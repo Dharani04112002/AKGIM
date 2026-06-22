@@ -2376,10 +2376,14 @@
     }
 
     .form-grid-2 {
+      display: grid;
+      gap: 14px;
       grid-template-columns: 1fr 1fr;
     }
 
     .form-grid-3 {
+      display: grid;
+      gap: 14px;
       grid-template-columns: repeat(3, 1fr);
     }
 
@@ -2389,11 +2393,13 @@
       gap: 5px;
     }
 
-    .form-group.span-2 {
+    .form-group.span-2,
+    .form-group.form-col-2 {
       grid-column: span 2;
     }
 
-    .form-group.span-3 {
+    .form-group.span-3,
+    .form-group.form-col-3 {
       grid-column: span 3;
     }
 
