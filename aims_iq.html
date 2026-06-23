@@ -4449,7 +4449,7 @@
           </div>
           <div class="sb-sub-group">
             <div class="nav-item" data-page="products" onclick="navigate('products',this)"><i class="ti ti-box nav-icon"></i><span class="nav-text">Products</span></div>
-            <div class="nav-item" data-page="warehouses" onclick="navigate('warehouses',this)"><i class="ti ti-building-warehouse nav-icon"></i><span class="nav-text">Warehouses</span></div>
+
             <div class="nav-item" data-page="customers" onclick="navigate('customers',this)"><i class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
             <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
             <div class="nav-item" data-page="employees" onclick="navigate('employees',this)"><i class="ti ti-id-badge nav-icon"></i><span class="nav-text">Employees</span></div>
@@ -4590,10 +4590,6 @@
               <i class="ti ti-user-check nav-icon"></i>
               <span class="nav-text">Assign Jobs</span>
             </div>
-            <div class="nav-item" data-page="svc-technicians" onclick="navigate('svc-technicians',this)">
-              <i class="ti ti-tool nav-icon"></i>
-              <span class="nav-text">Technicians</span>
-            </div>
             <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)">
               <i class="ti ti-chart-dots nav-icon"></i>
               <span class="nav-text">Service Reports</span>
@@ -4669,6 +4665,10 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
+            <div class="nav-item" data-page="warehouses" onclick="navigate('warehouses',this)">
+              <i class="ti ti-building-warehouse nav-icon"></i>
+              <span class="nav-text">Warehouses</span>
+            </div>
             <div class="nav-item" data-page="inv-dashboard" onclick="navigate('inv-dashboard',this)">
               <i class="ti ti-chart-area nav-icon"></i>
               <span class="nav-text">Stock Dashboard</span>
@@ -5722,6 +5722,7 @@
               <button class="tab-btn" onclick="setEmpDeptFilter('IT',this)">IT</button>
               <button class="tab-btn" onclick="setEmpDeptFilter('HR',this)">HR</button>
               <button class="tab-btn" onclick="setEmpDeptFilter('Operations',this)">Operations</button>
+              <button class="tab-btn" onclick="setEmpDeptFilter('Technician',this)">Technician</button>
             </div>
 
             <div class="card">
@@ -11778,20 +11779,7 @@
                       <option>Inactive</option>
                     </select>
                   </div>
-                  <div class="form-group" style="align-items:flex-end;">
-                    <label class="toggle-wrap" style="margin-bottom:4px;">
-                      <div class="toggle"><input type="checkbox" id="fp-track-batch">
-                        <div class="toggle-track"></div>
-                      </div>
-                      <span class="toggle-label">Track by Batch</span>
-                    </label>
-                    <label class="toggle-wrap">
-                      <div class="toggle"><input type="checkbox" id="fp-track-serial">
-                        <div class="toggle-track"></div>
-                      </div>
-                      <span class="toggle-label">Track by Serial Number</span>
-                    </label>
-                  </div>
+
                 </div>
               </div>
               <div class="modal-footer">
@@ -13005,7 +12993,7 @@
        EMPLOYEES — 20
        ───────────────────────────────────────────────────── */
     const EMP_NAMES = ['Rahul Sharma', 'Priya Singh', 'Amit Kumar', 'Sneha Patel', 'Ravi Gupta', 'Pooja Verma', 'Arjun Mehta', 'Kavya Reddy', 'Suresh Nair', 'Neha Joshi', 'Mohit Shah', 'Divya Pillai', 'Rohit Agarwal', 'Anita Bose', 'Karan Malhotra', 'Sunita Desai', 'Vijay Iyer', 'Meena Rao', 'Anand Tiwari', 'Deepa Menon'];
-    const EMP_DEPTS = ['Sales', 'Purchase', 'Finance', 'Inventory', 'IT', 'HR', 'Operations', 'CRM', 'Service', 'Admin'];
+    const EMP_DEPTS = ['Sales', 'Purchase', 'Finance', 'Inventory', 'IT', 'HR', 'Operations', 'CRM', 'Technician', 'Admin'];
     const EMP_ROLES = ['Manager', 'Executive', 'Analyst', 'Coordinator', 'Supervisor', 'Officer', 'Lead', 'Specialist'];
 
     DB.employees = EMP_NAMES.map((name, i) => {
