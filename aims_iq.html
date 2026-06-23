@@ -4830,8 +4830,9 @@
                 class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
             <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i
                 class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
-            <div class="nav-item" data-page="employees" onclick="navigate('employees',this)"><i
+            <div class="nav-item" data-page="hrm-employees" onclick="navigate('hrm-employees',this)"><i
                 class="ti ti-id-badge nav-icon"></i><span class="nav-text">Employees</span></div>
+
           </div>
         </div>
 
@@ -5045,10 +5046,37 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-
+<div class="nav-item" data-page="hrm-departments" onclick="navigate('hrm-departments',this)">
+              <i class="ti ti-building nav-icon"></i>
+              <span class="nav-text">Departments &amp; Designations</span>
+            </div>
             <div class="nav-item" data-page="hrm-attendance" onclick="navigate('hrm-attendance',this)">
               <i class="ti ti-calendar-check nav-icon"></i>
               <span class="nav-text">Attendance</span>
+            </div>
+            <div class="nav-item" data-page="hrm-shifts" onclick="navigate('hrm-shifts',this)">
+              <i class="ti ti-clock-hour-4 nav-icon"></i>
+              <span class="nav-text">Shift Management</span>
+            </div>
+            <div class="nav-item" data-page="hrm-leave" onclick="navigate('hrm-leave',this)">
+              <i class="ti ti-calendar-off nav-icon"></i>
+              <span class="nav-text">Leave Management</span>
+            </div>
+            <div class="nav-item" data-page="hrm-allowance" onclick="navigate('hrm-allowance',this)">
+              <i class="ti ti-receipt nav-icon"></i>
+              <span class="nav-text">Allowance &amp; Deduction</span>
+            </div>
+            <div class="nav-item" data-page="hrm-promotion" onclick="navigate('hrm-promotion',this)">
+              <i class="ti ti-trending-up nav-icon"></i>
+              <span class="nav-text">Promotion &amp; Increment</span>
+            </div>
+            <div class="nav-item" data-page="hrm-loans" onclick="navigate('hrm-loans',this)">
+              <i class="ti ti-credit-card nav-icon"></i>
+              <span class="nav-text">Loans</span>
+            </div>
+            <div class="nav-item" data-page="hrm-incentives" onclick="navigate('hrm-incentives',this)">
+              <i class="ti ti-star nav-icon"></i>
+              <span class="nav-text">Performance &amp; Incentives</span>
             </div>
             <div class="nav-item" data-page="hrm-payroll" onclick="navigate('hrm-payroll',this)">
               <i class="ti ti-wallet nav-icon"></i>
@@ -5126,6 +5154,8 @@
                 class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
             <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i
                 class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
+            <div class="nav-item" data-page="hrm-reports" onclick="navigate('hrm-reports',this)"><i
+                class="ti ti-file-analytics nav-icon"></i><span class="nav-text">HRMS Reports</span></div>
           </div>
         </div>
 
@@ -6021,71 +6051,6 @@
               <div id="sup-pagination"></div>
             </div>
           </div><!-- /#page-suppliers -->
-
-          <!-- ── EMPLOYEES ──────────────────────────────── -->
-          <div class="page" id="page-employees">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Employees</div>
-                <div class="page-sub">HR master — team members and designations</div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-primary" onclick="openModal('modal-employee')"><i class="ti ti-plus"></i> Add
-                  Employee</button>
-              </div>
-            </div>
-
-            <div class="kpi-grid kpi-grid-4 mb-4" id="emp-kpi-row"></div>
-
-            <!-- Department tabs -->
-            <div class="tabs-line mb-4">
-              <button class="tab-btn active" onclick="setEmpDeptFilter('',this)">All Depts</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Sales',this)">Sales</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Purchase',this)">Purchase</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Finance',this)">Finance</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Inventory',this)">Inventory</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('IT',this)">IT</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('HR',this)">HR</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Operations',this)">Operations</button>
-              <button class="tab-btn" onclick="setEmpDeptFilter('Technician',this)">Technician</button>
-            </div>
-
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-id-badge"></i> Employee List <span
-                    class="badge badge-blue no-dot ml-2" id="emp-count">0</span></div>
-                <div class="card-tools" style="display:flex;gap:8px;">
-                  <div class="filter-search"><i class="ti ti-search"></i><input id="emp-search" type="text"
-                      placeholder="Search name, dept, designation…" oninput="filterEmployees()"></div>
-                  <select class="form-control" style="width:130px;" id="emp-status-filter" onchange="filterEmployees()">
-                    <option value="">All Status</option>
-                    <option>Active</option>
-                    <option>On Leave</option>
-                    <option>Inactive</option>
-                  </select>
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Employee</th>
-                      <th>Department</th>
-                      <th>Designation</th>
-                      <th>Phone</th>
-                      <th>City</th>
-                      <th>Salary</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="emp-tbody"></tbody>
-                </table>
-              </div>
-              <div id="emp-pagination"></div>
-            </div>
-          </div><!-- /#page-employees -->
 
           <!-- ══════════════════════════════════════════════
                STEP 10 — INVENTORY MODULE
@@ -10310,67 +10275,65 @@
             </div>
           </div>
 
-          <!-- ── HRMS: DASHBOARD ─────────────────────────────── -->
-          <div class="page" id="page-hrm-dashboard">
-            <div class="page-header">
-              <div>
-                <div class="page-title">HRMS Dashboard</div>
-                <div class="page-sub">Workforce overview, attendance trends and payroll summary</div>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-dash-kpi"></div>
-            <div class="grid-2 mb-4">
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div class="chart-title">Attendance Trend</div>
-                </div>
-                <div class="chart-body">
-                  <div id="chart-hrm-attendance"></div>
-                </div>
-              </div>
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div class="chart-title">Headcount by Department</div>
-                </div>
-                <div class="chart-body">
-                  <div id="chart-hrm-dept"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- ── HRMS: ATTENDANCE ────────────────────────────── -->
           <div class="page" id="page-hrm-attendance">
             <div class="page-header">
               <div>
-                <div class="page-title">Attendance Integration</div>
-                <div class="page-sub">Biometric sync and manual attendance corrections</div>
+                <div class="page-title">Attendance</div>
+                <div class="page-sub">Daily attendance register — mark in/out times and status</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-outline"><i class="ti ti-refresh"></i> Sync Biometric</button>
-                <button class="btn btn-primary"><i class="ti ti-plus"></i> Mark Attendance</button>
+                <button class="btn btn-outline" onclick="renderAttTable()"><i class="ti ti-refresh"></i> Refresh</button>
+                <button class="btn btn-primary" onclick="saveAttendance()"><i class="ti ti-device-floppy"></i> Save Changes</button>
               </div>
             </div>
-            <div class="card mb-4">
+            <div class="card">
               <div class="card-header">
-                <div class="card-title">Attendance Register — Today</div>
+                <div class="card-title"><i class="ti ti-calendar-check"></i> Attendance Register
+                  <span id="att-today-badge" style="display:none;font-size:9px;font-weight:800;background:#E8F5E9;color:#1D9E75;border:1px solid #A5D6A7;padding:2px 8px;border-radius:20px;margin-left:8px;">Today</span>
+                </div>
+                <div class="card-tools" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <!-- Dept filter -->
+                  <select class="form-control" id="att-dept-filter" onchange="renderAttTable()" style="width:140px;">
+                    <option value="">All Depts</option>
+                  </select>
+                  <!-- Shift filter -->
+                  <select class="form-control" id="att-shift-filter" onchange="renderAttTable()" style="width:130px;">
+                    <option value="">All Shifts</option>
+                    <option>Morning Shift</option><option>General Shift</option><option>Night Shift</option>
+                  </select>
+                  <!-- Date navigator -->
+                  <div style="display:flex;align-items:center;gap:2px;border:1px solid var(--card-border);border-radius:8px;padding:2px 3px;background:var(--bg);">
+                    <button onclick="changeAttDate(-1)" class="btn btn-ghost btn-icon-sm" title="Previous day"><i class="ti ti-chevron-left"></i></button>
+                    <span id="att-date-label" style="font-size:12px;font-weight:600;color:var(--tx-1);min-width:155px;text-align:center;padding:0 6px;"></span>
+                    <button onclick="changeAttDate(1)" class="btn btn-ghost btn-icon-sm" title="Next day"><i class="ti ti-chevron-right"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Status pills -->
+              <div style="padding:8px 16px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card-bg);">
+                <span style="font-size:11px;font-weight:600;color:var(--tx-2);"><i class="ti ti-users" style="font-size:12px;"></i> <span id="att-emp-count">0</span> employees</span>
+                <div id="att-status-pills" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
               </div>
               <div class="table-wrap">
                 <table class="data-tbl">
                   <thead>
                     <tr>
+                      <th style="width:36px;text-align:center;">#</th>
                       <th>Employee</th>
-                      <th>Dept</th>
-                      <th>Shift</th>
-                      <th>In Time</th>
-                      <th>Out Time</th>
-                      <th>Status</th>
-                      <th>Actions</th>
+                      <th>Department</th>
+                      <th style="text-align:center;">Shift</th>
+                      <th style="text-align:center;">In Time</th>
+                      <th style="text-align:center;">Out Time</th>
+                      <th style="text-align:center;width:60px;">Hrs</th>
+                      <th style="text-align:center;width:110px;">Status</th>
+                      <th>Remarks</th>
                     </tr>
                   </thead>
                   <tbody id="hrm-att-tbody"></tbody>
                 </table>
               </div>
+              <div id="att-pagination"></div>
             </div>
           </div>
 
@@ -10435,6 +10398,321 @@
                   </thead>
                   <tbody id="hrm-ot-tbody"></tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: EMPLOYEE MANAGEMENT ── -->
+          <div class="page" id="page-hrm-employees">
+            <div class="page-header">
+              <div><div class="page-title">Employee Management</div><div class="page-sub">Manage all employee records, documents and salary details</div></div>
+              <div class="page-actions">
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+                <button class="btn btn-primary" onclick="openAddEmpModal()"><i class="ti ti-plus"></i> Add Employee</button>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-emp-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-users"></i> Employees <span class="badge badge-blue no-dot ml-2" id="hrm-emp-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="hrm-emp-search" type="text" placeholder="Search name, code…" oninput="filterHRMEmployees()"></div>
+                  <select class="form-control" style="width:140px;" id="hrm-emp-dept-filter" onchange="filterHRMEmployees()">
+                    <option value="">All Departments</option>
+                  </select>
+                  <select class="form-control" style="width:130px;" id="hrm-emp-status-filter" onchange="filterHRMEmployees()">
+                    <option value="">All Status</option>
+                    <option>Active</option><option>On Leave</option><option>Inactive</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Emp Code</th><th>Name</th><th>Department</th><th>Designation</th><th>Type</th><th>Shift</th><th>Basic (₹)</th><th>Pay Mode</th><th>Status</th><th>Actions</th></tr></thead>
+                  <tbody id="hrm-emp-tbody"></tbody>
+                </table>
+              </div>
+              <div id="hrm-emp-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: DEPARTMENTS & DESIGNATIONS ── -->
+          <div class="page" id="page-hrm-departments">
+            <div class="page-header">
+              <div><div class="page-title">Departments &amp; Designations</div><div class="page-sub">Manage organisational structure, grades and reporting hierarchy</div></div>
+            </div>
+            <div class="grid-2 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-building"></i> Departments</div>
+                  <button class="btn btn-primary btn-sm" onclick="showToast('info','Department','Add department form coming soon.')"><i class="ti ti-plus"></i> Add</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Department</th><th>Head</th><th>Employees</th><th>Actions</th></tr></thead>
+                    <tbody id="hrm-dept-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-briefcase"></i> Designations</div>
+                  <button class="btn btn-primary btn-sm" onclick="showToast('info','Designation','Add designation form coming soon.')"><i class="ti ti-plus"></i> Add</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Title</th><th>Department</th><th>Grade</th><th>Min Basic (₹)</th><th>Actions</th></tr></thead>
+                    <tbody id="hrm-desig-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: SHIFT MANAGEMENT ── -->
+          <div class="page" id="page-hrm-shifts">
+            <div class="page-header">
+              <div><div class="page-title">Shift Management</div><div class="page-sub">Configure shifts and assign employees to weekly rosters</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-shift')"><i class="ti ti-plus"></i> New Shift</button></div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-shift-kpi"></div>
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-clock-hour-4"></i> Shift Master</div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Shift Name</th><th>Start Time</th><th>End Time</th><th>Break</th><th>Hrs/Day</th><th>Employees</th><th>Actions</th></tr></thead>
+                  <tbody id="hrm-shift-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-calendar-week"></i> Weekly Roster</div>
+                <div class="card-tools">
+                  <select class="form-control" style="width:160px;" id="hrm-roster-shift-filter" onchange="renderHRMRoster()">
+                    <option value="">All Shifts</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Employee</th><th>Department</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+                  <tbody id="hrm-roster-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: LEAVE MANAGEMENT ── -->
+          <div class="page" id="page-hrm-leave">
+            <div class="page-header">
+              <div><div class="page-title">Leave Management</div><div class="page-sub">Leave entries, balances, types and public holidays</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-leave-entry')"><i class="ti ti-plus"></i> New Leave Entry</button></div>
+            </div>
+            <!-- Tabs -->
+            <div style="display:flex;gap:0;border-bottom:2px solid var(--card-border);margin-bottom:16px;" id="hrm-leave-tabs">
+              <button class="hrm-ltab active" onclick="switchLeaveTab('entry',this)" style="padding:9px 18px;font-size:12px;font-weight:600;background:none;border:none;border-bottom:2px solid var(--navy);margin-bottom:-2px;color:var(--navy);cursor:pointer;">Leave Entry</button>
+              <button class="hrm-ltab" onclick="switchLeaveTab('balance',this)" style="padding:9px 18px;font-size:12px;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--tx-3);cursor:pointer;">Leave Balance</button>
+              <button class="hrm-ltab" onclick="switchLeaveTab('types',this)" style="padding:9px 18px;font-size:12px;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--tx-3);cursor:pointer;">Leave Types</button>
+              <button class="hrm-ltab" onclick="switchLeaveTab('holidays',this)" style="padding:9px 18px;font-size:12px;font-weight:600;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--tx-3);cursor:pointer;">Holidays</button>
+            </div>
+            <div id="hrm-leave-panel-entry">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-calendar-off"></i> Leave Records</div>
+                  <div class="card-tools" style="display:flex;gap:8px;">
+                    <input type="month" class="form-control" id="hrm-leave-month" style="width:150px;" onchange="renderHRMLeaveEntry()">
+                    <select class="form-control" style="width:140px;" id="hrm-leave-status-filter" onchange="renderHRMLeaveEntry()"><option value="">All Status</option><option>Approved</option><option>Pending</option><option>Rejected</option></select>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Code</th><th>Employee</th><th>Department</th><th>Leave Type</th><th>From</th><th>To</th><th>Days</th><th>Remarks</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="hrm-leave-tbody"></tbody>
+                  </table>
+                </div>
+                <div id="hrm-leave-pagination"></div>
+              </div>
+            </div>
+            <div id="hrm-leave-panel-balance" style="display:none;">
+              <div class="card">
+                <div class="card-header"><div class="card-title"><i class="ti ti-scale"></i> Leave Balances</div></div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Code</th><th>Employee</th><th>Department</th><th>Leave Type</th><th>Allocated</th><th>Used</th><th>Balance</th></tr></thead>
+                    <tbody id="hrm-balance-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div id="hrm-leave-panel-types" style="display:none;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-list"></i> Leave Types</div>
+                  <button class="btn btn-primary btn-sm" onclick="showToast('info','Leave Type','Add leave type coming soon.')"><i class="ti ti-plus"></i> Add</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Type Name</th><th>Code</th><th>Days/Year</th><th>Paid</th><th>Carry Forward</th><th>Accrual</th><th>Actions</th></tr></thead>
+                    <tbody id="hrm-leavetype-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div id="hrm-leave-panel-holidays" style="display:none;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-sun"></i> Public Holidays</div>
+                  <button class="btn btn-primary btn-sm" onclick="showToast('info','Holiday','Add holiday coming soon.')"><i class="ti ti-plus"></i> Add</button>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Holiday Name</th><th>Date</th><th>Day</th><th>Type</th></tr></thead>
+                    <tbody id="hrm-holiday-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: ALLOWANCE & DEDUCTION ── -->
+          <div class="page" id="page-hrm-allowance">
+            <div class="page-header">
+              <div><div class="page-title">Allowance &amp; Deduction</div><div class="page-sub">Ad-hoc allowances and deductions applied to payroll</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-allowance')"><i class="ti ti-plus"></i> Add Entry</button></div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-allow-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-receipt"></i> Entries</div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <input type="month" class="form-control" id="hrm-allow-month" style="width:150px;" onchange="filterHRMAllowance()">
+                  <select class="form-control" style="width:140px;" id="hrm-allow-type-filter" onchange="filterHRMAllowance()"><option value="">All Types</option><option>Allowance</option><option>Deduction</option></select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Date</th><th>Code</th><th>Employee</th><th>Department</th><th>Type</th><th>Remarks</th><th>Amount (₹)</th><th>Actions</th></tr></thead>
+                  <tbody id="hrm-allow-tbody"></tbody>
+                </table>
+              </div>
+              <div id="hrm-allow-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: PROMOTION & INCREMENT ── -->
+          <div class="page" id="page-hrm-promotion">
+            <div class="page-header">
+              <div><div class="page-title">Promotion &amp; Salary Increment</div><div class="page-sub">Track promotions, designations changes and salary revisions</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openPromoModal()"><i class="ti ti-plus"></i> New Increment</button></div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-promo-kpi"></div>
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="ti ti-trending-up"></i> Promotion &amp; Increment Log</div></div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Code</th><th>Employee</th><th>From Designation</th><th>To Designation</th><th>Effective Date</th><th>Old Basic (₹)</th><th>New Basic (₹)</th><th>Increment %</th><th>Remarks</th></tr></thead>
+                  <tbody id="hrm-promo-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: LOANS ── -->
+          <div class="page" id="page-hrm-loans">
+            <div class="page-header">
+              <div><div class="page-title">Employee Loans</div><div class="page-sub">Manage personal, emergency and advance salary loans</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-loan')"><i class="ti ti-plus"></i> New Loan</button></div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-loan-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-credit-card"></i> Loan Register</div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="hrm-loan-search" type="text" placeholder="Search employee…" oninput="filterHRMLoans()"></div>
+                  <select class="form-control" style="width:130px;" id="hrm-loan-status-filter" onchange="filterHRMLoans()"><option value="">All Status</option><option>Active</option><option>Pending</option><option>Closed</option></select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Loan ID</th><th>Employee</th><th>Type</th><th>Principal (₹)</th><th>Outstanding (₹)</th><th>EMI (₹)</th><th>Start Date</th><th>Status</th><th>Actions</th></tr></thead>
+                  <tbody id="hrm-loan-tbody"></tbody>
+                </table>
+              </div>
+              <div id="hrm-loan-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: PERFORMANCE & INCENTIVES ── -->
+          <div class="page" id="page-hrm-incentives">
+            <div class="page-header">
+              <div><div class="page-title">Performance &amp; Incentives</div><div class="page-sub">Rate employees and manage performance-based incentive payouts</div></div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-incentive')"><i class="ti ti-plus"></i> Add Incentive</button></div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-incentive-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-star"></i> Incentive Records</div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <input type="month" class="form-control" id="hrm-incentive-month" style="width:150px;" onchange="filterHRMIncentives()">
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead><tr><th>Month</th><th>Employee</th><th>Department</th><th>Rating</th><th>Incentive (₹)</th><th>Remarks</th><th>Status</th><th>Actions</th></tr></thead>
+                  <tbody id="hrm-incentive-tbody"></tbody>
+                </table>
+              </div>
+              <div id="hrm-incentive-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── HRMS: REPORTS ── -->
+          <div class="page" id="page-hrm-reports">
+            <div class="page-header">
+              <div><div class="page-title">HRMS Reports</div><div class="page-sub">Payroll, attendance, statutory and bank statement reports</div></div>
+              <div class="page-actions">
+                <input type="month" class="form-control" id="hrm-rpt-month" style="width:160px;">
+              </div>
+            </div>
+            <div class="grid-2 mb-4">
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('pay-register')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-file-invoice" style="font-size:22px;color:var(--navy);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Pay Register</div><div style="font-size:12px;color:var(--tx-3);">Monthly salary register with earnings &amp; deductions</div></div>
+                </div>
+              </div>
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('attendance-register')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-calendar-check" style="font-size:22px;color:var(--green);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Attendance Register</div><div style="font-size:12px;color:var(--tx-3);">Daily attendance log for all employees</div></div>
+                </div>
+              </div>
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('bank-statement')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:#FFF8E1;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-building-bank" style="font-size:22px;color:var(--gold);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Bank Statement</div><div style="font-size:12px;color:var(--tx-3);">Bank transfer file for salary disbursement</div></div>
+                </div>
+              </div>
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('payslip')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:#E3F2FD;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-file-text" style="font-size:22px;color:var(--blue);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Payslip</div><div style="font-size:12px;color:var(--tx-3);">Individual employee payslips for selected month</div></div>
+                </div>
+              </div>
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('statutory')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:#FCE4EC;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-shield-check" style="font-size:22px;color:var(--red);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Statutory Deductions</div><div style="font-size:12px;color:var(--tx-3);">PF, ESI, PT and TDS summary report</div></div>
+                </div>
+              </div>
+              <div class="card" style="cursor:pointer;" onclick="generateHRMReport('loan-statement')">
+                <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
+                  <div style="width:48px;height:48px;border-radius:12px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-credit-card" style="font-size:22px;color:var(--green);"></i></div>
+                  <div><div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Loan Statement</div><div style="font-size:12px;color:var(--tx-3);">Outstanding loan balances and repayment schedule</div></div>
+                </div>
               </div>
             </div>
           </div>
@@ -11928,6 +12206,297 @@
             </div>
           </div>
 
+          <!-- HRM: Add/Edit Employee -->
+          <!-- HRM: New Shift -->
+          <div class="modal-wrap" id="modal-hrm-shift">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-clock-hour-4"></i> <span id="hrm-shift-modal-title">New Shift</span></div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-shift')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group form-col-2">
+                    <label class="form-label">Shift Name *</label>
+                    <input class="form-control" id="mshift-name" placeholder="e.g. Morning Shift">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Start Time *</label>
+                    <input type="time" class="form-control" id="mshift-start" value="09:00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">End Time *</label>
+                    <input type="time" class="form-control" id="mshift-end" value="18:00">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Break Duration (mins)</label>
+                    <input type="number" class="form-control" id="mshift-break" value="60" min="0" max="120">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Grace Time (mins)</label>
+                    <input type="number" class="form-control" id="mshift-grace" value="10" min="0" max="60">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Week Off Day</label>
+                    <select class="form-control" id="mshift-weekoff">
+                      <option value="Sunday">Sunday</option>
+                      <option value="Saturday">Saturday</option>
+                      <option value="Saturday,Sunday">Saturday & Sunday</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-shift')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveHRMShift()"><i class="ti ti-device-floppy"></i> Save Shift</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-wrap" id="modal-hrm-emp">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-user-plus"></i> <span id="hrm-emp-modal-title">Add Employee</span></div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-emp')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="tabs" style="margin-bottom:16px">
+                  <div class="tab-item active" onclick="switchEmpTab('personal',this)">Personal Info</div>
+                  <div class="tab-item" onclick="switchEmpTab('salary',this)">Salary Structure</div>
+                  <div class="tab-item" onclick="switchEmpTab('bank',this)">Bank & Statutory</div>
+                </div>
+                <!-- Personal Tab -->
+                <div class="tab-panel active" id="emp-tab-personal">
+                  <div class="form-grid-2">
+                    <div class="form-group"><label class="form-label">First Name *</label><input class="form-control" id="memp-fname" placeholder="First name"></div>
+                    <div class="form-group"><label class="form-label">Last Name *</label><input class="form-control" id="memp-lname" placeholder="Last name"></div>
+                    <div class="form-group"><label class="form-label">Department *</label>
+                      <select class="form-control" id="memp-dept"><option value="">— Select —</option></select>
+                    </div>
+                    <div class="form-group"><label class="form-label">Designation *</label>
+                      <select class="form-control" id="memp-desig"><option value="">— Select —</option></select>
+                    </div>
+                    <div class="form-group"><label class="form-label">Date of Joining</label><input class="form-control" id="memp-doj" type="date"></div>
+                    <div class="form-group"><label class="form-label">Gender</label>
+                      <select class="form-control" id="memp-gender"><option>Male</option><option>Female</option><option>Other</option></select>
+                    </div>
+                    <div class="form-group"><label class="form-label">Date of Birth</label><input class="form-control" id="memp-dob" type="date"></div>
+                    <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="memp-phone" placeholder="Mobile number"></div>
+                    <div class="form-group"><label class="form-label">Email</label><input class="form-control" id="memp-email" type="email" placeholder="Work email"></div>
+                    <div class="form-group"><label class="form-label">Shift</label>
+                      <select class="form-control" id="memp-shift"><option>Day Shift</option><option>Night Shift</option><option>General</option></select>
+                    </div>
+                    <div class="form-group"><label class="form-label">Status</label>
+                      <select class="form-control" id="memp-status"><option>Active</option><option>On Leave</option><option>Inactive</option></select>
+                    </div>
+                  </div>
+                </div>
+                <!-- Salary Tab -->
+                <div class="tab-panel" id="emp-tab-salary">
+                  <div class="form-grid-2">
+                    <div class="form-group"><label class="form-label">Basic Salary *</label><input class="form-control" id="memp-basic" type="number" placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">Pay Mode</label>
+                      <select class="form-control" id="memp-paymode"><option>Bank Transfer</option><option>Cash</option><option>Cheque</option></select>
+                    </div>
+                    <div class="form-group"><label class="form-label">DA</label><input class="form-control" id="memp-da" type="number" placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">HRA</label><input class="form-control" id="memp-hra" type="number" placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">Conveyance</label><input class="form-control" id="memp-conv" type="number" placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">Medical Allowance</label><input class="form-control" id="memp-medical" type="number" placeholder="0"></div>
+                    <div class="form-group"><label class="form-label">TDS %</label><input class="form-control" id="memp-tds" type="number" placeholder="0"></div>
+                    <div class="form-group" style="display:flex;gap:16px;align-items:center;padding-top:28px">
+                      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                        <input type="checkbox" id="memp-pf" checked> PF Eligible
+                      </label>
+                      <label style="display:flex;align-items:center;gap:6px;cursor:pointer">
+                        <input type="checkbox" id="memp-esi"> ESI Eligible
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- Bank Tab -->
+                <div class="tab-panel" id="emp-tab-bank">
+                  <div class="form-grid-2">
+                    <div class="form-group"><label class="form-label">Bank Account No</label><input class="form-control" id="memp-acno" placeholder="Account number"></div>
+                    <div class="form-group"><label class="form-label">Bank IFSC</label><input class="form-control" id="memp-ifsc" placeholder="IFSC code"></div>
+                    <div class="form-group"><label class="form-label">Aadhar No</label><input class="form-control" id="memp-aadhar" placeholder="12-digit Aadhar"></div>
+                    <div class="form-group"><label class="form-label">PAN No</label><input class="form-control" id="memp-pan" placeholder="PAN number"></div>
+                    <div class="form-group"><label class="form-label">UAN</label><input class="form-control" id="memp-uan" placeholder="Universal Account No"></div>
+                    <div class="form-group"><label class="form-label">ESI No</label><input class="form-control" id="memp-esino" placeholder="ESI number"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-emp')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveHRMEmployee()"><i class="ti ti-device-floppy"></i> Save Employee</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Apply Leave -->
+          <div class="modal-wrap" id="modal-hrm-leave-entry">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-calendar-off"></i> Apply Leave</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-leave-entry')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group"><label class="form-label">Employee *</label>
+                    <select class="form-control" id="ml-emp"><option value="">— Select —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Leave Type *</label>
+                    <select class="form-control" id="ml-type">
+                      <option>Earned Leave</option><option>Casual Leave</option><option>Sick Leave</option><option>Maternity Leave</option><option>Paternity Leave</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">From Date *</label><input class="form-control" id="ml-from" type="date"></div>
+                  <div class="form-group"><label class="form-label">To Date *</label><input class="form-control" id="ml-to" type="date"></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Reason *</label><textarea class="form-control" id="ml-reason" rows="3" placeholder="Reason for leave"></textarea></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-leave-entry')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveLeaveEntry()"><i class="ti ti-send"></i> Submit</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Allowance / Deduction -->
+          <div class="modal-wrap" id="modal-hrm-allowance">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-receipt"></i> Add Allowance / Deduction</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-allowance')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group"><label class="form-label">Employee *</label>
+                    <select class="form-control" id="mad-emp"><option value="">— Select —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Type *</label>
+                    <select class="form-control" id="mad-type"><option>Allowance</option><option>Deduction</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Particulars *</label><input class="form-control" id="mad-part" placeholder="e.g. Travel Allowance"></div>
+                  <div class="form-group"><label class="form-label">Amount *</label><input class="form-control" id="mad-amount" type="number" placeholder="0"></div>
+                  <div class="form-group"><label class="form-label">Applicable Month</label><input class="form-control" id="mad-month" type="month"></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input class="form-control" id="mad-remarks" placeholder="Optional remarks"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-allowance')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAllowanceEntry()"><i class="ti ti-device-floppy"></i> Save</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Promotion -->
+          <div class="modal-wrap" id="modal-hrm-promotion">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-trending-up"></i> Add Promotion / Increment</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-promotion')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group"><label class="form-label">Employee *</label>
+                    <select class="form-control" id="mpr-emp"><option value="">— Select —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Effective Date</label><input class="form-control" id="mpr-date" type="date"></div>
+                  <div class="form-group"><label class="form-label">From Designation</label><input class="form-control" id="mpr-from-desig" placeholder="Current designation"></div>
+                  <div class="form-group"><label class="form-label">To Designation</label><input class="form-control" id="mpr-to-desig" placeholder="New designation"></div>
+                  <div class="form-group"><label class="form-label">Old Salary</label><input class="form-control" id="mpr-old-sal" type="number" placeholder="0"></div>
+                  <div class="form-group"><label class="form-label">New Salary</label><input class="form-control" id="mpr-new-sal" type="number" placeholder="0"></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Remarks</label><textarea class="form-control" id="mpr-remarks" rows="2" placeholder="Remarks"></textarea></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-promotion')">Cancel</button>
+                <button class="btn btn-primary" onclick="savePromotion()"><i class="ti ti-device-floppy"></i> Save</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Loan -->
+          <div class="modal-wrap" id="modal-hrm-loan">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-credit-card"></i> New Employee Loan</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-loan')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group"><label class="form-label">Employee *</label>
+                    <select class="form-control" id="mln-emp"><option value="">— Select —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Loan Type *</label>
+                    <select class="form-control" id="mln-type"><option>Salary Advance</option><option>Personal Loan</option><option>Emergency Loan</option><option>Vehicle Loan</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Principal Amount *</label><input class="form-control" id="mln-principal" type="number" placeholder="0"></div>
+                  <div class="form-group"><label class="form-label">EMI Amount</label><input class="form-control" id="mln-emi" type="number" placeholder="0"></div>
+                  <div class="form-group"><label class="form-label">Disbursement Date</label><input class="form-control" id="mln-date" type="date"></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input class="form-control" id="mln-remarks" placeholder="Optional"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-loan')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveLoan()"><i class="ti ti-device-floppy"></i> Save Loan</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Incentive -->
+          <div class="modal-wrap" id="modal-hrm-incentive">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-star"></i> Add Incentive</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-incentive')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-grid-2">
+                  <div class="form-group"><label class="form-label">Employee *</label>
+                    <select class="form-control" id="minc-emp"><option value="">— Select —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Period</label><input class="form-control" id="minc-period" type="month"></div>
+                  <div class="form-group"><label class="form-label">Performance Rating</label>
+                    <select class="form-control" id="minc-rating">
+                      <option>Excellent</option><option>Good</option><option>Average</option><option>Below Average</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Target Achievement %</label><input class="form-control" id="minc-target" type="number" placeholder="0-100"></div>
+                  <div class="form-group"><label class="form-label">Incentive Amount</label><input class="form-control" id="minc-amount" type="number" placeholder="0"></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input class="form-control" id="minc-remarks" placeholder="Optional"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-incentive')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveIncentive()"><i class="ti ti-device-floppy"></i> Save</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Employee View -->
+          <div class="modal-wrap" id="modal-hrm-emp-view">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-id-badge-2"></i> <span id="vemp-title">Employee Detail</span></div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-emp-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vemp-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header"><div class="card-title">Employee Information</div></div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vemp-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-emp-view')">Close</button>
+                <button class="btn btn-primary" onclick="showToast('info','Edit','Edit form coming soon.')"><i class="ti ti-edit"></i> Edit</button>
+              </div>
+            </div>
+          </div>
+
           <!-- New Sales Order -->
           <div class="modal-wrap" id="modal-sal-order">
             <div class="modal modal-lg">
@@ -12941,59 +13510,6 @@
             </div>
           </div>
 
-          <!-- Employee Modal -->
-          <div class="modal-wrap" id="modal-employee">
-            <div class="modal modal-lg">
-              <div class="modal-header">
-                <div class="modal-title">Add / Edit Employee</div>
-                <button class="modal-close" onclick="closeModal('modal-employee')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body">
-                <div class="form-grid-2">
-                  <div class="form-group form-col-2"><label class="form-label">Full Name *</label><input
-                      class="form-control" id="fe-name" placeholder="Employee full name"></div>
-                  <div class="form-group"><label class="form-label">Department</label>
-                    <select class="form-control" id="fe-dept">
-                      <option>Sales</option>
-                      <option>Purchase</option>
-                      <option>Finance</option>
-                      <option>Inventory</option>
-                      <option>IT</option>
-                      <option>HR</option>
-                      <option>Operations</option>
-                      <option>CRM</option>
-                      <option>Service</option>
-                      <option>Admin</option>
-                    </select>
-                  </div>
-                  <div class="form-group"><label class="form-label">Designation</label><input class="form-control"
-                      id="fe-designation" placeholder="e.g. Sales Manager"></div>
-                  <div class="form-group"><label class="form-label">Email</label><input class="form-control"
-                      id="fe-email" type="email" placeholder="name@aimsiq.com"></div>
-                  <div class="form-group"><label class="form-label">Phone</label><input class="form-control"
-                      id="fe-phone" placeholder="+91 XXXXXXXXXX"></div>
-                  <div class="form-group"><label class="form-label">City</label><input class="form-control" id="fe-city"
-                      placeholder="City"></div>
-                  <div class="form-group"><label class="form-label">Monthly Salary (₹)</label><input
-                      class="form-control" type="number" id="fe-salary"></div>
-                  <div class="form-group"><label class="form-label">Joining Date</label><input class="form-control"
-                      type="date" id="fe-joining"></div>
-                  <div class="form-group"><label class="form-label">Status</label>
-                    <select class="form-control" id="fe-status">
-                      <option>Active</option>
-                      <option>On Leave</option>
-                      <option>Inactive</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-employee')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveEmployee()"><i class="ti ti-check"></i> Save
-                  Employee</button>
-              </div>
-            </div>
-          </div>
 
           <!-- Customer Detail Drawer -->
           <div class="drawer drawer-lg" id="drawer-customer">
@@ -13074,7 +13590,6 @@
       'warehouses': { title: 'Warehouses', crumbs: ['Masters', 'Warehouses'], module: 'masters' },
       'customers': { title: 'Customers', crumbs: ['Masters', 'Customers'], module: 'masters' },
       'suppliers': { title: 'Suppliers', crumbs: ['Masters', 'Suppliers'], module: 'masters' },
-      'employees': { title: 'Employees', crumbs: ['Masters', 'Employees'], module: 'masters' },
       // Inventory
       'inv-dashboard': { title: 'Stock Dashboard', crumbs: ['Inventory', 'Stock Dashboard'], module: 'inventory' },
       'inv-stock': { title: 'Stock List', crumbs: ['Inventory', 'Stock List'], module: 'inventory' },
@@ -13157,10 +13672,18 @@
       'svc-feedback': { title: 'Service Feedback', crumbs: ['Service', 'Feedback'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Root Cause Analysis'], module: 'service' },
       // HRMS & Payroll
-      'hrm-dashboard': { title: 'HRMS Dashboard', crumbs: ['HRMS', 'Dashboard'], module: 'hrms' },
       'hrm-attendance': { title: 'Attendance', crumbs: ['HRMS', 'Attendance'], module: 'hrms' },
       'hrm-payroll': { title: 'Payroll Processing', crumbs: ['HRMS', 'Payroll'], module: 'hrms' },
       'hrm-ot': { title: 'OT Calculation', crumbs: ['HRMS', 'Overtime'], module: 'hrms' },
+      'hrm-employees': { title: 'Employee Management', crumbs: ['Masters', 'Employees'], module: 'masters' },
+      'hrm-departments': { title: 'Departments & Designations', crumbs: ['HRMS', 'Departments'], module: 'hrms' },
+      'hrm-shifts': { title: 'Shift Management', crumbs: ['HRMS', 'Shifts'], module: 'hrms' },
+      'hrm-leave': { title: 'Leave Management', crumbs: ['HRMS', 'Leave'], module: 'hrms' },
+      'hrm-allowance': { title: 'Allowance & Deduction', crumbs: ['HRMS', 'Allowance'], module: 'hrms' },
+      'hrm-promotion': { title: 'Promotion & Increment', crumbs: ['HRMS', 'Promotion'], module: 'hrms' },
+      'hrm-loans': { title: 'Employee Loans', crumbs: ['HRMS', 'Loans'], module: 'hrms' },
+      'hrm-incentives': { title: 'Performance & Incentives', crumbs: ['HRMS', 'Incentives'], module: 'hrms' },
+      'hrm-reports': { title: 'HRMS Reports', crumbs: ['Reports', 'HRMS Reports'], module: 'reports' },
       // CRM (Extended)
 
       // Additional Reports
@@ -13291,7 +13814,7 @@
         'dashboard': 'dashboard',
         // Masters
         'products': 'masters', 'categories': 'masters', 'brands': 'masters', 'units': 'masters',
-        'warehouses': 'masters', 'customers': 'masters', 'suppliers': 'masters', 'employees': 'masters',
+        'warehouses': 'masters', 'customers': 'masters', 'suppliers': 'masters',
         // Reports
         'rep-sales': 'reports', 'rep-purchase': 'reports', 'rep-inventory': 'reports',
         'rep-financial': 'reports', 'rep-productivity': 'reports',
@@ -13723,7 +14246,6 @@
         case 'crm-opp-pagination': COPP_PER = v; cOppPage = 1; break;
         case 'cus-pagination': CUS_PER_PAGE = v; cusPage = 1; break;
         case 'dn-pagination': DN_PER = v; dnPage = 1; break;
-        case 'emp-pagination': EMP_PER = v; empPage = 1; break;
         case 'fexp-pagination': FEXP_PER = v; fexpPage = 1; break;
         case 'finc-pagination': FINC_PER = v; fincPage = 1; break;
         case 'fpay-pagination': FPAY_PER = v; fpayPage = 1; break;
@@ -15028,7 +15550,6 @@
     let catPage = 1; let CAT_PER = 10; let catFiltered = [...CATEGORIES];
     let brandPage = 1; let BRAND_PER = 10; let brandFiltered = [...BRANDS];
     let whPage = 1; let WH_PER = 10; let whFiltered = [...WAREHOUSES];
-    let empPage = 1; let EMP_PER = 10;
 
     function initProductsPage() {
       buildProdKPIs();
@@ -15393,7 +15914,6 @@
       once('warehouses', renderWarehousesPage);
       once('customers', initCustomersPage);
       once('suppliers', initSuppliersPage);
-      once('employees', initEmployeesPage);
       once('inv-dashboard', initInvDashboard);
       once('inv-stock', initStockPage);
       once('inv-ledger', initLedgerPage);
@@ -15456,10 +15976,18 @@
       once('svc-visits', initSvcVisits);
       once('svc-feedback', initSvcFeedback);
       once('svc-rca', initSvcRCA);
-      once('hrm-dashboard', initHRMDashboard);
       once('hrm-attendance', initHRMAttendance);
       once('hrm-payroll', initHRMPayroll);
       once('hrm-ot', initHRMOT);
+      once('hrm-employees', initHRMEmployees);
+      once('hrm-departments', initHRMDepartments);
+      once('hrm-shifts', initHRMShifts);
+      once('hrm-leave', initHRMLeave);
+      once('hrm-allowance', initHRMAllowance);
+      once('hrm-promotion', initHRMPromotion);
+      once('hrm-loans', initHRMLoans);
+      once('hrm-incentives', initHRMIncentives);
+      once('hrm-reports', initHRMReports);
 
       once('rep-leads', initRepLeads);
       once('rep-crm', initRepCRM);
@@ -16004,90 +16532,6 @@
       closeModal('modal-supplier');
       showToast('success', 'Supplier Saved', `"${name}" added to supplier master.`);
       filterSuppliers();
-    }
-
-    /* ─────────── EMPLOYEES ─────────── */
-    let empDeptFilter = '';
-
-    function initEmployeesPage() {
-      renderEmployeeKPIs();
-      filterEmployees();
-    }
-
-    function renderEmployeeKPIs() {
-      const kpiEl = document.getElementById('emp-kpi-row'); if (!kpiEl) return;
-      const active = DB.employees.filter(e => e.status === 'Active').length;
-      const onLeave = DB.employees.filter(e => e.status === 'On Leave').length;
-      const depts = [...new Set(DB.employees.map(e => e.department))].length;
-      const totalSal = DB.employees.reduce((s, e) => s + e.salary, 0);
-      kpiEl.innerHTML = `
-      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Employees</div><div class="kpi-val">${DB.employees.length}</div></div><div class="kpi-icon gold"><i class="ti ti-users"></i></div></div><div class="kpi-sub up">${active} active</div></div>
-      <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Departments</div><div class="kpi-val">${depts}</div></div><div class="kpi-icon blue"><i class="ti ti-building"></i></div></div><div class="kpi-sub neutral">Across company</div></div>
-      <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">On Leave</div><div class="kpi-val">${onLeave}</div></div><div class="kpi-icon amber"><i class="ti ti-calendar-off"></i></div></div><div class="kpi-sub warn">Currently absent</div></div>
-      <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Monthly Payroll</div><div class="kpi-val">₹${fmt(totalSal)}</div></div><div class="kpi-icon navy"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub neutral">Total CTC</div></div>`;
-    }
-
-    function setEmpDeptFilter(dept, btn) {
-      empDeptFilter = dept;
-      document.querySelectorAll('.tabs-line .tab-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      filterEmployees();
-    }
-
-    function filterEmployees() {
-      const search = (document.getElementById('emp-search')?.value || '').toLowerCase();
-      const status = document.getElementById('emp-status-filter')?.value || '';
-      const filtered = DB.employees.filter(e => {
-        const ms = !search || e.name.toLowerCase().includes(search) || e.department.toLowerCase().includes(search) || e.designation.toLowerCase().includes(search);
-        const mst = !status || e.status === status;
-        const md = !empDeptFilter || e.department === empDeptFilter;
-        return ms && mst && md;
-      });
-      const ec = document.getElementById('emp-count'); if (ec) ec.textContent = filtered.length;
-      
-      const start = (empPage - 1) * EMP_PER;
-      const slice = filtered.slice(start, start + EMP_PER);
-      
-      renderEmployeesTable(slice);
-      renderPagination('emp-pagination', filtered.length, empPage, EMP_PER, `function(p){empPage=p;filterEmployees()}`);
-    }
-
-    function renderEmployeesTable(data) {
-      const tbody = document.getElementById('emp-tbody'); if (!tbody) return;
-      const DEPT_COLORS = {
-        Sales: 'blue', Purchase: 'amber', Finance: 'green', Inventory: 'sky',
-        IT: 'purple', HR: 'gold', Operations: 'navy', CRM: 'red', Service: 'gray', Admin: 'navy'
-      };
-      const STATUS_CLS = { Active: 'green', 'On Leave': 'amber', Inactive: 'gray' };
-      tbody.innerHTML = data.map(e => `
-      <tr>
-        <td><span class="id-cell">${e.id}</span></td>
-        <td>
-          <div class="entity-cell">
-            <div class="entity-av ${DEPT_COLORS[e.department] || 'blue'}">${e.name.split(' ').map(n => n[0]).join('')}</div>
-            <div><div class="entity-name">${e.name}</div><div class="entity-sub">${e.email}</div></div>
-          </div>
-        </td>
-        <td><span class="tag tag-${DEPT_COLORS[e.department] || 'gray'}">${e.department}</span></td>
-        <td class="text-secondary">${e.designation}</td>
-        <td class="text-secondary">${e.phone}</td>
-        <td class="text-secondary">${e.city}</td>
-        <td class="amount-cell">₹${fmt(e.salary)}</td>
-        <td><span class="badge badge-${STATUS_CLS[e.status] || 'gray'}">${e.status}</span></td>
-        <td>
-          <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" title="Edit" onclick="openModal('modal-employee')"><i class="ti ti-edit"></i></button>
-          </div>
-        </td>
-      </tr>`).join('');
-    }
-
-    function saveEmployee() {
-      const name = document.getElementById('fe-name')?.value.trim();
-      if (!name) { showToast('error', 'Validation', 'Employee name is required.'); return; }
-      closeModal('modal-employee');
-      showToast('success', 'Employee Saved', `"${name}" added to the team.`);
-      filterEmployees();
     }
 
     /* ════════════════════════════════════════════════════════
@@ -21055,40 +21499,149 @@
       setTimeout(() => initPageCharts('svc-rca'), 20);
     }
 
-    /* ─── HRMS MODULE ─── */
-    function initHRMDashboard() {
-      const kpi = document.getElementById('hrm-dash-kpi');
-      if (kpi) kpi.innerHTML = `
-        <div class="kpi-card navy"><div class="kpi-label">Total Strength</div><div class="kpi-val">${DB.employees.length}</div></div>
-        <div class="kpi-card green"><div class="kpi-label">Present Today</div><div class="kpi-val">${DB.attendanceToday.filter(a => a.status === 'Present' || a.status === 'Late').length}</div></div>
-        <div class="kpi-card amber"><div class="kpi-label">On Leave</div><div class="kpi-val">${DB.attendanceToday.filter(a => a.status === 'On Leave').length}</div></div>
-        <div class="kpi-card gold"><div class="kpi-label">Monthly Payroll</div><div class="kpi-val">₹${fmt(SUMMARY.totalExpenses * 0.15)}</div></div>`;
-      registerChart('hrm-dashboard', () => {
-        new ApexCharts(document.getElementById('chart-hrm-attendance'), {
-          chart: { type: 'area', height: 220, toolbar: { show: false } },
-          series: [{ name: 'Attendance %', data: [94, 91, 95, 92, 96, 94, 95] }],
-          xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
-          colors: ['#C9A84C'], stroke: { curve: 'smooth' }
-        }).render();
-        new ApexCharts(document.getElementById('chart-hrm-dept'), {
-          chart: { type: 'pie', height: 220 },
-          series: [20, 15, 25, 40],
-          labels: ['Sales', 'Admin', 'Finance', 'Operations'],
-          colors: ['#0F1C2E', '#C9A84C', '#3B82F6', '#10B981'],
-          legend: { position: 'bottom' }
-        }).render();
-      });
-      setTimeout(() => initPageCharts('hrm-dashboard'), 20);
-    }
+    /* ── ATTENDANCE MODULE STATE ── */
+    let _attDate = new Date().toISOString().split('T')[0];
+    let _attRows = {};   // { empId: { inTime, outTime, shift, status, remarks } }
+    let _attPage = 1; const _attPer = 12;
+
+    const ATT_STATUSES = [
+      { code:'PR', label:'Present',  bg:'#E8F5E9', color:'#1D9E75', border:'#A5D6A7' },
+      { code:'AB', label:'Absent',   bg:'#FFEBEE', color:'#E53935', border:'#EF9A9A' },
+      { code:'HD', label:'Half Day', bg:'#E3F2FD', color:'#1976D2', border:'#90CAF9' },
+      { code:'HP', label:'HD LOP',   bg:'#FFF8E1', color:'#F9A825', border:'#FFE082' },
+      { code:'LV', label:'Leave',    bg:'#EDE7F6', color:'#7B1FA2', border:'#CE93D8' },
+      { code:'WO', label:'Week Off', bg:'#ECEFF1', color:'#607D8B', border:'#B0BEC5' },
+      { code:'HL', label:'Holiday',  bg:'#F3E5F5', color:'#8E24AA', border:'#CE93D8' },
+    ];
+    const ATT_S = Object.fromEntries(ATT_STATUSES.map(s => [s.code, s]));
+
     function initHRMAttendance() {
-      const tbody = document.getElementById('hrm-att-tbody'); if (!tbody) return;
-      tbody.innerHTML = DB.attendanceToday.map(a => `<tr style="${a.status === 'Absent' ? 'background:#FFF5F5;' : ''}">
-        <td><div class="entity-name">${a.name}</div></td>
-        <td>${a.dept}</td><td>${a.shift}</td><td>${a.in}</td><td>${a.out}</td>
-        <td><span class="badge badge-${a.status === 'Present' ? 'green' : (a.status === 'Late' ? 'amber' : 'red')}">${a.status}</span></td>
-        <td><button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Logs','Opening biometric trail...')"><i class="ti ti-fingerprint"></i></button></td>
-      </tr>`).join('');
+      // seed attendance rows from DB.attendanceToday if not already
+      if (Object.keys(_attRows).length === 0) {
+        DB.employees.forEach(e => {
+          const existing = DB.attendanceToday.find(a => a.name === e.name);
+          const today = new Date().toISOString().split('T')[0];
+          const dow = new Date(today).getDay();
+          const defaultStatus = (dow === 0) ? 'WO' : 'PR';
+          _attRows[e.id] = {
+            inTime: existing?.in || (defaultStatus==='PR' ? '09:00' : ''),
+            outTime: existing?.out || (defaultStatus==='PR' ? '18:00' : ''),
+            shift: e._shift || 'General Shift',
+            status: existing ? (existing.status==='Present'?'PR':existing.status==='Late'?'PR':existing.status==='Absent'?'AB':existing.status==='On Leave'?'LV':'WO') : defaultStatus,
+            remarks: ''
+          };
+        });
+      }
+      // populate dept filter
+      const deptSel = document.getElementById('att-dept-filter');
+      if (deptSel && deptSel.options.length === 1) {
+        [...new Set(DB.employees.map(e => e.department))].sort().forEach(d => deptSel.add(new Option(d,d)));
+      }
+      // init date
+      const today = new Date().toISOString().split('T')[0];
+      if (!_attDate) _attDate = today;
+      updateAttDateLabel();
+      renderAttTable();
     }
+
+    function updateAttDateLabel() {
+      const lbl = document.getElementById('att-date-label');
+      const badge = document.getElementById('att-today-badge');
+      const today = new Date().toISOString().split('T')[0];
+      if (lbl) {
+        const d = new Date(_attDate + 'T00:00:00');
+        lbl.textContent = d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+      }
+      if (badge) badge.style.display = _attDate === today ? 'inline-block' : 'none';
+    }
+
+    function changeAttDate(delta) {
+      const d = new Date(_attDate + 'T00:00:00');
+      d.setDate(d.getDate() + delta);
+      _attDate = d.toISOString().split('T')[0];
+      updateAttDateLabel();
+      renderAttTable();
+    }
+
+    function renderAttTable() {
+      const dept = document.getElementById('att-dept-filter')?.value || '';
+      const shift = document.getElementById('att-shift-filter')?.value || '';
+      const emps = DB.employees.filter(e => (!dept || e.department===dept) && (!shift || (e._shift||'General Shift')===shift));
+      const countEl = document.getElementById('att-emp-count');
+      if (countEl) countEl.textContent = emps.length;
+      // status pill counts
+      const counts = Object.fromEntries(ATT_STATUSES.map(s => [s.code, 0]));
+      emps.forEach(e => { const r = _attRows[e.id]; if (r) counts[r.status] = (counts[r.status]||0)+1; });
+      const pillsEl = document.getElementById('att-status-pills');
+      if (pillsEl) {
+        pillsEl.innerHTML = ATT_STATUSES.map(s => `<div style="display:flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:${s.bg};color:${s.color};border:1px solid ${s.border};">
+          <span style="width:6px;height:6px;border-radius:50%;background:${s.color};display:inline-block;"></span>
+          ${s.code}: <b>${counts[s.code]||0}</b>
+        </div>`).join('');
+      }
+      // paginate
+      const start = (_attPage-1)*_attPer;
+      const slice = emps.slice(start, start+_attPer);
+      const tbody = document.getElementById('hrm-att-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = slice.map((e, i) => {
+        const r = _attRows[e.id] || { inTime:'', outTime:'', shift:e._shift||'General Shift', status:'PR', remarks:'' };
+        const s = ATT_S[r.status] || ATT_S['PR'];
+        const hrs = calcAttHrs(r.inTime, r.outTime);
+        const initials = e.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+        return `<tr>
+          <td style="text-align:center;font-size:11px;color:var(--tx-3);font-family:monospace;">${String(start+i+1).padStart(2,'0')}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div style="width:30px;height:30px;border-radius:50%;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--navy);flex-shrink:0;">${initials}</div>
+              <div><div style="font-size:12px;font-weight:600;color:var(--tx-1);">${e.name}</div><div style="font-size:10px;color:var(--tx-3);font-family:monospace;">${e.id}</div></div>
+            </div>
+          </td>
+          <td style="font-size:11px;color:var(--tx-2);">${e.department}<br><span style="font-size:10px;color:var(--tx-3);">${e.designation}</span></td>
+          <td style="text-align:center;">
+            <input type="time" value="${r.inTime}" onchange="_attRows['${e.id}'].inTime=this.value;updateAttHrs('${e.id}',this)" style="width:90px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:11px;font-family:monospace;background:var(--card-bg);color:var(--tx-1);padding:0 4px;">
+          </td>
+          <td style="text-align:center;">
+            <input type="time" value="${r.outTime}" onchange="_attRows['${e.id}'].outTime=this.value;updateAttHrs('${e.id}',this)" style="width:90px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:11px;font-family:monospace;background:var(--card-bg);color:var(--tx-1);padding:0 4px;">
+          </td>
+          <td style="text-align:center;font-size:11px;font-family:monospace;font-weight:700;" id="att-hrs-${e.id}">${hrs ? `<span style="color:var(--green);">${hrs}</span>` : '<span style="color:var(--tx-3);">—</span>'}</td>
+          <td style="text-align:center;">
+            <input value="${r.shift.split(' ')[0]}" onchange="_attRows['${e.id}'].shift=this.value" style="width:52px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:10px;font-family:monospace;text-transform:uppercase;background:var(--card-bg);color:var(--tx-1);">
+          </td>
+          <td style="text-align:center;">
+            <select onchange="_attRows['${e.id}'].status=this.value;this.style.background=ATT_S[this.value]?.bg||'';this.style.color=ATT_S[this.value]?.color||'';" style="height:28px;border-radius:20px;border:1px solid ${s.border};background:${s.bg};color:${s.color};font-size:10px;font-weight:700;padding:0 20px 0 10px;cursor:pointer;width:90px;">
+              ${ATT_STATUSES.map(st => `<option value="${st.code}" ${r.status===st.code?'selected':''}>${st.code}</option>`).join('')}
+            </select>
+          </td>
+          <td>
+            <input value="${r.remarks||''}" placeholder="Add note…" onchange="_attRows['${e.id}'].remarks=this.value" style="width:100%;min-width:100px;height:28px;border:1px solid var(--card-border);border-radius:6px;font-size:11px;padding:0 8px;background:var(--card-bg);color:var(--tx-1);">
+          </td>
+        </tr>`;
+      }).join('') || '<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--tx-3);">No employees found</td></tr>';
+      renderPagination('att-pagination', emps.length, _attPage, _attPer, p => { _attPage=p; renderAttTable(); });
+    }
+
+    function calcAttHrs(inT, outT) {
+      if (!inT || !outT) return '';
+      const [h1,m1] = inT.split(':').map(Number);
+      const [h2,m2] = outT.split(':').map(Number);
+      let diff = ((h2*60+m2)-(h1*60+m1))/60;
+      if (diff < 0) diff += 24;
+      if (diff <= 0) return '';
+      return diff.toFixed(1)+'h';
+    }
+
+    function updateAttHrs(empId, input) {
+      const r = _attRows[empId];
+      const hrs = calcAttHrs(r.inTime, r.outTime);
+      const el = document.getElementById('att-hrs-'+empId);
+      if (el) el.innerHTML = hrs ? `<span style="color:var(--green);">${hrs}</span>` : '<span style="color:var(--tx-3);">—</span>';
+    }
+
+    function saveAttendance() {
+      showToast('success','Attendance Saved',`Attendance for ${_attDate} saved successfully.`);
+    }
+
     function initHRMPayroll() {
       const tbody = document.getElementById('hrm-pay-tbody'); if (!tbody) return;
       tbody.innerHTML = DB.payrollHistory.map(p => `<tr>
@@ -21107,6 +21660,1020 @@
         <td><i class="ti ti-check" style="color:var(--green);"></i> Auto</td>
         <td><button class="btn btn-primary btn-sm" onclick="showToast('success','OT Approved','Request added to payroll.')">Approve</button></td>
       </tr>`).join('');
+    }
+
+    /* ─── HRM EXTENDED MODULES ─── */
+    const DEPARTMENTS = ['Sales','Operations','Finance','HR','IT','Procurement','Logistics','Service','Marketing','Admin'];
+    const DESIGNATIONS = ['Manager','Executive','Engineer','Analyst','Coordinator','Specialist','Officer','Supervisor','Lead','Director'];
+    const SHIFT_LIST = [
+      {name:'Day Shift',start:'09:00',end:'18:00',dur:'9h',days:'Mon-Sat'},
+      {name:'Night Shift',start:'21:00',end:'06:00',dur:'9h',days:'Mon-Sun'},
+      {name:'General Shift',start:'10:00',end:'19:00',dur:'9h',days:'Mon-Fri'},
+      {name:'Half Day',start:'09:00',end:'13:00',dur:'4h',days:'Mon-Sat'}
+    ];
+    const HOLIDAYS_2026 = [
+      {date:'2026-01-01',name:"New Year's Day",type:'National'},{date:'2026-01-26',name:'Republic Day',type:'National'},
+      {date:'2026-03-10',name:'Holi',type:'Festival'},{date:'2026-04-14',name:'Ambedkar Jayanti',type:'National'},
+      {date:'2026-08-15',name:'Independence Day',type:'National'},{date:'2026-10-02',name:'Gandhi Jayanti',type:'National'},
+      {date:'2026-10-24',name:'Dussehra',type:'Festival'},{date:'2026-11-14',name:'Diwali',type:'Festival'},
+      {date:'2026-12-25',name:'Christmas',type:'National'}
+    ];
+    const LEAVE_POLICY = [
+      {type:'Earned Leave',annual:18,cf:'Yes (Max 30)',paid:'Yes',for:'All'},
+      {type:'Casual Leave',annual:12,cf:'No',paid:'Yes',for:'All'},
+      {type:'Sick Leave',annual:12,cf:'No',paid:'Yes',for:'All'},
+      {type:'Maternity Leave',annual:180,cf:'No',paid:'Yes',for:'Female'},
+      {type:'Paternity Leave',annual:7,cf:'No',paid:'Yes',for:'Male'}
+    ];
+
+    let hrmEmpPage = 1; const hrmEmpPer = 12;
+    let hrmEmpAll = [];
+
+    function initHRMEmployees() {
+      const deptSel = document.getElementById('emp-dept-filter');
+      if (deptSel && deptSel.options.length === 1)
+        DEPARTMENTS.forEach(d => deptSel.add(new Option(d, d)));
+      hrmEmpAll = DB.employees.slice();
+      const kpi = document.getElementById('hrm-emp-kpis');
+      const active = DB.employees.filter(e => e.status === 'Active').length;
+      const onLeave = DB.employees.filter(e => e.status === 'On Leave').length;
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card navy"><div class="kpi-label">Total Employees</div><div class="kpi-val">${DB.employees.length}</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Active</div><div class="kpi-val">${active}</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">On Leave</div><div class="kpi-val">${onLeave}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Departments</div><div class="kpi-val">${DEPARTMENTS.length}</div></div>`;
+      renderHRMEmpTable();
+    }
+
+    function filterHRMEmployees() {
+      const q = (document.getElementById('emp-search')?.value || '').toLowerCase();
+      const dept = document.getElementById('emp-dept-filter')?.value || '';
+      hrmEmpAll = DB.employees.filter(e =>
+        (!q || e.name.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)) &&
+        (!dept || e.department === dept)
+      );
+      hrmEmpPage = 1;
+      renderHRMEmpTable();
+    }
+
+    function renderHRMEmpTable() {
+      const tbody = document.getElementById('hrm-emp-tbody'); if (!tbody) return;
+      const start = (hrmEmpPage-1)*hrmEmpPer, slice = hrmEmpAll.slice(start, start+hrmEmpPer);
+      const colr = (s) => s==='Active'?'green':s==='On Leave'?'amber':'red';
+      tbody.innerHTML = slice.map(e => `<tr onclick="viewHRMEmployee('${e.id}')" style="cursor:pointer">
+        <td><span class="badge badge-outline">${e.id}</span></td>
+        <td><div class="entity-cell"><div class="entity-av" style="background:var(--navy)">${e.name[0]}</div><span class="entity-name">${e.name}</span></div></td>
+        <td>${e.department}</td><td>${e.designation}</td><td>${e.phone}</td>
+        <td>${fmtDate(e.joiningDate)}</td><td>&#8377;${fmt(e.salary)}</td>
+        <td><span class="badge badge-${colr(e.status)}">${e.status}</span></td>
+        <td><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();editHRMEmployee('${e.id}')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('');
+      renderPagination('hrm-emp-pagination', hrmEmpAll.length, hrmEmpPage, hrmEmpPer, 'setHRMEmpPage');
+    }
+
+    function setHRMEmpPage(p) { hrmEmpPage = p; renderHRMEmpTable(); }
+
+    function viewHRMEmployee(id) {
+      const e = DB.employees.find(x => x.id === id); if (!e) return;
+      showToast('default', e.name, `${e.designation} • ${e.department} • ${e.status}`);
+    }
+
+    function editHRMEmployee(id) {
+      const e = DB.employees.find(x => x.id === id); if (!e) return;
+      document.getElementById('hrm-emp-modal-title').textContent = 'Edit Employee';
+      document.getElementById('memp-fname').value = e.name.split(' ')[0] || '';
+      document.getElementById('memp-lname').value = e.name.split(' ').slice(1).join(' ') || '';
+      const deptSel = document.getElementById('memp-dept');
+      if (deptSel && deptSel.options.length <= 1) DEPARTMENTS.forEach(d => deptSel.add(new Option(d,d)));
+      deptSel.value = e.department;
+      const desigSel = document.getElementById('memp-desig');
+      if (desigSel && desigSel.options.length <= 1) DESIGNATIONS.forEach(d => desigSel.add(new Option(d,d)));
+      desigSel.value = e.designation;
+      document.getElementById('memp-phone').value = e.phone;
+      document.getElementById('memp-email').value = e.email;
+      document.getElementById('memp-basic').value = e.salary;
+      document.getElementById('memp-status').value = e.status;
+      openModal('modal-hrm-emp');
+    }
+
+    function openAddEmpModal() {
+      document.getElementById('hrm-emp-modal-title').textContent = 'Add Employee';
+      ['memp-fname','memp-lname','memp-phone','memp-email','memp-basic','memp-da','memp-hra','memp-conv','memp-medical','memp-tds','memp-acno','memp-ifsc','memp-aadhar','memp-pan','memp-uan','memp-esino'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+      const deptSel = document.getElementById('memp-dept');
+      if (deptSel && deptSel.options.length <= 1) DEPARTMENTS.forEach(d => deptSel.add(new Option(d,d)));
+      const desigSel = document.getElementById('memp-desig');
+      if (desigSel && desigSel.options.length <= 1) DESIGNATIONS.forEach(d => desigSel.add(new Option(d,d)));
+      openModal('modal-hrm-emp');
+    }
+
+    function saveHRMEmployee() {
+      const fname = document.getElementById('memp-fname').value.trim();
+      const lname = document.getElementById('memp-lname').value.trim();
+      if (!fname) { showToast('error','Validation','First name is required'); return; }
+      showToast('success','Employee Saved', fname + ' ' + lname + ' saved successfully');
+      closeModal('modal-hrm-emp');
+      renderHRMEmpTable();
+    }
+
+    function switchEmpTab(tab, el) {
+      document.querySelectorAll('#modal-hrm-emp .tab-item').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('#modal-hrm-emp .tab-panel').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('emp-tab-' + tab).classList.add('active');
+    }
+
+    function initHRMDepartments() {
+      const tbody = document.getElementById('hrm-dept-tbody'); if (!tbody) return;
+      const counts = {};
+      DB.employees.forEach(e => { counts[e.department] = (counts[e.department]||0)+1; });
+      tbody.innerHTML = DEPARTMENTS.map((d,i) => `<tr>
+        <td>${i+1}</td><td>${d}</td>
+        <td><div class="entity-cell"><div class="entity-av" style="background:var(--blue)">${DB.employees[i]?.name[0]||'?'}</div><span class="entity-name">${DB.employees[i]?.name||'&#8212;'}</span></div></td>
+        <td>${counts[d]||0}</td><td><span class="badge badge-green">Active</span></td>
+      </tr>`).join('');
+      const tbody2 = document.getElementById('hrm-desig-tbody'); if (!tbody2) return;
+      const dc = {};
+      DB.employees.forEach(e => { dc[e.designation] = (dc[e.designation]||0)+1; });
+      tbody2.innerHTML = DESIGNATIONS.map((d,i) => `<tr>
+        <td>${i+1}</td><td>${d}</td><td>${DEPARTMENTS[i%DEPARTMENTS.length]}</td><td>${dc[d]||si(1,8)}</td>
+      </tr>`).join('');
+    }
+
+    function openAddDeptModal() { showToast('default','Add Department','Form coming soon'); }
+    function openAddDesigModal() { showToast('default','Add Designation','Form coming soon'); }
+
+    function initHRMShifts() {
+      const tbody = document.getElementById('hrm-shift-tbody'); if (!tbody) return;
+      tbody.innerHTML = SHIFT_LIST.map(s => `<tr>
+        <td><strong>${s.name}</strong></td><td>${s.start}</td><td>${s.end}</td><td>${s.dur}</td>
+        <td>${si(10,30)}</td><td>${s.days}</td><td><span class="badge badge-green">Active</span></td>
+      </tr>`).join('');
+    }
+
+    let leaveRequests = [];
+    let leavePage = 1; const leavePer = 10;
+
+    function initHRMLeave() {
+      if (leaveRequests.length === 0) {
+        const leaveTypes = ['Earned Leave','Casual Leave','Sick Leave'];
+        const statuses = ['Pending','Pending','Approved','Approved','Approved','Rejected'];
+        leaveRequests = DB.employees.slice(0,25).map((e,i) => {
+          const from = new Date(Date.now() - si(1,60)*86400000);
+          const days = si(1,5);
+          const to = new Date(from.getTime() + days*86400000);
+          return {
+            id: i+1, emp: e.name, dept: e.department,
+            type: spick(leaveTypes), from: from.toISOString(), to: to.toISOString(),
+            days, reason: spick(['Medical','Personal Work','Travel','Family Function','Emergency']),
+            status: spick(statuses)
+          };
+        });
+      }
+      const empSel = document.getElementById('ml-emp');
+      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
+      renderLeaveTable();
+      renderLeaveBalances();
+      renderHolidays();
+      renderLeavePolicy();
+    }
+
+    function filterLeaveRequests() { leavePage = 1; renderLeaveTable(); }
+
+    function renderLeaveTable() {
+      const tbody = document.getElementById('hrm-leave-tbody'); if (!tbody) return;
+      const filter = document.getElementById('leave-status-filter')?.value || '';
+      const list = filter ? leaveRequests.filter(r => r.status === filter) : leaveRequests;
+      const slice = list.slice((leavePage-1)*leavePer, leavePage*leavePer);
+      const sc = s => s==='Approved'?'green':s==='Rejected'?'red':'amber';
+      tbody.innerHTML = slice.map(r => `<tr>
+        <td>${r.emp}</td><td>${r.type}</td><td>${fmtDate(r.from)}</td><td>${fmtDate(r.to)}</td>
+        <td>${r.days}</td><td>${r.reason}</td>
+        <td><span class="badge badge-${sc(r.status)}">${r.status}</span></td>
+        <td>${r.status==='Pending'?`<button class="btn btn-sm btn-primary" onclick="approveLeave(${r.id})">Approve</button>
+          <button class="btn btn-sm btn-outline" style="color:var(--red)" onclick="rejectLeave(${r.id})">Reject</button>`:'&#8212;'}</td>
+      </tr>`).join('');
+      renderPagination('hrm-leave-pagination', list.length, leavePage, leavePer, 'setLeavePage');
+    }
+
+    function setLeavePage(p) { leavePage = p; renderLeaveTable(); }
+    function approveLeave(id) { const r = leaveRequests.find(x=>x.id===id); if(r){r.status='Approved'; renderLeaveTable(); showToast('success','Approved','Leave request approved');} }
+    function rejectLeave(id) { const r = leaveRequests.find(x=>x.id===id); if(r){r.status='Rejected'; renderLeaveTable(); showToast('error','Rejected','Leave request rejected');} }
+
+    function renderLeaveBalances() {
+      const tbody = document.getElementById('hrm-lbal-tbody'); if (!tbody) return;
+      tbody.innerHTML = DB.employees.slice(0,15).map(e => `<tr>
+        <td>${e.name}</td><td>${si(5,18)}</td><td>${si(2,12)}</td><td>${si(3,12)}</td>
+        <td>${si(0,180)}</td><td>${si(0,7)}</td><td>${si(0,10)}</td><td>${si(5,20)}</td>
+      </tr>`).join('');
+    }
+
+    function renderHolidays() {
+      const tbody = document.getElementById('hrm-holiday-tbody'); if (!tbody) return;
+      const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      tbody.innerHTML = HOLIDAYS_2026.map(h => {
+        const d = new Date(h.date);
+        return `<tr><td>${fmtDate(h.date)}</td><td>${h.name}</td>
+          <td><span class="badge badge-${h.type==='National'?'navy':'gold'}">${h.type}</span></td>
+          <td>${days[d.getDay()]}</td></tr>`;
+      }).join('');
+    }
+
+    function renderLeavePolicy() {
+      const tbody = document.getElementById('hrm-policy-tbody'); if (!tbody) return;
+      tbody.innerHTML = LEAVE_POLICY.map(p => `<tr>
+        <td><strong>${p.type}</strong></td><td>${p.annual} days</td>
+        <td>${p.cf}</td><td><span class="badge badge-${p.paid==='Yes'?'green':'red'}">${p.paid}</span></td>
+        <td>${p.for}</td>
+      </tr>`).join('');
+    }
+
+    function saveLeaveEntry() {
+      const emp = document.getElementById('ml-emp')?.value;
+      const from = document.getElementById('ml-from')?.value;
+      const to = document.getElementById('ml-to')?.value;
+      if (!emp || !from || !to) { showToast('error','Validation','Fill all required fields'); return; }
+      const days = Math.ceil((new Date(to)-new Date(from))/86400000)+1;
+      const type = document.getElementById('ml-type')?.value;
+      leaveRequests.unshift({id:leaveRequests.length+1, emp: DB.employees.find(e=>e.id===emp)?.name||emp, dept:'', type, from, to, days, reason: document.getElementById('ml-reason')?.value||'', status:'Pending'});
+      showToast('success','Leave Submitted','Leave request submitted for approval');
+      closeModal('modal-hrm-leave-entry');
+      renderLeaveTable();
+    }
+
+    function switchLeaveTab(tab, el) {
+      document.querySelectorAll('#page-hrm-leave .tab-item').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('#page-hrm-leave .tab-panel').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('leave-tab-' + tab).classList.add('active');
+    }
+
+    let allowanceEntries = [];
+    let allowancePage = 1; const allowancePer = 10;
+
+    function initHRMAllowance() {
+      if (allowanceEntries.length === 0) {
+        const types = ['Allowance','Allowance','Deduction'];
+        const parts = ['Travel Allowance','Project Bonus','Late Deduction','Medical Allowance','Performance Bonus','Loan Deduction','Conveyance','Overtime Bonus'];
+        allowanceEntries = DB.employees.slice(0,20).map((e,i) => ({
+          id:i+1, emp:e.name, date: new Date(Date.now()-si(1,30)*86400000).toISOString(),
+          type: spick(types), particulars: spick(parts), amount: si(500,10000), month:'June 2026', remarks:''
+        }));
+      }
+      const empSel = document.getElementById('mad-emp');
+      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
+      filterAllowances();
+    }
+
+    function filterAllowances() { allowancePage = 1; renderAllowanceTable(); }
+
+    function renderAllowanceTable() {
+      const tbody = document.getElementById('hrm-allowance-tbody'); if (!tbody) return;
+      const filter = document.getElementById('allowance-type-filter')?.value || '';
+      const list = filter ? allowanceEntries.filter(a => a.type === filter) : allowanceEntries;
+      const slice = list.slice((allowancePage-1)*allowancePer, allowancePage*allowancePer);
+      tbody.innerHTML = slice.map(a => `<tr>
+        <td>${fmtDate(a.date)}</td><td>${a.emp}</td>
+        <td><span class="badge badge-${a.type==='Allowance'?'green':'red'}">${a.type}</span></td>
+        <td>${a.particulars}</td><td>&#8377;${fmt(a.amount)}</td><td>${a.month}</td><td>${a.remarks||'&#8212;'}</td>
+      </tr>`).join('');
+      renderPagination('hrm-allowance-pagination', list.length, allowancePage, allowancePer, 'setAllowancePage');
+    }
+
+    function setAllowancePage(p) { allowancePage = p; renderAllowanceTable(); }
+
+    function saveAllowanceEntry() {
+      const emp = document.getElementById('mad-emp')?.value;
+      const type = document.getElementById('mad-type')?.value;
+      const part = document.getElementById('mad-part')?.value.trim();
+      const amount = parseFloat(document.getElementById('mad-amount')?.value)||0;
+      if (!emp || !part || !amount) { showToast('error','Validation','Fill required fields'); return; }
+      allowanceEntries.unshift({id:allowanceEntries.length+1, emp: DB.employees.find(e=>e.id===emp)?.name||emp,
+        date: new Date().toISOString(), type, particulars: part, amount,
+        month: document.getElementById('mad-month')?.value||'June 2026', remarks: document.getElementById('mad-remarks')?.value||''});
+      showToast('success','Entry Saved','Allowance/Deduction entry saved');
+      closeModal('modal-hrm-allowance');
+      renderAllowanceTable();
+    }
+
+    let promotions = [];
+
+    function initHRMPromotion() {
+      if (promotions.length === 0) {
+        promotions = DB.employees.slice(0,12).map((e,i) => {
+          const oldSal = si(25000,80000), pct = si(5,25);
+          const newSal = Math.round(oldSal*(1+pct/100));
+          return { emp:e.name, date: new Date(Date.now()-si(30,365)*86400000).toISOString(),
+            fromDesig: DESIGNATIONS[(i+1)%DESIGNATIONS.length], toDesig: e.designation,
+            oldSal, newSal, pct, effective: fmtDate(new Date(Date.now()-si(1,30)*86400000).toISOString()) };
+        });
+      }
+      const empSel = document.getElementById('mpr-emp');
+      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
+      const tbody = document.getElementById('hrm-promo-tbody'); if (!tbody) return;
+      tbody.innerHTML = promotions.map(p => `<tr>
+        <td>${fmtDate(p.date)}</td><td>${p.emp}</td><td>${p.fromDesig}</td><td>${p.toDesig}</td>
+        <td>&#8377;${fmt(p.oldSal)}</td><td>&#8377;${fmt(p.newSal)}</td>
+        <td><span class="badge badge-green">+${p.pct}%</span></td><td>${p.effective}</td>
+      </tr>`).join('');
+    }
+
+    function openPromoModal() {
+      const sel = document.getElementById('mpr-emp');
+      if (sel && sel.options.length <= 1) DB.employees.forEach(e => sel.add(new Option(e.name, e.id)));
+      const today = new Date().toISOString().split('T')[0];
+      const dateEl = document.getElementById('mpr-date');
+      if (dateEl && !dateEl.value) dateEl.value = today;
+      openModal('modal-hrm-promotion');
+    }
+
+    function savePromotion() {
+      const emp = document.getElementById('mpr-emp')?.value;
+      if (!emp) { showToast('error','Validation','Select an employee'); return; }
+      const empName = DB.employees.find(e=>e.id===emp)?.name||emp;
+      const oldSal = parseFloat(document.getElementById('mpr-old-sal')?.value)||0;
+      const newSal = parseFloat(document.getElementById('mpr-new-sal')?.value)||0;
+      const pct = oldSal>0?Math.round((newSal-oldSal)/oldSal*100):0;
+      promotions.unshift({emp:empName, date:new Date().toISOString(),
+        fromDesig: document.getElementById('mpr-from-desig')?.value||'&#8212;',
+        toDesig: document.getElementById('mpr-to-desig')?.value||'&#8212;',
+        oldSal, newSal, pct, effective: document.getElementById('mpr-date')?.value||fmtDate(new Date().toISOString())});
+      showToast('success','Promotion Saved','Record added successfully');
+      closeModal('modal-hrm-promotion');
+      const tbody = document.getElementById('hrm-promo-tbody');
+      if (tbody) tbody.innerHTML = promotions.map(p=>`<tr><td>${fmtDate(p.date)}</td><td>${p.emp}</td><td>${p.fromDesig}</td><td>${p.toDesig}</td><td>&#8377;${fmt(p.oldSal)}</td><td>&#8377;${fmt(p.newSal)}</td><td><span class="badge badge-green">+${p.pct}%</span></td><td>${p.effective}</td></tr>`).join('');
+    }
+
+    let hrmLoans = [];
+
+    function initHRMLoans() {
+      if (hrmLoans.length === 0) {
+        const types = ['Salary Advance','Personal Loan','Emergency Loan','Vehicle Loan'];
+        hrmLoans = DB.employees.slice(0,15).map((e,i) => {
+          const principal = si(20000,200000), outstanding = Math.round(principal*si(10,90)/100);
+          return { id:'LN-'+String(i+1).padStart(3,'0'), emp:e.name, type:spick(types),
+            principal, outstanding, emi:Math.round(principal/si(6,24)),
+            disbursed: new Date(Date.now()-si(30,365)*86400000).toISOString(), status: outstanding>0?'Active':'Closed' };
+        });
+      }
+      const empSel = document.getElementById('mln-emp');
+      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
+      const kpi = document.getElementById('hrm-loans-kpis');
+      const active = hrmLoans.filter(l=>l.status==='Active');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card navy"><div class="kpi-label">Total Loans</div><div class="kpi-val">${hrmLoans.length}</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">Active Loans</div><div class="kpi-val">${active.length}</div></div>
+        <div class="kpi-card gold"><div class="kpi-label">Outstanding</div><div class="kpi-val">&#8377;${fmt(active.reduce((s,l)=>s+l.outstanding,0))}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Monthly EMI</div><div class="kpi-val">&#8377;${fmt(active.reduce((s,l)=>s+l.emi,0))}</div></div>`;
+      const tbody = document.getElementById('hrm-loans-tbody'); if (!tbody) return;
+      tbody.innerHTML = hrmLoans.map(l => `<tr>
+        <td><span class="badge badge-outline">${l.id}</span></td><td>${l.emp}</td><td>${l.type}</td>
+        <td>&#8377;${fmt(l.principal)}</td><td>&#8377;${fmt(l.outstanding)}</td><td>&#8377;${fmt(l.emi)}/mo</td>
+        <td>${fmtDate(l.disbursed)}</td>
+        <td><span class="badge badge-${l.status==='Active'?'green':'gray'}">${l.status}</span></td>
+      </tr>`).join('');
+    }
+
+    function saveLoan() {
+      const emp = document.getElementById('mln-emp')?.value;
+      const principal = parseFloat(document.getElementById('mln-principal')?.value)||0;
+      if (!emp || !principal) { showToast('error','Validation','Fill required fields'); return; }
+      const empName = DB.employees.find(e=>e.id===emp)?.name||emp;
+      hrmLoans.unshift({id:'LN-'+String(hrmLoans.length+1).padStart(3,'0'), emp:empName,
+        type: document.getElementById('mln-type')?.value||'Salary Advance', principal,
+        outstanding: principal, emi: parseFloat(document.getElementById('mln-emi')?.value)||Math.round(principal/12),
+        disbursed: document.getElementById('mln-date')?.value||new Date().toISOString(), status:'Active'});
+      showToast('success','Loan Created','Loan record saved successfully');
+      closeModal('modal-hrm-loan');
+      initHRMLoans();
+    }
+
+    let incentives = [];
+
+    function initHRMIncentives() {
+      if (incentives.length === 0) {
+        const ratings = ['Excellent','Good','Good','Average'];
+        incentives = DB.employees.slice(0,18).map((e,i) => ({
+          emp:e.name, period:'June 2026', rating:spick(ratings),
+          amount: si(2000,25000), target: si(70,120),
+          remarks: spick(['Target Exceeded','Good Performance','Meets Expectation','']),
+          status: spick(['Paid','Paid','Approved','Pending'])
+        }));
+      }
+      const empSel = document.getElementById('minc-emp');
+      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
+      const tbody = document.getElementById('hrm-incentive-tbody'); if (!tbody) return;
+      const rc = r => r==='Excellent'?'green':r==='Good'?'blue':r==='Average'?'amber':'red';
+      const sc = s => s==='Paid'?'green':s==='Approved'?'blue':s==='Pending'?'amber':'red';
+      tbody.innerHTML = incentives.map(i => `<tr>
+        <td>${i.emp}</td><td>${i.period}</td>
+        <td><span class="badge badge-${rc(i.rating)}">${i.rating}</span></td>
+        <td>&#8377;${fmt(i.amount)}</td><td>${i.target}%</td><td>${i.remarks||'&#8212;'}</td>
+        <td><span class="badge badge-${sc(i.status)}">${i.status}</span></td>
+      </tr>`).join('');
+    }
+
+    function saveIncentive() {
+      const emp = document.getElementById('minc-emp')?.value;
+      const amount = parseFloat(document.getElementById('minc-amount')?.value)||0;
+      if (!emp) { showToast('error','Validation','Select an employee'); return; }
+      const empName = DB.employees.find(e=>e.id===emp)?.name||emp;
+      incentives.unshift({emp:empName, period: document.getElementById('minc-period')?.value||'June 2026',
+        rating: document.getElementById('minc-rating')?.value||'Good', amount,
+        target: parseInt(document.getElementById('minc-target')?.value)||0,
+        remarks: document.getElementById('minc-remarks')?.value||'', status:'Pending'});
+      showToast('success','Incentive Saved','Incentive entry added');
+      closeModal('modal-hrm-incentive');
+      initHRMIncentives();
+    }
+
+    function initHRMReports() {
+      const kpi = document.getElementById('hrm-report-kpis');
+      const active = DB.employees.filter(e=>e.status==='Active').length;
+      const avgSal = Math.round(DB.employees.reduce((s,e)=>s+e.salary,0)/DB.employees.length);
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card navy"><div class="kpi-label">Total Headcount</div><div class="kpi-val">${DB.employees.length}</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Active Employees</div><div class="kpi-val">${active}</div></div>
+        <div class="kpi-card gold"><div class="kpi-label">Avg Salary</div><div class="kpi-val">&#8377;${fmt(avgSal)}</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">Attrition (YTD)</div><div class="kpi-val">${si(2,8)}%</div></div>`;
+      const tbody = document.getElementById('hrm-attrition-tbody');
+      if (tbody) {
+        const months = ['Jan 2026','Feb 2026','Mar 2026','Apr 2026','May 2026','Jun 2026'];
+        let hc = DB.employees.length - si(5,10);
+        tbody.innerHTML = months.map(m => {
+          const joined = si(1,5), exited = si(0,3), net = joined-exited;
+          hc += net;
+          const attr = ((exited/hc)*100).toFixed(1);
+          return `<tr><td>${m}</td><td>${hc}</td>
+            <td><span class="badge badge-green">+${joined}</span></td>
+            <td><span class="badge badge-red">${exited}</span></td>
+            <td><span class="badge badge-${net>=0?'green':'red'}">${net>=0?'+':''}${net}</span></td>
+            <td>${attr}%</td></tr>`;
+        }).join('');
+      }
+      registerChart('hrm-reports', () => {
+        if (window.ApexCharts) {
+          const deptCounts = {};
+          DB.employees.forEach(e => { deptCounts[e.department] = (deptCounts[e.department]||0)+1; });
+          const el1 = document.getElementById('chart-hrm-dept');
+          if (el1 && !el1._chart) {
+            el1._chart = new ApexCharts(el1, {
+              series:[{data:Object.values(deptCounts)}],
+              chart:{type:'bar',height:240,toolbar:{show:false}},
+              xaxis:{categories:Object.keys(deptCounts)},
+              colors:['#1e3a5f'],plotOptions:{bar:{horizontal:false,borderRadius:4}}
+            });
+            el1._chart.render();
+          }
+          const el2 = document.getElementById('chart-hrm-payroll-trend');
+          if (el2 && !el2._chart) {
+            el2._chart = new ApexCharts(el2, {
+              series:[{name:'Gross Payroll',data:DB.payrollHistory.slice(0,6).map(p=>p.gross)}],
+              chart:{type:'area',height:240,toolbar:{show:false}},
+              xaxis:{categories:DB.payrollHistory.slice(0,6).map(p=>p.month)},
+              colors:['#1e3a5f'],stroke:{curve:'smooth'},fill:{opacity:0.15}
+            });
+            el2._chart.render();
+          }
+        }
+      });
+      initPageCharts('hrm-reports');
+    }
+
+    /* ─── HRMS: DATA ─── */
+    (function seedHRMData() {
+      const depts = ['Engineering','Sales','HR','Finance','Operations','Marketing','Logistics'];
+      const desigs = ['Manager','Senior Engineer','Engineer','Executive','Lead','Analyst','Supervisor'];
+      const shifts = ['Morning (8-5)','General (9-6)','Night (10-7)'];
+      const leaveTypes = ['Casual Leave','Sick Leave','Earned Leave','Maternity Leave','Comp Off'];
+      const loanTypes = ['Personal Loan','Emergency Loan','Advance Salary'];
+
+      if (!DB.hrmDepts) {
+        DB.hrmDepts = depts.map((d,i) => ({
+          name: d, head: DB.employees[i%DB.employees.length]?.name || 'N/A',
+          count: DB.employees.filter(e => e.department === d).length || Math.floor(Math.random()*12)+3
+        }));
+      }
+      if (!DB.hrmDesigs) {
+        DB.hrmDesigs = desigs.map((t,i) => ({
+          title: t, dept: depts[i % depts.length],
+          grade: ['G1','G2','G3','G4','G5'][i%5],
+          minBasic: [20000,35000,50000,70000,90000][i%5]
+        }));
+      }
+      if (!DB.hrmShifts) {
+        DB.hrmShifts = [
+          { name:'Morning Shift', start:'08:00', end:'17:00', brk:60, hrs:8, count:0 },
+          { name:'General Shift', start:'09:00', end:'18:00', brk:60, hrs:8, count:0 },
+          { name:'Night Shift',   start:'22:00', end:'07:00', brk:30, hrs:8, count:0 }
+        ];
+        DB.employees.forEach((e,i) => {
+          e._shift = DB.hrmShifts[i % DB.hrmShifts.length].name;
+          DB.hrmShifts[i % DB.hrmShifts.length].count++;
+        });
+      }
+      if (!DB.hrmLeaveTypes) {
+        DB.hrmLeaveTypes = [
+          { name:'Casual Leave',    code:'CL', days:12, paid:true,  carry:true,  accrual:'Monthly' },
+          { name:'Sick Leave',      code:'SL', days:10, paid:true,  carry:false, accrual:'Annual'  },
+          { name:'Earned Leave',    code:'EL', days:15, paid:true,  carry:true,  accrual:'Monthly' },
+          { name:'Maternity Leave', code:'ML', days:90, paid:true,  carry:false, accrual:'Event'   },
+          { name:'Comp Off',        code:'CO', days:6,  paid:true,  carry:false, accrual:'Event'   }
+        ];
+      }
+      if (!DB.hrmLeaves) {
+        const statuses = ['Approved','Approved','Approved','Pending','Rejected'];
+        DB.hrmLeaves = DB.employees.slice(0,20).map((e,i) => {
+          const from = new Date(2026, Math.floor(i/4), (i%20)+1);
+          const days = Math.floor(Math.random()*3)+1;
+          const to = new Date(from); to.setDate(from.getDate()+days-1);
+          return {
+            id: 'LV-'+String(i+1).padStart(3,'0'), empId: e.id, empName: e.name,
+            dept: e.department, type: leaveTypes[i%leaveTypes.length],
+            from: from.toISOString().split('T')[0],
+            to:   to.toISOString().split('T')[0],
+            days, remarks: ['Medical','Family event','Personal work','Travel','Rest'][i%5],
+            status: statuses[i%statuses.length]
+          };
+        });
+      }
+      if (!DB.hrmHolidays) {
+        DB.hrmHolidays = [
+          { name:'New Year',        date:'2026-01-01', day:'Thursday', type:'National' },
+          { name:'Republic Day',    date:'2026-01-26', day:'Monday',   type:'National' },
+          { name:'Holi',            date:'2026-03-13', day:'Friday',   type:'Festival' },
+          { name:'Good Friday',     date:'2026-04-03', day:'Friday',   type:'National' },
+          { name:"Eid ul-Fitr",     date:'2026-03-31', day:'Tuesday',  type:'Festival' },
+          { name:'Independence Day',date:'2026-08-15', day:'Saturday', type:'National' },
+          { name:'Gandhi Jayanti',  date:'2026-10-02', day:'Friday',   type:'National' },
+          { name:'Diwali',          date:'2026-10-19', day:'Monday',   type:'Festival' },
+          { name:'Christmas',       date:'2026-12-25', day:'Friday',   type:'National' }
+        ];
+      }
+      if (!DB.hrmAllowances) {
+        const aTypes = ['Allowance','Deduction'];
+        const remarks = ['Travel Allowance','Medical Allowance','Performance Bonus','Loan EMI Deduction','Late Deduction','Overtime Pay','Uniform Allowance'];
+        DB.hrmAllowances = DB.employees.slice(0,25).map((e,i) => ({
+          id: 'AD-'+String(i+1).padStart(3,'0'),
+          date: new Date(2026,5,(i%28)+1).toISOString().split('T')[0],
+          empId: e.id, empName: e.name, dept: e.department,
+          type: aTypes[i%2], remarks: remarks[i%remarks.length],
+          amount: [2000,5000,1500,3000,8000,1000,4500][i%7]
+        }));
+      }
+      if (!DB.hrmPromos) {
+        DB.hrmPromos = DB.employees.slice(0,12).map((e,i) => {
+          const oldBasic = Math.round(e.salary * 0.85);
+          const pct = [8,10,12,15,20][i%5];
+          return {
+            empId: e.id, empName: e.name,
+            fromDesig: desigs[(i+1)%desigs.length], toDesig: desigs[i%desigs.length],
+            effective: new Date(2026, i%6, 1).toISOString().split('T')[0],
+            oldBasic, newBasic: e.salary,
+            pct, remarks: ['Performance appraisal','Annual review','Promotion','Lateral move'][i%4]
+          };
+        });
+      }
+      if (!DB.hrmLoans) {
+        const lStatuses = ['Active','Active','Pending','Closed'];
+        DB.hrmLoans = DB.employees.slice(0,18).map((e,i) => {
+          const principal = [25000,50000,75000,100000,30000][i%5];
+          const outstanding = Math.round(principal * (0.3 + (i%5)*0.1));
+          const emi = Math.round(principal/12);
+          return {
+            id: 'LN-'+String(i+1).padStart(3,'0'), empId: e.id, empName: e.name,
+            type: loanTypes[i%loanTypes.length], principal, outstanding, emi,
+            start: new Date(2025, i%12, 1).toISOString().split('T')[0],
+            status: lStatuses[i%lStatuses.length]
+          };
+        });
+      }
+      if (!DB.hrmIncentives) {
+        const ratings = ['Excellent','Good','Average','Good','Excellent'];
+        const iStatuses = ['Approved','Pending','Approved'];
+        DB.hrmIncentives = DB.employees.slice(0,22).map((e,i) => ({
+          month: ['2026-05','2026-04','2026-03'][i%3],
+          empId: e.id, empName: e.name, dept: e.department,
+          rating: ratings[i%ratings.length],
+          amount: [5000,3500,2000,8000,1500][i%5],
+          remarks: ['Target achieved','Exceeded quota','On track','Below target','Star performer'][i%5],
+          status: iStatuses[i%iStatuses.length]
+        }));
+      }
+    })();
+
+    /* ─── HRMS: EMPLOYEES ─── */
+    let _hrmEmpPage = 1, _hrmEmpRows = [], _hrmEmpPer = 10;
+    function initHRMEmployees() {
+      const kpi = document.getElementById('hrm-emp-kpi');
+      if (kpi) {
+        const total = DB.employees.length;
+        const active = DB.employees.filter(e => e.status === 'Active').length;
+        const onLeave = DB.employees.filter(e => e.status === 'On Leave').length;
+        const totalSal = DB.employees.reduce((s,e) => s+e.salary,0);
+        kpi.innerHTML = `
+          <div class="kpi-card blue"><div class="kpi-val">${total}</div><div class="kpi-lbl">Total Employees</div></div>
+          <div class="kpi-card green"><div class="kpi-val">${active}</div><div class="kpi-lbl">Active</div></div>
+          <div class="kpi-card amber"><div class="kpi-val">${onLeave}</div><div class="kpi-lbl">On Leave</div></div>
+          <div class="kpi-card gold"><div class="kpi-val">₹${(totalSal/100000).toFixed(1)}L</div><div class="kpi-lbl">Monthly Payroll</div></div>`;
+      }
+      const deptSel = document.getElementById('hrm-emp-dept-filter');
+      if (deptSel && deptSel.options.length === 1) {
+        [...new Set(DB.employees.map(e => e.department))].sort().forEach(d => deptSel.add(new Option(d,d)));
+      }
+      filterHRMEmployees();
+    }
+    function filterHRMEmployees() {
+      const q = (document.getElementById('hrm-emp-search')?.value || '').toLowerCase();
+      const dept = document.getElementById('hrm-emp-dept-filter')?.value || '';
+      const status = document.getElementById('hrm-emp-status-filter')?.value || '';
+      _hrmEmpRows = DB.employees.filter(e =>
+        (!q || e.name.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)) &&
+        (!dept || e.department === dept) &&
+        (!status || e.status === status)
+      );
+      _hrmEmpPage = 1;
+      renderHRMEmpTable();
+    }
+    function renderHRMEmpTable() {
+      const tbody = document.getElementById('hrm-emp-tbody');
+      const cnt = document.getElementById('hrm-emp-count');
+      if (!tbody) return;
+      if (cnt) cnt.textContent = _hrmEmpRows.length;
+      const start = (_hrmEmpPage-1)*_hrmEmpPer, slice = _hrmEmpRows.slice(start, start+_hrmEmpPer);
+      const typMap = {'Engineering':'Permanent','Sales':'Permanent','HR':'Permanent','Finance':'Contract','Operations':'Permanent','Marketing':'Contract','Logistics':'Daily'};
+      tbody.innerHTML = slice.map(e => `<tr onclick="openHRMEmpView('${e.id}')" style="cursor:pointer;">
+        <td><b>${e.id}</b></td>
+        <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:30px;height:30px;border-radius:50%;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:var(--navy);">${e.name.charAt(0)}</div>${e.name}</div></td>
+        <td>${e.department}</td><td>${e.designation}</td>
+        <td>${typMap[e.department]||'Permanent'}</td>
+        <td>${(e._shift || 'General Shift')}</td>
+        <td>₹${fmt(e.salary)}</td>
+        <td><span class="badge badge-blue no-dot">Bank Transfer</span></td>
+        <td><span class="badge ${e.status==='Active'?'badge-green':'badge-amber'} no-dot">${e.status}</span></td>
+        <td><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openHRMEmpView('${e.id}')"><i class="ti ti-eye"></i></button>
+            <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();showToast('info','Edit','Edit form coming soon.')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:var(--tx-3);">No employees found</td></tr>';
+      renderPagination('hrm-emp-pagination', _hrmEmpRows.length, _hrmEmpPage, _hrmEmpPer, p => { _hrmEmpPage=p; renderHRMEmpTable(); });
+    }
+    function openHRMEmpView(id) {
+      const e = DB.employees.find(x => x.id === id); if (!e) return;
+      const kpi = document.getElementById('vemp-kpi');
+      const info = document.getElementById('vemp-info');
+      const title = document.getElementById('vemp-title');
+      if (title) title.textContent = e.name + ' (' + e.id + ')';
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">₹${fmt(e.salary)}</div><div class="kpi-lbl">Monthly Salary</div></div>
+        <div class="kpi-card green"><div class="kpi-val">${e.status}</div><div class="kpi-lbl">Status</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">${new Date(e.joiningDate).getFullYear()}</div><div class="kpi-lbl">Joining Year</div></div>`;
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Employee ID</div><div class="detail-val">${e.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Full Name</div><div class="detail-val">${e.name}</div></div>
+        <div class="detail-row"><div class="detail-label">Department</div><div class="detail-val">${e.department}</div></div>
+        <div class="detail-row"><div class="detail-label">Designation</div><div class="detail-val">${e.designation}</div></div>
+        <div class="detail-row"><div class="detail-label">Email</div><div class="detail-val">${e.email}</div></div>
+        <div class="detail-row"><div class="detail-label">Phone</div><div class="detail-val">${e.phone}</div></div>
+        <div class="detail-row"><div class="detail-label">City</div><div class="detail-val">${e.city}</div></div>
+        <div class="detail-row"><div class="detail-label">Joining Date</div><div class="detail-val">${fmtDate(e.joiningDate)}</div></div>
+        <div class="detail-row"><div class="detail-label">Shift</div><div class="detail-val">${e._shift||'General Shift'}</div></div>
+        <div class="detail-row"><div class="detail-label">Pay Mode</div><div class="detail-val">Bank Transfer</div></div>`;
+      openModal('modal-hrm-emp-view');
+    }
+    function saveHRMEmp() {
+      const name = document.getElementById('hrm-emp-form-name')?.value.trim();
+      const dept = document.getElementById('hrm-emp-form-dept')?.value;
+      const desig = document.getElementById('hrm-emp-form-desig')?.value.trim();
+      const salary = parseFloat(document.getElementById('hrm-emp-form-salary')?.value)||0;
+      if (!name || !dept || !desig || !salary) { showToast('error','Validation','Please fill all required fields.'); return; }
+      const id = 'EMP-'+String(DB.employees.length+1).padStart(3,'0');
+      DB.employees.push({ id, name, department: dept, designation: desig, email: name.toLowerCase().replace(/ /g,'.')+`@company.com`, phone:'9'+Math.floor(Math.random()*900000000+100000000), salary, joiningDate: new Date().toISOString(), status:'Active', city:'Chennai' });
+      closeModal('modal-hrm-emp'); showToast('success','Employee Added',`${name} added successfully.`);
+      filterHRMEmployees();
+    }
+
+    /* ─── HRMS: DEPARTMENTS ─── */
+    function initHRMDepartments() {
+      const tbody = document.getElementById('hrm-dept-tbody');
+      if (tbody) tbody.innerHTML = DB.hrmDepts.map(d => `<tr>
+        <td><b>${d.name}</b></td><td>${d.head}</td><td>${d.count}</td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','Edit','Edit department coming soon.')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('');
+      const dtbody = document.getElementById('hrm-desig-tbody');
+      if (dtbody) dtbody.innerHTML = DB.hrmDesigs.map(d => `<tr>
+        <td><b>${d.title}</b></td><td>${d.dept}</td><td>${d.grade}</td><td>₹${fmt(d.minBasic)}</td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','Edit','Edit designation coming soon.')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('');
+    }
+
+    /* ─── HRMS: SHIFTS ─── */
+    function initHRMShifts() {
+      const kpi = document.getElementById('hrm-shift-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmShifts.length}</div><div class="kpi-lbl">Total Shifts</div></div>
+        <div class="kpi-card green"><div class="kpi-val">${DB.hrmShifts[0].count}</div><div class="kpi-lbl">Morning Shift</div></div>
+        <div class="kpi-card amber"><div class="kpi-val">${DB.hrmShifts[1].count}</div><div class="kpi-lbl">General Shift</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">${DB.hrmShifts[2].count}</div><div class="kpi-lbl">Night Shift</div></div>`;
+      const tbody = document.getElementById('hrm-shift-tbody');
+      if (tbody) tbody.innerHTML = DB.hrmShifts.map(s => `<tr>
+        <td><b>${s.name}</b></td><td>${s.start}</td><td>${s.end}</td>
+        <td>${s.brk} min</td><td>${s.hrs}h</td><td>${s.count}</td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','Edit','Edit shift coming soon.')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('');
+      const sel = document.getElementById('hrm-roster-shift-filter');
+      if (sel && sel.options.length === 1) DB.hrmShifts.forEach(s => sel.add(new Option(s.name, s.name)));
+      renderHRMRoster();
+    }
+    function renderHRMRoster() {
+      const tbody = document.getElementById('hrm-roster-tbody'); if (!tbody) return;
+      const f = document.getElementById('hrm-roster-shift-filter')?.value || '';
+      const emps = DB.employees.filter(e => !f || e._shift === f).slice(0,12);
+      tbody.innerHTML = emps.map(e => `<tr>
+        <td><b>${e.name}</b></td><td>${e.department}</td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#E8F5E9;color:#155724;">${e._shift?.split(' ')[0]||'G'}</span></td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#E8F5E9;color:#155724;">${e._shift?.split(' ')[0]||'G'}</span></td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#E8F5E9;color:#155724;">${e._shift?.split(' ')[0]||'G'}</span></td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#E8F5E9;color:#155724;">${e._shift?.split(' ')[0]||'G'}</span></td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#E8F5E9;color:#155724;">${e._shift?.split(' ')[0]||'G'}</span></td>
+        <td><span style="font-size:10px;padding:2px 5px;border-radius:4px;background:#FFF3CD;color:#856404;">WO</span></td>
+      </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--tx-3);">No employees</td></tr>';
+    }
+
+    function saveHRMShift() {
+      const name = document.getElementById('mshift-name')?.value.trim();
+      const start = document.getElementById('mshift-start')?.value;
+      const end = document.getElementById('mshift-end')?.value;
+      const brk = parseInt(document.getElementById('mshift-break')?.value)||60;
+      const grace = parseInt(document.getElementById('mshift-grace')?.value)||10;
+      const weekoff = document.getElementById('mshift-weekoff')?.value||'Sunday';
+      if (!name || !start || !end) { showToast('error','Validation','Shift name, start and end time are required.'); return; }
+      const [h1,m1] = start.split(':').map(Number);
+      const [h2,m2] = end.split(':').map(Number);
+      let diff = ((h2*60+m2)-(h1*60+m1))/60;
+      if (diff < 0) diff += 24;
+      const hrs = Math.max(0, diff - brk/60);
+      DB.hrmShifts.push({ name, start, end, brk, grace, weekoff, hrs: Math.round(hrs*10)/10, count: 0 });
+      closeModal('modal-hrm-shift');
+      showToast('success','Shift Saved', `"${name}" shift created successfully.`);
+      initHRMShifts();
+    }
+
+    /* ─── HRMS: LEAVE ─── */
+    let _hrmLeavePage = 1, _hrmLeaveRows = [], _hrmLeavePer = 10;
+    function initHRMLeave() {
+      const mn = document.getElementById('hrm-leave-month');
+      if (mn && !mn.value) mn.value = '2026-06';
+      renderHRMLeaveEntry();
+      renderHRMLeaveBalance();
+      renderHRMLeaveTypes();
+      renderHRMHolidays();
+    }
+    function switchLeaveTab(tab, el) {
+      ['entry','balance','types','holidays'].forEach(t => {
+        const p = document.getElementById('hrm-leave-panel-'+t);
+        if (p) p.style.display = t===tab ? '' : 'none';
+      });
+      document.querySelectorAll('.hrm-ltab').forEach(b => {
+        b.style.borderBottomColor = 'transparent'; b.style.color = 'var(--tx-3)';
+      });
+      if (el) { el.style.borderBottomColor = 'var(--navy)'; el.style.color = 'var(--navy)'; }
+    }
+    function renderHRMLeaveEntry() {
+      const month = document.getElementById('hrm-leave-month')?.value || '';
+      const statusF = document.getElementById('hrm-leave-status-filter')?.value || '';
+      _hrmLeaveRows = DB.hrmLeaves.filter(l =>
+        (!month || l.from.startsWith(month)) && (!statusF || l.status === statusF)
+      );
+      _hrmLeavePage = 1; _renderHRMLeaveTable();
+    }
+    function _renderHRMLeaveTable() {
+      const tbody = document.getElementById('hrm-leave-tbody'); if (!tbody) return;
+      const slice = _hrmLeaveRows.slice((_hrmLeavePage-1)*_hrmLeavePer, _hrmLeavePage*_hrmLeavePer);
+      const bCls = {Approved:'badge-green',Pending:'badge-amber',Rejected:'badge-red'};
+      tbody.innerHTML = slice.map(l => `<tr>
+        <td><b>${l.id}</b></td><td>${l.empName}</td><td>${l.dept}</td><td>${l.type}</td>
+        <td>${fmtDate(l.from)}</td><td>${fmtDate(l.to)}</td><td>${l.days}</td>
+        <td>${l.remarks}</td>
+        <td><span class="badge ${bCls[l.status]||'badge-outline'} no-dot">${l.status}</span></td>
+        <td>${l.status==='Pending'?`<button class="btn btn-primary btn-sm" onclick="approveLeave('${l.id}')">Approve</button>`:''}</td>
+      </tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:var(--tx-3);">No records</td></tr>';
+      renderPagination('hrm-leave-pagination', _hrmLeaveRows.length, _hrmLeavePage, _hrmLeavePer, p => { _hrmLeavePage=p; _renderHRMLeaveTable(); });
+    }
+    function approveLeave(id) {
+      const l = DB.hrmLeaves.find(x => x.id === id);
+      if (l) { l.status = 'Approved'; showToast('success','Leave Approved',`${l.empName}s leave approved.`); renderHRMLeaveEntry(); }
+    }
+    function renderHRMLeaveBalance() {
+      const tbody = document.getElementById('hrm-balance-tbody'); if (!tbody) return;
+      tbody.innerHTML = DB.employees.slice(0,15).flatMap(e =>
+        DB.hrmLeaveTypes.map(lt => {
+          const used = DB.hrmLeaves.filter(l => l.empId===e.id && l.type===lt.name && l.status==='Approved').reduce((s,l)=>s+l.days,0);
+          const bal = lt.days - used;
+          return `<tr><td>${e.id}</td><td>${e.name}</td><td>${e.department}</td><td>${lt.name}</td>
+            <td>${lt.days}</td><td>${used}</td><td><b style="color:${bal<3?'var(--red)':'var(--green)'};">${bal}</b></td></tr>`;
+        })
+      ).slice(0,40).join('');
+    }
+    function renderHRMLeaveTypes() {
+      const tbody = document.getElementById('hrm-leavetype-tbody'); if (!tbody) return;
+      tbody.innerHTML = DB.hrmLeaveTypes.map(lt => `<tr>
+        <td><b>${lt.name}</b></td><td>${lt.code}</td><td>${lt.days}</td>
+        <td><span class="badge ${lt.paid?'badge-green':'badge-outline'} no-dot">${lt.paid?'Paid':'Unpaid'}</span></td>
+        <td><span class="badge ${lt.carry?'badge-blue':'badge-outline'} no-dot">${lt.carry?'Yes':'No'}</span></td>
+        <td>${lt.accrual}</td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','Edit','Edit leave type coming soon.')"><i class="ti ti-edit"></i></button></td>
+      </tr>`).join('');
+    }
+    function renderHRMHolidays() {
+      const tbody = document.getElementById('hrm-holiday-tbody'); if (!tbody) return;
+      tbody.innerHTML = DB.hrmHolidays.map(h => `<tr>
+        <td><b>${h.name}</b></td><td>${fmtDate(h.date)}</td><td>${h.day}</td>
+        <td><span class="badge badge-blue no-dot">${h.type}</span></td>
+      </tr>`).join('');
+    }
+    function saveHRMLeaveEntry() {
+      const empId = document.getElementById('hrm-leave-emp')?.value;
+      const type = document.getElementById('hrm-leave-type')?.value;
+      const from = document.getElementById('hrm-leave-from')?.value;
+      const to = document.getElementById('hrm-leave-to')?.value;
+      if (!empId || !type || !from || !to) { showToast('error','Validation','Fill all fields.'); return; }
+      const emp = DB.employees.find(e => e.id===empId);
+      const days = Math.max(1, Math.round((new Date(to)-new Date(from))/(1000*86400))+1);
+      const id = 'LV-'+String(DB.hrmLeaves.length+1).padStart(3,'0');
+      DB.hrmLeaves.push({ id, empId, empName:emp?.name||empId, dept:emp?.department||'', type, from, to, days, remarks:'', status:'Pending' });
+      closeModal('modal-hrm-leave-entry'); showToast('success','Leave Applied','Leave request submitted for approval.');
+      renderHRMLeaveEntry();
+    }
+
+    /* ─── HRMS: ALLOWANCE ─── */
+    let _hrmAllowPage = 1, _hrmAllowRows = [], _hrmAllowPer = 10;
+    function initHRMAllowance() {
+      const mn = document.getElementById('hrm-allow-month');
+      if (mn && !mn.value) mn.value = '2026-06';
+      const totalAllow = DB.hrmAllowances.filter(a=>a.type==='Allowance').reduce((s,a)=>s+a.amount,0);
+      const totalDeduct = DB.hrmAllowances.filter(a=>a.type==='Deduction').reduce((s,a)=>s+a.amount,0);
+      const kpi = document.getElementById('hrm-allow-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmAllowances.length}</div><div class="kpi-lbl">Total Entries</div></div>
+        <div class="kpi-card green"><div class="kpi-val">₹${fmt(totalAllow)}</div><div class="kpi-lbl">Total Allowances</div></div>
+        <div class="kpi-card red"><div class="kpi-val">₹${fmt(totalDeduct)}</div><div class="kpi-lbl">Total Deductions</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">₹${fmt(totalAllow-totalDeduct)}</div><div class="kpi-lbl">Net Impact</div></div>`;
+      filterHRMAllowance();
+    }
+    function filterHRMAllowance() {
+      const month = document.getElementById('hrm-allow-month')?.value || '';
+      const typeF = document.getElementById('hrm-allow-type-filter')?.value || '';
+      _hrmAllowRows = DB.hrmAllowances.filter(a =>
+        (!month || a.date.startsWith(month)) && (!typeF || a.type === typeF)
+      );
+      _hrmAllowPage = 1; _renderHRMAllowTable();
+    }
+    function _renderHRMAllowTable() {
+      const tbody = document.getElementById('hrm-allow-tbody'); if (!tbody) return;
+      const slice = _hrmAllowRows.slice((_hrmAllowPage-1)*_hrmAllowPer, _hrmAllowPage*_hrmAllowPer);
+      tbody.innerHTML = slice.map(a => `<tr>
+        <td>${fmtDate(a.date)}</td><td>${a.empId}</td><td>${a.empName}</td><td>${a.dept}</td>
+        <td><span class="badge ${a.type==='Allowance'?'badge-green':'badge-red'} no-dot">${a.type}</span></td>
+        <td>${a.remarks}</td><td><b>₹${fmt(a.amount)}</b></td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','Delete','Delete coming soon.')"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
+      </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--tx-3);">No records</td></tr>';
+      renderPagination('hrm-allow-pagination', _hrmAllowRows.length, _hrmAllowPage, _hrmAllowPer, p => { _hrmAllowPage=p; _renderHRMAllowTable(); });
+    }
+    function saveHRMAllowance() {
+      const empId = document.getElementById('hrm-allow-emp')?.value;
+      const type = document.getElementById('hrm-allow-type')?.value;
+      const remarks = document.getElementById('hrm-allow-remarks')?.value.trim();
+      const amount = parseFloat(document.getElementById('hrm-allow-amount')?.value)||0;
+      if (!empId || !remarks || !amount) { showToast('error','Validation','Fill all fields.'); return; }
+      const emp = DB.employees.find(e => e.id===empId);
+      DB.hrmAllowances.push({ id:'AD-'+String(DB.hrmAllowances.length+1).padStart(3,'0'), date:new Date().toISOString().split('T')[0], empId, empName:emp?.name||empId, dept:emp?.department||'', type, remarks, amount });
+      closeModal('modal-hrm-allowance'); showToast('success','Entry Saved','Allowance/Deduction entry added.');
+      filterHRMAllowance();
+    }
+
+    /* ─── HRMS: PROMOTION ─── */
+    function initHRMPromotion() {
+      const active = DB.employees.filter(e=>e.status==='Active').length;
+      const avgInc = DB.hrmPromos.length ? DB.hrmPromos.reduce((s,p)=>s+p.pct,0)/DB.hrmPromos.length : 0;
+      const kpi = document.getElementById('hrm-promo-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmPromos.length}</div><div class="kpi-lbl">Promotions (YTD)</div></div>
+        <div class="kpi-card green"><div class="kpi-val">${avgInc.toFixed(1)}%</div><div class="kpi-lbl">Avg Increment</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">₹${(DB.hrmPromos.reduce((s,p)=>s+p.newBasic,0)/(DB.hrmPromos.length||1)/1000).toFixed(0)}K</div><div class="kpi-lbl">Avg New Basic</div></div>
+        <div class="kpi-card amber"><div class="kpi-val">${active}</div><div class="kpi-lbl">Active Employees</div></div>`;
+      const tbody = document.getElementById('hrm-promo-tbody');
+      if (tbody) tbody.innerHTML = DB.hrmPromos.map(p => `<tr>
+        <td><b>${p.empId}</b></td><td>${p.empName}</td>
+        <td>${p.fromDesig}</td><td><b>${p.toDesig}</b></td>
+        <td>${fmtDate(p.effective)}</td>
+        <td>₹${fmt(p.oldBasic)}</td><td>₹${fmt(p.newBasic)}</td>
+        <td><span class="badge badge-green no-dot">+${p.pct}%</span></td>
+        <td>${p.remarks}</td>
+      </tr>`).join('');
+    }
+
+    /* ─── HRMS: LOANS ─── */
+    let _hrmLoanPage = 1, _hrmLoanRows = [], _hrmLoanPer = 10;
+    function initHRMLoans() {
+      const totalPrincipal = DB.hrmLoans.reduce((s,l)=>s+l.principal,0);
+      const outstanding = DB.hrmLoans.filter(l=>l.status==='Active').reduce((s,l)=>s+l.outstanding,0);
+      const kpi = document.getElementById('hrm-loan-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmLoans.length}</div><div class="kpi-lbl">Total Loans</div></div>
+        <div class="kpi-card amber"><div class="kpi-val">${DB.hrmLoans.filter(l=>l.status==='Active').length}</div><div class="kpi-lbl">Active</div></div>
+        <div class="kpi-card red"><div class="kpi-val">₹${(outstanding/100000).toFixed(1)}L</div><div class="kpi-lbl">Outstanding</div></div>
+        <div class="kpi-card green"><div class="kpi-val">₹${(totalPrincipal/100000).toFixed(1)}L</div><div class="kpi-lbl">Total Disbursed</div></div>`;
+      filterHRMLoans();
+    }
+    function filterHRMLoans() {
+      const q = (document.getElementById('hrm-loan-search')?.value||'').toLowerCase();
+      const status = document.getElementById('hrm-loan-status-filter')?.value||'';
+      _hrmLoanRows = DB.hrmLoans.filter(l =>
+        (!q || l.empName.toLowerCase().includes(q)) && (!status || l.status===status)
+      );
+      _hrmLoanPage=1; _renderHRMLoanTable();
+    }
+    function _renderHRMLoanTable() {
+      const tbody = document.getElementById('hrm-loan-tbody'); if (!tbody) return;
+      const slice = _hrmLoanRows.slice((_hrmLoanPage-1)*_hrmLoanPer, _hrmLoanPage*_hrmLoanPer);
+      const bCls = {Active:'badge-green',Pending:'badge-amber',Closed:'badge-outline'};
+      tbody.innerHTML = slice.map(l => `<tr>
+        <td><b>${l.id}</b></td><td>${l.empName}</td><td>${l.type}</td>
+        <td>₹${fmt(l.principal)}</td>
+        <td><b style="color:var(--red);">₹${fmt(l.outstanding)}</b></td>
+        <td>₹${fmt(l.emi)}</td><td>${fmtDate(l.start)}</td>
+        <td><span class="badge ${bCls[l.status]||'badge-outline'} no-dot">${l.status}</span></td>
+        <td><button class="btn btn-outline btn-sm" onclick="showToast('info','View','Loan schedule coming soon.')"><i class="ti ti-eye"></i></button></td>
+      </tr>`).join('') || '<tr><td colspan="9" style="text-align:center;color:var(--tx-3);">No loans</td></tr>';
+      renderPagination('hrm-loan-pagination', _hrmLoanRows.length, _hrmLoanPage, _hrmLoanPer, p => { _hrmLoanPage=p; _renderHRMLoanTable(); });
+    }
+    function saveHRMLoan() {
+      const empId = document.getElementById('hrm-loan-emp')?.value;
+      const type = document.getElementById('hrm-loan-type')?.value;
+      const principal = parseFloat(document.getElementById('hrm-loan-amount')?.value)||0;
+      if (!empId || !principal) { showToast('error','Validation','Fill all required fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      const emi = Math.round(principal/12);
+      DB.hrmLoans.push({ id:'LN-'+String(DB.hrmLoans.length+1).padStart(3,'0'), empId, empName:emp?.name||empId, type, principal, outstanding:principal, emi, start:new Date().toISOString().split('T')[0], status:'Pending' });
+      closeModal('modal-hrm-loan'); showToast('success','Loan Applied','Loan request submitted.');
+      filterHRMLoans();
+    }
+
+    /* ─── HRMS: INCENTIVES ─── */
+    let _hrmIncPage = 1, _hrmIncRows = [], _hrmIncPer = 10;
+    function initHRMIncentives() {
+      const totalPayout = DB.hrmIncentives.filter(i=>i.status==='Approved').reduce((s,i)=>s+i.amount,0);
+      const kpi = document.getElementById('hrm-incentive-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmIncentives.length}</div><div class="kpi-lbl">Total Records</div></div>
+        <div class="kpi-card green"><div class="kpi-val">₹${fmt(totalPayout)}</div><div class="kpi-lbl">Approved Payout</div></div>
+        <div class="kpi-card amber"><div class="kpi-val">${DB.hrmIncentives.filter(i=>i.status==='Pending').length}</div><div class="kpi-lbl">Pending Approval</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">${DB.hrmIncentives.filter(i=>i.rating==='Excellent').length}</div><div class="kpi-lbl">Excellent Ratings</div></div>`;
+      const mn = document.getElementById('hrm-incentive-month');
+      if (mn && !mn.value) mn.value = '2026-05';
+      filterHRMIncentives();
+    }
+    function filterHRMIncentives() {
+      const month = document.getElementById('hrm-incentive-month')?.value||'';
+      _hrmIncRows = DB.hrmIncentives.filter(i => !month || i.month===month);
+      _hrmIncPage=1; _renderHRMIncTable();
+    }
+    function _renderHRMIncTable() {
+      const tbody = document.getElementById('hrm-incentive-tbody'); if (!tbody) return;
+      const slice = _hrmIncRows.slice((_hrmIncPage-1)*_hrmIncPer, _hrmIncPage*_hrmIncPer);
+      const ratingColor = {Excellent:'badge-green',Good:'badge-blue',Average:'badge-amber'};
+      tbody.innerHTML = slice.map((i,idx) => `<tr>
+        <td>${i.month}</td><td>${i.empName}</td><td>${i.dept}</td>
+        <td><span class="badge ${ratingColor[i.rating]||'badge-outline'} no-dot">${i.rating}</span></td>
+        <td><b>₹${fmt(i.amount)}</b></td><td>${i.remarks}</td>
+        <td><span class="badge ${i.status==='Approved'?'badge-green':'badge-amber'} no-dot">${i.status}</span></td>
+        <td>${i.status==='Pending'?`<button class="btn btn-primary btn-sm" onclick="approveIncentive(${(_hrmIncPage-1)*_hrmIncPer+idx})">Approve</button>`:''}</td>
+      </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--tx-3);">No records</td></tr>';
+      renderPagination('hrm-incentive-pagination', _hrmIncRows.length, _hrmIncPage, _hrmIncPer, p => { _hrmIncPage=p; _renderHRMIncTable(); });
+    }
+    function approveIncentive(idx) {
+      if (DB.hrmIncentives[idx]) { DB.hrmIncentives[idx].status='Approved'; showToast('success','Approved','Incentive approved.'); filterHRMIncentives(); }
+    }
+    function saveHRMIncentive() {
+      const empId = document.getElementById('hrm-inc-emp')?.value;
+      const rating = document.getElementById('hrm-inc-rating')?.value;
+      const amount = parseFloat(document.getElementById('hrm-inc-amount')?.value)||0;
+      const remarks = document.getElementById('hrm-inc-remarks')?.value.trim();
+      if (!empId || !rating || !amount) { showToast('error','Validation','Fill all fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      const mn = document.getElementById('hrm-incentive-month')?.value||'2026-06';
+      DB.hrmIncentives.push({ month:mn, empId, empName:emp?.name||empId, dept:emp?.department||'', rating, amount, remarks, status:'Pending' });
+      closeModal('modal-hrm-incentive'); showToast('success','Incentive Added','Record saved for approval.');
+      filterHRMIncentives();
+    }
+
+    /* ─── HRMS: REPORTS ─── */
+    function initHRMReports() {
+      const mn = document.getElementById('hrm-rpt-month');
+      if (mn && !mn.value) mn.value = '2026-06';
+    }
+    function generateHRMReport(type) {
+      const labels = {'pay-register':'Pay Register','attendance-register':'Attendance Register','bank-statement':'Bank Statement','payslip':'Payslip','statutory':'Statutory Deductions','loan-statement':'Loan Statement'};
+      const mn = document.getElementById('hrm-rpt-month')?.value||'2026-06';
+      showToast('success', labels[type]||type, `Report for ${mn} is being generated. Download will start shortly.`);
     }
 
     /* ─── CRM 360 & JOURNEY ─── */
@@ -21820,7 +23387,126 @@
       msgs.scrollTop = msgs.scrollHeight;
     }, 900);
   }
-</script>
+
+    /* ─── HRMS: MODAL SAVE ALIASES & HELPERS ─── */
+    function populateEmpDropdowns() {
+      ['ml-emp','mad-emp','mpr-emp','mln-emp','minc-emp','memp-dept'].forEach(id => {
+        const sel = document.getElementById(id);
+        if (!sel) return;
+        if (id === 'memp-dept') {
+          if (sel.options.length > 1) return;
+          ['Engineering','Sales','HR','Finance','Operations','Marketing','Logistics'].forEach(d => sel.add(new Option(d,d)));
+        } else {
+          if (sel.options.length > 1) return;
+          DB.employees.forEach(e => sel.add(new Option(e.name, e.id)));
+        }
+      });
+      const meDesc = document.getElementById('memp-desig');
+      if (meDesc && meDesc.options.length <= 1) {
+        ['Manager','Senior Engineer','Engineer','Executive','Lead','Analyst','Supervisor'].forEach(d => meDesc.add(new Option(d,d)));
+      }
+    }
+
+    function saveHRMEmployee() {
+      const fname = document.getElementById('memp-fname')?.value.trim();
+      const lname = document.getElementById('memp-lname')?.value.trim();
+      const dept = document.getElementById('memp-dept')?.value;
+      const desig = document.getElementById('memp-desig')?.value;
+      const basic = parseFloat(document.getElementById('memp-basic')?.value)||0;
+      const name = (fname+' '+lname).trim();
+      if (!name || name.length < 2 || !dept || !desig || !basic) { showToast('error','Validation','Fill all required fields.'); return; }
+      const id = 'EMP-'+String(DB.employees.length+1).padStart(3,'0');
+      const phone = document.getElementById('memp-phone')?.value || ('9'+Math.floor(Math.random()*900000000+100000000));
+      const email = document.getElementById('memp-email')?.value || (fname.toLowerCase()+'.'+lname.toLowerCase()+'@company.com');
+      const shift = document.getElementById('memp-shift')?.value || 'General Shift';
+      const status = document.getElementById('memp-status')?.value || 'Active';
+      const doj = document.getElementById('memp-doj')?.value || new Date().toISOString();
+      DB.employees.push({ id, name, department:dept, designation:desig, email, phone, salary:basic, joiningDate:doj, status, city:'Chennai', _shift:shift });
+      closeModal('modal-hrm-emp'); showToast('success','Employee Added',`${name} added successfully.`);
+      filterHRMEmployees();
+    }
+
+    function saveLeaveEntry() {
+      const empId = document.getElementById('ml-emp')?.value;
+      const type = document.getElementById('ml-type')?.value;
+      const from = document.getElementById('ml-from')?.value;
+      const to = document.getElementById('ml-to')?.value;
+      const reason = document.getElementById('ml-reason')?.value.trim();
+      if (!empId || !from || !to) { showToast('error','Validation','Fill all required fields.'); return; }
+      const emp = DB.employees.find(e => e.id===empId);
+      const days = Math.max(1, Math.round((new Date(to)-new Date(from))/(1000*86400))+1);
+      const id = 'LV-'+String(DB.hrmLeaves.length+1).padStart(3,'0');
+      DB.hrmLeaves.push({ id, empId, empName:emp?.name||empId, dept:emp?.department||'', type, from, to, days, remarks:reason||'', status:'Pending' });
+      closeModal('modal-hrm-leave-entry'); showToast('success','Leave Applied','Leave request submitted for approval.');
+      renderHRMLeaveEntry();
+    }
+
+    function saveAllowanceEntry() {
+      const empId = document.getElementById('mad-emp')?.value;
+      const type = document.getElementById('mad-type')?.value;
+      const part = document.getElementById('mad-part')?.value.trim();
+      const amount = parseFloat(document.getElementById('mad-amount')?.value)||0;
+      if (!empId || !part || !amount) { showToast('error','Validation','Fill all required fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      const date = document.getElementById('mad-month')?.value ? document.getElementById('mad-month').value+'-01' : new Date().toISOString().split('T')[0];
+      DB.hrmAllowances.push({ id:'AD-'+String(DB.hrmAllowances.length+1).padStart(3,'0'), date, empId, empName:emp?.name||empId, dept:emp?.department||'', type, remarks:part, amount });
+      closeModal('modal-hrm-allowance'); showToast('success','Entry Saved','Allowance/Deduction entry added.');
+      filterHRMAllowance();
+    }
+
+    function savePromotion() {
+      const empId = document.getElementById('mpr-emp')?.value;
+      const effective = document.getElementById('mpr-date')?.value || new Date().toISOString().split('T')[0];
+      const fromDesig = document.getElementById('mpr-from-desig')?.value.trim();
+      const toDesig = document.getElementById('mpr-to-desig')?.value.trim();
+      const oldBasic = parseFloat(document.getElementById('mpr-old-sal')?.value)||0;
+      const newBasic = parseFloat(document.getElementById('mpr-new-sal')?.value)||0;
+      const remarks = document.getElementById('mpr-remarks')?.value.trim();
+      if (!empId || !toDesig || !newBasic) { showToast('error','Validation','Fill all required fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      const pct = oldBasic ? Math.round(((newBasic-oldBasic)/oldBasic)*100) : 0;
+      DB.hrmPromos.push({ empId, empName:emp?.name||empId, fromDesig:fromDesig||emp?.designation||'', toDesig, effective, oldBasic, newBasic, pct, remarks });
+      closeModal('modal-hrm-promotion'); showToast('success','Saved','Promotion/increment record added.');
+      initHRMPromotion();
+    }
+
+    function saveLoan() {
+      const empId = document.getElementById('mln-emp')?.value;
+      const type = document.getElementById('mln-type')?.value;
+      const principal = parseFloat(document.getElementById('mln-principal')?.value)||0;
+      const emi = parseFloat(document.getElementById('mln-emi')?.value) || Math.round(principal/12);
+      if (!empId || !principal) { showToast('error','Validation','Fill all required fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      const start = document.getElementById('mln-date')?.value || new Date().toISOString().split('T')[0];
+      DB.hrmLoans.push({ id:'LN-'+String(DB.hrmLoans.length+1).padStart(3,'0'), empId, empName:emp?.name||empId, type, principal, outstanding:principal, emi, start, status:'Pending' });
+      closeModal('modal-hrm-loan'); showToast('success','Loan Applied','Loan request submitted.');
+      filterHRMLoans();
+    }
+
+    function saveIncentive() {
+      const empId = document.getElementById('minc-emp')?.value;
+      const rating = document.getElementById('minc-rating')?.value;
+      const amount = parseFloat(document.getElementById('minc-amount')?.value)||0;
+      const remarks = document.getElementById('minc-remarks')?.value.trim();
+      const month = document.getElementById('minc-period')?.value || new Date().toISOString().slice(0,7);
+      if (!empId || !rating || !amount) { showToast('error','Validation','Fill all fields.'); return; }
+      const emp = DB.employees.find(e=>e.id===empId);
+      DB.hrmIncentives.push({ month, empId, empName:emp?.name||empId, dept:emp?.department||'', rating, amount, remarks, status:'Pending' });
+      closeModal('modal-hrm-incentive'); showToast('success','Incentive Added','Record saved for approval.');
+      filterHRMIncentives();
+    }
+
+    /* Populate employee dropdowns whenever HRMS modals are opened */
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('[onclick]');
+      if (!btn) return;
+      const fn = btn.getAttribute('onclick');
+      if (fn && fn.includes("openModal('modal-hrm-")) {
+        setTimeout(populateEmpDropdowns, 50);
+      }
+    });
+
+  </script>
 
 </body>
 
