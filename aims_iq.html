@@ -289,6 +289,14 @@
       padding: 9px;
     }
 
+    .sidebar.collapsed .sb-user {
+      padding: 12px 8px;
+    }
+    .sidebar.collapsed .sb-user-inner {
+      padding: 8px 0;
+      justify-content: center;
+    }
+
     .sidebar.collapsed .nav-icon {
       margin: 0;
     }
@@ -296,10 +304,69 @@
     .sidebar.collapsed .sb-brand {
       justify-content: center;
       padding: 14px 8px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .sidebar.collapsed .sidebar-toggle {
+      display: none !important;
+    }
+
+    .tb-toggle-btn {
+      display: none;
+      margin-right: 12px;
+      background: #0F172A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--tx-3);
+      font-size: 17px;
+      width: 28px; height: 28px; border-radius: 6px;
+      align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .tb-toggle-btn:hover {
+      background: #1A2D45;
+      color: #FFFFFF;
+    }
+    #sidebar.collapsed + .main .tb-toggle-btn {
+      display: flex;
+    }
+
+    .sidebar.collapsed .nav-group {
+      position: relative;
     }
 
     .sidebar.collapsed .sb-sub-group {
       display: none;
+    }
+
+    .sidebar.collapsed .sb-sub-group.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      left: 56px;
+      top: 0;
+      background: linear-gradient(180deg, #060E1E 0%, #0C1A3A 100%);
+      border: 1px solid rgba(100,160,240,0.25);
+      border-radius: 8px;
+      min-width: 200px;
+      z-index: 9999;
+      padding: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      max-height: none !important;
+    }
+
+    .sidebar.collapsed .sb-sub-group.open .nav-text {
+      display: block !important;
+      flex: 1;
+    }
+
+    .sidebar.collapsed .sb-sub-group.open .nav-item {
+      justify-content: flex-start !important;
+      padding: 8px 12px !important;
+    }
+
+    .sidebar.collapsed .sb-sub-group.open .nav-icon {
+      margin-right: 12px !important;
     }
 
     /* Brand / Logo */
@@ -778,8 +845,8 @@
     }
 
     .topbar-search:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(239, 51, 64, .12);
+      border-color: #1479C9;
+      box-shadow: 0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
     .topbar-search i {
@@ -3836,6 +3903,10 @@
       box-shadow:
         0 3px 12px rgba(0,0,0,0.55) inset,
         0 1px 0 rgba(100,160,240,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-right: 12px;
     }
 
     /* ── SIDEBAR LOGO: EMBOSSED BLUE BADGE ── */
@@ -3923,11 +3994,12 @@
 
     /* ── TOPBAR SEARCH: RECESSED FIELD ── */
     .topbar-search {
-      background: linear-gradient(180deg, #B8CEDE 0%, #D4E4F4 100%);
-      border: 1px solid #88AACC;
-      box-shadow:
-        0 2px 6px rgba(10,40,90,0.18) inset,
-        0 1px 0 rgba(255,255,255,0.55);
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(136, 170, 204, 0.3);
+      box-shadow: inset 0 2px 4px rgba(10, 40, 90, 0.04);
+      border-radius: 8px;
+      width: 450px;
+      margin-left: 0;
     }
     .topbar-search input { color: #0A1830; }
     .topbar-search input::placeholder { color: #7A9AB8; }
@@ -4231,15 +4303,43 @@
 
       <!-- Brand / Logo -->
       <div class="sb-brand">
-        <div class="sb-logo">AI</div>
-        <div>
-          <div class="sb-brand-name">AIMS IQ</div>
-          <div class="sb-brand-tag">Enterprise ERP</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="sb-logo">AI</div>
+          <div>
+            <div class="sb-brand-name">AIMS IQ</div>
+            <div class="sb-brand-tag">Enterprise ERP</div>
+          </div>
         </div>
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--tx-3); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">
+          <i class="ti ti-layout-sidebar-left-collapse" id="sb-toggle-icon"></i>
+        </button>
       </div>
 
       <!-- Navigation -->
       <nav class="sb-nav" id="sb-nav">
+
+        <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard', this)">
+          <i class="ti ti-layout-dashboard nav-icon"></i>
+          <span class="nav-text">Dashboard</span>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-parent" onclick="toggleGroup(this)">
+            <i class="ti ti-package nav-icon"></i>
+            <span class="nav-text">Masters</span>
+            <i class="ti ti-chevron-right nav-arrow"></i>
+          </div>
+          <div class="sb-sub-group">
+            <div class="nav-item" data-page="products" onclick="navigate('products',this)"><i class="ti ti-box nav-icon"></i><span class="nav-text">Products</span></div>
+            <div class="nav-item" data-page="categories" onclick="navigate('categories',this)"><i class="ti ti-category nav-icon"></i><span class="nav-text">Categories</span></div>
+            <div class="nav-item" data-page="brands" onclick="navigate('brands',this)"><i class="ti ti-badge-tm nav-icon"></i><span class="nav-text">Brands</span></div>
+            <div class="nav-item" data-page="units" onclick="navigate('units',this)"><i class="ti ti-ruler-2 nav-icon"></i><span class="nav-text">Units</span></div>
+            <div class="nav-item" data-page="warehouses" onclick="navigate('warehouses',this)"><i class="ti ti-building-warehouse nav-icon"></i><span class="nav-text">Warehouses</span></div>
+            <div class="nav-item" data-page="customers" onclick="navigate('customers',this)"><i class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
+            <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
+            <div class="nav-item" data-page="employees" onclick="navigate('employees',this)"><i class="ti ti-id-badge nav-icon"></i><span class="nav-text">Employees</span></div>
+          </div>
+        </div>
 
         <!-- ── CRM ── -->
         <div class="nav-group">
@@ -4631,6 +4731,36 @@
         </div>
 
 
+        <!-- ── REPORTS ── -->
+        <div class="nav-group">
+          <div class="nav-parent" onclick="toggleGroup(this)">
+            <i class="ti ti-chart-pie nav-icon"></i>
+            <span class="nav-text">Reports</span>
+            <i class="ti ti-chevron-right nav-arrow"></i>
+          </div>
+          <div class="sb-sub-group">
+            <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
+            <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
+            <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
+            <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
+            <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
+          </div>
+        </div>
+
+        <!-- ── AI ASSISTANT ── -->
+        <div class="nav-group">
+          <div class="nav-parent" onclick="toggleGroup(this)">
+            <i class="ti ti-brain nav-icon"></i>
+            <span class="nav-text">AI Assistant</span>
+            <i class="ti ti-chevron-right nav-arrow"></i>
+          </div>
+          <div class="sb-sub-group">
+            <div class="nav-item" data-page="ai-assistant" onclick="navigate('ai-assistant',this)"><i class="ti ti-message-chatbot nav-icon"></i><span class="nav-text">Assistant</span></div>
+            <div class="nav-item" data-page="ai-dashboard" onclick="navigate('ai-dashboard',this)"><i class="ti ti-cpu nav-icon"></i><span class="nav-text">AI Dashboard</span></div>
+            <div class="nav-item" data-page="ai-insights" onclick="navigate('ai-insights',this)"><i class="ti ti-bulb nav-icon"></i><span class="nav-text">AI Insights</span></div>
+          </div>
+        </div>
+
         <!-- Bottom spacer -->
         <div style="height:16px;"></div>
 
@@ -4665,85 +4795,18 @@
       <!-- ── TOPBAR ── -->
       <header class="topbar" id="topbar">
 
-        <div style="display: flex; align-items: center; margin-right: 4px;">
-          <!-- Sidebar toggle -->
-          <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
-            <i class="ti ti-layout-sidebar-left-collapse" id="sb-toggle-icon"></i>
-          </button>
-        </div>
+        <button class="tb-toggle-btn" onclick="toggleSidebar()" title="Expand sidebar">
+          <i class="ti ti-layout-sidebar-left-collapse"></i>
+        </button>
 
-        <!-- Global Navigation -->
-        <div class="header-nav">
-          <div class="hn-item active" data-hn="dashboard" onclick="navigate('dashboard', this)">
-            <i class="ti ti-layout-dashboard"></i> Dashboard
-          </div>
-
-          <div class="hn-group">
-            <div class="hn-item" data-hn="masters">
-              <i class="ti ti-package"></i> Masters <i class="ti ti-chevron-down"
-                style="font-size:10px; opacity:0.5;"></i>
-            </div>
-            <div class="hn-dropdown">
-              <div class="hnd-item" data-page="products" onclick="navigate('products', this)"><i class="ti ti-box"></i>
-                Products</div>
-              <div class="hnd-item" data-page="categories" onclick="navigate('categories', this)"><i
-                  class="ti ti-category"></i> Categories</div>
-              <div class="hnd-item" data-page="brands" data-page="brands" onclick="navigate('brands', this)"><i
-                  class="ti ti-badge-tm"></i> Brands</div>
-              <div class="hnd-item" data-page="units" onclick="navigate('units', this)"><i class="ti ti-ruler-2"></i>
-                Units</div>
-              <div class="divider" style="margin:4px 0;"></div>
-              <div class="hnd-item" data-page="warehouses" onclick="navigate('warehouses', this)"><i
-                  class="ti ti-building-warehouse"></i> Warehouses</div>
-              <div class="hnd-item" data-page="customers" onclick="navigate('customers', this)"><i
-                  class="ti ti-users"></i> Customers</div>
-              <div class="hnd-item" data-page="suppliers" onclick="navigate('suppliers', this)"><i
-                  class="ti ti-truck-delivery"></i> Suppliers</div>
-              <div class="hnd-item" data-page="employees" onclick="navigate('employees', this)"><i
-                  class="ti ti-id-badge"></i> Employees</div>
-            </div>
-          </div>
-
-          <div class="hn-group">
-            <div class="hn-item" data-hn="reports">
-              <i class="ti ti-chart-pie"></i> Reports <i class="ti ti-chevron-down"
-                style="font-size:10px; opacity:0.5;"></i>
-            </div>
-            <div class="hn-dropdown">
-              <div class="hnd-item" data-page="rep-sales" onclick="navigate('rep-sales', this)"><i
-                  class="ti ti-trending-up"></i> Sales Reports</div>
-              <div class="hnd-item" data-page="rep-purchase" onclick="navigate('rep-purchase', this)"><i
-                  class="ti ti-shopping-cart"></i> Purchase Reports</div>
-              <div class="hnd-item" data-page="rep-inventory" onclick="navigate('rep-inventory', this)"><i
-                  class="ti ti-stack-2"></i> Inventory Reports</div>
-              <div class="hnd-item" data-page="rep-financial" onclick="navigate('rep-financial', this)"><i
-                  class="ti ti-report-money"></i> Financial Reports</div>
-              <div class="hnd-item" data-page="rep-productivity" onclick="navigate('rep-productivity', this)"><i
-                  class="ti ti-chart-arrows-vertical"></i> Productivity</div>
-            </div>
-          </div>
-
-          <div class="hn-group">
-            <div class="hn-item" data-hn="ai" style="color:var(--accent);">
-              <i class="ti ti-brain"></i> AI Assistant <i class="ti ti-chevron-down"
-                style="font-size:10px; opacity:0.5;"></i>
-            </div>
-            <div class="hn-dropdown">
-              <div class="hnd-item" data-page="ai-assistant" onclick="navigate('ai-assistant', this)"><i
-                  class="ti ti-message-chatbot"></i> Assistant</div>
-              <div class="hnd-item" data-page="ai-dashboard" onclick="navigate('ai-dashboard', this)"><i
-                  class="ti ti-cpu"></i> AI Dashboard</div>
-              <div class="hnd-item" data-page="ai-insights" onclick="navigate('ai-insights', this)"><i
-                  class="ti ti-bulb"></i> AI Insights</div>
-            </div>
-          </div>
-        </div>
 
         <!-- Search -->
         <div class="topbar-search">
           <i class="ti ti-search"></i>
           <input type="text" placeholder="Search anything…" id="global-search" oninput="globalSearch(this.value)" />
         </div>
+
+        <div style="flex: 1;"></div>
 
         <!-- Right cluster -->
         <div class="tb-right">
