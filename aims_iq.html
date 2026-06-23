@@ -169,6 +169,248 @@
       --dur-slow: 0.3s;
     }
 
+    /* ── INTELLIGENCE MODULE STYLES ── */
+    .stat-mini {
+      flex: 1;
+      border: 1px solid var(--card-border);
+      border-radius: 9px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+    }
+
+    .stat-mini-ico {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .stat-mini-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--tx-1);
+      line-height: 1;
+    }
+
+    .stat-mini-lbl {
+      font-size: 10px;
+      color: var(--tx-2);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-weight: 600;
+    }
+
+    .ai-hint-bar {
+      background: linear-gradient(90deg, #FDF4FF 0%, #F5F3FF 100%);
+      border: 1px solid #E9D5FF;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: #6B21A8;
+      font-size: 12px;
+    }
+
+    .ai-hint-bar i {
+      font-size: 18px;
+      color: #9333EA;
+    }
+
+    .cluster-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .cluster-card {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px;
+      border-top: 4px solid transparent;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .cluster-card:hover {
+      box-shadow: var(--card-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .cluster-card.champions {
+      border-top-color: #C9A84C;
+    }
+
+    .cluster-card.loyal {
+      border-top-color: #378ADD;
+    }
+
+    .cluster-card.need-att {
+      border-top-color: #F59E0B;
+    }
+
+    .cluster-card.at-risk {
+      border-top-color: #E24B4A;
+    }
+
+    .cluster-card.lost {
+      border-top-color: #9aaabb;
+    }
+
+    .cluster-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tx-1);
+      margin-bottom: 4px;
+    }
+
+    .cluster-count {
+      font-size: 11px;
+      color: var(--tx-2);
+      margin-bottom: 12px;
+    }
+
+    .cluster-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--tx-1);
+      margin-bottom: 4px;
+    }
+
+    .cluster-sub {
+      font-size: 11px;
+      color: var(--tx-2);
+    }
+
+    .cluster-risk {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .risk-low {
+      background: #E1F5EE;
+      color: #0F6E56;
+    }
+
+    .risk-med {
+      background: #FAEEDA;
+      color: #854F0B;
+    }
+
+    .risk-high {
+      background: #FCEBEB;
+      color: #A32D2D;
+    }
+
+    .bubble-arena {
+      position: relative;
+      height: 320px;
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      user-select: none;
+      text-align: center;
+      line-height: 1.3;
+      padding: 6px;
+    }
+
+    .bubble:hover {
+      transform: scale(1.07);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .18);
+      z-index: 10;
+    }
+
+    .score-h {
+      background: #E1F5EE;
+      color: #0F6E56;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .score-m {
+      background: #FAEEDA;
+      color: #854F0B;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .score-l {
+      background: #FCEBEB;
+      color: #A32D2D;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Drawer Styles for C360 */
+    .c360-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s;
+    }
+
+    .c360-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .c360-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 400px;
+      background: #fff;
+      z-index: 1001;
+      transform: translateX(100%);
+      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 24px;
+      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .c360-drawer.open {
+      transform: translateX(0);
+    }
+
     /* ── RESET ── */
     *,
     *::before,
@@ -553,6 +795,11 @@
       color: #fff;
     }
 
+    .nav-badge.purple {
+      background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+      color: #fff;
+    }
+
     /* Sub group (children) */
     .sb-sub-group {
       overflow: hidden;
@@ -593,9 +840,17 @@
       filter: drop-shadow(0 1px 3px rgba(56, 189, 248, 0.3));
     }
 
-    .sb-sub-group .nav-item:hover .nav-icon {
-      filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
-      transform: scale(1.1);
+    .sb-sub-sub-group .nav-item {
+      padding: 6px 10px 6px 36px !important;
+      font-size: 12px !important;
+    }
+
+    .sb-sub-sub-group .nav-icon {
+      font-size: 14px !important;
+    }
+
+    .nav-parent-inner.open .nav-arrow {
+      transform: rotate(90deg);
     }
 
     .sb-sub-group .nav-item.active {
@@ -4412,6 +4667,25 @@
     .card-action:hover {
       color: #0A4D8C;
     }
+
+    .atp-sku-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--br-2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .atp-sku-item:hover {
+      background: var(--bg-2);
+    }
+
+    .atp-sku-item.active {
+      background: var(--blue-gl);
+      border-left: 3px solid var(--blue);
+    }
   </style>
 </head>
 
@@ -4449,6 +4723,7 @@
           <span class="nav-text">Dashboard</span>
         </div>
 
+
         <div class="nav-group">
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-package nav-icon"></i>
@@ -4473,34 +4748,32 @@
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-heart-handshake nav-icon"></i>
             <span class="nav-text">CRM</span>
-            <span class="nav-badge gold" id="nb-leads">18</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
+            <div class="nav-item" data-page="atp" onclick="navigate('atp',this)">
+              <i class="ti ti-circle-check nav-icon"></i>
+              <span class="nav-text">Available to Promise</span>
+            </div>
             <div class="nav-item" data-page="crm-leads" onclick="navigate('crm-leads',this)">
               <i class="ti ti-target nav-icon"></i>
               <span class="nav-text">Leads</span>
-              <span class="nav-badge gold">18</span>
             </div>
             <div class="nav-item" data-page="crm-opportunities" onclick="navigate('crm-opportunities',this)">
               <i class="ti ti-diamond nav-icon"></i>
               <span class="nav-text">Opportunities</span>
             </div>
 
-            <div class="nav-item" data-page="crm-cust-360" onclick="navigate('crm-cust-360',this)">
-              <i class="ti ti-user-circle nav-icon"></i>
-              <span class="nav-text">Customer 360°</span>
-            </div>
-
+            <!-- Intelligence Items (Flattened) -->
           </div>
         </div>
+
 
         <!-- ── SALES ── -->
         <div class="nav-group">
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-coin nav-icon"></i>
             <span class="nav-text">Sales</span>
-            <span class="nav-badge green" id="nb-sales">24</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
@@ -4533,7 +4806,6 @@
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-shopping-cart nav-icon"></i>
             <span class="nav-text">Purchase</span>
-            <span class="nav-badge blue" id="nb-po">8</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
@@ -4559,7 +4831,6 @@
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-tools nav-icon"></i>
             <span class="nav-text">Service</span>
-            <span class="nav-badge red" id="nb-tickets">7</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
@@ -4645,7 +4916,6 @@
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-stack-2 nav-icon"></i>
             <span class="nav-text">Inventory</span>
-            <span class="nav-badge red" id="nb-lowstock">12</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
@@ -4675,7 +4945,6 @@
             <div class="nav-item" data-page="inv-lowstock" onclick="navigate('inv-lowstock',this)">
               <i class="ti ti-alert-triangle nav-icon"></i>
               <span class="nav-text">Low Stock Report</span>
-              <span class="nav-badge red">12</span>
             </div>
             <div class="nav-item" data-page="sal-buyback" onclick="navigate('sal-buyback',this)">
               <i class="ti ti-refresh nav-icon"></i>
@@ -4713,14 +4982,12 @@
           <div class="nav-parent" onclick="toggleGroup(this)">
             <i class="ti ti-checks nav-icon"></i>
             <span class="nav-text">Approvals</span>
-            <span class="nav-badge red" id="nb-approvals">5</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
             <div class="nav-item" data-page="sal-margin-approval" onclick="navigate('sal-margin-approval',this)">
               <i class="ti ti-shield-check nav-icon"></i>
               <span class="nav-text">Margin Approval</span>
-              <span class="nav-badge red">2</span>
             </div>
             <div class="nav-item" data-page="sal-adv-approval" onclick="navigate('sal-adv-approval',this)">
               <i class="ti ti-user-check nav-icon"></i>
@@ -4729,12 +4996,10 @@
             <div class="nav-item" data-page="appr-sal-quote" onclick="navigate('appr-sal-quote',this)">
               <i class="ti ti-file-description nav-icon"></i>
               <span class="nav-text">Sales Quote Approval</span>
-              <span class="nav-badge red">3</span>
             </div>
             <div class="nav-item" data-page="appr-amc-quote" onclick="navigate('appr-amc-quote',this)">
               <i class="ti ti-shield-check nav-icon"></i>
               <span class="nav-text">AMC Quote Approval</span>
-              <span class="nav-badge red">2</span>
             </div>
             <div class="nav-item" data-page="appr-po" onclick="navigate('appr-po',this)">
               <i class="ti ti-shopping-cart nav-icon"></i>
@@ -4813,13 +5078,41 @@
                 class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
             <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i
                 class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
-            <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)"><i class="ti ti-tool nav-icon"></i><span class="nav-text">Service Reports</span></div>
+            <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)"><i
+                class="ti ti-tool nav-icon"></i><span class="nav-text">Service Reports</span></div>
             <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i
                 class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
             <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i
                 class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
             <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i
                 class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
+          </div>
+        </div>
+
+        <!-- ── Ai Intelligence ── -->
+        <div class="nav-group">
+          <div class="nav-parent" onclick="toggleGroup(this)">
+            <i class="ti ti-bolt nav-icon"></i>
+            <span class="nav-text">Ai Intelligence</span>
+            <i class="ti ti-chevron-right nav-arrow"></i>
+          </div>
+          <div class="sb-sub-group">
+            <div class="nav-item" data-page="crm-c360" onclick="navigate('crm-c360',this)">
+              <i class="ti ti-chart-bubble nav-icon"></i>
+              <span class="nav-text">Customer 360°</span>
+            </div>
+            <div class="nav-item" data-page="crm-personas" onclick="navigate('crm-personas',this)">
+              <i class="ti ti-chart-pie-2 nav-icon"></i>
+              <span class="nav-text">Personas</span>
+            </div>
+            <div class="nav-item" data-page="crm-planner" onclick="navigate('crm-planner',this)">
+              <i class="ti ti-calendar-event nav-icon"></i>
+              <span class="nav-text">Visit Planner</span>
+            </div>
+            <div class="nav-item" data-page="crm-assignments" onclick="navigate('crm-assignments',this)">
+              <i class="ti ti-calendar-plus nav-icon"></i>
+              <span class="nav-text">Visit Assignments</span>
+            </div>
           </div>
         </div>
 
@@ -7485,6 +7778,208 @@
                ══════════════════════════════════════════════ -->
 
           <!-- CRM LEADS -->
+          <!-- ── AVAILABLE TO PROMISE ────────────────────── -->
+          <div class="page" id="page-atp">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Available to Promise
+                  <span
+                    style="font-size:10px;font-weight:700;background:#EBF5FF;color:#1D4ED8;padding:2px 8px;border-radius:10px;margin-left:8px;display:inline-flex;align-items:center;gap:4px;"><i
+                      class="ti ti-database" style="font-size:10px;"></i> Tally · Live</span>
+                </div>
+                <div class="page-sub">Real-time inventory, reservations, pricing & purchase status — SE deal-closing
+                  tool
+                </div>
+              </div>
+              <div class="page-actions">
+                <span id="atp-sync-badge"
+                  style="display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;padding:6px 12px;border-radius:20px;background:#ECFDF5;color:#15803D;border:1px solid #BBF7D0;">
+                  <span
+                    style="width:6px;height:6px;border-radius:50%;background:#16A34A;display:inline-block;box-shadow:0 0 0 2px rgba(22,163,74,0.2);"></span>
+                  Tally · Synced 9:38 AM
+                </span>
+              </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="card-title">Product Availability Search</div>
+              </div>
+              <div style="padding:20px;">
+                <div style="font-size:13px;font-weight:600;color:var(--tx-1);margin-bottom:12px;">Search by Part Number,
+                  SKU, or Description</div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+                  <div
+                    style="flex:1;min-width:300px;display:flex;align-items:center;border:1px solid var(--br-1);border-radius:8px;overflow:hidden;background:var(--bg-1);">
+                    <i class="ti ti-search" style="padding:0 12px;color:var(--blue);font-size:18px;"></i>
+                    <input id="atp-search-input" type="text" placeholder="e.g. 'safety gloves', 'SKU-11230', 'SCBA'…"
+                      style="flex:1;padding:12px 8px;border:none;outline:none;font-size:14px;background:transparent;color:var(--tx-1);"
+                      onkeydown="if(event.key==='Enter') atpSearch()" />
+                  </div>
+                  <select id="atp-warehouse" class="form-control" style="width:180px;">
+                    <option value="MUM">Mumbai (Main)</option>
+                    <option value="DEL">Delhi Hub</option>
+                    <option value="BEN">Bengaluru Distribution</option>
+                    <option value="PUN">Pune Factory</option>
+                  </select>
+                  <button class="btn btn-primary" onclick="atpSearch()">
+                    <i class="ti ti-search"></i> Check Availability
+                  </button>
+                </div>
+                <!-- Quick tags -->
+                <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center;">
+                  <span style="font-size:12px;color:var(--tx-3);">Quick Search:</span>
+                  <button onclick="atpQuick('Siemens')" class="btn btn-xs btn-outline">Siemens</button>
+                  <button onclick="atpQuick('Havells')" class="btn btn-xs btn-outline">Havells</button>
+                  <button onclick="atpQuick('3M')" class="btn btn-xs btn-outline">3M</button>
+                  <button onclick="atpQuick('Honeywell')" class="btn btn-xs btn-outline">Honeywell</button>
+                  <button onclick="atpQuick('ABB')" class="btn btn-xs btn-outline">ABB</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="atp-results-area" style="display:none;">
+              <div class="grid-2">
+                <!-- Search Results List -->
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-list"></i> <span id="atp-results-title">Search
+                        Results</span></div>
+                    <span id="atp-result-count" class="badge"></span>
+                  </div>
+                  <div id="atp-sku-list" style="max-height:600px;overflow-y:auto;"></div>
+                </div>
+
+                <!-- Product Detail Panel -->
+                <div id="atp-detail-panel" style="display:none;">
+                  <div class="card mb-4" style="border-left:4px solid var(--blue);">
+                    <div style="padding:16px;display:flex;justify-content:space-between;align-items:flex-start;">
+                      <div>
+                        <div id="atp-detail-name" style="font-size:16px;font-weight:700;color:var(--tx-1);">—</div>
+                        <div id="atp-detail-sku" style="font-size:12px;color:var(--tx-3);margin-top:4px;">—</div>
+                        <div id="atp-detail-cat" style="font-size:11px;color:var(--tx-3);margin-top:2px;">—</div>
+                      </div>
+                      <div id="atp-promise-badge"></div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-4"
+                    style="border:1px solid var(--blue-gl);box-shadow:0 4px 12px var(--shad-light);">
+                    <div class="card-header">
+                      <div class="card-title" style="color:var(--blue);"><i class="ti ti-calculator"></i> Promise
+                        Calculator</div>
+                    </div>
+                    <div style="padding:16px;">
+                      <div class="form-group mb-3">
+                        <label class="form-label">Quantity Needed</label>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                          <input type="number" id="atp-qty-input" min="1" value="100" class="form-control"
+                            style="width:120px;font-size:18px;font-weight:700;text-align:center;border-color:var(--blue);"
+                            oninput="atpCalculate()" />
+                          <span id="atp-unit-label"
+                            style="font-size:13px;color:var(--tx-3);font-weight:600;">units</span>
+                        </div>
+                      </div>
+                      <div id="atp-promise-result"
+                        style="padding:16px;border-radius:10px;background:var(--bg-2);border:1px dashed var(--br-1);">
+                        <div id="atp-promise-line-1" style="font-size:13px;font-weight:700;color:var(--green);">—</div>
+                        <div id="atp-promise-line-2" style="font-size:11px;color:var(--tx-2);margin-top:6px;"></div>
+                      </div>
+                      <div style="margin-top:16px;display:flex;gap:10px;">
+                        <button class="btn btn-primary" style="flex:1;" onclick="atpRaiseQuote()">
+                          <i class="ti ti-file-description"></i> Raise Quotation
+                        </button>
+                        <button class="btn btn-outline" title="Raise PR Request" onclick="atpRaisePR()">
+                          <i class="ti ti-clipboard-list"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid-2">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Inventory</div>
+                      </div>
+                      <div style="padding:16px;">
+                        <div
+                          style="display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--br-1);">
+                          <span style="font-size:12px;color:var(--tx-3);">On Hand</span>
+                          <span id="atp-inv-onhand" style="font-weight:700;">—</span>
+                        </div>
+                        <div
+                          style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--br-1);">
+                          <span style="font-size:12px;color:var(--tx-3);">Reserved</span>
+                          <span id="atp-inv-reserved" style="font-weight:700;color:var(--red);">—</span>
+                        </div>
+                        <div
+                          style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:2px solid var(--blue);">
+                          <span style="font-size:13px;font-weight:700;color:var(--blue);">Available to Promise</span>
+                          <span id="atp-inv-atp" style="font-size:18px;font-weight:800;color:var(--blue);">—</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;padding-top:10px;">
+                          <span style="font-size:12px;color:var(--tx-3);">Inbound (PO/PR)</span>
+                          <span id="atp-inv-onorder" style="font-weight:600;color:var(--gold);">—</span>
+                        </div>
+                        <div style="text-align:right;font-size:10px;color:var(--tx-3);margin-top:4px;">ETA: <span
+                            id="atp-inv-arrival">—</span></div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title">Pricing</div>
+                      </div>
+                      <div style="padding:16px;">
+                        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                          <span style="font-size:12px;color:var(--tx-3);">Standard Price</span>
+                          <span id="atp-price-std" style="font-weight:600;color:var(--tx-1);">—</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                          <span style="font-size:12px;color:var(--tx-3);">Customer Price</span>
+                          <span id="atp-price-cust" style="font-weight:700;color:var(--green);">—</span>
+                        </div>
+                        <div id="atp-special-price-banner"
+                          style="display:none;margin-top:10px;padding:8px;background:var(--gold-gl);border:1px solid var(--gold);border-radius:6px;font-size:11px;color:var(--tx-1);">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent orders -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-history"></i> Recent Lead Orders — Last 90 Days</div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Order #</th>
+                        <th>Customer</th>
+                        <th>Quantity</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="atp-recent-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="atp-empty-state" class="empty-state" style="padding:80px 20px;">
+              <div class="empty-icon"><i class="ti ti-search" style="opacity:0.3;"></i></div>
+              <div class="empty-title">Check Real-time Inventory Availability</div>
+              <div class="empty-desc">Search part number or name to see current stock level and promising date from
+                Tally ERP.</div>
+            </div>
+          </div>
+
           <div class="page" id="page-crm-leads">
             <div class="page-header">
               <div>
@@ -10036,63 +10531,273 @@
           </div>
 
           <!-- ── CRM: CUSTOMER 360 ───────────────────────────── -->
-          <div class="page" id="page-crm-cust-360">
+          <div class="page" id="page-crm-c360">
             <div class="page-header">
               <div>
-                <div class="page-title">Customer 360° View</div>
-                <div class="page-sub">Holistic view of customer interactions and commercial history</div>
+                <div class="page-title">Customer 360°</div>
+                <div class="page-sub">AI-powered customer intelligence — clusters, personas & RFM analysis</div>
               </div>
-              <select class="form-control" style="width:240px;" id="c360-selector" onchange="initCRMCust360()">
-                <option value="">Select Customer…</option>
-              </select>
+              <div class="page-actions">
+                <span id="c360-sync-status" class="badge badge-outline">Last analyzed: Today, 09:30</span>
+                <button class="btn btn-primary" onclick="alert('Syncing AI analysis...')"><i class="ti ti-refresh"></i>
+                  Refresh Analysis</button>
+              </div>
             </div>
-            <div id="c360-content" style="display:none;">
-              <div class="kpi-grid kpi-grid-4 mb-4" id="c360-kpi"></div>
-              <div class="grid-2 mb-4">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title">Recent Transactions</div>
-                  </div>
-                  <div class="table-wrap">
-                    <table class="data-tbl">
-                      <thead>
-                        <tr>
-                          <th>Ref #</th>
-                          <th>Type</th>
-                          <th>Value</th>
-                          <th>Date</th>
-                        </tr>
-                      </thead>
-                      <tbody id="c360-tx-tbody"></tbody>
-                    </table>
-                  </div>
+
+            <!-- Org KPIs -->
+            <div class="stat-row" style="margin-bottom:16px;">
+              <div class="stat-mini">
+                <div class="stat-mini-ico" style="background:#E1F5EE;color:#1D9E75;"><i class="ti ti-building"></i>
                 </div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title">Service History</div>
-                  </div>
-                  <div class="table-wrap">
-                    <table class="data-tbl">
-                      <thead>
-                        <tr>
-                          <th>Ticket #</th>
-                          <th>Type</th>
-                          <th>Status</th>
-                          <th>Last Update</th>
-                        </tr>
-                      </thead>
-                      <tbody id="c360-svc-tbody"></tbody>
-                    </table>
-                  </div>
+                <div>
+                  <div class="stat-mini-val">284</div>
+                  <div class="stat-mini-lbl">Total Customers</div>
+                </div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-mini-ico" style="background:#FBF5E8;color:#C9A84C;"><i class="ti ti-coins"></i></div>
+                <div>
+                  <div class="stat-mini-val">₹135.7M</div>
+                  <div class="stat-mini-lbl">Portfolio Value</div>
+                </div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-mini-ico" style="background:#E6F1FB;color:#378ADD;"><i
+                    class="ti ti-heart-rate-monitor"></i></div>
+                <div>
+                  <div class="stat-mini-val" style="color:#1D9E75;">86%</div>
+                  <div class="stat-mini-lbl">Health Score</div>
+                </div>
+              </div>
+              <div class="stat-mini">
+                <div class="stat-mini-ico" style="background:#FCEBEB;color:#E24B4A;"><i
+                    class="ti ti-alert-triangle"></i></div>
+                <div>
+                  <div class="stat-mini-val" style="color:#E24B4A;">12</div>
+                  <div class="stat-mini-lbl">At-Risk</div>
                 </div>
               </div>
             </div>
-            <div id="c360-empty" style="text-align:center;padding:100px 0;color:#9AACBE;">
-              <i class="ti ti-user-search" style="font-size:48px;display:block;margin-bottom:16px;"></i>
-              Select a customer above to view their 360° profile
+
+            <!-- AI Insight banner -->
+            <div class="ai-hint-bar" style="margin-bottom:16px;">
+              <i class="ti ti-sparkles"></i>
+              <div class="ai-hint-txt"><b>AI Portfolio Insight:</b> High health score achieved. Champions cluster drives
+                88% of revenue. Focus outreach on 14 "Need Attention" accounts — ₹8.4M recovery opportunity identified.
+              </div>
+            </div>
+
+            <!-- Cluster cards -->
+            <div style="font-size:13px;font-weight:700;color:var(--tx-1);margin-bottom:12px;">Customer Clusters</div>
+            <div class="cluster-grid">
+              <div class="cluster-card champions" onclick="navigate('crm-personas')">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                  <div style="width:10px;height:10px;border-radius:50%;background:#C9A84C;"></div>
+                  <div class="cluster-name">Champions</div>
+                </div>
+                <div class="cluster-count"><i class="ti ti-users"></i> 18 customers</div>
+                <div class="cluster-val">₹119.3M</div>
+                <div class="cluster-sub">Portfolio value</div>
+                <span class="cluster-risk risk-low"><i class="ti ti-shield-check"></i> LOW Risk</span>
+              </div>
+              <div class="cluster-card loyal" onclick="navigate('crm-personas')">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                  <div style="width:10px;height:10px;border-radius:50%;background:#378ADD;"></div>
+                  <div class="cluster-name">Loyal</div>
+                </div>
+                <div class="cluster-count"><i class="ti ti-users"></i> 54 customers</div>
+                <div class="cluster-val">₹14.4M</div>
+                <div class="cluster-sub">Portfolio value</div>
+                <span class="cluster-risk risk-low"><i class="ti ti-shield-check"></i> LOW Risk</span>
+              </div>
+              <div class="cluster-card at-risk" onclick="navigate('crm-personas')">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                  <div style="width:10px;height:10px;border-radius:50%;background:#E24B4A;"></div>
+                  <div class="cluster-name">At Risk</div>
+                </div>
+                <div class="cluster-count"><i class="ti ti-users"></i> 12 customers</div>
+                <div class="cluster-val">₹782K</div>
+                <div class="cluster-sub">Portfolio value</div>
+                <span class="cluster-risk risk-high"><i class="ti ti-alert-triangle"></i> HIGH Risk</span>
+              </div>
             </div>
           </div>
 
+          <!-- ── CRM: PERSONAS ────────────────────────────── -->
+          <div class="page" id="page-crm-personas">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Customer Personas</div>
+                <div class="page-sub">AI-powered segmentation mapping and RFM visualization</div>
+              </div>
+              <div class="page-actions">
+                <select class="form-control" style="width:160px;">
+                  <option>All Clusters</option>
+                  <option>Champions</option>
+                  <option>Loyal</option>
+                  <option>At Risk</option>
+                </select>
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+              </div>
+            </div>
+
+            <div class="bubble-arena">
+              <!-- Champions cluster -->
+              <div class="bubble"
+                style="width:110px;height:110px;background:radial-gradient(circle at 35% 35%,#e8c56a,#C9A84C);color:#3a2400;left:12%;top:15%;"
+                onclick="openC360Panel('Al-Faris Industrial','Champions · Welding','₹18.4M','₹220K/yr','Champions','4.8','Stable')">
+                Al-Faris<br>Industrial</div>
+              <div class="bubble"
+                style="width:90px;height:90px;background:radial-gradient(circle at 35% 35%,#e8c56a,#C9A84C);color:#3a2400;left:26%;top:8%;"
+                onclick="openC360Panel('Gulf Metals','Champions · Safety','₹14.2M','₹180K/yr','Champions','4.6','Growing')">
+                Gulf Metals</div>
+              <div class="bubble"
+                style="width:80px;height:80px;background:radial-gradient(circle at 35% 35%,#e8c56a,#C9A84C);color:#3a2400;left:36%;top:26%;"
+                onclick="openC360Panel('Jebel Ali Steel','Champions · Lifting','₹11.8M','₹145K/yr','Champions','4.5','Stable')">
+                Jebel Ali<br>Steel</div>
+              <!-- Loyal cluster -->
+              <div class="bubble"
+                style="width:65px;height:65px;background:radial-gradient(circle at 35% 35%,#6bb3ed,#378ADD);color:#fff;left:62%;top:8%;"
+                onclick="openC360Panel('AeroTech Engg','Loyal · Tools','₹3.2M','₹42K/yr','Loyal','3.9','Stable')">
+                AeroTech</div>
+              <div class="bubble"
+                style="width:58px;height:58px;background:radial-gradient(circle at 35% 35%,#6bb3ed,#378ADD);color:#fff;left:74%;top:18%;"
+                onclick="openC360Panel('Mumbai Steel','Loyal · Safety','₹2.6M','₹34K/yr','Loyal','3.7','Stable')">Mumbai
+                Steel</div>
+              <!-- At Risk -->
+              <div class="bubble"
+                style="width:50px;height:50px;background:radial-gradient(circle at 35% 35%,#ef7e7e,#E24B4A);color:#fff;left:54%;top:56%;"
+                onclick="openC360Panel('Al-Rashid Trading','At Risk · PPE','₹98K','₹4K/yr','At Risk','1.6','Declining')">
+                Al-Rashid</div>
+
+              <div
+                style="position:absolute;bottom:10px;left:12px;display:flex;gap:10px;font-size:10px;font-weight:600;color:var(--tx-3);">
+                <span style="display:flex;align-items:center;gap:4px;"><span
+                    style="width:8px;height:8px;border-radius:50%;background:#C9A84C;"></span>Champions</span>
+                <span style="display:flex;align-items:center;gap:4px;"><span
+                    style="width:8px;height:8px;border-radius:50%;background:#378ADD;"></span>Loyal</span>
+                <span style="display:flex;align-items:center;gap:4px;"><span
+                    style="width:8px;height:8px;border-radius:50%;background:#E24B4A;"></span>At Risk</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Cluster</th>
+                      <th>LTV</th>
+                      <th>RFM Score</th>
+                      <th>Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      onclick="openC360Panel('Al-Faris Industrial','Champions · Welding','₹18.4M','₹220K/yr','Champions','4.8','Stable')">
+                      <td><b>Al-Faris Industrial LLC</b></td>
+                      <td><span class="score-h">Champions</span></td>
+                      <td>₹18.4M</td>
+                      <td><span class="score-h">4.8</span></td>
+                      <td>Stable</td>
+                    </tr>
+                    <tr
+                      onclick="openC360Panel('Gulf Metals','Champions · Safety','₹14.2M','₹180K/yr','Champions','4.6','Growing')">
+                      <td><b>Gulf Metals Trading</b></td>
+                      <td><span class="score-h">Champions</span></td>
+                      <td>₹14.2M</td>
+                      <td><span class="score-h">4.6</span></td>
+                      <td>Growing</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── CRM: VISIT PLANNER ────────────────────────── -->
+          <div class="page" id="page-crm-planner">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Visit Planner</div>
+                <div class="page-sub">Schedule and optimize sales engineer field visits</div>
+              </div>
+              <div class="page-actions"><button class="btn btn-primary" onclick="navigate('crm-assignments')">Plan New
+                  Visit</button></div>
+            </div>
+            <!-- Calendar/Plan Interface (Simplified for Integration) -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Today's Scheduled Visits</div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Customer</th>
+                      <th>Engineer</th>
+                      <th>Purpose</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>09:00 AM</td>
+                      <td><b>Reliance Industries</b></td>
+                      <td>Ahmed Malik</td>
+                      <td>Safety PPE Demo</td>
+                      <td><span class="badge badge-blue">Scheduled</span></td>
+                    </tr>
+                    <tr>
+                      <td>11:30 AM</td>
+                      <td><b>TATA Steel</b></td>
+                      <td>Fatima Rahman</td>
+                      <td>Contract Renewal</td>
+                      <td><span class="badge badge-green">Completed</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── CRM: VISIT ASSIGNMENTS ────────────────────── -->
+          <div class="page" id="page-crm-assignments">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Visit Assignments</div>
+                <div class="page-sub">Assign specific high-priority visits to sales team members</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">New Assignment</div>
+              </div>
+              <div class="card-body">
+                <div class="grid-2 mb-4">
+                  <div><label class="form-label">Select Customer</label><select class="form-control">
+                      <option>Apex Pvt Ltd</option>
+                      <option>Bharat Industries</option>
+                    </select></div>
+                  <div><label class="form-label">Sales Engineer</label><select class="form-control">
+                      <option>Ahmed Malik</option>
+                      <option>Fatima Rahman</option>
+                    </select></div>
+                </div>
+                <div class="grid-2 mb-4">
+                  <div><label class="form-label">Date</label><input type="date" class="form-control"></div>
+                  <div><label class="form-label">Priority</label><select class="form-control">
+                      <option>High</option>
+                      <option>Medium</option>
+                    </select></div>
+                </div>
+                <button class="btn btn-primary"
+                  onclick="showToast('success', 'Assigned', 'Visit assigned successfully.')">Create Assignment</button>
+              </div>
+            </div>
+          </div>
 
           <!-- ── REPORTS: LEADS ──────────────────────── -->
           <div class="page" id="page-rep-leads">
@@ -11844,7 +12549,58 @@
             </div>
           </div>
 
-          <!-- Supplier Modal -->
+          <!-- ── CUSTOMER 360 DRAWER ────────────────────── -->
+          <div class="c360-overlay" id="c360-overlay" onclick="closeC360Panel()"></div>
+          <div class="c360-drawer" id="c360-drawer">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+              <h3 id="c360-panel-name" style="margin:0;">Al-Faris Industrial</h3>
+              <button class="btn btn-ghost btn-icon-sm" onclick="closeC360Panel()"><i class="ti ti-x"></i></button>
+            </div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:16px;margin-bottom:20px;">
+              <div
+                style="font-size:11px;font-weight:700;color:var(--tx-3);text-transform:uppercase;margin-bottom:12px;">AI
+                Insight Summary</div>
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="font-size:12px;color:var(--tx-2);">Segment</span>
+                  <span id="c360-panel-seg" style="font-size:12px;font-weight:700;color:var(--tx-1);">Champions ·
+                    Welding</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="font-size:12px;color:var(--tx-2);">Lifetime Value (LTV)</span>
+                  <span id="c360-panel-ltv" style="font-size:12px;font-weight:700;color:#16A34A;">₹18.4M</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;">
+                  <span style="font-size:12px;color:var(--tx-2);">Annual Spend</span>
+                  <span id="c360-panel-annual" style="font-size:12px;font-weight:700;color:var(--tx-1);">₹220K/yr</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:20px;">
+              <label class="form-label">Cluster Assignment</label>
+              <div id="c360-panel-cluster" class="score-h" style="display:inline-block;">Champions</div>
+            </div>
+
+            <div class="grid-2 mb-4">
+              <div>
+                <label class="form-label">RFM Score</label>
+                <div id="c360-panel-rfm" style="font-size:24px;font-weight:800;color:var(--tx-1);">4.8</div>
+                <div style="font-size:10px;color:var(--tx-3);">Top 2% of portfolio</div>
+              </div>
+              <div>
+                <label class="form-label">Growth Trend</label>
+                <div id="c360-panel-trend" style="font-size:14px;font-weight:700;color:#16A34A;"><i
+                    class="ti ti-trending-up"></i> Growing</div>
+              </div>
+            </div>
+
+            <div style="border-top:1px solid var(--card-border);padding-top:16px;">
+              <button class="btn btn-primary w-full" onclick="alert('Opening Full 360 View...'); closeC360Panel();">View
+                Full Customer Profile</button>
+            </div>
+          </div>
+
           <div class="modal-wrap" id="modal-supplier">
             <div class="modal modal-lg">
               <div class="modal-header">
@@ -12074,12 +12830,17 @@
       'fin-cashflow': { title: 'Cash Flow', crumbs: ['Finance', 'Cash Flow'], module: 'finance' },
       'fin-reports': { title: 'Financial Reports', crumbs: ['Finance', 'Reports'], module: 'finance' },
       // CRM
+      'atp': { title: 'Available to Promise', crumbs: ['CRM', 'ATP'], module: 'crm' },
       'crm-leads': { title: 'Leads', crumbs: ['CRM', 'Leads'], module: 'crm' },
       'crm-opportunities': { title: 'Opportunities', crumbs: ['CRM', 'Opportunities'], module: 'crm' },
       'crm-activities': { title: 'Activities', crumbs: ['CRM', 'Activities'], module: 'crm' },
       'crm-meetings': { title: 'Meetings', crumbs: ['CRM', 'Meetings'], module: 'crm' },
       'crm-followups': { title: 'Follow Ups', crumbs: ['CRM', 'Follow Ups'], module: 'crm' },
       'crm-calllogs': { title: 'Call Logs', crumbs: ['CRM', 'Call Logs'], module: 'crm' },
+      'crm-c360': { title: 'Customer 360°', crumbs: ['CRM', 'Intelligence', 'Customer 360°'], module: 'crm' },
+      'crm-personas': { title: 'Personas', crumbs: ['CRM', 'Intelligence', 'Personas'], module: 'crm' },
+      'crm-planner': { title: 'Visit Planner', crumbs: ['CRM', 'Intelligence', 'Visit Planner'], module: 'crm' },
+      'crm-assignments': { title: 'Visit Assignments', crumbs: ['CRM', 'Intelligence', 'Visit Assignments'], module: 'crm' },
       // Service
       'svc-tickets': { title: 'Tickets', crumbs: ['Service', 'Tickets'], module: 'service' },
       'svc-requests': { title: 'Service Requests', crumbs: ['Service', 'Requests'], module: 'service' },
@@ -12124,7 +12885,7 @@
       'hrm-payroll': { title: 'Payroll Processing', crumbs: ['HRMS', 'Payroll'], module: 'hrms' },
       'hrm-ot': { title: 'OT Calculation', crumbs: ['HRMS', 'Overtime'], module: 'hrms' },
       // CRM (Extended)
-      'crm-cust-360': { title: 'Customer 360°', crumbs: ['CRM', 'Customer 360'], module: 'crm' },
+
       // Additional Reports
       'rep-crm': { title: 'CRM Analytics', crumbs: ['Reports', 'CRM'], module: 'reports' },
       'rep-service': { title: 'Service Performance', crumbs: ['Reports', 'Service'], module: 'reports' },
@@ -12294,6 +13055,19 @@
             }
           }
         }
+        // Nested sub-sub-group
+        const subSubGroup = sidebarItem.closest('.sb-sub-sub-group');
+        if (subSubGroup) {
+          const pin = subSubGroup.previousElementSibling;
+          if (pin && !pin.classList.contains('open')) {
+            toggleSubGroup(pin);
+          }
+          // Parent group check
+          const psg = pin.closest('.sb-sub-group');
+          if (psg && !psg.classList.contains('open')) {
+            openGroup(psg.previousElementSibling);
+          }
+        }
       }
     }
 
@@ -12327,6 +13101,23 @@
         closeGroup(parentEl);
       } else {
         openGroup(parentEl);
+      }
+    }
+
+    function toggleSubGroup(el) {
+      const sub = el.nextElementSibling;
+      const isOpen = el.classList.contains('open');
+      if (isOpen) {
+        el.classList.remove('open');
+        sub.style.display = 'none';
+      } else {
+        el.classList.add('open');
+        sub.style.display = 'block';
+      }
+      // Re-calculate parent scrollHeight if open
+      const parentSub = el.closest('.sb-sub-group');
+      if (parentSub) {
+        parentSub.style.maxHeight = parentSub.scrollHeight + 400 + 'px';
       }
     }
 
@@ -13558,16 +14349,7 @@
 
     /* Update nav badges with real counts */
     function updateNavBadges() {
-      const nb = id => document.getElementById(id);
-      if (nb('nb-customers')) nb('nb-customers').textContent = SUMMARY.activeCustomers;
-      if (nb('nb-suppliers')) nb('nb-suppliers').textContent = SUMMARY.activeSuppliers;
-      if (nb('nb-lowstock')) nb('nb-lowstock').textContent = SUMMARY.lowStockCount;
-      if (nb('nb-po')) nb('nb-po').textContent = SUMMARY.pendingPOs;
-      if (nb('nb-sales')) nb('nb-sales').textContent = SUMMARY.pendingInvoices;
-      if (nb('nb-leads')) nb('nb-leads').textContent = SUMMARY.newLeads;
-      if (nb('nb-tickets')) nb('nb-tickets').textContent = SUMMARY.openTickets;
-      const nc = document.getElementById('notif-count');
-      if (nc) nc.textContent = '4';
+      // Badges removed from sidebar
     }
 
     /* ════════════════════════════════════════════════════════
@@ -14269,6 +15051,7 @@
     function initPageOnNav(pageId) {
       const once = (id, fn) => { if (!initialised[id]) { initialised[id] = true; fn(); } };
       once('products', initProductsPage);
+      once('atp', initAtpPage);
       once('categories', renderCategoriesPage);
       once('brands', renderBrandsPage);
       once('units', renderUnitsPage);
@@ -14345,13 +15128,17 @@
       once('hrm-attendance', initHRMAttendance);
       once('hrm-payroll', initHRMPayroll);
       once('hrm-ot', initHRMOT);
-      once('crm-cust-360', initCRMCust360);
+
       once('rep-leads', initRepLeads);
       once('rep-crm', initRepCRM);
       once('rep-service', initRepService);
       once('rep-productivity', initRepProductivity);
       once('com-email', initComEmail);
       once('com-whatsapp', initComWhatsApp);
+      once('crm-c360', () => { }); // No complex init needed for demo
+      once('crm-personas', () => { }); // No complex init needed for demo
+      once('crm-planner', () => { }); // No complex init needed for demo
+      once('crm-assignments', () => { }); // No complex init needed for demo
     }
 
     /* ─────────────────────────────────
@@ -17099,6 +17886,142 @@
     /* ─── CRM LEADS ─── */
     let cLeadPage = 1; const CLEAD_PER = 12; let cLeadFiltered = [];
 
+    /* ─── AVAILABLE TO PROMISE (ATP) ─── */
+    const ATP_DATA = {
+      'Siemens Circuit Breaker (100A)': { sku: 'SKU-77210', cat: 'Electrical', unit: 'units', onHand: 510, reserved: 142, onOrder: 500, arrival: '28 Jun 2024', stdPrice: '₹14,500', custPrice: '₹13,200', discount: '5% on 10+', moq: 1, leadTime: '7 days', vendor: 'Siemens India Ltd', po: 'APR-2024-0409', lastPO: '2 Jun 2024', special: 'Contract price for AIMS framework valid till Dec 2024.', recentOrders: [{ id: 'SO-2024-077', cust: 'Reliance Ind.', qty: 200, date: '15 Jun', status: 'Delivered' }, { id: 'SO-2024-063', cust: 'TATA Steel', qty: 150, date: '8 Jun', status: 'Delivered' }, { id: 'SO-2024-058', cust: 'L&T', qty: 300, date: '2 Jun', status: 'Invoiced' }] },
+      'Havells MCB Switch (32A)': { sku: 'SKU-88492', cat: 'Electrical', unit: 'units', onHand: 84, reserved: 22, onOrder: 200, arrival: '5 Jul 2024', stdPrice: '₹1,200', custPrice: '₹1,050', discount: '10% on 50+', moq: 10, leadTime: '15 days', vendor: 'Havells India', po: 'APR-2024-0412', lastPO: '12 Jun 2024', special: null, recentOrders: [{ id: 'SO-2024-074', cust: 'ONGC', qty: 50, date: '14 Jun', status: 'Delivered' }, { id: 'SO-2024-061', cust: 'BPCL', qty: 80, date: '6 Jun', status: 'Delivered' }] },
+      '3M Premium Safety Goggles': { sku: 'SKU-99771', cat: 'Safety Equipment', unit: 'units', onHand: 220, reserved: 45, onOrder: 300, arrival: '1 Jul 2024', stdPrice: '₹850', custPrice: '₹720', discount: '8% on 100+', moq: 20, leadTime: '10 days', vendor: '3M India Ltd', po: 'APR-2024-0411', lastPO: '10 Jun 2024', special: null, recentOrders: [{ id: 'SO-2024-071', cust: 'Adani Group', qty: 100, date: '12 Jun', status: 'Delivered' }, { id: 'SO-2024-060', cust: 'Hindustan Zinc', qty: 200, date: '5 Jun', status: 'Invoiced' }] },
+      'Honeywell Safety Harness (L)': { sku: 'SKU-30042', cat: 'Safety Equipment', unit: 'units', onHand: 4, reserved: 4, onOrder: 40, arrival: '12 Jul 2024', stdPrice: '₹12,400', custPrice: '₹11,500', discount: '3% on 10+', moq: 2, leadTime: '21 days', vendor: 'Honeywell India', po: 'APR-2024-0413', lastPO: '14 Jun 2024', special: 'Critical stock — lead time 21 days for fresh imports.', recentOrders: [{ id: 'SO-2024-055', cust: 'Reliance Ind.', qty: 10, date: '28 May', status: 'Delivered' }] },
+      'ABB Contactor Relay (230V)': { sku: 'SKU-20187', cat: 'Electrical', unit: 'units', onHand: 3, reserved: 1, onOrder: 6, arrival: '18 Jul 2024', stdPrice: '₹28,600', custPrice: '₹26,400', discount: 'N/A', moq: 1, leadTime: '30 days', vendor: 'ABB India', po: 'APR-2024-0408', lastPO: '5 Jun 2024', special: 'Import item — price linked to Euro exchange rate.', recentOrders: [{ id: 'SO-2024-050', cust: 'TATA Motors', qty: 2, date: '20 May', status: 'Delivered' }] }
+    };
+
+    const ATP_SEARCH_MAP = {
+      breaker: ['Siemens Circuit Breaker (100A)'], switch: ['Havells MCB Switch (32A)'],
+      goggles: ['3M Premium Safety Goggles'], harness: ['Honeywell Safety Harness (L)'],
+      siemens: ['Siemens Circuit Breaker (100A)'], havells: ['Havells MCB Switch (32A)'],
+      honeywell: ['Honeywell Safety Harness (L)'], abb: ['ABB Contactor Relay (230V)']
+    };
+
+    let atpCurrentSku = null;
+
+    function atpSearch() {
+      const q = document.getElementById('atp-search-input').value.toLowerCase().trim();
+      let matches = [];
+      if (!q) matches = Object.keys(ATP_DATA);
+      else {
+        // Try map first
+        for (const k in ATP_SEARCH_MAP) { if (q.includes(k)) matches = ATP_SEARCH_MAP[k]; }
+        if (!matches.length) {
+          matches = Object.keys(ATP_DATA).filter(n => n.toLowerCase().includes(q) || ATP_DATA[n].sku.toLowerCase().includes(q));
+        }
+      }
+
+      document.getElementById('atp-empty-state').style.display = 'none';
+      document.getElementById('atp-detail-panel').style.display = 'none';
+      document.getElementById('atp-results-area').style.display = 'block';
+      document.getElementById('atp-results-title').textContent = q ? `Results for "${q}"` : 'All Products';
+      document.getElementById('atp-result-count').textContent = `${matches.length} SKU${matches.length !== 1 ? 's' : ''} found`;
+
+      const list = document.getElementById('atp-sku-list');
+      list.innerHTML = '';
+      if (!matches.length) {
+        list.innerHTML = '<div style="padding:30px;text-align:center;color:var(--tx-3);"><i class="ti ti-search-off mb-2" style="font-size:24px;display:block;"></i>No matching products found.</div>';
+        return;
+      }
+
+      matches.forEach(name => {
+        const d = ATP_DATA[name];
+        const atp = d.onHand - d.reserved;
+        const color = atp <= 0 ? 'red' : atp < 10 ? 'amber' : 'green';
+        const label = atp <= 0 ? 'Out of Stock' : atp < 10 ? 'Low Stock' : 'Available';
+
+        list.innerHTML += `<div class="atp-sku-item" onclick="atpShowDetail('${name.replace(/'/g, "\\'")}')">
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;color:var(--tx-1);">${name}</div>
+            <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">${d.sku} &nbsp;·&nbsp; ${d.cat}</div>
+          </div>
+          <div style="text-align:right;min-width:90px;">
+            <span class="badge badge-${color}">${label}</span>
+            <div style="font-size:11px;color:var(--tx-3);margin-top:4px;">${atp > 0 ? (atp + ' ' + d.unit) : ('ETA: ' + d.arrival)}</div>
+          </div>
+          <i class="ti ti-chevron-right" style="color:var(--tx-3);opacity:0.5;"></i>
+        </div>`;
+      });
+    }
+
+    function atpQuick(q) { document.getElementById('atp-search-input').value = q; atpSearch(); }
+
+    function atpShowDetail(name) {
+      atpCurrentSku = name;
+      const d = ATP_DATA[name]; if (!d) return;
+      document.querySelectorAll('.atp-sku-item').forEach(i => i.classList.remove('active'));
+      const atp = d.onHand - d.reserved;
+
+      document.getElementById('atp-detail-panel').style.display = 'block';
+      document.getElementById('atp-detail-name').textContent = name;
+      document.getElementById('atp-detail-sku').textContent = d.sku + '  ·  ' + d.cat;
+      document.getElementById('atp-detail-cat').textContent = 'Preferred Vendor: ' + d.vendor;
+
+      document.getElementById('atp-inv-onhand').textContent = d.onHand.toLocaleString() + ' ' + d.unit;
+      document.getElementById('atp-inv-reserved').textContent = d.reserved.toLocaleString() + ' ' + d.unit;
+      document.getElementById('atp-inv-atp').textContent = atp.toLocaleString() + ' ' + d.unit;
+      document.getElementById('atp-inv-onorder').textContent = d.onOrder.toLocaleString() + ' ' + d.unit;
+      document.getElementById('atp-inv-arrival').textContent = d.arrival;
+
+      document.getElementById('atp-price-std').textContent = d.stdPrice;
+      document.getElementById('atp-price-cust').textContent = d.custPrice;
+      const banner = document.getElementById('atp-special-price-banner');
+      if (d.special) { banner.style.display = 'block'; banner.innerHTML = '<i class="ti ti-star" style="margin-right:6px;"></i>' + d.special; }
+      else { banner.style.display = 'none'; }
+
+      const tbody = document.getElementById('atp-recent-tbody');
+      tbody.innerHTML = d.recentOrders.map(o => `<tr><td><span class="badge badge-outline">${o.id}</span></td><td>${o.cust}</td><td>${o.qty.toLocaleString()}</td><td>${o.date}</td><td><span class="badge badge-green">${o.status}</span></td></tr>`).join('');
+
+      document.getElementById('atp-qty-input').value = 100;
+      atpCalculate();
+    }
+
+    function atpCalculate() {
+      if (!atpCurrentSku) return;
+      const d = ATP_DATA[atpCurrentSku];
+      const qty = parseInt(document.getElementById('atp-qty-input').value) || 0;
+      const atp = d.onHand - d.reserved;
+      const resultDiv = document.getElementById('atp-promise-result');
+      const badge = document.getElementById('atp-promise-badge');
+
+      if (qty <= atp) {
+        document.getElementById('atp-promise-line-1').textContent = `✓ Full quantity (${qty.toLocaleString()} ${d.unit}) available for immediate delivery.`;
+        document.getElementById('atp-promise-line-1').style.color = 'var(--green)';
+        document.getElementById('atp-promise-line-2').textContent = `Stock Level: ${atp.toLocaleString()} ${d.unit} ATP. No delay expected.`;
+        resultDiv.style.borderColor = 'var(--green)';
+        badge.innerHTML = '<span class="badge badge-green" style="padding:6px 12px;font-size:12px;"><i class="ti ti-check"></i> Can Promise</span>';
+      } else if (qty <= atp + d.onOrder) {
+        document.getElementById('atp-promise-line-1').textContent = `⚠ Partial immediate delivery + balance from inbound stock.`;
+        document.getElementById('atp-promise-line-1').style.color = 'var(--gold)';
+        document.getElementById('atp-promise-line-2').textContent = `Promise ${atp.toLocaleString()} today. Balance ${qty - atp} expected ${d.arrival}.`;
+        resultDiv.style.borderColor = 'var(--gold)';
+        badge.innerHTML = '<span class="badge badge-warning" style="padding:6px 12px;font-size:12px;"><i class="ti ti-clock"></i> Split Promise</span>';
+      } else {
+        document.getElementById('atp-promise-line-1').textContent = `✗ Quantity exceeds available and inbound stock.`;
+        document.getElementById('atp-promise-line-1').style.color = 'var(--red)';
+        document.getElementById('atp-promise-line-2').textContent = `Lead time for deficit: ${d.leadTime}. Supplier: ${d.vendor}.`;
+        resultDiv.style.borderColor = 'var(--red)';
+        badge.innerHTML = '<span class="badge badge-red" style="padding:6px 12px;font-size:12px;"><i class="ti ti-alert-triangle"></i> Stock Shortfall</span>';
+      }
+    }
+
+    function atpRaiseQuote() {
+      if (!atpCurrentSku) return;
+      showToast('info', 'Sales Quotation', `Quote draft created for ${atpCurrentSku} (Qty: ${document.getElementById('atp-qty-input').value}).`);
+    }
+
+    function atpRaisePR() {
+      if (!atpCurrentSku) return;
+      showToast('warning', 'Purchase Req', `PR request raised for ${atpCurrentSku} to cover shortfall.`);
+    }
+
+    function initAtpPage() { atpSearch(); }
+
     function initCRMLeads() {
       const total = DB.leads.length;
       const won = DB.leads.filter(l => l.status === 'Won').length;
@@ -19461,6 +20384,33 @@
 
     function initComEmail() { /* Static UI */ }
     function initComWhatsApp() { /* Static UI */ }
+
+    /* ── Customer 360 Logic ── */
+    function openC360Panel(name, seg, ltv, annual, cluster, rfm, trend) {
+      document.getElementById('c360-panel-name').textContent = name;
+      document.getElementById('c360-panel-seg').textContent = seg;
+      document.getElementById('c360-panel-ltv').textContent = ltv;
+      document.getElementById('c360-panel-annual').textContent = annual;
+      const cl = document.getElementById('c360-panel-cluster');
+      cl.textContent = cluster;
+      cl.className = 'score-h'; // default
+      if (cluster === 'At Risk') cl.className = 'score-l';
+      if (cluster === 'Loyal') cl.className = 'score-m';
+
+      document.getElementById('c360-panel-rfm').textContent = rfm;
+      document.getElementById('c360-panel-trend').innerHTML = trend.includes('Growing')
+        ? '<i class="ti ti-trending-up"></i> Growing'
+        : (trend.includes('Declining') ? '<i class="ti ti-trending-down"></i> Declining' : 'Stable');
+      document.getElementById('c360-panel-trend').style.color = trend.includes('Growing') ? '#16A34A' : (trend.includes('Declining') ? '#DC2626' : '#5A7080');
+
+      document.getElementById('c360-overlay').classList.add('open');
+      document.getElementById('c360-drawer').classList.add('open');
+    }
+
+    function closeC360Panel() {
+      document.getElementById('c360-overlay').classList.remove('open');
+      document.getElementById('c360-drawer').classList.remove('open');
+    }
   </script>
 
   <!-- ═══════════════════════════════════════════
