@@ -4659,17 +4659,14 @@
               <i class="ti ti-building-warehouse nav-icon"></i>
               <span class="nav-text">Warehouses</span>
             </div>
-            <div class="nav-item" data-page="inv-dashboard" onclick="navigate('inv-dashboard',this)">
-              <i class="ti ti-chart-area nav-icon"></i>
-              <span class="nav-text">Stock Dashboard</span>
-            </div>
+
             <div class="nav-item" data-page="inv-stock" onclick="navigate('inv-stock',this)">
               <i class="ti ti-list-details nav-icon"></i>
               <span class="nav-text">Stock List</span>
             </div>
             <div class="nav-item" data-page="inv-ledger" onclick="navigate('inv-ledger',this)">
               <i class="ti ti-book nav-icon"></i>
-              <span class="nav-text">Inventory Ledger</span>
+              <span class="nav-text">Stock Movements</span>
             </div>
             <div class="nav-item" data-page="inv-adjustment" onclick="navigate('inv-adjustment',this)">
               <i class="ti ti-adjustments nav-icon"></i>
@@ -4679,18 +4676,8 @@
               <i class="ti ti-transfer nav-icon"></i>
               <span class="nav-text">Stock Transfer</span>
             </div>
-            <div class="nav-item" data-page="inv-opening" onclick="navigate('inv-opening',this)">
-              <i class="ti ti-database-import nav-icon"></i>
-              <span class="nav-text">Opening Stock</span>
-            </div>
-            <div class="nav-item" data-page="inv-batch" onclick="navigate('inv-batch',this)">
-              <i class="ti ti-layers-difference nav-icon"></i>
-              <span class="nav-text">Batch Tracking</span>
-            </div>
-            <div class="nav-item" data-page="inv-serial" onclick="navigate('inv-serial',this)">
-              <i class="ti ti-barcode nav-icon"></i>
-              <span class="nav-text">Serial Tracking</span>
-            </div>
+
+
             <div class="nav-item" data-page="inv-lowstock" onclick="navigate('inv-lowstock',this)">
               <i class="ti ti-alert-triangle nav-icon"></i>
               <span class="nav-text">Low Stock Report</span>
@@ -5887,7 +5874,7 @@
           <div class="page" id="page-inv-ledger">
             <div class="page-header">
               <div>
-                <div class="page-title">Inventory Ledger</div>
+                <div class="page-title">Stock Movements</div>
                 <div class="page-sub">Full transaction history — every stock movement</div>
               </div>
               <div class="page-actions"><button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
@@ -12071,7 +12058,7 @@
       // Inventory
       'inv-dashboard': { title: 'Stock Dashboard', crumbs: ['Inventory', 'Stock Dashboard'], module: 'inventory' },
       'inv-stock': { title: 'Stock List', crumbs: ['Inventory', 'Stock List'], module: 'inventory' },
-      'inv-ledger': { title: 'Inventory Ledger', crumbs: ['Inventory', 'Ledger'], module: 'inventory' },
+      'inv-ledger': { title: 'Stock Movements', crumbs: ['Inventory', 'Stock Movements'], module: 'inventory' },
       'inv-adjustment': { title: 'Stock Adjustment', crumbs: ['Inventory', 'Adjustment'], module: 'inventory' },
       'inv-transfer': { title: 'Stock Transfer', crumbs: ['Inventory', 'Transfer'], module: 'inventory' },
       'inv-opening': { title: 'Opening Stock', crumbs: ['Inventory', 'Opening Stock'], module: 'inventory' },
