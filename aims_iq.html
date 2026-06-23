@@ -7751,7 +7751,7 @@
                 <div class="page-title">Opportunities</div>
                 <div class="page-sub">Qualified deals in pipeline</div>
               </div>
-              <button class="btn btn-primary" onclick="openModal('modal-crm-opportunity')"><i class="ti ti-plus"></i>
+              <button class="btn btn-primary" onclick="openNewOppPanel()"><i class="ti ti-plus"></i>
                 New Opportunity</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="crm-opp-kpi"></div>
@@ -10736,45 +10736,54 @@
           </div>
 
           <div class="modal-wrap" id="modal-crm-opportunity">
-            <div class="modal modal-md">
+            <div class="modal modal-xl">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-briefcase"></i> New Opportunity</div>
-                <button class="modal-close" onclick="closeModal('modal-crm-opportunity')"><i
-                    class="ti ti-x"></i></button>
+                <button class="modal-close" onclick="closeModal('modal-crm-opportunity')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-grid-2">
-                  <div class="form-group"><label class="form-label">Title *</label><input class="form-control"
-                      id="mcopp-title" placeholder="Q4 Enterprise Deal"></div>
-                  <div class="form-group"><label class="form-label">Company</label><input class="form-control"
-                      id="mcopp-company" placeholder="Acme Corp"></div>
-                  <div class="form-group"><label class="form-label">Value (₹) *</label><input class="form-control"
-                      type="number" id="mcopp-value" placeholder="500000"></div>
+                <div class="form-grid-2 mb-4">
+                  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="mcopp-title" placeholder="Q4 Enterprise Deal"></div>
+                  <div class="form-group"><label class="form-label">Company</label><input class="form-control" id="mcopp-company" placeholder="Acme Corp"></div>
                   <div class="form-group"><label class="form-label">Stage</label>
                     <select class="form-control" id="mcopp-stage">
-                      <option>Prospect</option>
-                      <option>Qualification</option>
-                      <option>Proposal</option>
-                      <option>Negotiation</option>
-                      <option>Closed Won</option>
-                      <option>Closed Lost</option>
+                      <option>Prospect</option><option>Qualification</option><option>Proposal</option>
+                      <option>Negotiation</option><option>Closed Won</option><option>Closed Lost</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Probability %</label><input class="form-control"
-                      type="number" id="mcopp-prob" min="0" max="100" placeholder="60"></div>
-                  <div class="form-group"><label class="form-label">Expected Close</label><input class="form-control"
-                      type="date" id="mcopp-close"></div>
+                  <div class="form-group"><label class="form-label">Probability %</label><input class="form-control" type="number" id="mcopp-prob" min="0" max="100" placeholder="60"></div>
+                  <div class="form-group"><label class="form-label">Expected Close</label><input class="form-control" type="date" id="mcopp-close"></div>
                   <div class="form-group"><label class="form-label">Owner</label>
-                    <select class="form-control" id="mcopp-owner">
-                      <option value="">Select…</option>
-                    </select>
+                    <select class="form-control" id="mcopp-owner"><option value="">Select…</option></select>
+                  </div>
+                </div>
+                <div class="divider mb-3"></div>
+                <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead><tr><th>Item / Product</th><th>Qty</th><th>Rate (₹)</th><th>Amount (₹)</th><th></th></tr></thead>
+                    <tbody id="mcopp-items-body">
+                      <tr>
+                        <td><input class="form-control" placeholder="Item name" oninput="moppCalcTotals()" style="min-width:200px;"></td>
+                        <td><input type="number" class="form-control" value="1" min="1" style="width:70px;" oninput="moppCalcTotals()"></td>
+                        <td><input type="number" class="form-control" value="0" style="width:110px;" oninput="moppCalcTotals()"></td>
+                        <td class="amount-cell mopp-amt">₹0</td>
+                        <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();moppCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
+                  <button class="btn btn-ghost" onclick="moppAddRow()"><i class="ti ti-plus"></i> Add Item</button>
+                  <div style="text-align:right;font-size:13px;color:var(--tx-2);">
+                    Subtotal: <b id="mopp-subtotal">₹0</b> &nbsp;|&nbsp; GST (18%): <b id="mopp-tax">₹0</b>
+                    &nbsp;|&nbsp; <span style="font-size:15px;font-weight:800;color:var(--navy);">Total: <span id="mopp-total">₹0</span></span>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-opportunity')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveOpportunity()"><i class="ti ti-check"></i> Save
-                  Opportunity</button>
+                <button class="btn btn-primary" onclick="saveOpportunity()"><i class="ti ti-check"></i> Save Opportunity</button>
               </div>
             </div>
           </div>
@@ -13387,18 +13396,26 @@
     /* ─────────────────────────────────────────────────────
        CRM OPPORTUNITIES — 25
        ───────────────────────────────────────────────────── */
+    const OPP_ITEM_NAMES = ['Industrial Pump Set','HDPE Pipes (100m)','Control Panel Unit','Solar Inverter 5KW','Compressor System','Valve Assembly Kit','Steel Fabrication','Electrical Wiring Bundle','Filtration Unit','Generator Set 25KVA','Conveyor Belt System','Hydraulic Press','Fire Safety Equipment','CCTV System (16ch)','Water Treatment Plant'];
     DB.opportunities = Array.from({ length: 25 }, (_, i) => {
-      const lead = DB.leads[i % DB.leads.length];
+      const lead  = DB.leads[i % DB.leads.length];
+      const items = Array.from({ length: si(1, 4) }, () => {
+        const qty  = si(1, 20);
+        const rate = si(5000, 150000);
+        return { name: spick(OPP_ITEM_NAMES), qty, rate };
+      });
+      const sub   = items.reduce((s, it) => s + it.qty * it.rate, 0);
       return {
-        id: `OPP-${String(i + 1).padStart(3, '0')}`,
-        name: lead.name + ' — ' + spick(['Bulk Order', 'Annual Contract', 'Project Supply', 'Service Agreement', 'Framework Deal']),
-        customer: lead.name,
-        value: si(100000, 5000000),
-        stage: spick(['Qualification', 'Needs Analysis', 'Proposal', 'Negotiation', 'Closing']),
+        id:          `OPP-${String(i + 1).padStart(3, '0')}`,
+        name:        lead.name + ' — ' + spick(['Bulk Order', 'Annual Contract', 'Project Supply', 'Service Agreement', 'Framework Deal']),
+        customer:    lead.name,
+        value:       Math.round(sub * 1.18),
+        stage:       spick(['Qualification', 'Needs Analysis', 'Proposal', 'Negotiation', 'Closing']),
         probability: si(20, 90),
-        closeDate: new Date(Date.now() + si(7, 90) * 86400000).toISOString(),
-        assignedTo: spick(DB.employees).name,
-        createdAt: new Date(Date.now() - si(5, 60) * 86400000).toISOString(),
+        closeDate:   new Date(Date.now() + si(7, 90) * 86400000).toISOString(),
+        assignedTo:  spick(DB.employees).name,
+        createdAt:   new Date(Date.now() - si(5, 60) * 86400000).toISOString(),
+        items,
       };
     });
 
@@ -17323,7 +17340,13 @@
           <div style="background:#F7F9FB;border:1px solid #E4E7EC;border-top:none;border-radius:0 0 6px 6px;min-height:120px;padding:8px;display:flex;flex-direction:column;gap:6px;">
             ${leads.slice(0, 4).map(l => `
               <div style="background:#fff;border:1px solid #E4E7EC;border-radius:6px;padding:8px 10px;cursor:pointer;" onclick="openLeadPanel('${l.id}')">
-                <div style="font-size:12px;font-weight:600;color:#0F1C2E;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.name}</div>
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:4px;">
+                  <div style="font-size:12px;font-weight:600;color:#0F1C2E;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${l.name}</div>
+                  <button title="Convert to Opportunity" onclick="event.stopPropagation();convertLeadToOpportunity('${l.id}')"
+                    style="background:none;border:none;cursor:pointer;padding:0;line-height:1;flex-shrink:0;">
+                    <i class="ti ti-arrow-right-circle" style="color:#C9A84C;font-size:14px;"></i>
+                  </button>
+                </div>
                 <div style="font-size:11px;color:#C9A84C;font-weight:700;">₹${fmt(l.value)}</div>
                 <div style="font-size:10px;color:#9AACBE;margin-top:2px;">${l.assignedTo.split(' ')[0]}</div>
               </div>`).join('')}
@@ -17377,6 +17400,24 @@
       document.getElementById('lead-side-panel').style.right = '-70vw';
       document.getElementById('lead-panel-overlay').style.display = 'none';
     }
+
+    function convertLeadToOpportunity(id) {
+      const lead = DB.leads.find(l => l.id === id);
+      if (!lead) return;
+      navigate('crm-opportunities', null);
+      setTimeout(() => {
+        const stageMap = { New:'Prospect', Contacted:'Qualification', Qualified:'Qualification',
+                           Proposal:'Proposal', Negotiation:'Negotiation' };
+        openNewOppPanel();
+        document.getElementById('osp-title').value   = lead.name + ' — Opportunity';
+        document.getElementById('osp-company').value = lead.name;
+        document.getElementById('osp-avatar').textContent = lead.name.charAt(0).toUpperCase();
+        document.getElementById('osp-stage').value   = stageMap[lead.status] || 'Prospect';
+        document.getElementById('osp-prob').value    = lead.probability || 50;
+        _ospPopulateOwner(lead.assignedTo);
+      }, 150);
+    }
+
     function switchLspTab(tab, btn) {
       document.querySelectorAll('#lead-side-panel .lsp-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('#lead-side-panel .lsp-panel').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
@@ -17497,7 +17538,7 @@
         <td class="text-muted" style="font-size:11px;">${fmtDate(l.lastContact)}</td>
         <td onclick="event.stopPropagation()">
           <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" title="Convert to Opportunity" onclick="showToast('success','Converted','Lead converted to opportunity.')"><i class="ti ti-arrow-right-circle" style="color:var(--gold);"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Convert to Opportunity" onclick="convertLeadToOpportunity('${l.id}')"><i class="ti ti-arrow-right-circle" style="color:var(--gold);"></i></button>
           </div>
         </td>
       </tr>`).join('');
@@ -17553,7 +17594,7 @@
       tbody.innerHTML = slice.map(o => {
         const prob_cls = o.probability >= 70 ? 'green' : o.probability >= 40 ? 'amber' : 'red';
         return `
-      <tr>
+      <tr style="cursor:pointer;" onclick="openOppPanel('${o.id}')">
         <td><span class="id-cell">${o.id}</span></td>
         <td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.name}</td>
         <td class="text-secondary" style="font-size:12px;">${o.customer}</td>
@@ -17562,19 +17603,275 @@
         <td><span class="badge badge-${prob_cls} no-dot">${o.probability}%</span></td>
         <td class="text-muted" style="font-size:11px;">${fmtDate(o.closeDate)}</td>
         <td class="text-secondary" style="font-size:12px;">${o.assignedTo}</td>
-        <td>
-          <button class="btn btn-ghost btn-icon-sm" onclick="showToast('success','Won','Opportunity marked Closed Won!')"><i class="ti ti-trophy" style="color:var(--green);"></i></button>
+        <td onclick="event.stopPropagation()">
+          <button class="btn btn-ghost btn-icon-sm" title="Create Sales Quote" onclick="createQuoteFromOpportunity('${o.id}')"><i class="ti ti-file-invoice" style="color:var(--blue);"></i></button>
+          <button class="btn btn-ghost btn-icon-sm" title="Mark Won" onclick="showToast('success','Won','Opportunity marked Closed Won!')"><i class="ti ti-trophy" style="color:var(--green);"></i></button>
         </td>
       </tr>`}).join('');
       renderPagination('crm-opp-pagination', cOppFiltered.length, cOppPage, COPP_PER, `function(p){cOppPage=p;renderOpportunitiesTable()}`);
     }
 
+    function moppAddRow() {
+      const tbody = document.getElementById('mcopp-items-body'); if (!tbody) return;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="form-control" placeholder="Item name" oninput="moppCalcTotals()" style="min-width:200px;"></td>
+        <td><input type="number" class="form-control" value="1" min="1" style="width:70px;" oninput="moppCalcTotals()"></td>
+        <td><input type="number" class="form-control" value="0" style="width:110px;" oninput="moppCalcTotals()"></td>
+        <td class="amount-cell mopp-amt">₹0</td>
+        <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();moppCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function moppCalcTotals() {
+      let sub = 0;
+      document.querySelectorAll('#mcopp-items-body tr').forEach(row => {
+        const inputs = row.querySelectorAll('input[type=number]');
+        const qty  = parseFloat(inputs[0]?.value) || 0;
+        const rate = parseFloat(inputs[1]?.value) || 0;
+        const amt  = qty * rate;
+        sub += amt;
+        const amtEl = row.querySelector('.mopp-amt');
+        if (amtEl) amtEl.textContent = '₹' + fmt(Math.round(amt));
+      });
+      const tax = sub * 0.18;
+      const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = '₹' + fmt(Math.round(v)); };
+      el('mopp-subtotal', sub); el('mopp-tax', tax); el('mopp-total', sub + tax);
+      const valEl = document.getElementById('mcopp-value');
+      if (valEl) valEl.value = Math.round(sub + tax);
+    }
+
+    function _moppGetItems() {
+      const items = [];
+      document.querySelectorAll('#mcopp-items-body tr').forEach(row => {
+        const nameEl = row.querySelector('input[type=text],input:not([type])');
+        const inputs  = row.querySelectorAll('input[type=number]');
+        const name = nameEl?.value?.trim();
+        if (!name) return;
+        items.push({ name, qty: parseFloat(inputs[0]?.value)||1, rate: parseFloat(inputs[1]?.value)||0 });
+      });
+      return items;
+    }
+
     function saveOpportunity() {
-      const title = document.getElementById('mcopp-title')?.value;
-      const val = document.getElementById('mcopp-value')?.value;
-      if (!title || !val) { showToast('error', 'Validation', 'Fill required fields.'); return; }
+      const title   = document.getElementById('mcopp-title')?.value?.trim();
+      const company = document.getElementById('mcopp-company')?.value?.trim();
+      if (!title) { showToast('error','Validation','Title is required.'); return; }
+      const items = _moppGetItems();
+      const totalVal = items.reduce((s, i) => s + i.qty * i.rate, 0) * 1.18;
+      const opp = {
+        id:          'OPP-' + Date.now(),
+        name:        title,
+        customer:    company || title,
+        value:       Math.round(totalVal) || parseInt(document.getElementById('mcopp-value')?.value) || 0,
+        stage:       document.getElementById('mcopp-stage')?.value || 'Prospect',
+        probability: parseInt(document.getElementById('mcopp-prob')?.value) || 50,
+        closeDate:   document.getElementById('mcopp-close')?.value || '',
+        assignedTo:  document.getElementById('mcopp-owner')?.selectedOptions[0]?.text || '',
+        items
+      };
+      DB.opportunities.unshift(opp);
       closeModal('modal-crm-opportunity');
-      showToast('success', 'Opportunity Saved', `${title} added to pipeline.`);
+      /* reset items table */
+      const tbody = document.getElementById('mcopp-items-body');
+      if (tbody) tbody.innerHTML = `<tr>
+        <td><input class="form-control" placeholder="Item name" oninput="moppCalcTotals()" style="min-width:200px;"></td>
+        <td><input type="number" class="form-control" value="1" min="1" style="width:70px;" oninput="moppCalcTotals()"></td>
+        <td><input type="number" class="form-control" value="0" style="width:110px;" oninput="moppCalcTotals()"></td>
+        <td class="amount-cell mopp-amt">₹0</td><td></td></tr>`;
+      ['mopp-subtotal','mopp-tax','mopp-total'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent='₹0'; });
+      initCRMOpportunities();
+      showToast('success','Opportunity Saved', `${title} added to pipeline.`);
+    }
+
+    /* ── Opportunity panel helpers ── */
+    function _ospPopulateOwner(val) {
+      const sel = document.getElementById('osp-owner');
+      if (!sel) return;
+      if (sel.options.length <= 1) DB.employees.slice(0,20).forEach(e => sel.add(new Option(e.name, e.name)));
+      sel.value = val || '';
+    }
+
+    function ospUpdateAvatar() {
+      const v = (document.getElementById('osp-company')?.value || document.getElementById('osp-title')?.value || '?');
+      document.getElementById('osp-avatar').textContent = v.charAt(0).toUpperCase();
+    }
+
+    function ospUpdateStageBadge() {
+      const sel = document.getElementById('osp-stage');
+      const clsMap = { Prospect:'gray', Qualification:'blue', 'Needs Analysis':'blue',
+                       Proposal:'amber', Negotiation:'amber', Closing:'green',
+                       'Closed Won':'green', 'Closed Lost':'red' };
+      sel.style.background = '';
+      sel.style.color = '';
+    }
+
+    function ospAddRow(name='', qty=1, rate=0) {
+      const tbody = document.getElementById('osp-items-body');
+      if (!tbody) return;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input class="osp-item-input" value="${name}" placeholder="Item name" oninput="ospCalcTotals()"></td>
+        <td><input class="osp-item-input" type="number" value="${qty}" min="1" style="width:55px;text-align:center;" oninput="ospCalcTotals()"></td>
+        <td><input class="osp-item-input" type="number" value="${rate}" style="width:100px;text-align:right;" oninput="ospCalcTotals()"></td>
+        <td style="text-align:right;font-weight:600;color:#0A1830;" class="osp-amt">₹${fmt(Math.round(qty*rate))}</td>
+        <td><button style="background:none;border:none;cursor:pointer;padding:2px 4px;" onclick="this.closest('tr').remove();ospCalcTotals()"><i class="ti ti-trash" style="color:#E53935;font-size:13px;"></i></button></td>`;
+      tbody.appendChild(tr);
+      ospCalcTotals();
+    }
+
+    function ospCalcTotals() {
+      let sub = 0;
+      document.querySelectorAll('#osp-items-body tr').forEach(row => {
+        const inputs = row.querySelectorAll('input[type=number]');
+        const qty  = parseFloat(inputs[0]?.value) || 0;
+        const rate = parseFloat(inputs[1]?.value) || 0;
+        const amt  = qty * rate;
+        sub += amt;
+        const amtEl = row.querySelector('.osp-amt');
+        if (amtEl) amtEl.textContent = '₹' + fmt(Math.round(amt));
+      });
+      const tax = sub * 0.18;
+      const el = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = '₹' + fmt(Math.round(v)); };
+      el('osp-subtotal', sub); el('osp-tax', tax); el('osp-total', sub + tax);
+      const vd = document.getElementById('osp-value-display');
+      if (vd) vd.textContent = '₹' + fmt(Math.round(sub + tax));
+    }
+
+    function _ospOpen() {
+      document.getElementById('opp-side-panel').style.right = '0';
+      document.getElementById('opp-panel-overlay').style.display = 'block';
+    }
+
+    function openNewOppPanel() {
+      window._ospCurrentId = null;
+      document.getElementById('osp-title').value   = '';
+      document.getElementById('osp-company').value = '';
+      document.getElementById('osp-avatar').textContent = '+';
+      document.getElementById('osp-stage').value   = 'Prospect';
+      document.getElementById('osp-prob').value    = '';
+      document.getElementById('osp-close').value   = '';
+      document.getElementById('osp-value-display').textContent = '₹0';
+      document.getElementById('osp-items-body').innerHTML = '';
+      document.getElementById('osp-subtotal').textContent = '₹0';
+      document.getElementById('osp-tax').textContent      = '₹0';
+      document.getElementById('osp-total').textContent    = '₹0';
+      document.getElementById('osp-save-label').textContent = 'Save Opportunity';
+      document.getElementById('osp-quote-btn').style.display = 'none';
+      document.getElementById('osp-won-btn').style.display   = 'none';
+      _ospPopulateOwner('');
+      ospAddRow();
+      _ospOpen();
+    }
+
+    function openOppPanel(id) {
+      const opp = DB.opportunities.find(o => o.id === id);
+      if (!opp) return;
+      window._ospCurrentId = id;
+      document.getElementById('osp-avatar').textContent  = (opp.customer||opp.name).charAt(0).toUpperCase();
+      document.getElementById('osp-title').value         = opp.name;
+      document.getElementById('osp-company').value       = opp.customer || '';
+      document.getElementById('osp-stage').value         = opp.stage || 'Prospect';
+      document.getElementById('osp-prob').value          = opp.probability || '';
+      document.getElementById('osp-close').value         = opp.closeDate ? opp.closeDate.slice(0,10) : '';
+      document.getElementById('osp-value-display').textContent = '₹' + fmt(opp.value);
+      document.getElementById('osp-save-label').textContent    = 'Save Changes';
+      document.getElementById('osp-quote-btn').style.display   = '';
+      document.getElementById('osp-won-btn').style.display     = '';
+      _ospPopulateOwner(opp.assignedTo);
+      /* Populate editable items */
+      document.getElementById('osp-items-body').innerHTML = '';
+      (opp.items || []).forEach(it => ospAddRow(it.name, it.qty, it.rate));
+      if (!(opp.items||[]).length) ospAddRow();
+      _ospOpen();
+    }
+
+    function closeOppPanel() {
+      document.getElementById('opp-side-panel').style.right = '-70vw';
+      document.getElementById('opp-panel-overlay').style.display = 'none';
+    }
+
+    function ospSave() {
+      const title = document.getElementById('osp-title').value.trim();
+      if (!title) { showToast('warn','Required','Please enter an opportunity title.'); return; }
+      const items = [];
+      document.querySelectorAll('#osp-items-body tr').forEach(row => {
+        const nameEl = row.querySelector('input:not([type=number])');
+        const nums   = row.querySelectorAll('input[type=number]');
+        const name   = nameEl?.value?.trim();
+        if (!name) return;
+        items.push({ name, qty: parseFloat(nums[0]?.value)||1, rate: parseFloat(nums[1]?.value)||0 });
+      });
+      const sub   = items.reduce((s, it) => s + it.qty * it.rate, 0);
+      const total = Math.round(sub * 1.18);
+      if (window._ospCurrentId) {
+        const opp = DB.opportunities.find(o => o.id === window._ospCurrentId);
+        if (opp) {
+          opp.name        = title;
+          opp.customer    = document.getElementById('osp-company').value.trim() || title;
+          opp.stage       = document.getElementById('osp-stage').value;
+          opp.probability = parseInt(document.getElementById('osp-prob').value) || opp.probability;
+          opp.closeDate   = document.getElementById('osp-close').value;
+          opp.assignedTo  = document.getElementById('osp-owner').value;
+          opp.value       = total;
+          opp.items       = items;
+        }
+        showToast('success','Saved','Opportunity updated.');
+      } else {
+        DB.opportunities.unshift({
+          id:          'OPP-' + Date.now(),
+          name:        title,
+          customer:    document.getElementById('osp-company').value.trim() || title,
+          stage:       document.getElementById('osp-stage').value,
+          probability: parseInt(document.getElementById('osp-prob').value) || 50,
+          closeDate:   document.getElementById('osp-close').value,
+          assignedTo:  document.getElementById('osp-owner').value,
+          value:       total,
+          items,
+          createdAt:   new Date().toISOString(),
+        });
+        showToast('success','Created',`${title} added to pipeline.`);
+      }
+      closeOppPanel();
+      if (typeof initCRMOpportunities === 'function') initCRMOpportunities();
+    }
+
+    function createQuoteFromOpportunity(id) {
+      const opp = DB.opportunities.find(o => o.id === id);
+      if (!opp) return;
+      navigate('sal-quotations', null);
+      setTimeout(() => {
+        /* Set customer */
+        const custEl = document.getElementById('mquo-customer');
+        if (custEl) Array.from(custEl.options).forEach(o => { if (o.text === opp.customer) custEl.value = o.value; });
+        /* Set date + valid till (30 days) */
+        const today = new Date();
+        const valid = new Date(today); valid.setDate(valid.getDate() + 30);
+        const fmt8 = d => d.toISOString().slice(0,10);
+        const set = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
+        set('mquo-date',  fmt8(today));
+        set('mquo-valid', fmt8(valid));
+        set('mquo-notes', `From Opportunity: ${opp.name}`);
+        /* Populate line items from opportunity */
+        const tbody = document.getElementById('mquo-items-body');
+        if (tbody && opp.items && opp.items.length) {
+          tbody.innerHTML = '';
+          opp.items.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><select class="form-control" onchange="mquoCalc(this)" style="min-width:200px;">
+                    <option value="">${item.name}</option></select></td>
+              <td><input type="number" class="form-control" style="width:70px;" value="${item.qty}" min="1" oninput="mquoCalcTotals()"></td>
+              <td><input type="number" class="form-control" style="width:100px;" value="${item.rate}" oninput="mquoCalcTotals()"></td>
+              <td><input type="number" class="form-control" style="width:60px;" value="0" min="0" max="100" oninput="mquoCalcTotals()"></td>
+              <td class="amount-cell mquo-amt">₹${fmt(Math.round(item.qty * item.rate))}</td>
+              <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mquoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
+            tbody.appendChild(tr);
+          });
+          if (typeof mquoCalcTotals === 'function') mquoCalcTotals();
+        }
+        openModal('modal-sal-quotation');
+      }, 150);
     }
 
     /* ─── CRM ACTIVITIES ─── */
@@ -19573,6 +19870,130 @@
       font-size: 12px;
     }
     .lsp-empty i { font-size: 32px; display: block; margin-bottom: 8px; }
+  </style>
+
+  <!-- ── Opportunity Side Panel (inline editable) ── -->
+  <div id="opp-panel-overlay" onclick="closeOppPanel()" style="display:none;position:fixed;inset:0;z-index:1099;"></div>
+  <div id="opp-side-panel" style="position:fixed;top:0;right:-70vw;width:70vw;height:100vh;
+       background:#F8FBFF;z-index:1100;
+       box-shadow:-6px 0 40px rgba(10,40,90,0.22);
+       transition:right 0.3s cubic-bezier(0.4,0,0.2,1);
+       display:flex;flex-direction:column;border-left:2px solid #AECAE8;">
+
+    <!-- ── Header ── -->
+    <div style="padding:14px 24px 12px;border-bottom:1px solid #AECAE8;
+                background:linear-gradient(180deg,#FAFCFF,#EEF4FF);flex-shrink:0;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+          <div id="osp-avatar" style="width:44px;height:44px;border-radius:12px;flex-shrink:0;
+               background:linear-gradient(145deg,#7C3AED,#4338CA);color:#fff;font-size:18px;font-weight:700;
+               display:flex;align-items:center;justify-content:center;
+               box-shadow:0 3px 10px rgba(124,58,237,0.35);">W</div>
+          <div style="flex:1;min-width:0;">
+            <input id="osp-title" placeholder="Opportunity title…"
+              style="font-size:15px;font-weight:700;color:#0A1830;border:none;background:transparent;
+                     outline:none;width:100%;padding:0;margin-bottom:3px;"
+              oninput="ospUpdateAvatar()">
+            <input id="osp-company" placeholder="Company name…"
+              style="font-size:11px;color:#6A88A8;border:none;background:transparent;outline:none;width:100%;padding:0;">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+          <select id="osp-stage" onchange="ospUpdateStageBadge()" class="osp-stage-sel">
+            <option>Prospect</option><option>Qualification</option><option>Needs Analysis</option>
+            <option>Proposal</option><option>Negotiation</option><option>Closing</option>
+            <option>Closed Won</option><option>Closed Lost</option>
+          </select>
+          <button class="btn btn-ghost btn-icon-sm" onclick="closeOppPanel()"><i class="ti ti-x"></i></button>
+        </div>
+      </div>
+
+      <!-- Meta row: probability · close date · owner -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
+          <i class="ti ti-coin" style="color:#7C3AED;"></i>
+          <span id="osp-value-display" style="font-weight:700;color:#0A1830;">₹0</span>
+        </label>
+        <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
+          <i class="ti ti-percent" style="color:#7C3AED;"></i>
+          <input id="osp-prob" type="number" min="0" max="100" placeholder="50"
+            style="width:40px;font-size:11px;font-weight:600;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+          <span>% prob</span>
+        </label>
+        <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
+          <i class="ti ti-calendar" style="color:#7C3AED;"></i>
+          <span>Close:</span>
+          <input id="osp-close" type="date"
+            style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+        </label>
+        <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
+          <i class="ti ti-user" style="color:#7C3AED;"></i>
+          <select id="osp-owner" style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+            <option value="">Select owner…</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <!-- ── Body ── -->
+    <div style="flex:1;overflow-y:auto;padding:20px 24px;">
+
+      <!-- Line items -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:700;color:#4A6888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Line Items</div>
+        <div style="border:1px solid #AECAE8;border-radius:8px;overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;">
+            <thead>
+              <tr style="background:#EEF4FF;">
+                <th style="padding:8px 12px;text-align:left;color:#4A6888;font-weight:600;">Item / Product</th>
+                <th style="padding:8px 12px;text-align:center;color:#4A6888;font-weight:600;width:70px;">Qty</th>
+                <th style="padding:8px 12px;text-align:right;color:#4A6888;font-weight:600;width:120px;">Rate (₹)</th>
+                <th style="padding:8px 12px;text-align:right;color:#4A6888;font-weight:600;width:120px;">Amount (₹)</th>
+                <th style="width:32px;"></th>
+              </tr>
+            </thead>
+            <tbody id="osp-items-body"></tbody>
+          </table>
+          <div style="padding:8px 12px;border-top:1px solid #AECAE8;">
+            <button class="btn btn-ghost btn-sm" onclick="ospAddRow()"><i class="ti ti-plus"></i> Add Item</button>
+          </div>
+          <div style="padding:10px 12px;text-align:right;font-size:12px;color:#2A4060;border-top:1px solid #AECAE8;background:#FAFCFF;">
+            Subtotal: <b id="osp-subtotal">₹0</b> &nbsp;|&nbsp; GST (18%): <b id="osp-tax">₹0</b>
+            &nbsp;|&nbsp; <span style="font-size:14px;font-weight:800;color:#0A1830;">Total: <span id="osp-total">₹0</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" onclick="ospSave()">
+          <i class="ti ti-check"></i> <span id="osp-save-label">Save Opportunity</span>
+        </button>
+        <button id="osp-quote-btn" class="btn btn-outline btn-sm" style="display:none;"
+          onclick="closeOppPanel();createQuoteFromOpportunity(window._ospCurrentId)">
+          <i class="ti ti-file-invoice"></i> Create Sales Quote
+        </button>
+        <button id="osp-won-btn" class="btn btn-outline btn-sm" style="display:none;"
+          onclick="showToast('success','Won','Opportunity marked Closed Won!')">
+          <i class="ti ti-trophy"></i> Mark Won
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="closeOppPanel()">Cancel</button>
+      </div>
+    </div>
+  </div><!-- /#opp-side-panel -->
+
+  <style>
+    .osp-stage-sel {
+      font-size:11px;font-weight:700;padding:3px 8px;border-radius:12px;
+      border:1px solid #AECAE8;background:#EEF4FF;color:#1479C9;cursor:pointer;outline:none;
+    }
+    #osp-items-body tr { border-top:1px solid #AECAE8; }
+    #osp-items-body td { padding:6px 8px; }
+    .osp-item-input {
+      border:none;background:transparent;outline:none;font-size:12px;color:#0A1830;width:100%;
+      padding:2px 4px;border-radius:4px;
+    }
+    .osp-item-input:focus { background:#EEF4FF; }
   </style>
 
 </body>
