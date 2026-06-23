@@ -10909,46 +10909,393 @@
             <div class="page-header">
               <div>
                 <div class="page-title">Visit Planner</div>
-                <div class="page-sub">Schedule and optimize sales engineer field visits</div>
+                <div class="page-sub">Priority customer engagements and scheduled health checks — Mon, 23 Jun 2026</div>
               </div>
-              <div class="page-actions"><button class="btn btn-primary" onclick="navigate('crm-assignments')">Plan New
-                  Visit</button></div>
-            </div>
-            <!-- Calendar/Plan Interface (Simplified for Integration) -->
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title">Today's Scheduled Visits</div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Time</th>
-                      <th>Customer</th>
-                      <th>Engineer</th>
-                      <th>Purpose</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>09:00 AM</td>
-                      <td><b>Reliance Industries</b></td>
-                      <td>Ahmed Malik</td>
-                      <td>Safety PPE Demo</td>
-                      <td><span class="badge badge-blue">Scheduled</span></td>
-                    </tr>
-                    <tr>
-                      <td>11:30 AM</td>
-                      <td><b>TATA Steel</b></td>
-                      <td>Fatima Rahman</td>
-                      <td>Contract Renewal</td>
-                      <td><span class="badge badge-green">Completed</span></td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="page-actions">
+                <button id="aims-btn-header-plan" class="btn btn-secondary"
+                  style="font-size:11px;padding:6px 12px;background:#fff;border:1px solid #E7E5E4;color:#DC2626;font-weight:600;display:none;gap:4px;border-radius:8px;cursor:pointer;align-items:center;"
+                  onclick="aimsToggleAIPlan()">
+                  <i class="ti ti-x" style="font-size:13px;"></i> Close AI Plan
+                </button>
               </div>
             </div>
+
+            <!-- Planner / Visit History toggle -->
+            <div style="display:inline-flex;background:#F1F0EE;border:1px solid #E7E5E4;border-radius:9px;padding:3px;gap:2px;margin-bottom:14px;">
+              <button id="aims-vp-tab-planner" onclick="aimsVisitView('planner')"
+                style="font-size:12px;font-weight:600;padding:7px 16px;border:none;border-radius:7px;cursor:pointer;background:#fff;color:#0A1628;box-shadow:0 1px 2px rgba(0,0,0,0.06);display:flex;align-items:center;gap:6px;">
+                <i class="ti ti-calendar-event" style="font-size:13px;"></i>Planner</button>
+              <button id="aims-vp-tab-history" onclick="aimsVisitView('history')"
+                style="font-size:12px;font-weight:600;padding:7px 16px;border:none;border-radius:7px;cursor:pointer;background:transparent;color:#6a7f96;display:flex;align-items:center;gap:6px;">
+                <i class="ti ti-clipboard-check" style="font-size:13px;"></i>Visit History</button>
+            </div>
+
+            <!-- ══ PLANNER VIEW ══ -->
+            <div id="aims-vp-planner">
+
+              <!-- AI Planning Placeholder -->
+              <div id="aims-plan-placeholder"
+                style="padding:80px 40px;text-align:center;background:#fff;border:1px solid #E7E5E4;border-radius:12px;margin-top:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <div style="width:80px;height:80px;background:linear-gradient(135deg,#DC2626 0%,#EF4444 100%);border-radius:24px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 10px 15px -3px rgba(220,38,38,0.25);">
+                  <i class="ti ti-sparkles" style="font-size:40px;color:#fff;"></i>
+                </div>
+                <h2 style="font-size:20px;color:#0A1628;margin-bottom:12px;font-weight:700;">Optimize Your Day with AI</h2>
+                <p style="color:#6a7f96;max-width:440px;margin:0 auto 32px;line-height:1.6;font-size:14px;">
+                  Your daily roadmap is ready to be generated. Click below to prioritize visits based on account health, upcoming renewals, and geographic proximity.
+                </p>
+                <button onclick="aimsToggleAIPlan()"
+                  style="font-size:15px;padding:14px 32px;background:linear-gradient(135deg,#B91C1C,#DC2626);color:#fff;font-weight:700;gap:8px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 4px 12px rgba(220,38,38,0.35);transition:transform .2s;display:inline-flex;align-items:center;"
+                  onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                  <i class="ti ti-sparkles" style="font-size:18px;"></i>Plan with AI
+                </button>
+              </div>
+
+              <div id="aims-plan-content" style="display:none;">
+
+                <!-- KPI strip -->
+                <div class="stat-row" style="margin-bottom:16px;background:transparent;border:none;box-shadow:none;padding:0;">
+                  <div class="stat-mini">
+                    <div class="stat-mini-ico" style="background:#E6F1FB;color:#378ADD;"><i class="ti ti-map-pin"></i></div>
+                    <div><div class="stat-mini-val">5</div><div class="stat-mini-lbl">Visits Scheduled</div></div>
+                  </div>
+                  <div class="stat-mini">
+                    <div class="stat-mini-ico" style="background:#EEEDFE;color:#534AB7;"><i class="ti ti-file-invoice"></i></div>
+                    <div><div class="stat-mini-val">9</div><div class="stat-mini-lbl">Pending Quotes</div></div>
+                  </div>
+                  <div class="stat-mini">
+                    <div class="stat-mini-ico" style="background:#FCEBEB;color:#E24B4A;"><i class="ti ti-alert-triangle"></i></div>
+                    <div><div class="stat-mini-val" style="color:#E24B4A;">4</div><div class="stat-mini-lbl">At-Risk Follow-ups</div></div>
+                  </div>
+                  <div class="stat-mini">
+                    <div class="stat-mini-ico" style="background:#FBF5E8;color:#C9A84C;"><i class="ti ti-phone"></i></div>
+                    <div><div class="stat-mini-val">5</div><div class="stat-mini-lbl">Calls Pending</div></div>
+                  </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start;">
+
+                  <div style="display:flex;flex-direction:column;gap:16px;">
+                    <!-- Visit schedule card -->
+                    <div class="card" style="padding:0;overflow:hidden;">
+                      <div class="card-header" style="padding:14px 16px;border-bottom:1px solid #eef1f5;">
+                        <div class="card-title"><i class="ti ti-calendar-event" style="margin-right:6px;color:#378ADD;"></i>Visit Schedule</div>
+                      </div>
+                      <div style="display:flex;flex-direction:column;">
+
+                        <!-- In progress -->
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;border-left:3px solid #378ADD;">
+                          <div style="text-align:center;min-width:48px;">
+                            <div style="font-size:11px;font-weight:700;color:#378ADD;">10:30</div>
+                            <div style="font-size:10px;color:#9aaabb;">AM</div>
+                          </div>
+                          <div style="width:3px;border-radius:3px;background:#378ADD;flex-shrink:0;"></div>
+                          <div style="flex:1;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                              <div style="font-size:13px;font-weight:600;color:#0A1628;">Reliance Industries</div>
+                              <span class="pill" style="background:#E6F1FB;color:#378ADD;font-size:10px;"><i class="ti ti-clock" style="font-size:10px;margin-right:2px;"></i>Now</span>
+                            </div>
+                            <div style="font-size:11px;color:#6a7f96;">Upsell opportunity — Safety PPE & Lifting · Champions · Mumbai</div>
+                            <div style="display:flex;gap:10px;margin-top:6px;">
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-user" style="font-size:10px;margin-right:3px;"></i>Ravi Kumar</span>
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-map-pin" style="font-size:10px;margin-right:3px;"></i>BKC, Mumbai</span>
+                            </div>
+                          </div>
+                          <span class="score-h" style="align-self:center;">4.8</span>
+                        </div>
+
+                        <!-- At risk -->
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;">
+                          <div style="text-align:center;min-width:48px;">
+                            <div style="font-size:11px;font-weight:700;color:#0A1628;">12:00</div>
+                            <div style="font-size:10px;color:#9aaabb;">PM</div>
+                          </div>
+                          <div style="width:3px;border-radius:3px;background:#E24B4A;flex-shrink:0;"></div>
+                          <div style="flex:1;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                              <div style="font-size:13px;font-weight:600;color:#0A1628;">Bharat Heavy Electricals</div>
+                              <span class="pill pill-red" style="font-size:10px;"><i class="ti ti-alert-triangle" style="font-size:10px;margin-right:2px;"></i>At Risk</span>
+                            </div>
+                            <div style="font-size:11px;color:#6a7f96;">Re-engagement — 65 days silent · Welding Consumables · Pune</div>
+                            <div style="display:flex;gap:10px;margin-top:6px;">
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-user" style="font-size:10px;margin-right:3px;"></i>Priya Singh</span>
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-map-pin" style="font-size:10px;margin-right:3px;"></i>Hinjewadi, Pune</span>
+                            </div>
+                          </div>
+                          <span class="score-l" style="align-self:center;">1.8</span>
+                        </div>
+
+                        <!-- Need attention -->
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;">
+                          <div style="text-align:center;min-width:48px;">
+                            <div style="font-size:11px;font-weight:700;color:#0A1628;">14:30</div>
+                            <div style="font-size:10px;color:#9aaabb;">PM</div>
+                          </div>
+                          <div style="width:3px;border-radius:3px;background:#F59E0B;flex-shrink:0;"></div>
+                          <div style="flex:1;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                              <div style="font-size:13px;font-weight:600;color:#0A1628;">TATA Steel</div>
+                              <span class="pill pill-amber" style="font-size:10px;">Need Attention</span>
+                            </div>
+                            <div style="font-size:11px;color:#6a7f96;">Health check — Abrasives & Hand Tools · Jamshedpur</div>
+                            <div style="display:flex;gap:10px;margin-top:6px;">
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-user" style="font-size:10px;margin-right:3px;"></i>Ravi Kumar</span>
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-map-pin" style="font-size:10px;margin-right:3px;"></i>Jamshedpur Industrial</span>
+                            </div>
+                          </div>
+                          <span class="score-m" style="align-self:center;">2.7</span>
+                        </div>
+
+                        <!-- Call only -->
+                        <div style="display:flex;gap:14px;padding:14px 16px;">
+                          <div style="text-align:center;min-width:48px;">
+                            <div style="font-size:11px;font-weight:700;color:#0A1628;">16:00</div>
+                            <div style="font-size:10px;color:#9aaabb;">PM</div>
+                          </div>
+                          <div style="width:3px;border-radius:3px;background:#9aaabb;flex-shrink:0;"></div>
+                          <div style="flex:1;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+                              <div style="font-size:13px;font-weight:600;color:#0A1628;">L&T Engineering</div>
+                              <span class="pill" style="background:#FBF5E8;color:#7A5C1A;font-size:10px;">Champions</span>
+                            </div>
+                            <div style="font-size:11px;color:#6a7f96;">Monthly check-in call — Lifting Equipment · Chennai</div>
+                            <div style="display:flex;gap:10px;margin-top:6px;">
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-phone" style="font-size:10px;margin-right:3px;"></i>Call only</span>
+                              <span style="font-size:10px;color:#6a7f96;"><i class="ti ti-map-pin" style="font-size:10px;margin-right:3px;"></i>Chennai Industrial</span>
+                            </div>
+                          </div>
+                          <span class="score-h" style="align-self:center;">4.5</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Pending Quotations -->
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title"><i class="ti ti-file-description" style="margin-right:6px;color:#534AB7;"></i>Pending Quotations</div>
+                        <span class="badge badge-blue no-dot">9</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-112</div><div style="font-size:11px;color:#6a7f96;">Apex Industries · Safety Gloves</div></div>
+                          <span class="pill pill-amber">Draft</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-108</div><div style="font-size:11px;color:#6a7f96;">Birla Corp · Welding Rods</div></div>
+                          <span class="pill pill-blue">Pending</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-103</div><div style="font-size:11px;color:#6a7f96;">TATA Steel · Abrasives</div></div>
+                          <span class="pill pill-amber">Draft</span>
+                        </div>
+                      </div>
+                      <div style="padding:14px 16px 16px;">
+                        <button onclick="navigate('sal-quotations')"
+                          style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#534AB7;border:1px solid #EEEDFE;border-radius:7px;cursor:pointer;font-weight:600;">View All Quotes</button>
+                      </div>
+                    </div>
+
+                    <!-- Sales Requirements -->
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title"><i class="ti ti-clipboard-list" style="margin-right:6px;color:#378ADD;"></i>Sales Requirements</div>
+                        <span class="badge badge-amber no-dot">8</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-058</div><div style="font-size:11px;color:#6a7f96;">Godrej Industries · Safety Helmets</div></div>
+                          <span class="pill pill-red">High</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-054</div><div style="font-size:11px;color:#6a7f96;">Reliance Ind. · Grinding Discs</div></div>
+                          <span class="pill pill-blue">Normal</span>
+                        </div>
+                      </div>
+                      <div style="padding:14px 16px 16px;">
+                        <button onclick="navigate('sal-orders')"
+                          style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#378ADD;border:1px solid #E6F1FB;border-radius:7px;cursor:pointer;font-weight:600;">View All Requirements</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right column -->
+                  <div style="display:flex;flex-direction:column;gap:14px;">
+
+                    <!-- Pending tasks -->
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title"><i class="ti ti-checkbox" style="margin-right:6px;color:#C9A84C;"></i>Pending Tasks</div>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:10px;padding:16px;">
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+                          <input type="checkbox" style="margin-top:2px;accent-color:#378ADD;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Send quotation to Bharat Petroleum</div><div style="font-size:11px;color:#9aaabb;">Safety PPE · Due today</div></div>
+                        </label>
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+                          <input type="checkbox" style="margin-top:2px;accent-color:#378ADD;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Follow up on Lifting order — Apex Pvt Ltd</div><div style="font-size:11px;color:#9aaabb;">Lifting Equipment · Overdue 1 day</div></div>
+                        </label>
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+                          <input type="checkbox" style="margin-top:2px;accent-color:#378ADD;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Update RFM score — Mahindra & Mahindra</div><div style="font-size:11px;color:#9aaabb;">Hand Tools · Due today</div></div>
+                        </label>
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+                          <input type="checkbox" checked style="margin-top:2px;accent-color:#1D9E75;">
+                          <div style="text-decoration:line-through;opacity:0.5;">
+                            <div style="font-size:12px;font-weight:600;color:#0A1628;">Log visit report — TATA Steel</div>
+                            <div style="font-size:11px;color:#9aaabb;">Completed 09:00</div>
+                          </div>
+                        </label>
+                        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
+                          <input type="checkbox" style="margin-top:2px;accent-color:#378ADD;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">WhatsApp loyalty offer — Bharat HE</div><div style="font-size:11px;color:#E24B4A;">At Risk · 5% discount campaign</div></div>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- AI hint -->
+                    <div style="background:#0A1628;border:1px solid #2a3a50;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
+                      <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#C9A84C;">
+                        <i class="ti ti-sparkles"></i> AI Priorities for Today
+                      </div>
+                      <div style="font-size:11px;color:#94A3B8;line-height:1.7;">
+                        1. <b style="color:#fff;">Bharat Heavy Electricals</b> — 65 days silent, send WhatsApp offer before visit.<br>
+                        2. <b style="color:#fff;">Reliance Industries</b> — declining trend, pitch Safety PPE bundle during 10:30 visit.<br>
+                        3. <b style="color:#fff;">Apex Industries</b> — quotation pending 4 days, close today or risk losing order.
+                      </div>
+                    </div>
+
+                    <!-- Calls pending -->
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title"><i class="ti ti-phone" style="margin-right:6px;color:#378ADD;"></i>Calls Pending</div>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:10px;padding:16px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Mahindra & Mahindra</div><div style="font-size:11px;color:#9aaabb;">Safety PPE · Declining</div></div>
+                          <button style="font-size:11px;padding:4px 10px;background:#C9A84C;border:none;border-radius:6px;cursor:pointer;color:#0A1628;font-weight:700;" onclick="showToast('info','Calling','Calling Mahindra & Mahindra…')"><i class="ti ti-phone" style="font-size:11px;"></i></button>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Hindustan Unilever</div><div style="font-size:11px;color:#E24B4A;">At Risk · Abrasives</div></div>
+                          <button style="font-size:11px;padding:4px 10px;background:#C9A84C;border:none;border-radius:6px;cursor:pointer;color:#0A1628;font-weight:700;" onclick="showToast('info','Calling','Calling Hindustan Unilever…')"><i class="ti ti-phone" style="font-size:11px;"></i></button>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Birla Corp</div><div style="font-size:11px;color:#9aaabb;">Hibernating · Welding</div></div>
+                          <button style="font-size:11px;padding:4px 10px;background:#C9A84C;border:none;border-radius:6px;cursor:pointer;color:#0A1628;font-weight:700;" onclick="showToast('info','Calling','Calling Birla Corp…')"><i class="ti ti-phone" style="font-size:11px;"></i></button>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Godrej Industries</div><div style="font-size:11px;color:#9aaabb;">Hibernating · Hand Tools</div></div>
+                          <button style="font-size:11px;padding:4px 10px;background:#C9A84C;border:none;border-radius:6px;cursor:pointer;color:#0A1628;font-weight:700;" onclick="showToast('info','Calling','Calling Godrej Industries…')"><i class="ti ti-phone" style="font-size:11px;"></i></button>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                          <div><div style="font-size:12px;font-weight:600;color:#0A1628;">Bharat Petroleum</div><div style="font-size:11px;color:#9aaabb;">New Lead · Safety</div></div>
+                          <button style="font-size:11px;padding:4px 10px;background:#C9A84C;border:none;border-radius:6px;cursor:pointer;color:#0A1628;font-weight:700;" onclick="showToast('info','Calling','Calling Bharat Petroleum…')"><i class="ti ti-phone" style="font-size:11px;"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div><!-- /aims-plan-content -->
+            </div><!-- /aims-vp-planner -->
+
+            <!-- ══ VISIT HISTORY VIEW ══ -->
+            <div id="aims-vp-history" style="display:none;">
+              <div style="margin-bottom:14px;color:#6a7f96;font-size:12px;">Logged field visits — completed customer engagements with notes, competitor intel &amp; GPS verification.</div>
+              <div class="visit-layout">
+                <div>
+                  <div class="filter-bar" style="margin-bottom:10px;">
+                    <span style="font-size:13px;font-weight:600;color:#0A1628;">14 visits this month</span>
+                    <div class="fc on" style="margin-left:auto;">All</div>
+                    <div class="fc">This week</div>
+                    <div class="fc">Today</div>
+                  </div>
+                  <div class="visit-list">
+                    <div class="vc vc-sel" onclick="aimsVisitForm(this,'Reliance Industries','Product pitch',['Safety PPE','Lifting'],'3M','Interested in bulk safety harness order. Budget ₹4.2L. Decision by next Friday.')">
+                      <div class="vc-head">
+                        <div><div class="vc-name">Reliance Industries</div><div class="vc-date">Today, 09:00 AM · BKC, Mumbai</div></div>
+                        <span class="pill pill-green">Completed</span>
+                      </div>
+                      <div class="vc-body">Customer interested in bulk safety harness + PPE kit bundle. Comparing with 3M pricing. Budget approx. ₹4.2 Lakh. Decision expected by next Friday. <strong style="color:#0A1628;">AI summary generated.</strong></div>
+                      <div class="vc-tags">
+                        <div class="vc-tag">Safety PPE</div><div class="vc-tag">Lifting</div><div class="vc-tag">Competitor: 3M</div><div class="vc-tag">GPS verified</div>
+                      </div>
+                    </div>
+                    <div class="vc" onclick="aimsVisitForm(this,'Apex Pvt Ltd','Follow-up',['Welding','Abrasives'],'None','Client wants demo before committing to grinding disc order. Price negotiation ongoing — target ₹1.8L. Send samples by week end.')">
+                      <div class="vc-head">
+                        <div><div class="vc-name">Apex Pvt Ltd</div><div class="vc-date">Yesterday, 3:00 PM · Andheri East, Mumbai</div></div>
+                        <span class="pill pill-amber">Follow-up needed</span>
+                      </div>
+                      <div class="vc-body">Discussed welding consumables bulk order — client wants demo unit before committing. Price negotiation ongoing, target ₹1,80,000. Send samples by end of this week.</div>
+                      <div class="vc-tags">
+                        <div class="vc-tag">Welding</div><div class="vc-tag">Abrasives</div><div class="vc-tag">GPS verified</div>
+                      </div>
+                    </div>
+                    <div class="vc" onclick="aimsVisitForm(this,'Bharat Industries','Product pitch',['Hand Tools','Abrasives'],'None','Introduced new abrasive range. Positive response from procurement — will include in Q3 tender submission.')">
+                      <div class="vc-head">
+                        <div><div class="vc-name">Bharat Industries</div><div class="vc-date">20 Jun · Pune Industrial Zone</div></div>
+                        <span class="pill pill-green">Completed</span>
+                      </div>
+                      <div class="vc-body">Introduced new abrasive grinding discs range. Very positive response from procurement manager — will include in next quarterly tender submission.</div>
+                      <div class="vc-tags">
+                        <div class="vc-tag">Hand Tools</div><div class="vc-tag">Abrasives</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="vp-form-card">
+                    <div class="vp-form-title"><i class="ti ti-pencil" style="font-size:14px;margin-right:6px;vertical-align:-2px;"></i>Log new visit</div>
+                    <div class="fg"><label>Customer</label>
+                      <select class="vf-customer">
+                        <option>Reliance Industries</option>
+                        <option>Apex Pvt Ltd</option>
+                        <option>Bharat Industries</option>
+                        <option>TATA Steel</option>
+                        <option>L&T Engineering</option>
+                      </select>
+                    </div>
+                    <div class="fg"><label>Visit purpose</label>
+                      <select class="vf-purpose">
+                        <option>Product pitch</option>
+                        <option>Follow-up</option>
+                        <option>Quotation delivery</option>
+                        <option>Complaint resolution</option>
+                      </select>
+                    </div>
+                    <div class="fg"><label>Products discussed</label>
+                      <div class="chips-row">
+                        <div class="chip" onclick="this.classList.toggle('sel')">Safety PPE</div>
+                        <div class="chip" onclick="this.classList.toggle('sel')">Welding</div>
+                        <div class="chip" onclick="this.classList.toggle('sel')">Lifting</div>
+                        <div class="chip" onclick="this.classList.toggle('sel')">Abrasives</div>
+                        <div class="chip" onclick="this.classList.toggle('sel')">Hand Tools</div>
+                      </div>
+                    </div>
+                    <div class="fg"><label>Competitor mentioned</label>
+                      <select class="vf-competitor">
+                        <option>None</option>
+                        <option>3M</option>
+                        <option>Honeywell</option>
+                        <option>Bosch</option>
+                        <option>Stanley</option>
+                      </select>
+                    </div>
+                    <div class="fg"><label>Quick notes</label>
+                      <textarea class="vf-notes" placeholder="Enter 2–3 bullet points…"></textarea>
+                    </div>
+                    <div class="gps-bar">
+                      <div class="gps-dot"></div>
+                      <div class="gps-txt">GPS locked · BKC, Mumbai · 19.0760°N, 72.8777°E</div>
+                    </div>
+                    <div class="vp-btn-row">
+                      <button class="btn btn-primary" style="flex:1;" onclick="showToast('success','Visit Logged','Visit report submitted successfully.')">Submit Report</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- /aims-vp-history -->
+
           </div>
 
           <!-- ── CRM: VISIT ASSIGNMENTS ────────────────────── -->
@@ -23654,6 +24001,46 @@
   #ask-ai-panel.open { display:flex !important; }
 </style>
 
+<style>
+  /* ── Visit Planner CSS ── */
+  #page-crm-planner .card-title i { color: inherit; }
+  #page-crm-planner .card { overflow: visible; }
+  .fc { font-size:12px;padding:5px 12px;border-radius:6px;border:1px solid #E7E5E4;background:#fff;color:#6a7f96;cursor:pointer;font-weight:500;transition:all .12s; }
+  .fc:hover { border-color:#C9A84C;color:#C9A84C; }
+  .fc.on { background:#0A1628;color:#C9A84C;border-color:#0A1628; }
+  .visit-layout { display:grid;grid-template-columns:1fr 360px;gap:16px; }
+  .visit-list { display:flex;flex-direction:column;gap:10px; }
+  .vc { background:#fff;border:1px solid #E7E5E4;border-radius:10px;padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s; }
+  .vc:hover { border-color:#C9A84C;box-shadow:0 2px 8px rgba(201,168,76,.12); }
+  .vc.vc-sel { border-color:#C9A84C;box-shadow:0 0 0 3px rgba(201,168,76,.18);background:#FFFDF5; }
+  .vc-head { display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px; }
+  .vc-name { font-size:13px;font-weight:600;color:#0A1628; }
+  .vc-date { font-size:11px;color:#9aaabb;margin-top:2px; }
+  .vc-body { font-size:12px;color:#5a7080;line-height:1.6;margin-bottom:9px; }
+  .vc-tags { display:flex;flex-wrap:wrap;gap:5px; }
+  .vc-tag { font-size:10px;padding:2px 8px;border-radius:5px;background:#f4f6f9;color:#6a7f96;border:1px solid #E7E5E4; }
+  .vp-form-card { background:#fff;border:1px solid #E7E5E4;border-radius:10px;padding:16px; }
+  .vp-form-title { font-size:13px;font-weight:600;color:#0A1628;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #F0EFEC; }
+  .fg { margin-bottom:12px; }
+  .fg label { font-size:11px;color:#6a7f96;font-weight:600;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px; }
+  .fg select,.fg input,.fg textarea { width:100%;font-size:13px;padding:9px 11px;border:1px solid #E7E5E4;border-radius:7px;background:#fff;color:#0A1628;outline:none;transition:border-color .12s; }
+  .fg select:focus,.fg input:focus,.fg textarea:focus { border-color:#C9A84C; }
+  .fg textarea { height:66px;resize:none; }
+  .chips-row { display:flex;flex-wrap:wrap;gap:5px; }
+  .chip { font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid #E7E5E4;background:#f4f6f9;color:#6a7f96;cursor:pointer;transition:all .12s;font-weight:500; }
+  .chip:hover { border-color:#C9A84C; }
+  .chip.sel { background:#0A1628;color:#C9A84C;border-color:#0A1628; }
+  .gps-bar { display:flex;align-items:center;gap:8px;background:#f4f6f9;border:1px solid #E7E5E4;border-radius:7px;padding:8px 10px;margin-bottom:12px; }
+  .gps-dot { width:8px;height:8px;border-radius:50%;background:#1D9E75;flex-shrink:0; }
+  .gps-txt { font-size:11px;color:#5a7080; }
+  .vp-btn-row { display:flex;gap:8px; }
+  .pill { display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap; }
+  .pill-green { background:#D1FAE5;color:#065F46; }
+  .pill-red { background:#FEE2E2;color:#991B1B; }
+  .pill-amber { background:#FEF3C7;color:#92400E; }
+  .pill-blue { background:#DBEAFE;color:#1E40AF; }
+</style>
+
 <script>
   function toggleAskAI() {
     const panel = document.getElementById('ask-ai-panel');
@@ -23839,6 +24226,58 @@
         setTimeout(populateEmpDropdowns, 50);
       }
     });
+
+    /* ── Visit Planner: Plan with AI toggle ── */
+    function aimsToggleAIPlan() {
+      const panel = document.getElementById('aims-plan-content');
+      const placeholder = document.getElementById('aims-plan-placeholder');
+      const headerBtn = document.getElementById('aims-btn-header-plan');
+      const visible = panel.style.display !== 'none';
+      panel.style.display = visible ? 'none' : 'block';
+      if (placeholder) placeholder.style.display = visible ? 'flex' : 'none';
+      if (headerBtn) headerBtn.style.display = visible ? 'none' : 'flex';
+    }
+
+    /* ── Visit Planner: Planner / History tab toggle ── */
+    function aimsVisitView(view) {
+      const planner = document.getElementById('aims-vp-planner');
+      const history = document.getElementById('aims-vp-history');
+      const tabP = document.getElementById('aims-vp-tab-planner');
+      const tabH = document.getElementById('aims-vp-tab-history');
+      const headerBtn = document.getElementById('aims-btn-header-plan');
+      if (view === 'history') {
+        planner.style.display = 'none';
+        history.style.display = 'block';
+        tabH.style.background = '#fff'; tabH.style.color = '#0A1628'; tabH.style.boxShadow = '0 1px 2px rgba(0,0,0,0.06)';
+        tabP.style.background = 'transparent'; tabP.style.color = '#6a7f96'; tabP.style.boxShadow = 'none';
+        if (headerBtn) headerBtn.style.display = 'none';
+      } else {
+        planner.style.display = 'block';
+        history.style.display = 'none';
+        tabP.style.background = '#fff'; tabP.style.color = '#0A1628'; tabP.style.boxShadow = '0 1px 2px rgba(0,0,0,0.06)';
+        tabH.style.background = 'transparent'; tabH.style.color = '#6a7f96'; tabH.style.boxShadow = 'none';
+        const panelVisible = document.getElementById('aims-plan-content').style.display !== 'none';
+        if (headerBtn) headerBtn.style.display = panelVisible ? 'flex' : 'none';
+      }
+    }
+
+    /* ── Visit Planner: fill log form from visit card click ── */
+    function aimsVisitForm(card, customer, purpose, products, competitor, notes) {
+      const layout = card.closest('.visit-layout');
+      layout.querySelectorAll('.vc').forEach(c => c.classList.remove('vc-sel'));
+      card.classList.add('vc-sel');
+      const custSel = layout.querySelector('.vf-customer');
+      if (custSel) Array.from(custSel.options).forEach(o => { o.selected = o.text === customer; });
+      const purSel = layout.querySelector('.vf-purpose');
+      if (purSel) Array.from(purSel.options).forEach(o => { o.selected = o.text === purpose; });
+      layout.querySelectorAll('.chips-row .chip').forEach(c => {
+        c.classList.toggle('sel', products.includes(c.textContent.trim()));
+      });
+      const compSel = layout.querySelector('.vf-competitor');
+      if (compSel) Array.from(compSel.options).forEach(o => { o.selected = o.text === competitor; });
+      const ta = layout.querySelector('.vf-notes');
+      if (ta) ta.value = notes;
+    }
 
   </script>
 
