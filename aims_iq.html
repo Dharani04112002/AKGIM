@@ -1109,7 +1109,7 @@
       gap: 7px;
       background: var(--bg);
       border: 1px solid var(--card-border);
-      border-radius: var(--radius);
+      border-radius: 6px;
       padding: 6px 12px;
       width: 220px;
       transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
@@ -2545,20 +2545,29 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-radius: 20px;
+      background: linear-gradient(180deg, #FAFCFF 0%, #D4E4F4 100%);
+      border: 1px solid #88AACC;
+      border-radius: 6px;
       padding: 6px 14px;
       min-width: 200px;
       flex: 1;
       max-width: 300px;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 3px 8px rgba(10, 40, 90, 0.12),
+        0 1px 3px rgba(10, 40, 90, 0.08);
       transition: all var(--dur-base) cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .filter-search:focus-within {
-      background: #FFFFFF;
-      border-color: var(--sky-blue);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15), 0 2px 4px rgba(0, 0, 0, 0.02);
+      background: linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      border-color: #1479C9;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
     .filter-search i {
@@ -2577,24 +2586,32 @@
       border: none;
       outline: none;
       font-size: var(--fs-sm);
-      color: var(--tx-1);
+      color: #0A1830;
+      font-weight: 500;
       width: 100%;
     }
 
     .filter-search input::placeholder {
-      color: var(--tx-3);
+      color: #7A9AB8;
+      font-weight: 400;
     }
 
     .filter-select,
     .select-sm {
       appearance: none;
-      background: #F8FAFC url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239AACBE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 12px center;
-      background-size: 16px;
-      border: 1px solid #E2E8F0;
-      border-radius: 20px;
+      background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239AACBE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 12px center, linear-gradient(180deg, #FAFCFF 0%, #D4E4F4 100%);
+      background-size: 16px, auto;
+      border: 1px solid #88AACC;
+      border-radius: 6px;
       padding: 6px 32px 6px 14px;
       font-size: var(--fs-sm);
-      color: var(--tx-2);
+      color: #0A1830;
+      font-weight: 600;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 3px 8px rgba(10, 40, 90, 0.12),
+        0 1px 3px rgba(10, 40, 90, 0.08);
       cursor: pointer;
       outline: none;
       transition: all var(--dur-base) cubic-bezier(0.4, 0, 0.2, 1);
@@ -2602,28 +2619,46 @@
 
     .filter-select:focus,
     .select-sm:focus {
-      background-color: #FFFFFF;
-      border-color: var(--sky-blue);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15), 0 2px 4px rgba(0, 0, 0, 0.02);
+      background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231479C9%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 12px center, linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      background-size: 16px, auto;
+      border-color: #1479C9;
+      color: #0A4D8C;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
     .search-input {
-      background: #F8FAFC url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239AACBE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%3E%3C%2Fcircle%3E%3Cline%20x1%3D%2221%22%20y1%3D%2221%22%20x2%3D%2216.65%22%20y2%3D%2216.65%22%3E%3C%2Fline%3E%3C%2Fsvg%3E") no-repeat left 12px center;
-      background-size: 14px;
-      border: 1px solid #E2E8F0;
-      border-radius: 20px;
+      background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239AACBE%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%3E%3C%2Fcircle%3E%3Cline%20x1%3D%2221%22%20y1%3D%2221%22%20x2%3D%2216.65%22%20y2%3D%2216.65%22%3E%3C%2Fline%3E%3C%2Fsvg%3E") no-repeat left 12px center, linear-gradient(180deg, #FAFCFF 0%, #D4E4F4 100%);
+      background-size: 14px, auto;
+      border: 1px solid #88AACC;
+      border-radius: 6px;
       padding: 6px 14px 6px 34px;
       font-size: var(--fs-sm);
-      color: var(--tx-1);
+      color: #0A1830;
+      font-weight: 500;
       outline: none;
       min-width: 180px;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 3px 8px rgba(10, 40, 90, 0.12),
+        0 1px 3px rgba(10, 40, 90, 0.08);
       transition: all var(--dur-base) cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .search-input:focus {
-      background-color: #FFFFFF;
-      border-color: var(--sky-blue);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15), 0 2px 4px rgba(0, 0, 0, 0.02);
+      background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231479C9%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%3E%3C%2Fcircle%3E%3Cline%20x1%3D%2221%22%20y1%3D%2221%22%20x2%3D%2216.65%22%20y2%3D%2216.65%22%3E%3C%2Fline%3E%3C%2Fsvg%3E") no-repeat left 12px center, linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      background-size: 14px, auto;
+      border-color: #1479C9;
+      color: #0A4D8C;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
     .filter-chip {
@@ -2631,7 +2666,7 @@
       align-items: center;
       gap: 5px;
       padding: 5px 12px;
-      border-radius: 20px;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: 600;
       border: 1px solid var(--card-border);
@@ -4302,14 +4337,27 @@
 
     /* ── TOPBAR SEARCH: RECESSED FIELD ── */
     .topbar-search {
-      background: #FFFFFF;
+      background: linear-gradient(180deg, #FAFCFF 0%, #D4E4F4 100%);
       border: 1px solid #88AACC;
-      border-radius: 8px;
+      border-radius: 6px;
       width: 450px;
       margin-left: 0;
       box-shadow:
-        0 2px 6px rgba(10, 40, 90, 0.18) inset,
-        0 1px 0 rgba(255, 255, 255, 0.55);
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 3px 8px rgba(10, 40, 90, 0.12),
+        0 1px 3px rgba(10, 40, 90, 0.08);
+      transition: all var(--dur-base) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .topbar-search:focus-within {
+      background: linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      border-color: #1479C9;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
     .topbar-search input {
@@ -5579,6 +5627,8 @@
                   Product</button>
               </div>
             </div>
+            <!-- KPI Row -->
+            <div class="kpi-grid kpi-grid-4 mb-4" id="prod-kpi-row"></div>
             <!-- Filter Bar -->
             <div class="filter-bar" id="prod-filter-bar">
               <div class="filter-search"><i class="ti ti-search"></i><input type="text"
@@ -5601,9 +5651,6 @@
                 <option value="zero">Out of Stock</option>
               </select>
               <div class="ml-auto" style="display:flex;gap:6px;">
-                <button class="btn btn-outline btn-sm" onclick="filterProducts()"><i class="ti ti-filter"></i>
-                  Filter</button>
-                <button class="btn btn-ghost btn-sm" onclick="clearProdFilters()"><i class="ti ti-x"></i> Clear</button>
               </div>
             </div>
             <!-- Table -->
@@ -14915,6 +14962,7 @@
     let prodFiltered = [];
 
     function initProductsPage() {
+      buildProdKPIs();
       // Populate filter dropdowns
       const catSel = document.getElementById('prod-cat-filter');
       const brnSel = document.getElementById('prod-brand-filter');
@@ -14925,6 +14973,33 @@
         BRANDS.forEach(b => brnSel.add(new Option(b.name, b.name)));
       }
       filterProducts();
+    }
+
+    function buildProdKPIs() {
+      const el = document.getElementById('prod-kpi-row');
+      if (!el) return;
+      const totalVal = fmtCur(SUMMARY.stockValue);
+      const outOfStock = DB.products.filter(p => p.stock === 0).length;
+      const cards = [
+        { label: 'Total Products', val: DB.products.length, icon: 'ti-box', color: 'blue', sub: 'Active catalogue items', dir: 'neutral' },
+        { label: 'Inventory Value', val: totalVal, icon: 'ti-coin', color: 'gold', sub: 'Total stock valuation', dir: 'neutral' },
+        { label: 'Low Stock', val: SUMMARY.lowStockCount, icon: 'ti-alert-triangle', color: 'amber', sub: 'Items below minimum level', dir: 'warn' },
+        { label: 'Out of Stock', val: outOfStock, icon: 'ti-ban', color: 'red', sub: 'Items completely depleted', dir: 'warn' },
+      ];
+      el.innerHTML = cards.map(c => `
+      <div class="kpi-card ${c.color}">
+        <div class="kpi-head">
+          <div>
+            <div class="kpi-label">${c.label}</div>
+            <div class="kpi-val">${c.val}</div>
+          </div>
+          <div class="kpi-icon ${c.color}"><i class="ti ${c.icon}"></i></div>
+        </div>
+        <div class="kpi-sub ${c.dir}">
+          <i class="ti ${c.dir === 'warn' ? 'ti-alert-circle' : 'ti-info-circle'}"></i>
+          ${c.sub}
+        </div>
+      </div>`).join('');
     }
 
     function filterProducts(searchVal) {
