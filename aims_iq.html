@@ -4982,10 +4982,6 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="pur-supplier-ledger" onclick="navigate('pur-supplier-ledger',this)">
-              <i class="ti ti-address-book nav-icon"></i>
-              <span class="nav-text">Supplier Ledger</span>
-            </div>
             <div class="nav-item" data-page="fin-payments" onclick="navigate('fin-payments',this)">
               <i class="ti ti-credit-card nav-icon"></i>
               <span class="nav-text">Payments</span>
@@ -4998,21 +4994,9 @@
               <i class="ti ti-minus-vertical nav-icon"></i>
               <span class="nav-text">Expenses</span>
             </div>
-            <div class="nav-item" data-page="fin-income" onclick="navigate('fin-income',this)">
-              <i class="ti ti-plus nav-icon"></i>
-              <span class="nav-text">Income</span>
-            </div>
-            <div class="nav-item" data-page="fin-pl" onclick="navigate('fin-pl',this)">
-              <i class="ti ti-trending-up nav-icon"></i>
-              <span class="nav-text">Profit &amp; Loss</span>
-            </div>
-            <div class="nav-item" data-page="fin-cashflow" onclick="navigate('fin-cashflow',this)">
-              <i class="ti ti-cash nav-icon"></i>
-              <span class="nav-text">Cash Flow</span>
-            </div>
-            <div class="nav-item" data-page="fin-reports" onclick="navigate('fin-reports',this)">
-              <i class="ti ti-file-analytics nav-icon"></i>
-              <span class="nav-text">Financial Reports</span>
+            <div class="nav-item" data-page="pur-supplier-ledger" onclick="navigate('pur-supplier-ledger',this)">
+              <i class="ti ti-address-book nav-icon"></i>
+              <span class="nav-text">Supplier Ledger</span>
             </div>
             <div class="nav-item" data-page="sal-customer-ledger" onclick="navigate('sal-customer-ledger',this)">
               <i class="ti ti-address-book nav-icon"></i>
@@ -5365,7 +5349,7 @@
                   </div>
                 </div>
 
-                <div class="notif-item" onclick="navigate('fin-reports',null);closeAll()">
+                <div class="notif-item" onclick="closeAll()">
                   <div class="notif-ico" style="background:var(--green-bg); color:var(--green);">
                     <i class="ti ti-check"></i>
                   </div>
@@ -7344,68 +7328,6 @@
             </div>
           </div><!-- /#page-sal-delivery -->
 
-          <!-- ── CUSTOMER LEDGER ────────────────────────── -->
-          <div class="page" id="page-sal-customer-ledger">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Customer Ledger</div>
-                <div class="page-sub">Account statement — receivables, receipts and balances</div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="openModal('modal-sal-receipt')"><i class="ti ti-plus"></i>
-                  Record Receipt</button>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="cl-kpi"></div>
-            <div class="card mb-4">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-filter"></i> Filter by Customer</div>
-              </div>
-              <div class="card-body" style="padding:12px 16px;">
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <select class="form-control" style="max-width:320px;" id="cl-cust-select"
-                    onchange="loadCustomerLedger()">
-                    <option value="">— Select Customer —</option>
-                  </select>
-                  <button class="btn btn-ghost" onclick="loadCustomerLedger()"><i class="ti ti-refresh"></i>
-                    Refresh</button>
-                </div>
-              </div>
-            </div>
-            <div id="cl-content" style="display:none;">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <div class="card-title" id="cl-cust-name">Customer Ledger</div>
-                </div>
-                <div class="card-body" style="padding:16px;">
-                  <div class="detail-grid kpi-grid-4" id="cl-cust-kpi"></div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-list-details"></i> Transaction History</div>
-                </div>
-                <div class="table-wrap">
-                  <table class="data-tbl">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Reference</th>
-                        <th>Type</th>
-                        <th>Debit (₹)</th>
-                        <th>Credit (₹)</th>
-                        <th>Balance (₹)</th>
-                        <th>Method</th>
-                        <th>Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody id="cl-tbody"></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div><!-- /#page-sal-customer-ledger -->
 
           <!-- ══════════════════════════════════════════════
                STEP 13 — FINANCE MODULE
@@ -7548,20 +7470,6 @@
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="fexp-kpi"></div>
-            <div class="grid-2 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-donut"></i> Expenses by Category</div>
-                </div>
-                <div id="chart-exp-cat" style="height:220px;"></div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-bar"></i> Monthly Expense Trend</div>
-                </div>
-                <div id="chart-exp-trend" style="height:220px;"></div>
-              </div>
-            </div>
             <div class="card">
               <div class="card-header">
                 <div class="card-title"><i class="ti ti-receipt"></i> Expense Register <span
@@ -7603,250 +7511,65 @@
             </div>
           </div><!-- /#page-fin-expenses -->
 
-          <!-- ── INCOME ─────────────────────────────────── -->
-          <div class="page" id="page-fin-income">
+          <!-- ── CUSTOMER LEDGER ────────────────────────── -->
+          <div class="page" id="page-sal-customer-ledger">
             <div class="page-header">
               <div>
-                <div class="page-title">Other Income</div>
-                <div class="page-sub">Non-sales income — interest, rent, commission and misc</div>
+                <div class="page-title">Customer Ledger</div>
+                <div class="page-sub">Account statement — receivables, receipts and balances</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary" onclick="openModal('modal-fin-income')"><i class="ti ti-plus"></i> Add
-                  Income</button>
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+                <button class="btn btn-primary" onclick="openModal('modal-sal-receipt')"><i class="ti ti-plus"></i> Record Receipt</button>
               </div>
             </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="finc-kpi"></div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-cash"></i> Income Register <span
-                    class="badge badge-blue no-dot ml-2" id="finc-count">0</span></div>
-                <div class="card-tools" style="display:flex;gap:8px;">
-                  <div class="filter-search"><i class="ti ti-search"></i><input id="finc-search" type="text"
-                      placeholder="Search source, notes…" oninput="filterIncome()"></div>
-                  <select class="form-control" style="width:160px;" id="finc-source-filter" onchange="filterIncome()">
-                    <option value="">All Sources</option>
-                    <option>Interest Income</option>
-                    <option>Rental Income</option>
-                    <option>Commission</option>
-                    <option>Scrap Sale</option>
-                    <option>Service Charges</option>
-                    <option>Miscellaneous</option>
-                  </select>
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Ref #</th>
-                      <th>Source</th>
-                      <th>Amount</th>
-                      <th>Date</th>
-                      <th>Method</th>
-                      <th>Notes</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="finc-tbody"></tbody>
-                </table>
-              </div>
-              <div id="finc-pagination"></div>
-            </div>
-          </div><!-- /#page-fin-income -->
-
-          <!-- ── P&L ────────────────────────────────────── -->
-          <div class="page" id="page-fin-pl">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Profit &amp; Loss Statement</div>
-                <div class="page-sub">Monthly revenue, COGS, gross profit and net profit</div>
-              </div>
-              <div class="page-actions">
-                <div style="display:flex;gap:8px;align-items:center;">
-                  <select class="form-control" style="width:160px;" id="pl-year-select" onchange="renderPL()">
-                    <option value="2025">FY 2025-26</option>
-                    <option value="2024">FY 2024-25</option>
-                  </select>
-                  <button class="btn btn-outline" onclick="showToast('default','Export','P&L exported.')"><i
-                      class="ti ti-download"></i> Export</button>
-                </div>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="pl-kpi"></div>
-            <div class="grid-2 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-area"></i> Revenue vs COGS vs Profit</div>
-                </div>
-                <div id="chart-pl-trend" style="height:240px;"></div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-bar"></i> Gross Margin by Month</div>
-                </div>
-                <div id="chart-pl-margin" style="height:240px;"></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-table"></i> Monthly P&amp;L Statement</div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Month</th>
-                      <th>Revenue</th>
-                      <th>COGS</th>
-                      <th>Gross Profit</th>
-                      <th>Gross%</th>
-                      <th>OpEx</th>
-                      <th>Net Profit</th>
-                      <th>Net%</th>
-                      <th>Trend</th>
-                    </tr>
-                  </thead>
-                  <tbody id="pl-tbody"></tbody>
-                  <tfoot id="pl-tfoot"></tfoot>
-                </table>
-              </div>
-            </div>
-          </div><!-- /#page-fin-pl -->
-
-          <!-- ── CASH FLOW ──────────────────────────────── -->
-          <div class="page" id="page-fin-cashflow">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Cash Flow</div>
-                <div class="page-sub">Operating, investing and financing activities</div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-outline" onclick="showToast('default','Export','Cash flow exported.')"><i
-                    class="ti ti-download"></i> Export</button>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="cf-kpi"></div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="cl-kpi"></div>
             <div class="card mb-4">
               <div class="card-header">
-                <div class="card-title"><i class="ti ti-chart-area"></i> Cash Position (12 Months)</div>
+                <div class="card-title"><i class="ti ti-filter"></i> Filter by Customer</div>
               </div>
-              <div id="chart-cashflow" style="height:240px;"></div>
+              <div class="card-body" style="padding:12px 16px;">
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <select class="form-control" style="max-width:320px;" id="cl-cust-select" onchange="loadCustomerLedger()">
+                    <option value="">— Select Customer —</option>
+                  </select>
+                  <button class="btn btn-ghost" onclick="loadCustomerLedger()"><i class="ti ti-refresh"></i> Refresh</button>
+                </div>
+              </div>
             </div>
-            <div class="grid-2">
+            <div id="cl-content" style="display:none;">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <div class="card-title" id="cl-cust-name">Customer Ledger</div>
+                </div>
+                <div class="card-body" style="padding:16px;">
+                  <div class="detail-grid kpi-grid-4" id="cl-cust-kpi"></div>
+                </div>
+              </div>
               <div class="card">
                 <div class="card-header">
-                  <div class="card-title"><i class="ti ti-arrow-up-circle" style="color:var(--green)"></i> Cash Inflows
-                  </div>
+                  <div class="card-title"><i class="ti ti-list-details"></i> Transaction History</div>
                 </div>
                 <div class="table-wrap">
                   <table class="data-tbl">
                     <thead>
                       <tr>
-                        <th>Source</th>
-                        <th>Amount</th>
-                        <th>%</th>
-                      </tr>
-                    </thead>
-                    <tbody id="cf-inflows"></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-arrow-down-circle" style="color:var(--red)"></i> Cash Outflows
-                  </div>
-                </div>
-                <div class="table-wrap">
-                  <table class="data-tbl">
-                    <thead>
-                      <tr>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>%</th>
-                      </tr>
-                    </thead>
-                    <tbody id="cf-outflows"></tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div><!-- /#page-fin-cashflow -->
-
-          <!-- ── FINANCIAL REPORTS ──────────────────────── -->
-          <div class="page" id="page-fin-reports">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Financial Reports</div>
-                <div class="page-sub">Balance sheet, trial balance and key financial ratios</div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-outline" onclick="showToast('default','Export','Report exported.')"><i
-                    class="ti ti-download"></i> Export PDF</button>
-              </div>
-            </div>
-            <!-- Report tabs -->
-            <div class="tabs-line mb-4">
-              <button class="tab-btn active" onclick="showFinReport('balance',this)">Balance Sheet</button>
-              <button class="tab-btn" onclick="showFinReport('trial',this)">Trial Balance</button>
-              <button class="tab-btn" onclick="showFinReport('ratios',this)">Key Ratios</button>
-            </div>
-
-            <!-- Balance Sheet -->
-            <div id="fin-rep-balance">
-              <div class="grid-2">
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-building-bank"></i> Assets</div>
-                  </div>
-                  <div class="card-body" style="padding:16px;">
-                    <div id="bs-assets"></div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-scale"></i> Liabilities &amp; Equity</div>
-                  </div>
-                  <div class="card-body" style="padding:16px;">
-                    <div id="bs-liabilities"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Trial Balance -->
-            <div id="fin-rep-trial" style="display:none;">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-list-details"></i> Trial Balance</div>
-                </div>
-                <div class="table-wrap">
-                  <table class="data-tbl">
-                    <thead>
-                      <tr>
-                        <th>Account</th>
-                        <th>Account Type</th>
+                        <th>Date</th>
+                        <th>Reference</th>
+                        <th>Type</th>
                         <th>Debit (₹)</th>
                         <th>Credit (₹)</th>
+                        <th>Balance (₹)</th>
+                        <th>Method</th>
+                        <th>Notes</th>
                       </tr>
                     </thead>
-                    <tbody id="trial-tbody"></tbody>
-                    <tfoot id="trial-tfoot"></tfoot>
+                    <tbody id="cl-tbody"></tbody>
                   </table>
                 </div>
               </div>
             </div>
-
-            <!-- Key Ratios -->
-            <div id="fin-rep-ratios" style="display:none;">
-              <div class="kpi-grid kpi-grid-3 mb-4" id="ratio-kpi"></div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-bar"></i> Ratio Analysis</div>
-                </div>
-                <div id="chart-ratios" style="height:260px;"></div>
-              </div>
-            </div>
-          </div><!-- /#page-fin-reports -->
+          </div><!-- /#page-sal-customer-ledger -->
 
           <!-- ══════════════════════════════════════════════
                STEP 14 — CRM MODULE
@@ -13369,10 +13092,6 @@
       'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Finance', 'Supplier Ledger'], module: 'finance' },
       'fin-receipts': { title: 'Receipts', crumbs: ['Finance', 'Receipts'], module: 'finance' },
       'fin-expenses': { title: 'Expenses', crumbs: ['Finance', 'Expenses'], module: 'finance' },
-      'fin-income': { title: 'Income', crumbs: ['Finance', 'Income'], module: 'finance' },
-      'fin-pl': { title: 'Profit & Loss', crumbs: ['Finance', 'P&L'], module: 'finance' },
-      'fin-cashflow': { title: 'Cash Flow', crumbs: ['Finance', 'Cash Flow'], module: 'finance' },
-      'fin-reports': { title: 'Financial Reports', crumbs: ['Finance', 'Reports'], module: 'finance' },
       // CRM
       'atp': { title: 'Available to Promise', crumbs: ['CRM', 'ATP'], module: 'crm' },
       'crm-leads': { title: 'Leads', crumbs: ['CRM', 'Leads'], module: 'crm' },
@@ -15687,10 +15406,6 @@
       once('fin-payments', initFinPayments);
       once('fin-receipts', initFinReceipts);
       once('fin-expenses', initFinExpenses);
-      once('fin-income', initFinIncome);
-      once('fin-pl', initFinPL);
-      once('fin-cashflow', initFinCashflow);
-      once('fin-reports', initFinReports);
       once('crm-leads', initCRMLeads);
       once('crm-opportunities', initCRMOpportunities);
       once('crm-activities', initCRMActivities);
@@ -18142,36 +17857,6 @@
       const fc = document.getElementById('fexp-count'); if (fc) fc.textContent = DB.expenses.length;
       renderExpensesTable();
 
-      registerChart('fin-expenses', () => {
-        /* Category donut */
-        const catAmt = {};
-        DB.expenses.forEach(e => { catAmt[e.category] = (catAmt[e.category] || 0) + e.amount; });
-        const ce = Object.entries(catAmt).sort((a, b) => b[1] - a[1]);
-        new ApexCharts(document.getElementById('chart-exp-cat'), {
-          chart: { type: 'donut', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
-          series: ce.map(e => e[1]), labels: ce.map(e => e[0]),
-          colors: ['#ef4444', '#C9A84C', '#3B82F6', '#F59E0B', '#8B5CF6', '#0EA5E9', '#22c55e', '#94A3B8', '#0F1C2E', '#6B7280'],
-          legend: { position: 'bottom', fontSize: '10px' },
-          dataLabels: { enabled: false },
-          plotOptions: { pie: { donut: { size: '60%' } } }
-        }).render();
-        /* Monthly trend bar */
-        const mthAmt = Array(12).fill(0);
-        DB.expenses.forEach(e => {
-          const m = new Date(e.date).getMonth(); mthAmt[m] += e.amount;
-        });
-        const mLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        new ApexCharts(document.getElementById('chart-exp-trend'), {
-          chart: { type: 'bar', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
-          series: [{ name: 'Expenses', data: mthAmt }],
-          xaxis: { categories: mLabels, labels: { style: { fontSize: '10px' } } },
-          colors: ['#ef4444'], dataLabels: { enabled: false },
-          plotOptions: { bar: { columnWidth: '60%', borderRadius: 3 } },
-          grid: { borderColor: '#E4E7EC' },
-          yaxis: { labels: { formatter: v => '₹' + fmt(v) } }
-        }).render();
-      });
-      setTimeout(() => initPageCharts('fin-expenses'), 20);
     }
 
     function filterExpenses() {
