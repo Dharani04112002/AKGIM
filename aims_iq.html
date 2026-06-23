@@ -2093,7 +2093,7 @@
 
     .data-tbl thead th {
       background: var(--card);
-      padding: 12px 16px;
+      padding: 12px 10px;
       text-align: left;
       font-size: 11px;
       font-weight: 700;
@@ -2117,7 +2117,7 @@
     }
 
     .data-tbl tbody td {
-      padding: 14px 16px;
+      padding: 14px 10px;
       border-bottom: 1px solid #F0F2F5;
       color: var(--tx-1);
       vertical-align: middle;
@@ -4492,10 +4492,6 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="sal-dashboard" onclick="navigate('sal-dashboard',this)">
-              <i class="ti ti-chart-line nav-icon"></i>
-              <span class="nav-text">Sales Dashboard</span>
-            </div>
             <div class="nav-item" data-page="sal-quotations" onclick="navigate('sal-quotations',this)">
               <i class="ti ti-file-description nav-icon"></i>
               <span class="nav-text">Quotations</span>
@@ -6809,61 +6805,6 @@
                sal-orders · sal-invoice · sal-delivery
                sal-customer-ledger
                ══════════════════════════════════════════════ -->
-
-          <!-- ── SALES DASHBOARD ───────────────────────── -->
-          <div class="page" id="page-sal-dashboard">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Sales Dashboard</div>
-                <div class="page-sub">Revenue, orders, invoices and customer activity</div>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="sald-kpi"></div>
-            <div class="grid-2 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-area"></i> Monthly Revenue</div>
-                </div>
-                <div id="chart-sal-revenue" style="height:220px;"></div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-donut"></i> Invoice Status</div>
-                </div>
-                <div id="chart-sal-inv-status" style="height:220px;"></div>
-              </div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-clock"></i> Recent Invoices</div>
-                  <div class="card-tools"><button class="btn btn-sm btn-outline"
-                      onclick="navigate('sal-invoice',this)">View All</button></div>
-                </div>
-                <div class="table-wrap">
-                  <table class="data-tbl">
-                    <thead>
-                      <tr>
-                        <th>Invoice #</th>
-                        <th>Customer</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="sald-recent-inv"></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-trophy"></i> Top Customers</div>
-                  <div class="card-tools"><button class="btn btn-sm btn-outline"
-                      onclick="navigate('customers',this)">View All</button></div>
-                </div>
-                <div id="sald-top-custs" style="padding:8px 16px;"></div>
-              </div>
-            </div>
-          </div><!-- /#page-sal-dashboard -->
 
           <!-- ── QUOTATIONS ─────────────────────────────── -->
           <div class="page" id="page-sal-quotations">
@@ -12154,7 +12095,6 @@
       'pur-invoice': { title: 'Purchase Invoice', crumbs: ['Purchase', 'Invoice'], module: 'purchase' },
       'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Purchase', 'Supplier Ledger'], module: 'purchase' },
       // Sales
-      'sal-dashboard': { title: 'Sales Dashboard', crumbs: ['Sales', 'Dashboard'], module: 'sales' },
       'sal-quotations': { title: 'Quotations', crumbs: ['Sales', 'Quotations'], module: 'sales' },
       'sal-quotation-detail': { title: 'Quotation Detail', crumbs: ['Sales', 'Quotations', 'Detail'], module: 'sales' },
       'sal-orders': { title: 'Sales Orders', crumbs: ['Sales', 'Orders'], module: 'sales' },
@@ -14400,7 +14340,6 @@
       once('pur-grn-detail', () => { });
       once('pur-invoice', initPurchaseInvoicePage);
       once('pur-supplier-ledger', initSupplierLedgerPage);
-      once('sal-dashboard', initSalDashboard);
       once('sal-quotations', initQuotationsPage);
       once('sal-quotation-detail', () => { });
       once('sal-orders', initSalesOrdersPage);
@@ -16145,84 +16084,6 @@
     const QUO_STATUS_CLS = { Draft: 'gray', Sent: 'blue', Accepted: 'green', Rejected: 'red', Expired: 'amber' };
     const SO_STATUS_CLS = { Draft: 'gray', Pending: 'amber', Confirmed: 'blue', Processing: 'navy', Shipped: 'sky', Delivered: 'green', Cancelled: 'red' };
     const DN_STATUS_CLS = { Pending: 'amber', Dispatched: 'blue', 'In Transit': 'navy', Delivered: 'green', Returned: 'red' };
-
-    /* ─── SALES DASHBOARD ─── */
-    function initSalDashboard() {
-      const invs = DB.invoices;
-      const totalRev = invs.reduce((s, i) => s + i.total, 0);
-      const totalPaid = invs.reduce((s, i) => s + i.paid, 0);
-      const receivable = invs.reduce((s, i) => s + i.balance, 0);
-      const overdue = invs.filter(i => i.status === 'Overdue').length;
-
-      const kpi = document.getElementById('sald-kpi');
-      if (kpi) kpi.innerHTML = `
-      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Revenue</div><div class="kpi-val">₹${fmt(totalRev)}</div></div><div class="kpi-icon gold"><i class="ti ti-chart-line"></i></div></div><div class="kpi-sub up">${invs.length} invoices</div></div>
-      <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Total Received</div><div class="kpi-val">₹${fmt(totalPaid)}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Collected</div></div>
-      <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Receivables</div><div class="kpi-val">₹${fmt(receivable)}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Outstanding</div></div>
-      <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Overdue</div><div class="kpi-val">${overdue}</div></div><div class="kpi-icon red"><i class="ti ti-alert-triangle"></i></div></div><div class="kpi-sub warn">Past due date</div></div>`;
-
-      /* Recent invoices mini-table */
-      const tbody = document.getElementById('sald-recent-inv');
-      if (tbody) tbody.innerHTML = invs.slice(0, 6).map(i => `
-      <tr>
-        <td><span class="id-cell" style="font-size:10px;">${i.id}</span></td>
-        <td class="entity-name truncate" style="max-width:120px;">${i.customer}</td>
-        <td class="amount-cell">₹${fmt(i.total)}</td>
-        <td><span class="badge badge-${INV_STATUS_CLS[i.status] || 'gray'}">${i.status}</span></td>
-      </tr>`).join('');
-
-      /* Top customers bar list */
-      const topCusts = document.getElementById('sald-top-custs');
-      if (topCusts) {
-        const top = [...DB.customers].sort((a, b) => b.totalValue - a.totalValue).slice(0, 5);
-        const maxV = top[0]?.totalValue || 1;
-        topCusts.innerHTML = top.map(c => `
-        <div style="margin-bottom:12px;">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
-            <span style="font-weight:600;color:var(--tx-1);">${c.name}</span>
-            <span style="color:var(--gold);font-weight:700;">₹${fmt(c.totalValue)}</span>
-          </div>
-          <div style="background:#E4E7EC;border-radius:6px;height:6px;">
-            <div style="width:${(c.totalValue / maxV * 100).toFixed(0)}%;background:var(--gold);height:6px;border-radius:6px;"></div>
-          </div>
-        </div>`).join('');
-      }
-
-      registerChart('sal-dashboard', () => {
-        /* Monthly revenue trend */
-        const months = []; const vals = [];
-        for (let i = 11; i >= 0; i--) {
-          const d = new Date(); d.setMonth(d.getMonth() - i);
-          months.push(d.toLocaleString('default', { month: 'short' }));
-          vals.push(invs.filter(inv => {
-            const id = new Date(inv.date);
-            return id.getFullYear() === d.getFullYear() && id.getMonth() === d.getMonth();
-          }).reduce((s, inv) => s + inv.total, 0));
-        }
-        new ApexCharts(document.getElementById('chart-sal-revenue'), {
-          chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
-          series: [{ name: 'Revenue', data: vals }],
-          xaxis: { categories: months, labels: { style: { fontSize: '11px' } } },
-          colors: ['#C9A84C'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: .4, opacityTo: .05 } },
-          stroke: { width: 2 }, dataLabels: { enabled: false },
-          grid: { borderColor: '#E4E7EC' }, yaxis: { labels: { formatter: v => '₹' + fmt(v) } }
-        }).render();
-
-        /* Invoice status donut */
-        const sc = {};
-        invs.forEach(i => { sc[i.status] = (sc[i.status] || 0) + 1; });
-        const se = Object.entries(sc);
-        new ApexCharts(document.getElementById('chart-sal-inv-status'), {
-          chart: { type: 'donut', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
-          series: se.map(e => e[1]), labels: se.map(e => e[0]),
-          colors: ['#94A3B8', '#3B82F6', '#22c55e', '#F59E0B', '#ef4444', '#E4E7EC'],
-          legend: { position: 'bottom', fontSize: '11px' },
-          dataLabels: { enabled: false },
-          plotOptions: { pie: { donut: { size: '65%' } } }
-        }).render();
-      });
-      setTimeout(() => initPageCharts('sal-dashboard'), 20);
-    }
 
     /* ─── QUOTATIONS ─── */
     let quoPage = 1; const QUO_PER = 15;
