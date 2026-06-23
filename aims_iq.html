@@ -2665,6 +2665,56 @@
         0 0 0 3px rgba(20, 121, 201, 0.15);
     }
 
+    .tabs-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: var(--sp-4);
+    }
+
+    .tab-btn {
+      appearance: none;
+      background: linear-gradient(180deg, #FAFCFF 0%, #D4E4F4 100%);
+      border: 1px solid #88AACC;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: var(--fs-sm);
+      color: #0A1830;
+      font-weight: 500;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 3px 8px rgba(10, 40, 90, 0.12),
+        0 1px 3px rgba(10, 40, 90, 0.08);
+      cursor: pointer;
+      outline: none;
+      transition: all var(--dur-base) cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover {
+      background: linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      border-color: #1479C9;
+      color: #0A4D8C;
+      transform: translateY(-1px);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, #FFFFFF 0%, #E4F0FF 100%);
+      border-color: #1479C9;
+      color: #0A4D8C;
+      font-weight: 600;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 -1px 0 rgba(10, 40, 90, 0.1) inset,
+        0 4px 10px rgba(10, 40, 90, 0.15),
+        0 0 0 3px rgba(20, 121, 201, 0.15);
+    }
+
     .filter-chip {
       display: inline-flex;
       align-items: center;
@@ -4824,7 +4874,7 @@
         <!-- ── SALES ── -->
         <div class="nav-group">
           <div class="nav-parent" onclick="toggleGroup(this)">
-            <i class="ti ti-coin nav-icon"></i>
+            <i class="ti ti-currency-rupee nav-icon"></i>
             <span class="nav-text">Sales</span>
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
@@ -5715,6 +5765,7 @@
                 <tbody id="cat-tbody"></tbody>
               </table>
             </div>
+            <div id="cat-pagination"></div>
           </div><!-- /#page-categories -->
 
           <!-- ══════════════════════════════════
@@ -5752,6 +5803,7 @@
                 <tbody id="brand-tbody"></tbody>
               </table>
             </div>
+            <div id="brand-pagination"></div>
           </div><!-- /#page-brands -->
 
           <!-- ══════════════════════════════════
@@ -6066,6 +6118,7 @@
                   <tbody id="emp-tbody"></tbody>
                 </table>
               </div>
+              <div id="emp-pagination"></div>
             </div>
           </div><!-- /#page-employees -->
 
@@ -10660,7 +10713,7 @@
                 </div>
               </div>
               <div class="stat-mini">
-                <div class="stat-mini-ico" style="background:#FBF5E8;color:#C9A84C;"><i class="ti ti-coins"></i></div>
+                <div class="stat-mini-ico" style="background:#FBF5E8;color:#C9A84C;"><i class="ti ti-currency-rupee"></i></div>
                 <div>
                   <div class="stat-mini-val">₹135.7M</div>
                   <div class="stat-mini-lbl">Portfolio Value</div>
@@ -13784,44 +13837,86 @@
        PAGINATION HELPER
        renderPagination(containerId, total, page, perPage, onPageFn)
        ═══════════════════════════════════════════ */
+    window.updatePerPage = function(containerId, value, callbackB64) {
+      const v = parseInt(value);
+      switch(containerId) {
+        case 'adj-pagination': ADJ_PER = v; adjPage = 1; break;
+        case 'admin-user-pagination': AUSER_PER = v; aUserPage = 1; break;
+        case 'audit-pagination': AUDIT_PER = v; aAuditPage = 1; break;
+        case 'batch-pagination': BATCH_PER = v; batchPage = 1; break;
+        case 'brand-pagination': BRAND_PER = v; brandPage = 1; break;
+        case 'cat-pagination': CAT_PER = v; catPage = 1; break;
+        case 'cn-pagination': CN_PER = v; cnPage = 1; break;
+        case 'crm-act-pagination': CACT_PER = v; cActPage = 1; break;
+        case 'crm-call-pagination': CCALL_PER = v; cCallPage = 1; break;
+        case 'crm-fu-pagination': CFU_PER = v; cFUPage = 1; break;
+        case 'crm-lead-pagination': CLEAD_PER = v; cLeadPage = 1; break;
+        case 'crm-meet-pagination': CMEET_PER = v; cMeetPage = 1; break;
+        case 'crm-opp-pagination': COPP_PER = v; cOppPage = 1; break;
+        case 'cus-pagination': CUS_PER_PAGE = v; cusPage = 1; break;
+        case 'dn-pagination': DN_PER = v; dnPage = 1; break;
+        case 'emp-pagination': EMP_PER = v; empPage = 1; break;
+        case 'fexp-pagination': FEXP_PER = v; fexpPage = 1; break;
+        case 'finc-pagination': FINC_PER = v; fincPage = 1; break;
+        case 'fpay-pagination': FPAY_PER = v; fpayPage = 1; break;
+        case 'frec-pagination': FREC_PER = v; frecPage = 1; break;
+        case 'grn-pagination': GRN_PER = v; grnPage = 1; break;
+        case 'ledger-pagination': LEDGER_PER = v; ledgerPage = 1; break;
+        case 'pinv-pagination': PINV_PER = v; pinvPage = 1; break;
+        case 'po-pagination': PO_PER = v; poPage = 1; break;
+        case 'prod-pagination': PROD_PER_PAGE = v; prodPage = 1; break;
+        case 'quo-pagination': QUO_PER = v; quoPage = 1; break;
+        case 'ret-pagination': RET_PER = v; retPage = 1; break;
+        case 'serial-pagination': SERIAL_PER = v; serialPage = 1; break;
+        case 'sinv-pagination': SINV_PER = v; sinvPage = 1; break;
+        case 'so-pagination': SO_PER = v; soPage = 1; break;
+        case 'stock-pagination': STOCK_PER = v; stockPage = 1; break;
+        case 'sup-pagination': SUP_PER_PAGE = v; supPage = 1; break;
+        case 'svc-req-pagination': SREQ_PER = v; sReqPage = 1; break;
+        case 'svc-tick-pagination': STICK_PER = v; sTickPage = 1; break;
+        case 'trf-pagination': TRF_PER = v; trfPage = 1; break;
+        case 'var-pagination': VAR_PER_PAGE = v; varPage = 1; break;
+        case 'wh-pagination': WH_PER = v; whPage = 1; break;
+      }
+      try {
+        const fnStr = atob(callbackB64);
+        const fn = eval("(" + fnStr + ")");
+        fn(1);
+      } catch(e) { console.error('Pagination err:', e); }
+    };
+
     function renderPagination(containerId, total, page, perPage, onPageFn) {
       const container = document.getElementById(containerId);
       if (!container) return;
 
-      const totalPages = Math.ceil(total / perPage);
-      const start = (page - 1) * perPage + 1;
-      const end = Math.min(page * perPage, total);
+      const totalPages = Math.ceil(total / perPage) || 1;
+      const safePage = Math.max(1, Math.min(page, totalPages));
 
-      let pages = [];
-      if (totalPages <= 7) {
-        pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-      } else {
-        if (page <= 4) {
-          pages = [1, 2, 3, 4, 5, '…', totalPages];
-        } else if (page >= totalPages - 3) {
-          pages = [1, '…', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-        } else {
-          pages = [1, '…', page - 1, page, page + 1, '…', totalPages];
-        }
-      }
+      const btnStyle = "padding: 6px 10px; border: 1px solid var(--card-border); border-radius: 6px; background: transparent; color: var(--tx-2); cursor: pointer; transition: 0.2s;";
+      const disStyle = "padding: 6px 10px; border: 1px solid var(--card-border); border-radius: 6px; background: transparent; color: var(--tx-3); cursor: not-allowed; opacity: 0.5;";
 
       container.innerHTML = `
-      <div class="pagination">
-        <span class="pg-info">Showing <b>${start}–${end}</b> of <b>${total}</b> records</span>
-        <div class="pg-btns">
-          <button class="pg-btn" onclick="(${onPageFn})(${page - 1})"
-            ${page <= 1 ? 'disabled' : ''} title="Previous">
-            <i class="ti ti-chevron-left"></i>
-          </button>
-          ${pages.map(p => p === '…'
-        ? `<button class="pg-btn" disabled>…</button>`
-        : `<button class="pg-btn ${p === page ? 'active' : ''}"
-                onclick="(${onPageFn})(${p})">${p}</button>`
-      ).join('')}
-          <button class="pg-btn" onclick="(${onPageFn})(${page + 1})"
-            ${page >= totalPages ? 'disabled' : ''} title="Next">
-            <i class="ti ti-chevron-right"></i>
-          </button>
+      <div class="pagination" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-top:1px solid var(--card-border); color:var(--tx-2); font-size:13px;">
+        <div class="pg-info">0 of ${total} row(s) selected.</div>
+        <div style="display:flex; align-items:center; gap:24px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span>Rows per page</span>
+            <select class="form-control" style="width:70px; padding:4px 8px; height:32px; font-size:13px; cursor:pointer;" 
+                    onchange="updatePerPage('${containerId}', this.value, '${btoa(onPageFn)}')">
+              <option value="10" ${perPage == 10 ? 'selected' : ''}>10</option>
+              <option value="20" ${perPage == 20 ? 'selected' : ''}>20</option>
+              <option value="30" ${perPage == 30 ? 'selected' : ''}>30</option>
+              <option value="40" ${perPage == 40 ? 'selected' : ''}>40</option>
+              <option value="50" ${perPage == 50 ? 'selected' : ''}>50</option>
+            </select>
+          </div>
+          <span>Page ${safePage} of ${totalPages}</span>
+          <div class="pg-btns" style="display:flex; gap:6px;">
+            <button style="${safePage <= 1 ? disStyle : btnStyle}" onclick="${safePage <= 1 ? '' : `(${onPageFn})(1)`}" ${safePage <= 1 ? 'disabled' : ''}><i class="ti ti-chevrons-left"></i></button>
+            <button style="${safePage <= 1 ? disStyle : btnStyle}" onclick="${safePage <= 1 ? '' : `(${onPageFn})(${safePage - 1})`}" ${safePage <= 1 ? 'disabled' : ''}><i class="ti ti-chevron-left"></i></button>
+            <button style="${safePage >= totalPages ? disStyle : btnStyle}" onclick="${safePage >= totalPages ? '' : `(${onPageFn})(${safePage + 1})`}" ${safePage >= totalPages ? 'disabled' : ''}><i class="ti ti-chevron-right"></i></button>
+            <button style="${safePage >= totalPages ? disStyle : btnStyle}" onclick="${safePage >= totalPages ? '' : `(${onPageFn})(${totalPages})`}" ${safePage >= totalPages ? 'disabled' : ''}><i class="ti ti-chevrons-right"></i></button>
+          </div>
         </div>
       </div>`;
     }
@@ -14739,7 +14834,7 @@
       const lastMonth = DB.monthlyPL.at(-2);
       const revChange = ((thisMonth.revenue - lastMonth.revenue) / lastMonth.revenue * 100).toFixed(1);
       const cards = [
-        { label: 'Total Revenue', val: fmtCur(SUMMARY.totalRevenue), icon: 'ti-coin', color: 'gold', sub: `↑ ${revChange}% vs last month`, dir: 'up' },
+        { label: 'Total Revenue', val: fmtCur(SUMMARY.totalRevenue), icon: 'ti-currency-rupee', color: 'gold', sub: `↑ ${revChange}% vs last month`, dir: 'up' },
         { label: 'Total Received', val: fmtCur(SUMMARY.totalPaid), icon: 'ti-arrow-down-circle', color: 'green', sub: `${DB.invoices.filter(i => i.status === 'Paid').length} invoices paid`, dir: 'up' },
         { label: 'Receivables', val: fmtCur(SUMMARY.totalReceivable), icon: 'ti-clock', color: 'amber', sub: `${DB.invoices.filter(i => i.status === 'Overdue').length} overdue invoices`, dir: 'warn' },
         { label: 'Total Purchases', val: fmtCur(SUMMARY.totalPurchases), icon: 'ti-shopping-cart', color: 'blue', sub: `${DB.purchaseOrders.length} purchase orders`, dir: 'neutral' },
@@ -15060,8 +15155,12 @@
     /* ─────────────────────────────────
        PRODUCTS PAGE
        ───────────────────────────────── */
-    let prodPage = 1; const PROD_PER_PAGE = 15;
+    let prodPage = 1; let PROD_PER_PAGE = 10;
     let prodFiltered = [];
+    let catPage = 1; let CAT_PER = 10; let catFiltered = [...CATEGORIES];
+    let brandPage = 1; let BRAND_PER = 10; let brandFiltered = [...BRANDS];
+    let whPage = 1; let WH_PER = 10; let whFiltered = [...WAREHOUSES];
+    let empPage = 1; let EMP_PER = 10;
 
     function initProductsPage() {
       buildProdKPIs();
@@ -15084,7 +15183,7 @@
       const outOfStock = DB.products.filter(p => p.stock === 0).length;
       const cards = [
         { label: 'Total Products', val: DB.products.length, icon: 'ti-box', color: 'blue', sub: 'Active catalogue items', dir: 'neutral' },
-        { label: 'Inventory Value', val: totalVal, icon: 'ti-coin', color: 'gold', sub: 'Total stock valuation', dir: 'neutral' },
+        { label: 'Inventory Value', val: totalVal, icon: 'ti-currency-rupee', color: 'gold', sub: 'Total stock valuation', dir: 'neutral' },
         { label: 'Low Stock', val: SUMMARY.lowStockCount, icon: 'ti-alert-triangle', color: 'amber', sub: 'Items below minimum level', dir: 'warn' },
         { label: 'Out of Stock', val: outOfStock, icon: 'ti-ban', color: 'red', sub: 'Items completely depleted', dir: 'warn' },
       ];
@@ -15537,7 +15636,11 @@
       // Table
       const tbody = document.getElementById('cat-tbody');
       if (!tbody) return;
-      tbody.innerHTML = CATEGORIES.map((c, i) => {
+      
+      const start = (catPage - 1) * CAT_PER;
+      const slice = catFiltered.slice(start, start + CAT_PER);
+      
+      tbody.innerHTML = slice.map((c, i) => {
         const prods = DB.products.filter(p => p.category === c.name);
         const stockVal = prods.reduce((s, p) => s + p.stock * p.cost, 0);
         return `
@@ -15561,7 +15664,8 @@
       </tr>`;
       }).join('');
       const cc = document.getElementById('cat-count');
-      if (cc) cc.textContent = CATEGORIES.length;
+      if (cc) cc.textContent = catFiltered.length;
+      renderPagination('cat-pagination', catFiltered.length, catPage, CAT_PER, `function(p){catPage=p;renderCategoriesPage()}`);
     }
 
     function filterAndGoProducts(category) {
@@ -15573,10 +15677,10 @@
     }
 
     function filterCategories(val) {
-      const lower = val.toLowerCase();
-      document.querySelectorAll('#cat-tbody tr').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(lower) ? '' : 'none';
-      });
+      const lower = (val || '').toLowerCase();
+      catFiltered = CATEGORIES.filter(c => c.name.toLowerCase().includes(lower));
+      catPage = 1;
+      renderCategoriesPage();
     }
 
     /* ─────────────────────────────────
@@ -15595,7 +15699,10 @@
         brandTopCat[p.brand][p.category] = (brandTopCat[p.brand][p.category] || 0) + 1;
       });
 
-      tbody.innerHTML = BRANDS.map((b, i) => {
+      const start = (brandPage - 1) * BRAND_PER;
+      const slice = brandFiltered.slice(start, start + BRAND_PER);
+
+      tbody.innerHTML = slice.map((b, i) => {
         const count = brandCounts[b.name] || 0;
         const catObj = brandTopCat[b.name] || {};
         const topCat = Object.entries(catObj).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
@@ -15623,14 +15730,15 @@
       }).join('');
 
       const bc = document.getElementById('brand-count');
-      if (bc) bc.textContent = BRANDS.length;
+      if (bc) bc.textContent = brandFiltered.length;
+      renderPagination('brand-pagination', brandFiltered.length, brandPage, BRAND_PER, `function(p){brandPage=p;renderBrandsPage()}`);
     }
 
     function filterBrands(val) {
-      const lower = val.toLowerCase();
-      document.querySelectorAll('#brand-tbody tr').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(lower) ? '' : 'none';
-      });
+      const lower = (val || '').toLowerCase();
+      brandFiltered = BRANDS.filter(b => b.name.toLowerCase().includes(lower));
+      brandPage = 1;
+      renderBrandsPage();
     }
 
     /* ─────────────────────────────────
@@ -15693,7 +15801,7 @@
     /* ─────────────────────────────────
        VARIANTS PAGE
        ───────────────────────────────── */
-    let varPage = 1; const VAR_PER_PAGE = 15;
+    let varPage = 1; let VAR_PER_PAGE = 10;
     let varFiltered = [];
 
     function filterVariants(searchVal) {
@@ -15760,7 +15868,11 @@
       // Table
       const tbody = document.getElementById('wh-tbody');
       if (!tbody) return;
-      tbody.innerHTML = WAREHOUSES.map((w, i) => {
+      
+      const start = (whPage - 1) * WH_PER;
+      const slice = whFiltered.slice(start, start + WH_PER);
+
+      tbody.innerHTML = slice.map((w, i) => {
         const util = (w.used / w.capacity * 100).toFixed(1);
         const prodCount = DB.products.filter(p => p.warehouse === w.name).length;
         const stockVal = DB.products.filter(p => p.warehouse === w.name).reduce((s, p) => s + p.stock * p.cost, 0);
@@ -15795,18 +15907,19 @@
       </tr>`;
       }).join('');
       const wc = document.getElementById('wh-count');
-      if (wc) wc.textContent = WAREHOUSES.length;
+      if (wc) wc.textContent = whFiltered.length;
+      renderPagination('wh-pagination', whFiltered.length, whPage, WH_PER, `function(p){whPage=p;renderWarehousesPage()}`);
     }
 
     function filterWarehouses(val) {
-      const lower = val.toLowerCase();
-      document.querySelectorAll('#wh-tbody tr').forEach(row => {
-        row.style.display = row.textContent.toLowerCase().includes(lower) ? '' : 'none';
-      });
+      const lower = (val || '').toLowerCase();
+      whFiltered = WAREHOUSES.filter(w => w.name.toLowerCase().includes(lower) || w.city.toLowerCase().includes(lower));
+      whPage = 1;
+      renderWarehousesPage();
     }
 
     /* ─────────── CUSTOMERS ─────────── */
-    let cusPage = 1; const CUS_PER_PAGE = 15;
+    let cusPage = 1; let CUS_PER_PAGE = 10;
     let cusFiltered = [];
 
     function initCustomersPage() {
@@ -15924,7 +16037,7 @@
     }
 
     /* ─────────── SUPPLIERS ─────────── */
-    let supPage = 1; const SUP_PER_PAGE = 15;
+    let supPage = 1; let SUP_PER_PAGE = 10;
     let supFiltered = [];
 
     function initSuppliersPage() {
@@ -16066,7 +16179,12 @@
         return ms && mst && md;
       });
       const ec = document.getElementById('emp-count'); if (ec) ec.textContent = filtered.length;
-      renderEmployeesTable(filtered);
+      
+      const start = (empPage - 1) * EMP_PER;
+      const slice = filtered.slice(start, start + EMP_PER);
+      
+      renderEmployeesTable(slice);
+      renderPagination('emp-pagination', filtered.length, empPage, EMP_PER, `function(p){empPage=p;filterEmployees()}`);
     }
 
     function renderEmployeesTable(data) {
@@ -16208,7 +16326,7 @@
     }
 
     /* ─── STOCK LIST ─── */
-    let stockPage = 1; const STOCK_PER = 20;
+    let stockPage = 1; let STOCK_PER = 10;
     let stockFiltered = [];
 
     function initStockPage() {
@@ -16299,7 +16417,7 @@
     }
 
     /* ─── LEDGER ─── */
-    let ledgerPage = 1; const LEDGER_PER = 20;
+    let ledgerPage = 1; let LEDGER_PER = 10;
     let ledgerFiltered = [];
 
     function initLedgerPage() {
@@ -16351,7 +16469,7 @@
     }
 
     /* ─── ADJUSTMENTS ─── */
-    let adjPage = 1; const ADJ_PER = 15;
+    let adjPage = 1; let ADJ_PER = 10;
     let adjFiltered = [];
 
     function initAdjustmentPage() {
@@ -16412,7 +16530,7 @@
     }
 
     /* ─── TRANSFERS ─── */
-    let trfPage = 1; const TRF_PER = 15;
+    let trfPage = 1; let TRF_PER = 10;
     let trfFiltered = [];
 
     function initTransferPage() {
@@ -16468,7 +16586,7 @@
     }
 
     /* ─── BATCHES ─── */
-    let batchPage = 1; const BATCH_PER = 15;
+    let batchPage = 1; let BATCH_PER = 10;
     let batchFiltered = [];
 
     function initBatchPage() {
@@ -16523,7 +16641,7 @@
     }
 
     /* ─── SERIALS ─── */
-    let serialPage = 1; const SERIAL_PER = 15;
+    let serialPage = 1; let SERIAL_PER = 10;
     let serialFiltered = [];
 
     function initSerialPage() {
@@ -16666,7 +16784,7 @@
 
 
     /* ─── PURCHASE ORDERS ─── */
-    let poPage = 1; const PO_PER = 15;
+    let poPage = 1; let PO_PER = 10;
     let poFiltered = [];
 
     function initPOsPage() {
@@ -16834,7 +16952,7 @@
     }
 
     /* ─── GRN ─── */
-    let grnPage = 1; const GRN_PER = 15;
+    let grnPage = 1; let GRN_PER = 10;
     let grnFiltered = [];
 
     function initGRNPage() {
@@ -16935,7 +17053,7 @@
     }
 
     /* ─── PURCHASE INVOICES ─── */
-    let pinvPage = 1; const PINV_PER = 15;
+    let pinvPage = 1; let PINV_PER = 10;
     let pinvFiltered = [];
 
     function initPurchaseInvoicePage() {
@@ -17114,7 +17232,7 @@
     const DN_STATUS_CLS = { Pending: 'amber', Dispatched: 'blue', 'In Transit': 'navy', Delivered: 'green', Returned: 'red' };
 
     /* ─── QUOTATIONS ─── */
-    let quoPage = 1; const QUO_PER = 15;
+    let quoPage = 1; let QUO_PER = 10;
     let quoFiltered = [];
 
     function initQuotationsPage() {
@@ -17383,7 +17501,7 @@
     }
 
     /* ─── SALES ORDERS ─── */
-    let soPage = 1; const SO_PER = 15;
+    let soPage = 1; let SO_PER = 10;
     let soFiltered = [];
 
     function initSalesOrdersPage() {
@@ -17454,7 +17572,7 @@
     }
 
     /* ─── SALES INVOICES ─── */
-    let sinvPage = 1; const SINV_PER = 15;
+    let sinvPage = 1; let SINV_PER = 10;
     let sinvFiltered = [];
 
     function initSalesInvoicePage() {
@@ -17527,7 +17645,7 @@
     }
 
     /* ─── DELIVERY NOTES ─── */
-    let dnPage = 1; const DN_PER = 15;
+    let dnPage = 1; let DN_PER = 10;
     let dnFiltered = [];
 
     function initDeliveryPage() {
@@ -17717,7 +17835,7 @@
     const INC_SOURCE_CLS = { 'Interest Income': 'blue', 'Rental Income': 'navy', 'Commission': 'gold', 'Scrap Sale': 'amber', 'Service Charges': 'sky', 'Miscellaneous': 'gray' };
 
     /* ─── PAYMENTS ─── */
-    let fpayPage = 1; const FPAY_PER = 15; let fpayFiltered = [];
+    let fpayPage = 1; let FPAY_PER = 10; let fpayFiltered = [];
 
     function initFinPayments() {
       const total = DB.payments.reduce((s, p) => s + p.amount, 0);
@@ -17792,7 +17910,7 @@
     }
 
     /* ─── RECEIPTS ─── */
-    let frecPage = 1; const FREC_PER = 15; let frecFiltered = [];
+    let frecPage = 1; let FREC_PER = 10; let frecFiltered = [];
 
     function initFinReceipts() {
       const total = DB.receipts.reduce((s, r) => s + r.amount, 0);
@@ -17863,7 +17981,7 @@
     }
 
     /* ─── EXPENSES ─── */
-    let fexpPage = 1; const FEXP_PER = 15; let fexpFiltered = [];
+    let fexpPage = 1; let FEXP_PER = 10; let fexpFiltered = [];
 
     function initFinExpenses() {
       const total = DB.expenses.reduce((s, e) => s + e.amount, 0);
@@ -17967,7 +18085,7 @@
     }
 
     /* ─── INCOME ─── */
-    let fincPage = 1; const FINC_PER = 15; let fincFiltered = [];
+    let fincPage = 1; let FINC_PER = 10; let fincFiltered = [];
 
     function initFinIncome() {
       const total = DB.income.reduce((s, i) => s + i.amount, 0);
@@ -18284,7 +18402,7 @@
     const CALL_OUT_CLS = { Connected: 'green', 'No Answer': 'amber', Voicemail: 'blue', Busy: 'red' };
 
     /* ─── CRM LEADS ─── */
-    let cLeadPage = 1; const CLEAD_PER = 12; let cLeadFiltered = [];
+    let cLeadPage = 1; let CLEAD_PER = 10; let cLeadFiltered = [];
 
     /* ─── AVAILABLE TO PROMISE (ATP) ─── */
     const ATP_DATA = {
@@ -18669,7 +18787,7 @@
     }
 
     /* ─── CRM OPPORTUNITIES ─── */
-    let cOppPage = 1; const COPP_PER = 10; let cOppFiltered = [];
+    let cOppPage = 1; let COPP_PER = 10; let cOppFiltered = [];
 
     function initCRMOpportunities() {
       const total = DB.opportunities.length;
@@ -18681,7 +18799,7 @@
       <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Pipeline Value</div><div class="kpi-val">₹${fmt(pipeline)}</div></div><div class="kpi-icon gold"><i class="ti ti-chart-bar"></i></div></div><div class="kpi-sub up">${total} opportunities</div></div>
       <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Weighted Value</div><div class="kpi-val">₹${fmt(Math.round(weightedPipe))}</div></div><div class="kpi-icon blue"><i class="ti ti-calculator"></i></div></div><div class="kpi-sub neutral">Probability adjusted</div></div>
       <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Closed Won</div><div class="kpi-val">${won}</div></div><div class="kpi-icon green"><i class="ti ti-trophy"></i></div></div><div class="kpi-sub up">Deals won</div></div>
-      <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Avg Deal Size</div><div class="kpi-val">₹${fmt(Math.round(pipeline / Math.max(1, total - won)))}</div></div><div class="kpi-icon navy"><i class="ti ti-coin"></i></div></div><div class="kpi-sub neutral">Active deals avg</div></div>`;
+      <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Avg Deal Size</div><div class="kpi-val">₹${fmt(Math.round(pipeline / Math.max(1, total - won)))}</div></div><div class="kpi-icon navy"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub neutral">Active deals avg</div></div>`;
 
       const ow = document.getElementById('mcopp-owner');
       if (ow && ow.options.length === 1) DB.employees.slice(0, 15).forEach(e => ow.add(new Option(e.name, e.id)));
@@ -18993,7 +19111,7 @@
     }
 
     /* ─── CRM ACTIVITIES ─── */
-    let cActPage = 1; const CACT_PER = 10; let cActFiltered = [];
+    let cActPage = 1; let CACT_PER = 10; let cActFiltered = [];
 
     function initCRMActivities() {
       const done = DB.activities.filter(a => a.status === 'Completed').length;
@@ -19055,7 +19173,7 @@
     }
 
     /* ─── CRM CALL LOGS ─── */
-    let cCallPage = 1; const CCALL_PER = 12; let cCallFiltered = [];
+    let cCallPage = 1; let CCALL_PER = 10; let cCallFiltered = [];
 
     function initCRMCallLogs() {
       const total = DB.callLogs.length;
@@ -19121,7 +19239,7 @@
     }
 
     /* ─── CRM FOLLOW-UPS ─── */
-    let cFUPage = 1; const CFU_PER = 12; let cFUFiltered = [];
+    let cFUPage = 1; let CFU_PER = 10; let cFUFiltered = [];
 
     function initCRMFollowUps() {
       const overdue = DB.followUps.filter(f => f.status === 'Overdue').length;
@@ -19192,7 +19310,7 @@
     }
 
     /* ─── CRM MEETINGS ─── */
-    let cMeetPage = 1; const CMEET_PER = 10; let cMeetFiltered = [];
+    let cMeetPage = 1; let CMEET_PER = 10; let cMeetFiltered = [];
 
     function initCRMMeetings() {
       const total = DB.meetings.length;
@@ -19485,7 +19603,7 @@
       if (kpi) kpi.innerHTML = `
       <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Customers</div><div class="kpi-val">${total}</div></div><div class="kpi-icon navy"><i class="ti ti-users"></i></div></div><div class="kpi-sub neutral">Registered</div></div>
       <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Active</div><div class="kpi-val">${active}</div></div><div class="kpi-icon green"><i class="ti ti-user-check"></i></div></div><div class="kpi-sub up">${(active / total * 100).toFixed(0)}% active</div></div>
-      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Revenue</div><div class="kpi-val">₹${fmt(totRev)}</div></div><div class="kpi-icon gold"><i class="ti ti-coin"></i></div></div><div class="kpi-sub up">Lifetime value</div></div>
+      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Revenue</div><div class="kpi-val">₹${fmt(totRev)}</div></div><div class="kpi-icon gold"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub up">Lifetime value</div></div>
       <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Avg LTV</div><div class="kpi-val">₹${fmt(avgLTV)}</div></div><div class="kpi-icon blue"><i class="ti ti-chart-bar"></i></div></div><div class="kpi-sub neutral">Per customer</div></div>`;
 
       /* Segments */
@@ -19544,7 +19662,7 @@
       if (kpi) kpi.innerHTML = `
       <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Suppliers</div><div class="kpi-val">${total}</div></div><div class="kpi-icon navy"><i class="ti ti-truck"></i></div></div><div class="kpi-sub neutral">Registered</div></div>
       <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Active</div><div class="kpi-val">${active}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div><div class="kpi-sub up">${(active / total * 100).toFixed(0)}% active</div></div>
-      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Spend</div><div class="kpi-val">₹${fmt(totSpend)}</div></div><div class="kpi-icon gold"><i class="ti ti-coin"></i></div></div><div class="kpi-sub warn">Procurement</div></div>
+      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Spend</div><div class="kpi-val">₹${fmt(totSpend)}</div></div><div class="kpi-icon gold"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub warn">Procurement</div></div>
       <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Avg Rating</div><div class="kpi-val">${avgRating}★</div></div><div class="kpi-icon blue"><i class="ti ti-star"></i></div></div><div class="kpi-sub up">Vendor score</div></div>`;
 
       /* Performance matrix */
@@ -19672,7 +19790,7 @@
     const SVC_STATUS_CLS = { Pending: 'amber', Scheduled: 'blue', 'In Progress': 'gold', Completed: 'green', Cancelled: 'red' };
 
     /* ─── SERVICE TICKETS ─── */
-    let sTickPage = 1; const STICK_PER = 12; let sTickFiltered = [];
+    let sTickPage = 1; let STICK_PER = 10; let sTickFiltered = [];
 
     function initSvcTickets() {
       const open = DB.tickets.filter(t => t.status === 'Open').length;
@@ -19751,7 +19869,7 @@
     }
 
     /* ─── SERVICE REQUESTS ─── */
-    let sReqPage = 1; const SREQ_PER = 10; let sReqFiltered = [];
+    let sReqPage = 1; let SREQ_PER = 10; let sReqFiltered = [];
 
     function initSvcRequests() {
       const pending = DB.serviceRequests.filter(r => r.status === 'Pending').length;
@@ -20000,7 +20118,7 @@
       <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Insights Generated</div><div class="kpi-val">${AI_INSIGHTS_DATA.length}</div></div><div class="kpi-icon gold"><i class="ti ti-bulb"></i></div></div><div class="kpi-sub up">This week</div></div>
       <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Critical Alerts</div><div class="kpi-val">${anomalies.filter(a => a.impact === 'Critical').length}</div></div><div class="kpi-icon red"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub warn">Need attention</div></div>
       <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Recommendations</div><div class="kpi-val">${AI_RECOMMENDATIONS.length}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div><div class="kpi-sub neutral">Actionable</div></div>
-      <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Potential Savings</div><div class="kpi-val">₹19.6L</div></div><div class="kpi-icon blue"><i class="ti ti-coin"></i></div></div><div class="kpi-sub up">If actioned</div></div>`;
+      <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Potential Savings</div><div class="kpi-val">₹19.6L</div></div><div class="kpi-icon blue"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub up">If actioned</div></div>`;
 
       const anom = document.getElementById('ai-anomalies');
       if (anom) anom.innerHTML = anomalies.map(a => `
@@ -20193,7 +20311,7 @@
     const PERM_MODULES = ['Dashboard', 'Sales', 'Quotations', 'Invoices', 'Purchase', 'GRN', 'Inventory', 'Finance', 'CRM', 'Reports', 'Admin'];
 
     /* ─── ADMIN USERS ─── */
-    let aUserPage = 1; const AUSER_PER = 12; let aUserFiltered = [];
+    let aUserPage = 1; let AUSER_PER = 10; let aUserFiltered = [];
 
     function initAdminUsers() {
       const sysUsers = DB.employees.slice(0, 25).map((e, i) => ({
@@ -20325,7 +20443,7 @@
     }
 
     /* ─── AUDIT LOG ─── */
-    let aAuditPage = 1; const AUDIT_PER = 15; let aAuditFiltered = [];
+    let aAuditPage = 1; let AUDIT_PER = 10; let aAuditFiltered = [];
 
     function initAdminAudit() {
       /* Generate audit log from DB data */
@@ -20465,7 +20583,7 @@
     const RET_STATUS_CLS = { Pending: 'amber', Processing: 'blue', Completed: 'green', Cancelled: 'red' };
     const RET_INSP_CLS = { Pending: 'amber', 'In Progress': 'blue', Completed: 'green' };
     const RET_OUTCOME_CLS = { Refund: 'green', Replacement: 'blue', Repair: 'amber', Rejected: 'red', Pending: 'gray' };
-    let retPage = 1; const RET_PER = 15;
+    let retPage = 1; let RET_PER = 10;
     let retFiltered = [];
 
     function initSalReturns() {
@@ -20614,7 +20732,7 @@
     }
 
     const CN_STATUS_CLS = { Draft: 'gray', Issued: 'blue', Applied: 'green', Cancelled: 'red' };
-    let cnPage = 1; const CN_PER = 15;
+    let cnPage = 1; let CN_PER = 10;
     let cnFiltered = [];
 
     function initCreditNotePage() {
@@ -21140,7 +21258,7 @@
         </div>
       </div>
       <div style="display:flex;gap:20px;font-size:11px;color:#2A4060;">
-        <span><i class="ti ti-coin" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
+        <span><i class="ti ti-currency-rupee" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
             id="lsp-value">—</span></span>
         <span><i class="ti ti-database" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
             id="lsp-source">—</span></span>
@@ -21372,7 +21490,7 @@
       <!-- Meta row: probability · close date · owner -->
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
         <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
-          <i class="ti ti-coin" style="color:#7C3AED;"></i>
+          <i class="ti ti-currency-rupee" style="color:#7C3AED;"></i>
           <span id="osp-value-display" style="font-weight:700;color:#0A1830;">₹0</span>
         </label>
         <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
