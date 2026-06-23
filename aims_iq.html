@@ -5362,29 +5362,18 @@
                 <div class="page-subtitle" id="dash-greeting">Welcome back, Admin</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-outline" onclick="showToast('info','Generating…','Report export started.')">
-                  <i class="ti ti-download"></i> Export
-                </button>
-                <button class="btn btn-outline" onclick="navigate('sal-invoice',null)">
-                  <i class="ti ti-file-invoice"></i> New Invoice
-                </button>
-                <button class="btn btn-primary" onclick="navigate('sal-orders',null)">
-                  <i class="ti ti-plus"></i> New Order
-                </button>
+                <select id="dash-date-filter" class="form-control" style="width: 150px; background: var(--red-grad); color: white; border: none; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(239, 51, 64, 0.3);" onchange="updateDashboardFilter(this.value)">
+                  <option value="today" style="background: white; color: var(--tx-1);">Today</option>
+                  <option value="this_week" style="background: white; color: var(--tx-1);">This Week</option>
+                  <option value="this_month" style="background: white; color: var(--tx-1);" selected>This Month</option>
+                  <option value="this_year" style="background: white; color: var(--tx-1);">This Year</option>
+                  <option value="all_time" style="background: white; color: var(--tx-1);">All Time</option>
+                </select>
               </div>
-            </div>
-
-            <!-- AI Insight Bar -->
-            <div class="ai-hint mb-4" id="dash-ai-hint">
-              <i class="ti ti-brain"></i>
-              <div class="ai-hint-text" id="dash-ai-text">Loading AI insights…</div>
             </div>
 
             <!-- KPI Row 1 — Financial -->
             <div class="kpi-grid kpi-grid-4 mb-4" id="dash-kpi-row1"></div>
-
-            <!-- KPI Row 2 — Operational -->
-            <div class="kpi-grid kpi-grid-4 mb-4" id="dash-kpi-row2"></div>
 
             <!-- Charts Row -->
             <div class="grid-2 mb-4">
@@ -5457,7 +5446,6 @@
               <div class="card">
                 <div class="card-header">
                   <span class="card-title"><i class="ti ti-category"></i> Top Categories</span>
-                  <span class="card-action" onclick="navigate('rep-sales',null)">View all</span>
                 </div>
                 <div class="card-body">
                   <div class="progress-wrap" id="dash-top-cats"></div>
@@ -5498,9 +5486,6 @@
                 </div>
                 <div class="card-body" style="padding:12px 14px;">
                   <div class="timeline" id="dash-activity"></div>
-                </div>
-                <div class="card-footer" style="text-align:center;">
-                  <span class="card-action" onclick="navigate('crm-activities',null)">View all activity</span>
                 </div>
               </div>
 
@@ -5564,10 +5549,6 @@
                   <button class="btn btn-outline" style="justify-content:flex-start;"
                     onclick="navigate('crm-leads',null)">
                     <i class="ti ti-target"></i> Add Lead
-                  </button>
-                  <button class="btn btn-outline" style="justify-content:flex-start;"
-                    onclick="navigate('svc-tickets',null)">
-                    <i class="ti ti-ticket"></i> Create Ticket
                   </button>
                   <button class="btn btn-primary" style="justify-content:flex-start;"
                     onclick="navigate('rep-sales',null)">
@@ -14358,9 +14339,7 @@
 
     function buildDashboard() {
       buildDashGreeting();
-      buildDashAIHint();
       buildDashKPIRow1();
-      buildDashKPIRow2();
       buildDashInvoiceTable();
       buildDashActivity();
       buildDashTopCustomers();
@@ -14375,18 +14354,6 @@
       const tod = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
       const el = document.getElementById('dash-greeting');
       if (el) el.textContent = `${tod}, Admin — ${new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}`;
-    }
-
-    /* ── AI Hint Bar ── */
-    function buildDashAIHint() {
-      const insights = [
-        `Revenue this month is <b>${fmtCur(DB.monthlyPL.at(-1).revenue)}</b> — up <b>↑ 12.4%</b> vs last month. Top performer: <b>Electronics</b> category.`,
-        `<b>${SUMMARY.lowStockCount} products</b> are below minimum stock. Recommend raising POs for top-moving items immediately.`,
-        `<b>${SUMMARY.overdueFollowups} follow-ups</b> are overdue. <b>${SUMMARY.openTickets} service tickets</b> are open — assign technicians to avoid SLA breach.`,
-        `Receivables stand at <b>${fmtCur(SUMMARY.totalReceivable)}</b>. <b>${DB.invoices.filter(i => i.status === 'Overdue').length} invoices</b> are overdue — send payment reminders.`,
-      ];
-      const el = document.getElementById('dash-ai-text');
-      if (el) el.innerHTML = insights[Math.floor(Date.now() / 3600000) % insights.length];
     }
 
     /* ── KPI Row 1: Financial ── */
@@ -14418,30 +14385,27 @@
       </div>`).join('');
     }
 
-    /* ── KPI Row 2: Operational ── */
-    function buildDashKPIRow2() {
-      const el = document.getElementById('dash-kpi-row2');
-      if (!el) return;
-      const cards = [
-        { label: 'Stock Value', val: fmtCur(SUMMARY.stockValue), icon: 'ti-stack-2', color: 'purple', sub: `${DB.products.length} SKUs tracked`, dir: 'neutral' },
-        { label: 'Low Stock Items', val: SUMMARY.lowStockCount, icon: 'ti-alert-triangle', color: 'red', sub: 'Below minimum reorder level', dir: 'warn' },
-        { label: 'Open Tickets', val: SUMMARY.openTickets, icon: 'ti-ticket', color: 'sky', sub: `${DB.technicians.filter(t => t.status === 'On Job').length} technicians on job`, dir: 'neutral' },
-        { label: 'Net Profit (YTD)', val: fmtCur(Math.max(0, SUMMARY.netProfit)), icon: 'ti-trending-up', color: 'green', sub: `${DB.monthlyPL.filter(m => m.net > 0).length}/12 profitable months`, dir: 'up' },
-      ];
-      el.innerHTML = cards.map(c => `
-      <div class="kpi-card ${c.color}">
-        <div class="kpi-head">
-          <div>
-            <div class="kpi-label">${c.label}</div>
-            <div class="kpi-val">${c.val}</div>
-          </div>
-          <div class="kpi-icon ${c.color}"><i class="ti ${c.icon}"></i></div>
-        </div>
-        <div class="kpi-sub ${c.dir}">
-          <i class="ti ${c.dir === 'up' ? 'ti-trending-up' : c.dir === 'warn' ? 'ti-alert-circle' : 'ti-minus'}"></i>
-          ${c.sub}
-        </div>
-      </div>`).join('');
+    /* ── Date Filter Update ── */
+    let dashFilterMultiplier = 1;
+    function updateDashboardFilter(val) {
+      let nextM = 1;
+      if (val === 'today') nextM = 0.03;
+      else if (val === 'this_week') nextM = 0.25;
+      else if (val === 'this_month') nextM = 1;
+      else if (val === 'this_year') nextM = 12;
+      else if (val === 'all_time') nextM = 36;
+      
+      const ratio = nextM / dashFilterMultiplier;
+      dashFilterMultiplier = nextM;
+      
+      SUMMARY.totalRevenue *= ratio;
+      SUMMARY.totalPaid *= ratio;
+      SUMMARY.totalReceivable *= ratio;
+      SUMMARY.totalPurchases *= ratio;
+      
+      buildDashKPIRow1();
+      
+      showToast('success', 'Dashboard Updated', 'Data refreshed for selected period.');
     }
 
     /* ── Recent Invoices Table ── */
