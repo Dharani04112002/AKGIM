@@ -11727,8 +11727,7 @@
                 <button class="btn btn-outline" onclick="closeModal('modal-sinv-view')">Close</button>
                 <button class="btn btn-outline" onclick="showToast('default','Print','Printing invoice…')"><i
                     class="ti ti-printer"></i> Print</button>
-                <button class="btn btn-primary"
-                  onclick="openModal('modal-sal-receipt');closeModal('modal-sinv-view')"><i
+                <button class="btn btn-primary" id="btn-convert-srec"><i
                     class="ti ti-credit-card"></i> Record Payment</button>
               </div>
             </div>
@@ -17341,7 +17340,26 @@
         <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(inv.subtotal)}</td></tr>
         <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(inv.tax)}</td></tr>
         <tr style="background:#0F1C2E;color:#fff;"><td colspan="4"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(inv.total)}</td></tr>`;
+      const btnConvert = document.getElementById('btn-convert-srec');
+      if (btnConvert) btnConvert.onclick = () => { closeModal('modal-sinv-view'); convertSInvToReceipt(inv.id); };
       openModal('modal-sinv-view');
+    }
+
+    function convertSInvToReceipt(iId) {
+      const inv = DB.invoices.find(x => x.id === iId); if (!inv) return;
+      populateSalDropdowns();
+      const recInvSel = document.getElementById('mrec-inv');
+      if (recInvSel && !Array.from(recInvSel.options).some(o => o.value === inv.id)) {
+        recInvSel.add(new Option(inv.id + ' — ' + inv.customer, inv.id));
+      }
+      if (recInvSel) recInvSel.value = inv.id;
+      const custSel = document.getElementById('mrec-cust');
+      if (custSel) custSel.value = inv.customerId;
+      const amtInp = document.getElementById('mrec-amount');
+      if (amtInp) amtInp.value = inv.balance > 0 ? inv.balance : inv.total;
+      const dateInp = document.getElementById('mrec-date');
+      if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
+      openModal('modal-sal-receipt');
     }
 
     /* Quotation modal helpers */
@@ -17578,7 +17596,7 @@
         <td onclick="event.stopPropagation()">
           <div style="display:flex;gap:4px;">
             <button class="btn btn-ghost btn-icon-sm" onclick="viewSInvDetail('${i.id}')"><i class="ti ti-eye"></i></button>
-            <button class="btn btn-ghost btn-icon-sm" onclick="openModal('modal-sal-receipt')"><i class="ti ti-credit-card"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Record Receipt" onclick="convertSInvToReceipt('${i.id}')"><i class="ti ti-credit-card"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing invoice…')"><i class="ti ti-printer"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Email','Invoice emailed to customer.')"><i class="ti ti-mail"></i></button>
           </div>
