@@ -4516,10 +4516,6 @@
               <i class="ti ti-file-invoice nav-icon"></i>
               <span class="nav-text">Sales Invoice</span>
             </div>
-            <div class="nav-item" data-page="sal-customer-ledger" onclick="navigate('sal-customer-ledger',this)">
-              <i class="ti ti-address-book nav-icon"></i>
-              <span class="nav-text">Customer Ledger</span>
-            </div>
             <div class="nav-item" data-page="sal-delivery" onclick="navigate('sal-delivery',this)">
               <i class="ti ti-truck nav-icon"></i>
               <span class="nav-text">Delivery Notes</span>
@@ -4528,10 +4524,6 @@
             <div class="nav-item" data-page="sal-returns" onclick="navigate('sal-returns',this)">
               <i class="ti ti-backspace nav-icon"></i>
               <span class="nav-text">Sales Returns</span>
-            </div>
-            <div class="nav-item" data-page="sal-buyback" onclick="navigate('sal-buyback',this)">
-              <i class="ti ti-refresh nav-icon"></i>
-              <span class="nav-text">Buy Back</span>
             </div>
           </div>
         </div>
@@ -4643,6 +4635,10 @@
               <i class="ti ti-file-analytics nav-icon"></i>
               <span class="nav-text">Financial Reports</span>
             </div>
+            <div class="nav-item" data-page="sal-customer-ledger" onclick="navigate('sal-customer-ledger',this)">
+              <i class="ti ti-address-book nav-icon"></i>
+              <span class="nav-text">Customer Ledger</span>
+            </div>
           </div>
         </div>
 
@@ -4682,6 +4678,10 @@
               <i class="ti ti-alert-triangle nav-icon"></i>
               <span class="nav-text">Low Stock Report</span>
               <span class="nav-badge red">12</span>
+            </div>
+            <div class="nav-item" data-page="sal-buyback" onclick="navigate('sal-buyback',this)">
+              <i class="ti ti-refresh nav-icon"></i>
+              <span class="nav-text">Buy Back</span>
             </div>
           </div>
         </div>
@@ -12077,7 +12077,7 @@
       'sal-quotations': { title: 'Quotations', crumbs: ['Sales', 'Quotations'], module: 'sales' },
       'sal-orders': { title: 'Sales Orders', crumbs: ['Sales', 'Orders'], module: 'sales' },
       'sal-invoice': { title: 'Sales Invoice', crumbs: ['Sales', 'Invoice'], module: 'sales' },
-      'sal-customer-ledger': { title: 'Customer Ledger', crumbs: ['Sales', 'Customer Ledger'], module: 'sales' },
+      'sal-customer-ledger': { title: 'Customer Ledger', crumbs: ['Finance', 'Customer Ledger'], module: 'finance' },
       'sal-delivery': { title: 'Delivery Notes', crumbs: ['Sales', 'Delivery Notes'], module: 'sales' },
       // Finance
       'fin-payments': { title: 'Payments', crumbs: ['Finance', 'Payments'], module: 'finance' },
@@ -12122,7 +12122,7 @@
       'sal-margin-approval': { title: 'Margin Approvals', crumbs: ['Approvals', 'Margin Approval'], module: 'approvals' },
       // Returns & Buy Back
       'sal-returns': { title: 'Sales Returns', crumbs: ['Sales', 'Returns'], module: 'sales' },
-      'sal-buyback': { title: 'Buy Back', crumbs: ['Sales', 'Buy Back'], module: 'sales' },
+      'sal-buyback': { title: 'Buy Back', crumbs: ['Inventory', 'Buy Back'], module: 'inventory' },
       // Installation Mgmt
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
       // AMC & Warranty
