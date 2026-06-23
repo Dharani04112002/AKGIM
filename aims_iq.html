@@ -4798,6 +4798,10 @@
               <i class="ti ti-backspace nav-icon"></i>
               <span class="nav-text">Sales Returns</span>
             </div>
+            <div class="nav-item" data-page="sal-credit-note" onclick="navigate('sal-credit-note',this)">
+              <i class="ti ti-receipt-refund nav-icon"></i>
+              <span class="nav-text">Credit Note</span>
+            </div>
           </div>
         </div>
 
@@ -4988,10 +4992,6 @@
             <div class="nav-item" data-page="sal-margin-approval" onclick="navigate('sal-margin-approval',this)">
               <i class="ti ti-shield-check nav-icon"></i>
               <span class="nav-text">Margin Approval</span>
-            </div>
-            <div class="nav-item" data-page="sal-adv-approval" onclick="navigate('sal-adv-approval',this)">
-              <i class="ti ti-user-check nav-icon"></i>
-              <span class="nav-text">Adv. Approval</span>
             </div>
             <div class="nav-item" data-page="appr-sal-quote" onclick="navigate('appr-sal-quote',this)">
               <i class="ti ti-file-description nav-icon"></i>
@@ -10125,12 +10125,32 @@
                 <div class="page-sub">Manage customer returns and inspections</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary"><i class="ti ti-plus"></i> New Return Request</button>
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+                <button class="btn btn-primary" onclick="openModal('modal-sal-return')"><i class="ti ti-plus"></i> New Return Request</button>
               </div>
             </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="ret-kpi"></div>
             <div class="card">
               <div class="card-header">
-                <div class="card-title"><i class="ti ti-backspace"></i> Return Transactions</div>
+                <div class="card-title"><i class="ti ti-backspace"></i> Return Transactions <span class="badge badge-blue no-dot ml-2" id="ret-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="ret-search" type="text" placeholder="Search RET#, customer…" oninput="filterReturns()"></div>
+                  <select class="form-control" style="width:150px;" id="ret-status-filter" onchange="filterReturns()">
+                    <option value="">All Status</option>
+                    <option>Pending</option>
+                    <option>Processing</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                  </select>
+                  <select class="form-control" style="width:150px;" id="ret-outcome-filter" onchange="filterReturns()">
+                    <option value="">All Outcomes</option>
+                    <option>Refund</option>
+                    <option>Replacement</option>
+                    <option>Repair</option>
+                    <option>Rejected</option>
+                    <option>Pending</option>
+                  </select>
+                </div>
               </div>
               <div class="table-wrap">
                 <table class="data-tbl">
@@ -10141,7 +10161,7 @@
                       <th>Invoice Ref</th>
                       <th>Date</th>
                       <th>Items</th>
-                      <th>Inspection Status</th>
+                      <th>Inspection</th>
                       <th>Outcome</th>
                       <th>Status</th>
                       <th>Actions</th>
@@ -10150,6 +10170,59 @@
                   <tbody id="sal-returns-tbody"></tbody>
                 </table>
               </div>
+              <div id="ret-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── SALES: CREDIT NOTE ────────────────────── -->
+          <div class="page" id="page-sal-credit-note">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Credit Notes</div>
+                <div class="page-sub">Issue and manage credit notes against sales invoices</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+                <button class="btn btn-primary" onclick="openModal('modal-sal-credit-note')"><i class="ti ti-plus"></i>
+                  New Credit Note</button>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="cn-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-receipt-refund"></i> Credit Note List <span
+                    class="badge badge-blue no-dot ml-2" id="cn-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="cn-search" type="text"
+                      placeholder="Search CN#, customer…" oninput="filterCreditNotes()"></div>
+                  <select class="form-control" style="width:150px;" id="cn-status-filter"
+                    onchange="filterCreditNotes()">
+                    <option value="">All Status</option>
+                    <option>Draft</option>
+                    <option>Issued</option>
+                    <option>Applied</option>
+                    <option>Cancelled</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>CN #</th>
+                      <th>Customer</th>
+                      <th>Invoice Ref</th>
+                      <th>Date</th>
+                      <th>Reason</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cn-tbody"></tbody>
+                </table>
+              </div>
+              <div id="cn-pagination"></div>
             </div>
           </div>
 
@@ -12027,6 +12100,158 @@
             </div>
           </div>
 
+          <!-- New Sales Return -->
+          <div class="modal-wrap" id="modal-sal-return">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-backspace"></i> New Return Request</div>
+                <button class="modal-close" onclick="closeModal('modal-sal-return')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div class="form-grid-2 mb-4">
+                  <div class="form-group"><label class="form-label">Customer *</label>
+                    <select class="form-control" id="mret-customer"><option value="">— Select Customer —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Invoice Reference</label>
+                    <select class="form-control" id="mret-invoice"><option value="">— Select Invoice —</option></select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Return Date</label>
+                    <input class="form-control" type="date" id="mret-date">
+                  </div>
+                  <div class="form-group"><label class="form-label">Return Reason</label>
+                    <select class="form-control" id="mret-reason">
+                      <option>Defective / Damaged</option>
+                      <option>Wrong Product Delivered</option>
+                      <option>Not as Described</option>
+                      <option>Customer Changed Mind</option>
+                      <option>Excess Quantity</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Expected Outcome</label>
+                    <select class="form-control" id="mret-outcome">
+                      <option>Refund</option>
+                      <option>Replacement</option>
+                      <option>Repair</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Inspection Status</label>
+                    <select class="form-control" id="mret-inspection">
+                      <option>Pending</option>
+                      <option>In Progress</option>
+                      <option>Completed</option>
+                    </select>
+                  </div>
+                  <div class="form-group form-col-2"><label class="form-label">Notes</label>
+                    <input class="form-control" id="mret-notes" placeholder="Additional notes…">
+                  </div>
+                </div>
+                <div class="divider mb-3"></div>
+                <div class="card-title mb-3"><i class="ti ti-list"></i> Return Items</div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr><th>Product</th><th>Qty</th><th>Reason</th><th></th></tr>
+                    </thead>
+                    <tbody id="mret-items-body">
+                      <tr>
+                        <td><select class="form-control" style="min-width:200px;"><option value="">— Select —</option></select></td>
+                        <td><input type="number" class="form-control" style="width:70px;" value="1" min="1"></td>
+                        <td><input type="text" class="form-control" placeholder="Item reason…"></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="btn btn-ghost mt-2" onclick="mretAddRow()"><i class="ti ti-plus"></i> Add Item</button>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-sal-return')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveReturn()"><i class="ti ti-check"></i> Submit Return</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- New Credit Note -->
+          <div class="modal-wrap" id="modal-sal-credit-note">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-receipt-refund"></i> New Credit Note</div>
+                <button class="modal-close" onclick="closeModal('modal-sal-credit-note')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div class="form-grid-2 mb-4">
+                  <div class="form-group"><label class="form-label">Customer *</label>
+                    <select class="form-control" id="mcn-customer">
+                      <option value="">— Select Customer —</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Invoice Reference</label>
+                    <select class="form-control" id="mcn-invoice">
+                      <option value="">— Select Invoice —</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Date</label>
+                    <input class="form-control" type="date" id="mcn-date">
+                  </div>
+                  <div class="form-group"><label class="form-label">Reason</label>
+                    <select class="form-control" id="mcn-reason">
+                      <option>Defective Product</option>
+                      <option>Wrong Item Delivered</option>
+                      <option>Overcharge</option>
+                      <option>Customer Goodwill</option>
+                      <option>Cancelled Order</option>
+                    </select>
+                  </div>
+                  <div class="form-group form-col-2"><label class="form-label">Notes</label>
+                    <input class="form-control" id="mcn-notes" placeholder="Additional notes…">
+                  </div>
+                </div>
+                <div class="divider mb-3"></div>
+                <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Rate (₹)</th>
+                        <th>Amount (₹)</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="mcn-items-body">
+                      <tr>
+                        <td><select class="form-control" style="min-width:200px;">
+                            <option value="">— Select —</option>
+                          </select></td>
+                        <td><input type="number" class="form-control" style="width:70px;" value="1" min="1"
+                            oninput="mcnCalcTotals()"></td>
+                        <td><input type="number" class="form-control" style="width:100px;" value="0"
+                            oninput="mcnCalcTotals()"></td>
+                        <td class="amount-cell mcn-amt">₹0</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
+                  <button class="btn btn-ghost" onclick="mcnAddRow()"><i class="ti ti-plus"></i> Add Item</button>
+                  <div style="text-align:right;font-size:14px;color:var(--tx-2);">
+                    Total: <span style="font-size:16px;font-weight:800;color:var(--navy);" id="mcn-total">₹0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-sal-credit-note')">Cancel</button>
+                <button class="btn btn-outline" onclick="saveCreditNote('Draft')"><i class="ti ti-device-floppy"></i>
+                  Save Draft</button>
+                <button class="btn btn-primary" onclick="saveCreditNote('Issued')"><i class="ti ti-send"></i>
+                  Issue</button>
+              </div>
+            </div>
+          </div>
+
           <!-- ══ STEP 11 MODALS ══ -->
 
           <!-- New PO Modal -->
@@ -12851,6 +13076,7 @@
       'sal-margin-approval': { title: 'Margin Approvals', crumbs: ['Approvals', 'Margin Approval'], module: 'approvals' },
       // Returns & Buy Back
       'sal-returns': { title: 'Sales Returns', crumbs: ['Sales', 'Returns'], module: 'sales' },
+      'sal-credit-note': { title: 'Credit Notes', crumbs: ['Sales', 'Credit Note'], module: 'sales' },
       'sal-buyback': { title: 'Buy Back', crumbs: ['Inventory', 'Buy Back'], module: 'inventory' },
       // Installation Mgmt
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
@@ -15082,6 +15308,7 @@
 
       once('sal-margin-approval', initSalMarginApproval);
       once('sal-returns', initSalReturns);
+      once('sal-credit-note', initCreditNotePage);
       once('sal-buyback', initSalBuyback);
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
@@ -20026,10 +20253,257 @@
     }
 
     /* ─── SALES: RETURNS & BUY BACK ─── */
+    const RET_STATUS_CLS = { Pending: 'amber', Processing: 'blue', Completed: 'green', Cancelled: 'red' };
+    const RET_INSP_CLS = { Pending: 'amber', 'In Progress': 'blue', Completed: 'green' };
+    const RET_OUTCOME_CLS = { Refund: 'green', Replacement: 'blue', Repair: 'amber', Rejected: 'red', Pending: 'gray' };
+    let retPage = 1; const RET_PER = 15;
+    let retFiltered = [];
+
     function initSalReturns() {
-      const tbody = document.getElementById('sal-returns-tbody'); if (!tbody) return;
-      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state">No active returns currently pending inspection.</div></td></tr>`;
+      if (!DB.salesReturns) {
+        const reasons = ['Defective / Damaged', 'Wrong Product Delivered', 'Not as Described', 'Customer Changed Mind', 'Excess Quantity'];
+        const outcomes = ['Refund', 'Replacement', 'Repair', 'Rejected', 'Pending'];
+        const inspections = ['Pending', 'In Progress', 'Completed'];
+        DB.salesReturns = Array.from({ length: 30 }, (_, i) => {
+          const cust = spick(DB.customers);
+          const inv = spick(DB.invoices);
+          const itemCount = si(1, 4);
+          const inspection = spick(inspections);
+          const outcome = inspection === 'Completed' ? spick(['Refund', 'Replacement', 'Repair', 'Rejected']) : 'Pending';
+          const status = inspection === 'Completed' ? 'Completed' : inspection === 'In Progress' ? 'Processing' : 'Pending';
+          return {
+            id: `RET-2024-${String(i + 1).padStart(4, '0')}`,
+            customer: cust.name,
+            invoiceRef: inv.id,
+            date: new Date(Date.now() - si(1, 90) * 86400000).toISOString(),
+            itemCount,
+            reason: spick(reasons),
+            inspectionStatus: inspection,
+            outcome,
+            status,
+          };
+        });
+      }
+      const pending = DB.salesReturns.filter(r => r.status === 'Pending').length;
+      const processing = DB.salesReturns.filter(r => r.status === 'Processing').length;
+      const completed = DB.salesReturns.filter(r => r.status === 'Completed').length;
+      const kpi = document.getElementById('ret-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending</div><div class="kpi-val">${pending}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Awaiting inspection</div></div>
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Processing</div><div class="kpi-val">${processing}</div></div><div class="kpi-icon blue"><i class="ti ti-loader"></i></div></div><div class="kpi-sub neutral">Under review</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Completed</div><div class="kpi-val">${completed}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Resolved</div></div>
+        <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total</div><div class="kpi-val">${DB.salesReturns.length}</div></div><div class="kpi-icon navy"><i class="ti ti-backspace"></i></div></div><div class="kpi-sub neutral">All returns</div></div>`;
+      const custSel = document.getElementById('mret-customer');
+      if (custSel && custSel.options.length === 1) DB.customers.forEach(c => custSel.add(new Option(c.name, c.name)));
+      const invSel = document.getElementById('mret-invoice');
+      if (invSel && invSel.options.length === 1) DB.invoices.slice(0, 50).forEach(i => invSel.add(new Option(i.id + ' — ' + i.customer, i.id)));
+      const dateEl = document.getElementById('mret-date'); if (dateEl) dateEl.value = new Date().toISOString().slice(0, 10);
+      retFiltered = [...DB.salesReturns].sort((a, b) => new Date(b.date) - new Date(a.date));
+      const sc = document.getElementById('ret-count'); if (sc) sc.textContent = DB.salesReturns.length;
+      renderReturnsTable();
     }
+
+    function filterReturns() {
+      const search = (document.getElementById('ret-search')?.value || '').toLowerCase();
+      const status = document.getElementById('ret-status-filter')?.value || '';
+      const outcome = document.getElementById('ret-outcome-filter')?.value || '';
+      retFiltered = DB.salesReturns.filter(r => {
+        const ms = !search || r.id.toLowerCase().includes(search) || r.customer.toLowerCase().includes(search);
+        const mst = !status || r.status === status;
+        const mo = !outcome || r.outcome === outcome;
+        return ms && mst && mo;
+      }).sort((a, b) => new Date(b.date) - new Date(a.date));
+      const sc = document.getElementById('ret-count'); if (sc) sc.textContent = retFiltered.length;
+      retPage = 1; renderReturnsTable();
+    }
+
+    function renderReturnsTable() {
+      const tbody = document.getElementById('sal-returns-tbody'); if (!tbody) return;
+      const start = (retPage - 1) * RET_PER;
+      const slice = retFiltered.slice(start, start + RET_PER);
+      if (!slice.length) { tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state">No returns found.</div></td></tr>`; return; }
+      tbody.innerHTML = slice.map(r => `
+        <tr>
+          <td><span class="id-cell">${r.id}</span></td>
+          <td>
+            <div class="entity-cell">
+              <div class="entity-av blue">${r.customer.charAt(0)}</div>
+              <div class="entity-name truncate" style="max-width:120px;">${r.customer}</div>
+            </div>
+          </td>
+          <td><span class="id-cell" style="font-size:10px;">${r.invoiceRef}</span></td>
+          <td class="text-muted" style="font-size:12px;">${fmtDate(r.date)}</td>
+          <td class="text-center">${r.itemCount}</td>
+          <td><span class="badge badge-${RET_INSP_CLS[r.inspectionStatus] || 'gray'}">${r.inspectionStatus}</span></td>
+          <td><span class="badge badge-${RET_OUTCOME_CLS[r.outcome] || 'gray'}">${r.outcome}</span></td>
+          <td><span class="badge badge-${RET_STATUS_CLS[r.status] || 'gray'}">${r.status}</span></td>
+          <td>
+            <div style="display:flex;gap:4px;">
+              <button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Return','Opening return details…')"><i class="ti ti-eye"></i></button>
+              <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing return note…')"><i class="ti ti-printer"></i></button>
+            </div>
+          </td>
+        </tr>`).join('');
+      renderPagination('ret-pagination', retFiltered.length, retPage, RET_PER, `function(p){retPage=p;renderReturnsTable()}`);
+    }
+
+    function mretAddRow() {
+      const tbody = document.getElementById('mret-items-body'); if (!tbody) return;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><select class="form-control" style="min-width:200px;"><option value="">— Select —</option>
+          ${DB.products.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}
+        </select></td>
+        <td><input type="number" class="form-control" style="width:70px;" value="1" min="1"></td>
+        <td><input type="text" class="form-control" placeholder="Item reason…"></td>
+        <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function saveReturn() {
+      if (!DB.salesReturns) DB.salesReturns = [];
+      const cust = document.getElementById('mret-customer')?.value;
+      if (!cust) { showToast('warning', 'Validation', 'Please select a customer.'); return; }
+      const inv = document.getElementById('mret-invoice')?.value || '—';
+      const outcome = document.getElementById('mret-outcome')?.value || 'Pending';
+      const inspection = document.getElementById('mret-inspection')?.value || 'Pending';
+      let itemCount = 0;
+      document.querySelectorAll('#mret-items-body tr').forEach(tr => { if (tr.cells[0]?.querySelector('select')?.value) itemCount++; });
+      DB.salesReturns.unshift({
+        id: `RET-${Date.now()}`, customer: cust, invoiceRef: inv,
+        date: new Date().toISOString(), itemCount: itemCount || 1,
+        reason: document.getElementById('mret-reason')?.value || '',
+        inspectionStatus: inspection, outcome, status: 'Pending',
+      });
+      closeModal('modal-sal-return');
+      showToast('success', 'Return', 'Return request submitted successfully.');
+      retFiltered = [...DB.salesReturns]; retPage = 1; renderReturnsTable();
+      const sc = document.getElementById('ret-count'); if (sc) sc.textContent = DB.salesReturns.length;
+    }
+    const CN_STATUS_CLS = { Draft: 'gray', Issued: 'blue', Applied: 'green', Cancelled: 'red' };
+    let cnPage = 1; const CN_PER = 15;
+    let cnFiltered = [];
+
+    function initCreditNotePage() {
+      if (!DB.creditNotes) {
+        const reasons = ['Defective Product', 'Wrong Item Delivered', 'Overcharge', 'Customer Goodwill', 'Cancelled Order'];
+        DB.creditNotes = Array.from({ length: 20 }, (_, i) => {
+          const cust = spick(DB.customers);
+          const inv = spick(DB.invoices);
+          const amount = Math.round(inv.total * si(5, 30) / 100);
+          return {
+            id: `CN-2024-${String(i + 1).padStart(4, '0')}`,
+            customer: cust.name,
+            invoiceRef: inv.id,
+            date: new Date(Date.now() - si(1, 120) * 86400000).toISOString(),
+            reason: spick(reasons),
+            amount,
+            status: spick(['Draft', 'Issued', 'Issued', 'Applied', 'Applied', 'Cancelled']),
+          };
+        });
+      }
+      const total = DB.creditNotes.reduce((s, c) => s + c.amount, 0);
+      const issued = DB.creditNotes.filter(c => c.status === 'Issued').length;
+      const applied = DB.creditNotes.filter(c => c.status === 'Applied').length;
+      const kpi = document.getElementById('cn-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total CN Value</div><div class="kpi-val">₹${fmt(total)}</div></div><div class="kpi-icon gold"><i class="ti ti-receipt-refund"></i></div></div><div class="kpi-sub neutral">${DB.creditNotes.length} notes</div></div>
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Issued</div><div class="kpi-val">${issued}</div></div><div class="kpi-icon blue"><i class="ti ti-send"></i></div></div><div class="kpi-sub neutral">Pending use</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Applied</div><div class="kpi-val">${applied}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Used against invoices</div></div>
+        <div class="kpi-card gray"><div class="kpi-head"><div><div class="kpi-label">Cancelled</div><div class="kpi-val">${DB.creditNotes.filter(c => c.status === 'Cancelled').length}</div></div><div class="kpi-icon gray"><i class="ti ti-ban"></i></div></div><div class="kpi-sub neutral">Voided</div></div>`;
+      const custSel = document.getElementById('mcn-customer');
+      if (custSel && custSel.options.length === 1) DB.customers.forEach(c => custSel.add(new Option(c.name, c.name)));
+      const invSel = document.getElementById('mcn-invoice');
+      if (invSel && invSel.options.length === 1) DB.invoices.slice(0, 50).forEach(i => invSel.add(new Option(i.id + ' — ' + i.customer, i.id)));
+      const dateEl = document.getElementById('mcn-date'); if (dateEl) dateEl.value = new Date().toISOString().slice(0, 10);
+      cnFiltered = [...DB.creditNotes].sort((a, b) => new Date(b.date) - new Date(a.date));
+      const sc = document.getElementById('cn-count'); if (sc) sc.textContent = DB.creditNotes.length;
+      renderCNTable();
+    }
+
+    function filterCreditNotes() {
+      const search = (document.getElementById('cn-search')?.value || '').toLowerCase();
+      const status = document.getElementById('cn-status-filter')?.value || '';
+      cnFiltered = DB.creditNotes.filter(c => {
+        const ms = !search || c.id.toLowerCase().includes(search) || c.customer.toLowerCase().includes(search);
+        const mst = !status || c.status === status;
+        return ms && mst;
+      }).sort((a, b) => new Date(b.date) - new Date(a.date));
+      const sc = document.getElementById('cn-count'); if (sc) sc.textContent = cnFiltered.length;
+      cnPage = 1; renderCNTable();
+    }
+
+    function renderCNTable() {
+      const tbody = document.getElementById('cn-tbody'); if (!tbody) return;
+      const start = (cnPage - 1) * CN_PER;
+      const slice = cnFiltered.slice(start, start + CN_PER);
+      if (!slice.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No credit notes found.</div></td></tr>`; return; }
+      tbody.innerHTML = slice.map(c => `
+        <tr>
+          <td><span class="id-cell">${c.id}</span></td>
+          <td>
+            <div class="entity-cell">
+              <div class="entity-av blue">${c.customer.charAt(0)}</div>
+              <div class="entity-name truncate" style="max-width:130px;">${c.customer}</div>
+            </div>
+          </td>
+          <td><span class="id-cell" style="font-size:10px;">${c.invoiceRef}</span></td>
+          <td class="text-muted" style="font-size:12px;">${fmtDate(c.date)}</td>
+          <td class="text-muted" style="font-size:12px;">${c.reason}</td>
+          <td class="amount-cell" style="font-weight:700;">₹${fmt(c.amount)}</td>
+          <td><span class="badge badge-${CN_STATUS_CLS[c.status] || 'gray'}">${c.status}</span></td>
+          <td>
+            <div style="display:flex;gap:4px;">
+              <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing credit note…')"><i class="ti ti-printer"></i></button>
+            </div>
+          </td>
+        </tr>`).join('');
+      renderPagination('cn-pagination', cnFiltered.length, cnPage, CN_PER, `function(p){cnPage=p;renderCNTable()}`);
+    }
+
+    function mcnAddRow() {
+      const tbody = document.getElementById('mcn-items-body'); if (!tbody) return;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><select class="form-control" style="min-width:200px;"><option value="">— Select —</option>
+          ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}
+        </select></td>
+        <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mcnCalcTotals()"></td>
+        <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="mcnCalcTotals()"></td>
+        <td class="amount-cell mcn-amt">₹0</td>
+        <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mcnCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function mcnCalcTotals() {
+      let total = 0;
+      document.querySelectorAll('#mcn-items-body tr').forEach(tr => {
+        const qty = parseFloat(tr.cells[1]?.querySelector('input')?.value) || 0;
+        const rate = parseFloat(tr.cells[2]?.querySelector('input')?.value) || 0;
+        const amt = qty * rate;
+        const amtCell = tr.querySelector('.mcn-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(amt);
+        total += amt;
+      });
+      const t = document.getElementById('mcn-total'); if (t) t.textContent = '₹' + fmt(total);
+    }
+
+    function saveCreditNote(status) {
+      if (!DB.creditNotes) DB.creditNotes = [];
+      const cust = document.getElementById('mcn-customer')?.value;
+      if (!cust) { showToast('warning', 'Validation', 'Please select a customer.'); return; }
+      const inv = document.getElementById('mcn-invoice')?.value || '—';
+      const reason = document.getElementById('mcn-reason')?.value || '';
+      let total = 0;
+      document.querySelectorAll('#mcn-items-body tr').forEach(tr => {
+        total += (parseFloat(tr.cells[1]?.querySelector('input')?.value) || 0) * (parseFloat(tr.cells[2]?.querySelector('input')?.value) || 0);
+      });
+      DB.creditNotes.unshift({ id: `CN-${Date.now()}`, customer: cust, invoiceRef: inv, date: new Date().toISOString(), reason, amount: total, status });
+      closeModal('modal-sal-credit-note');
+      showToast('success', 'Credit Note', `Credit note ${status === 'Draft' ? 'saved as draft' : 'issued'} successfully.`);
+      cnFiltered = [...DB.creditNotes]; cnPage = 1; renderCNTable();
+      const sc = document.getElementById('cn-count'); if (sc) sc.textContent = DB.creditNotes.length;
+    }
+
     function initSalBuyback() {
       const tbody = document.getElementById('sal-buyback-tbody'); if (!tbody) return;
       tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No buy back transactions found.</div></td></tr>`;
@@ -20216,7 +20690,7 @@
           <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Qualified</div><div class="kpi-val">${qualified}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div></div>
           <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">In Pipeline</div><div class="kpi-val">${propLeads}</div></div><div class="kpi-icon gold"><i class="ti ti-trending-up"></i></div></div></div>`;
       }
-      
+
       registerChart('rep-leads', () => {
         const srcCounts = {};
         const statusCounts = {};
