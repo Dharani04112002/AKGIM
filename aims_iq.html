@@ -4807,6 +4807,8 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
+            <div class="nav-item" data-page="rep-leads" onclick="navigate('rep-leads',this)"><i
+                class="ti ti-users-group nav-icon"></i><span class="nav-text">Leads Reports</span></div>
             <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i
                 class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
             <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i
@@ -10092,6 +10094,43 @@
           </div>
 
 
+          <!-- ── REPORTS: LEADS ──────────────────────── -->
+          <div class="page" id="page-rep-leads">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Leads Reports</div>
+                <div class="page-sub">Comprehensive overview of lead acquisition, status, and conversion</div>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="rep-leads-kpi"></div>
+            <div class="grid-2 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-chart-pie"></i> Leads by Source</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-rep-leads-source"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-chart-bar"></i> Leads by Status</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-rep-leads-status"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-chart-area"></i> Monthly Lead Acquisition</div>
+              </div>
+              <div class="card-body" style="padding:16px;">
+                <div id="chart-rep-leads-monthly"></div>
+              </div>
+            </div>
+          </div>
+
           <!-- ── REPORTS: CRM ANALYTICS ──────────────────────── -->
           <div class="page" id="page-rep-crm">
             <div class="page-header">
@@ -12048,6 +12087,7 @@
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
       'svc-reports': { title: 'Service Reports', crumbs: ['Service', 'Reports'], module: 'service' },
       // Reports
+      'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
       'rep-purchase': { title: 'Purchase Reports', crumbs: ['Reports', 'Purchase'], module: 'reports' },
       'rep-inventory': { title: 'Inventory Reports', crumbs: ['Reports', 'Inventory'], module: 'reports' },
@@ -14306,6 +14346,7 @@
       once('hrm-payroll', initHRMPayroll);
       once('hrm-ot', initHRMOT);
       once('crm-cust-360', initCRMCust360);
+      once('rep-leads', initRepLeads);
       once('rep-crm', initRepCRM);
       once('rep-service', initRepService);
       once('rep-productivity', initRepProductivity);
@@ -19275,6 +19316,61 @@
 
 
     /* ─── NEW REPORTS & ADMIN ─── */
+    function initRepLeads() {
+      const kpi = document.getElementById('rep-leads-kpi');
+      if (kpi) {
+        const totalLeads = DB.leads.length;
+        const qualified = DB.leads.filter(l => l.status === 'Qualified').length;
+        const newLeads = DB.leads.filter(l => l.status === 'New').length;
+        const propLeads = DB.leads.filter(l => l.status === 'Proposal' || l.status === 'Negotiation').length;
+        kpi.innerHTML = `
+          <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Leads</div><div class="kpi-val">${totalLeads}</div></div><div class="kpi-icon navy"><i class="ti ti-users-group"></i></div></div></div>
+          <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">New Leads</div><div class="kpi-val">${newLeads}</div></div><div class="kpi-icon blue"><i class="ti ti-bulb"></i></div></div></div>
+          <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Qualified</div><div class="kpi-val">${qualified}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div></div>
+          <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">In Pipeline</div><div class="kpi-val">${propLeads}</div></div><div class="kpi-icon gold"><i class="ti ti-trending-up"></i></div></div></div>`;
+      }
+      
+      registerChart('rep-leads', () => {
+        const srcCounts = {};
+        const statusCounts = {};
+        DB.leads.forEach(l => {
+          srcCounts[l.source] = (srcCounts[l.source] || 0) + 1;
+          statusCounts[l.status] = (statusCounts[l.status] || 0) + 1;
+        });
+
+        new ApexCharts(document.getElementById('chart-rep-leads-source'), {
+          chart: { type: 'donut', height: 260, fontFamily: 'Inter,sans-serif' },
+          series: Object.values(srcCounts),
+          labels: Object.keys(srcCounts),
+          colors: ['#3B82F6', '#F59E0B', '#22c55e', '#8B5CF6', '#ef4444', '#0F1C2E'],
+          legend: { position: 'bottom', fontSize: '12px' },
+          plotOptions: { pie: { donut: { size: '65%' } } }
+        }).render();
+
+        new ApexCharts(document.getElementById('chart-rep-leads-status'), {
+          chart: { type: 'bar', height: 260, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
+          series: [{ name: 'Leads', data: Object.values(statusCounts) }],
+          xaxis: { categories: Object.keys(statusCounts), labels: { style: { fontSize: '11px' } } },
+          colors: ['#0A5096'],
+          plotOptions: { bar: { borderRadius: 4, horizontal: true } },
+          dataLabels: { enabled: false },
+          grid: { borderColor: '#E4E7EC' }
+        }).render();
+
+        new ApexCharts(document.getElementById('chart-rep-leads-monthly'), {
+          chart: { type: 'area', height: 250, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
+          series: [{ name: 'New Leads', data: [12, 18, 24, 20, 35, 42, 38, 50, 48, 55, 60, 65] }],
+          xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], labels: { style: { fontSize: '11px' } } },
+          colors: ['#10B981'],
+          fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05 } },
+          stroke: { width: 2, curve: 'smooth' },
+          dataLabels: { enabled: false },
+          grid: { borderColor: '#E4E7EC' }
+        }).render();
+      });
+      setTimeout(() => initPageCharts('rep-leads'), 20);
+    }
+
     function initRepCRM() {
       const kpi = document.getElementById('rep-crm-kpi');
       if (kpi) kpi.innerHTML = `
