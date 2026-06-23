@@ -402,13 +402,15 @@
       background: #fff;
       z-index: 1001;
       transform: translateX(100%);
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       padding: 24px;
-      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+      visibility: hidden;
     }
 
     .c360-drawer.open {
       transform: translateX(0);
+      box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+      visibility: visible;
     }
 
     /* ── RESET ── */
@@ -3242,13 +3244,15 @@
       z-index: var(--z-drawer);
       display: flex;
       flex-direction: column;
-      box-shadow: -8px 0 32px rgba(15, 28, 46, .14);
       transform: translateX(100%);
-      transition: transform var(--dur-slow) var(--ease);
+      transition: all var(--dur-slow) var(--ease);
+      visibility: hidden;
     }
 
     .drawer.open {
       transform: translateX(0);
+      box-shadow: -8px 0 32px rgba(15, 28, 46, .14);
+      visibility: visible;
     }
 
     .drawer-sm {
@@ -4732,21 +4736,7 @@
       color: #FFFFFF;
     }
 
-    /* ── SCROLLBAR: BLUE STEEL ── */
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #5A90C0 0%, #3A6890 100%);
-      border-radius: 6px;
-      border: 1px solid #2A4870;
-      box-shadow: 0 1px 0 rgba(150, 200, 255, 0.22) inset;
-    }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, #70A8D8 0%, #4A7AA8 100%);
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(10, 40, 90, 0.1);
-    }
 
     /* ── PAGE TITLE AREA ── */
     .page-title {
@@ -21209,7 +21199,6 @@
 
   <div id="lead-side-panel" style="position:fixed;top:0;right:-70vw;width:70vw;height:100vh;
        background:#F8FBFF;z-index:1100;
-       box-shadow:-6px 0 40px rgba(10,40,90,0.22);
        transition:right 0.3s cubic-bezier(0.4,0,0.2,1);
        display:flex;flex-direction:column;border-left:2px solid #AECAE8;">
 
@@ -21428,7 +21417,6 @@
   <div id="opp-panel-overlay" onclick="closeOppPanel()" style="display:none;position:fixed;inset:0;z-index:1099;"></div>
   <div id="opp-side-panel" style="position:fixed;top:0;right:-70vw;width:70vw;height:100vh;
        background:#F8FBFF;z-index:1100;
-       box-shadow:-6px 0 40px rgba(10,40,90,0.22);
        transition:right 0.3s cubic-bezier(0.4,0,0.2,1);
        display:flex;flex-direction:column;border-left:2px solid #AECAE8;">
 
