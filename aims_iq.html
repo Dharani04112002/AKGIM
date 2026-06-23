@@ -4907,14 +4907,14 @@
           </div>
           <div class="sb-sub-group">
 
-            <div class="nav-item" data-page="pur-orders" onclick="navigate('pur-orders',this)">
+            <!-- <div class="nav-item" data-page="pur-orders" onclick="navigate('pur-orders',this)">
               <i class="ti ti-file-invoice nav-icon"></i>
               <span class="nav-text">Purchase Orders</span>
             </div>
             <div class="nav-item" data-page="pur-grn" onclick="navigate('pur-grn',this)">
               <i class="ti ti-clipboard-check nav-icon"></i>
               <span class="nav-text">GRN</span>
-            </div>
+            </div> -->
             <div class="nav-item" data-page="pur-invoice" onclick="navigate('pur-invoice',this)">
               <i class="ti ti-receipt nav-icon"></i>
               <span class="nav-text">Purchase Invoice</span>
@@ -6933,8 +6933,9 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="openModal('modal-pur-invoice')"><i class="ti ti-plus"></i> New
-                  Invoice</button>
+                <!-- <button class="btn btn-primary" onclick="openModal('modal-pur-invoice')"><i class="ti ti-plus"></i> New
+                  Invoice</button> -->
+                <button class="btn btn-primary" onclick="showToast('info', 'Sync Started', 'Syncing with Tally...')"><i class="ti ti-refresh"></i> Sync with Tally</button>
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="pinv-kpi"></div>
