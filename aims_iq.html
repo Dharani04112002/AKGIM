@@ -4573,11 +4573,7 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="svc-tickets" onclick="navigate('svc-tickets',this)">
-              <i class="ti ti-ticket nav-icon"></i>
-              <span class="nav-text">Tickets</span>
-              <span class="nav-badge red">7</span>
-            </div>
+
             <div class="nav-item" data-page="svc-requests" onclick="navigate('svc-requests',this)">
               <i class="ti ti-message-dots nav-icon"></i>
               <span class="nav-text">Service Requests</span>
@@ -4586,10 +4582,7 @@
               <i class="ti ti-user-check nav-icon"></i>
               <span class="nav-text">Assign Jobs</span>
             </div>
-            <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)">
-              <i class="ti ti-chart-dots nav-icon"></i>
-              <span class="nav-text">Service Reports</span>
-            </div>
+
             <div class="nav-item" data-page="svc-installation" onclick="navigate('svc-installation',this)">
               <i class="ti ti-settings-automation nav-icon"></i>
               <span class="nav-text">Installation Mgmt</span>
@@ -4606,10 +4599,7 @@
               <i class="ti ti-thumb-up nav-icon"></i>
               <span class="nav-text">Service Feedback</span>
             </div>
-            <div class="nav-item" data-page="svc-rca" onclick="navigate('svc-rca',this)">
-              <i class="ti ti-search nav-icon"></i>
-              <span class="nav-text">Service RCA</span>
-            </div>
+
           </div>
         </div>
 
@@ -4830,6 +4820,7 @@
           <div class="sb-sub-group">
             <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
             <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
+            <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)"><i class="ti ti-tool nav-icon"></i><span class="nav-text">Service Reports</span></div>
             <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
             <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
             <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
@@ -19295,7 +19286,7 @@
          <div class="kpi-card navy"><div class="kpi-label">Active AMC/Warranty</div><div class="kpi-val">428</div></div>
          <div class="kpi-card amber"><div class="kpi-label">Expiring Soon</div><div class="kpi-val">19</div></div>
          <div class="kpi-card green"><div class="kpi-label">Renewed (MTD)</div><div class="kpi-val">34</div></div>
-         <div class="kpi-card gold"><div class="kpi-label">Contract Value</div><div class="kpi-val">₹${fmt(1250000)}</div></div>`;
+         <div class="kpi-card red"><div class="kpi-label">Pending Renewals</div><div class="kpi-val">12</div></div>`;
       const wtbody = document.getElementById('svc-warranty-tbody');
       wtbody.innerHTML = DB.products.slice(0, 5).map(p => `<tr><td>SN-${si(100000, 999999)}</td><td>${p.name}</td><td>${spick(DB.customers).name}</td><td>${fmtDate(new Date(Date.now() + 15 * 86400000))}</td></tr>`).join('');
       const atbody = document.getElementById('svc-amc-renew-tbody');
