@@ -11930,6 +11930,104 @@
             </div>
           </div>
 
+          <!-- View Delivery Note -->
+          <div class="modal-wrap" id="modal-dn-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-truck-delivery"></i> <span id="vdn-title">Delivery Note</span></div>
+                <button class="modal-close" onclick="closeModal('modal-dn-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vdn-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Delivery Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vdn-info"></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="data-tbl">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product</th>
+                          <th>Qty</th>
+                          <th>Rate (₹)</th>
+                          <th>Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vdn-items"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-dn-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('info','Track','Opening live tracking…')"><i class="ti ti-map-pin"></i> Track Shipment</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing DN…')"><i class="ti ti-printer"></i> Print</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Sales Return -->
+          <div class="modal-wrap" id="modal-ret-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-backspace"></i> <span id="vret-title">Sales Return</span></div>
+                <button class="modal-close" onclick="closeModal('modal-ret-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vret-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Return Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vret-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-ret-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing return note…')"><i class="ti ti-printer"></i> Print</button>
+                <button id="vret-btn-inspect" class="btn btn-primary" onclick="showToast('info','Inspection','Inspection started.');closeModal('modal-ret-view')"><i class="ti ti-search"></i> Start Inspection</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Credit Note -->
+          <div class="modal-wrap" id="modal-cn-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-receipt-refund"></i> <span id="vcn-title">Credit Note</span></div>
+                <button class="modal-close" onclick="closeModal('modal-cn-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vcn-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Credit Note Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vcn-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-cn-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing credit note…')"><i class="ti ti-printer"></i> Print</button>
+                <button id="vcn-btn-issue" class="btn btn-primary" onclick="showToast('success','Issued','Credit note issued.');closeModal('modal-cn-view')"><i class="ti ti-send"></i> Issue Note</button>
+                <button id="vcn-btn-apply" class="btn btn-primary" onclick="showToast('success','Applied','Credit note applied to invoice.');closeModal('modal-cn-view')"><i class="ti ti-circle-check"></i> Apply to Invoice</button>
+              </div>
+            </div>
+          </div>
+
           <!-- New Sales Order -->
           <div class="modal-wrap" id="modal-sal-order">
             <div class="modal modal-lg">
@@ -17470,7 +17568,7 @@
       const start = (dnPage - 1) * DN_PER;
       const slice = dnFiltered.slice(start, start + DN_PER);
       tbody.innerHTML = slice.map(d => `
-      <tr>
+      <tr style="cursor:pointer;" onclick="openDNPanel('${d.id}')">
         <td><span class="id-cell">${d.id}</span></td>
         <td><span class="id-cell" style="font-size:10px;">${d.soId}</span></td>
         <td>
@@ -17486,7 +17584,7 @@
         <td class="text-secondary" style="font-size:12px;">${d.deliveredBy}</td>
         <td><span class="badge badge-${DN_STATUS_CLS[d.status] || 'gray'}">${d.status}</span></td>
         <td>
-          <div style="display:flex;gap:4px;">
+          <div style="display:flex;gap:4px;" onclick="event.stopPropagation()">
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Track','Opening tracking for ${d.trackingNo}…')"><i class="ti ti-map-pin"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing DN…')"><i class="ti ti-printer"></i></button>
           </div>
@@ -17500,6 +17598,38 @@
       if (!so) { showToast('error', 'Validation', 'Select a sales order.'); return; }
       closeModal('modal-sal-delivery');
       showToast('success', 'DN Created', 'Delivery note created and ready for dispatch.');
+    }
+
+    function openDNPanel(id) {
+      const d = DB.deliveryNotes.find(x => x.id === id);
+      if (!d) return;
+      document.getElementById('vdn-title').textContent = d.id;
+      const cls = DN_STATUS_CLS[d.status] || 'gray';
+      const kpi = document.getElementById('vdn-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card ${cls}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${d.status}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Transporter</div><div class="kpi-val" style="font-size:14px;">${d.transporter}</div></div>
+        <div class="kpi-card gold"><div class="kpi-label">Tracking #</div><div class="kpi-val" style="font-size:13px;">${d.trackingNo}</div></div>`;
+      const info = document.getElementById('vdn-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">DN #</div><div class="detail-val">${d.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${d.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">SO Ref</div><div class="detail-val">${d.soId}</div></div>
+        <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(d.date)}</div></div>
+        <div class="detail-row"><div class="detail-label">Warehouse</div><div class="detail-val">${d.warehouse}</div></div>
+        <div class="detail-row"><div class="detail-label">Delivered By</div><div class="detail-val">${d.deliveredBy}</div></div>
+        <div class="detail-row"><div class="detail-label">Status</div><div class="detail-val"><span class="badge badge-${cls}">${d.status}</span></div></div>`;
+      const items = d.items || [];
+      const vdnItems = document.getElementById('vdn-items');
+      if (vdnItems) vdnItems.innerHTML = items.map((it, i) => `
+        <tr>
+          <td class="text-muted">${i + 1}</td>
+          <td class="entity-name">${it.product || it.name || '—'}</td>
+          <td style="font-weight:600;">${it.qty || it.quantity || 1} ${it.unit || ''}</td>
+          <td class="amount-cell">₹${fmt(it.rate || it.price || 0)}</td>
+          <td class="amount-cell" style="font-weight:700;">₹${fmt((it.qty || it.quantity || 1) * (it.rate || it.price || 0))}</td>
+        </tr>`).join('') || `<tr><td colspan="5" style="padding:12px;text-align:center;color:#8AA0B8;">No line items</td></tr>`;
+      openModal('modal-dn-view');
     }
 
     /* ─── CUSTOMER LEDGER ─── */
@@ -20402,7 +20532,7 @@
       const slice = retFiltered.slice(start, start + RET_PER);
       if (!slice.length) { tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state">No returns found.</div></td></tr>`; return; }
       tbody.innerHTML = slice.map(r => `
-        <tr>
+        <tr style="cursor:pointer;" onclick="openReturnPanel('${r.id}')">
           <td><span class="id-cell">${r.id}</span></td>
           <td>
             <div class="entity-cell">
@@ -20417,8 +20547,8 @@
           <td><span class="badge badge-${RET_OUTCOME_CLS[r.outcome] || 'gray'}">${r.outcome}</span></td>
           <td><span class="badge badge-${RET_STATUS_CLS[r.status] || 'gray'}">${r.status}</span></td>
           <td>
-            <div style="display:flex;gap:4px;">
-              <button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Return','Opening return details…')"><i class="ti ti-eye"></i></button>
+            <div style="display:flex;gap:4px;" onclick="event.stopPropagation()">
+              <button class="btn btn-ghost btn-icon-sm" onclick="openReturnPanel('${r.id}')"><i class="ti ti-eye"></i></button>
               <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing return note…')"><i class="ti ti-printer"></i></button>
             </div>
           </td>
@@ -20459,6 +20589,30 @@
       retFiltered = [...DB.salesReturns]; retPage = 1; renderReturnsTable();
       const sc = document.getElementById('ret-count'); if (sc) sc.textContent = DB.salesReturns.length;
     }
+
+    function openReturnPanel(id) {
+      const r = DB.salesReturns.find(x => x.id === id);
+      if (!r) return;
+      document.getElementById('vret-title').textContent = r.id;
+      const kpi = document.getElementById('vret-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card ${RET_STATUS_CLS[r.status] || 'gray'}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${r.status}</div></div>
+        <div class="kpi-card ${RET_INSP_CLS[r.inspectionStatus] || 'gray'}"><div class="kpi-label">Inspection</div><div class="kpi-val" style="font-size:14px;">${r.inspectionStatus}</div></div>
+        <div class="kpi-card ${RET_OUTCOME_CLS[r.outcome] || 'gray'}"><div class="kpi-label">Outcome</div><div class="kpi-val" style="font-size:14px;">${r.outcome}</div></div>`;
+      const info = document.getElementById('vret-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Return #</div><div class="detail-val">${r.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${r.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(r.date)}</div></div>
+        <div class="detail-row"><div class="detail-label">Invoice Ref</div><div class="detail-val">${r.invoiceRef}</div></div>
+        <div class="detail-row"><div class="detail-label">Items</div><div class="detail-val">${r.itemCount} item(s)</div></div>
+        <div class="detail-row"><div class="detail-label">Reason</div><div class="detail-val">${r.reason || '—'}</div></div>
+        <div class="detail-row"><div class="detail-label">Inspection</div><div class="detail-val"><span class="badge badge-${RET_INSP_CLS[r.inspectionStatus] || 'gray'}">${r.inspectionStatus}</span></div></div>
+        <div class="detail-row"><div class="detail-label">Outcome</div><div class="detail-val"><span class="badge badge-${RET_OUTCOME_CLS[r.outcome] || 'gray'}">${r.outcome}</span></div></div>`;
+      document.getElementById('vret-btn-inspect').style.display = r.inspectionStatus === 'Pending' ? '' : 'none';
+      openModal('modal-ret-view');
+    }
+
     const CN_STATUS_CLS = { Draft: 'gray', Issued: 'blue', Applied: 'green', Cancelled: 'red' };
     let cnPage = 1; const CN_PER = 15;
     let cnFiltered = [];
@@ -20518,7 +20672,7 @@
       const slice = cnFiltered.slice(start, start + CN_PER);
       if (!slice.length) { tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No credit notes found.</div></td></tr>`; return; }
       tbody.innerHTML = slice.map(c => `
-        <tr>
+        <tr style="cursor:pointer;" onclick="openCNPanel('${c.id}')">
           <td><span class="id-cell">${c.id}</span></td>
           <td>
             <div class="entity-cell">
@@ -20532,7 +20686,7 @@
           <td class="amount-cell" style="font-weight:700;">₹${fmt(c.amount)}</td>
           <td><span class="badge badge-${CN_STATUS_CLS[c.status] || 'gray'}">${c.status}</span></td>
           <td>
-            <div style="display:flex;gap:4px;">
+            <div style="display:flex;gap:4px;" onclick="event.stopPropagation()">
               <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing credit note…')"><i class="ti ti-printer"></i></button>
             </div>
           </td>
@@ -20581,6 +20735,29 @@
       showToast('success', 'Credit Note', `Credit note ${status === 'Draft' ? 'saved as draft' : 'issued'} successfully.`);
       cnFiltered = [...DB.creditNotes]; cnPage = 1; renderCNTable();
       const sc = document.getElementById('cn-count'); if (sc) sc.textContent = DB.creditNotes.length;
+    }
+
+    function openCNPanel(id) {
+      const c = DB.creditNotes.find(x => x.id === id);
+      if (!c) return;
+      const cls = CN_STATUS_CLS[c.status] || 'gray';
+      document.getElementById('vcn-title').textContent = c.id;
+      const kpi = document.getElementById('vcn-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-label">Credit Amount</div><div class="kpi-val">₹${fmt(c.amount)}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Invoice Ref</div><div class="kpi-val" style="font-size:14px;">${c.invoiceRef}</div></div>
+        <div class="kpi-card ${cls}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${c.status}</div></div>`;
+      const info = document.getElementById('vcn-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Credit Note #</div><div class="detail-val">${c.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${c.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(c.date)}</div></div>
+        <div class="detail-row"><div class="detail-label">Against Invoice</div><div class="detail-val">${c.invoiceRef}</div></div>
+        <div class="detail-row"><div class="detail-label">Reason</div><div class="detail-val">${c.reason || '—'}</div></div>
+        <div class="detail-row"><div class="detail-label">Status</div><div class="detail-val"><span class="badge badge-${cls}">${c.status}</span></div></div>`;
+      document.getElementById('vcn-btn-issue').style.display = c.status === 'Draft' ? '' : 'none';
+      document.getElementById('vcn-btn-apply').style.display = c.status === 'Issued' ? '' : 'none';
+      openModal('modal-cn-view');
     }
 
     function initSalBuyback() {
@@ -21270,6 +21447,11 @@
       </div>
     </div>
   </div><!-- /#opp-side-panel -->
+
+  <!-- ── DELIVERY NOTE DETAIL SIDE PANEL ── -->
+
+
+
 
   <style>
     .osp-stage-sel {
