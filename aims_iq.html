@@ -17903,19 +17903,29 @@
 
     function convertSInvToReceipt(iId) {
       const inv = DB.invoices.find(x => x.id === iId); if (!inv) return;
-      populateSalDropdowns();
-      const recInvSel = document.getElementById('mrec-inv');
-      if (recInvSel && !Array.from(recInvSel.options).some(o => o.value === inv.id)) {
-        recInvSel.add(new Option(inv.id + ' — ' + inv.customer, inv.id));
+      
+      const partySel = document.getElementById('mfrec-party');
+      if (partySel && partySel.options.length <= 1) {
+        DB.customers.forEach(c => partySel.add(new Option(c.name, c.id)));
       }
-      if (recInvSel) recInvSel.value = inv.id;
-      const custSel = document.getElementById('mrec-cust');
-      if (custSel) custSel.value = inv.customerId;
-      const amtInp = document.getElementById('mrec-amount');
+      if (partySel) partySel.value = inv.customerId;
+      
+      const invSel = document.getElementById('mfrec-inv');
+      if (invSel) {
+        if (!Array.from(invSel.options).some(o => o.value === inv.id)) {
+          invSel.add(new Option(inv.id + ' — ' + inv.customer, inv.id));
+        }
+        invSel.value = inv.id;
+      }
+      
+      const amtInp = document.getElementById('mfrec-amount');
       if (amtInp) amtInp.value = inv.balance > 0 ? inv.balance : inv.total;
-      const dateInp = document.getElementById('mrec-date');
+      
+      const dateInp = document.getElementById('mfrec-date');
       if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
-      openModal('modal-sal-receipt');
+      
+      navigate('fin-receipts', null);
+      openModal('modal-fin-receipt');
     }
 
     /* Quotation modal helpers */
