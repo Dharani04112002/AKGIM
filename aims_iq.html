@@ -293,6 +293,7 @@
     .sidebar.collapsed .sb-user {
       padding: 12px 8px;
     }
+
     .sidebar.collapsed .sb-user-inner {
       padding: 8px 0;
       justify-content: center;
@@ -308,7 +309,7 @@
       flex-direction: column;
       gap: 12px;
     }
-    
+
     .sidebar.collapsed .sidebar-toggle {
       display: none !important;
     }
@@ -320,15 +321,21 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--tx-3);
       font-size: 17px;
-      width: 28px; height: 28px; border-radius: 6px;
-      align-items: center; justify-content: center;
-      cursor: pointer; transition: all 0.2s;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
     }
+
     .tb-toggle-btn:hover {
       background: #1A2D45;
       color: #FFFFFF;
     }
-    #sidebar.collapsed + .main .tb-toggle-btn {
+
+    #sidebar.collapsed+.main .tb-toggle-btn {
       display: flex;
     }
 
@@ -347,12 +354,12 @@
       left: 56px;
       top: 0;
       background: linear-gradient(180deg, #060E1E 0%, #0C1A3A 100%);
-      border: 1px solid rgba(100,160,240,0.25);
+      border: 1px solid rgba(100, 160, 240, 0.25);
       border-radius: 8px;
       min-width: 200px;
       z-index: 9999;
       padding: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
       max-height: none !important;
     }
 
@@ -4428,7 +4435,8 @@
             <div class="sb-brand-tag">Enterprise ERP</div>
           </div>
         </div>
-        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--tx-3); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar"
+          style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--tx-3); width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;">
           <i class="ti ti-layout-sidebar-left-collapse" id="sb-toggle-icon"></i>
         </button>
       </div>
@@ -4448,11 +4456,15 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="products" onclick="navigate('products',this)"><i class="ti ti-box nav-icon"></i><span class="nav-text">Products</span></div>
+            <div class="nav-item" data-page="products" onclick="navigate('products',this)"><i
+                class="ti ti-box nav-icon"></i><span class="nav-text">Products</span></div>
 
-            <div class="nav-item" data-page="customers" onclick="navigate('customers',this)"><i class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
-            <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
-            <div class="nav-item" data-page="employees" onclick="navigate('employees',this)"><i class="ti ti-id-badge nav-icon"></i><span class="nav-text">Employees</span></div>
+            <div class="nav-item" data-page="customers" onclick="navigate('customers',this)"><i
+                class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
+            <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i
+                class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
+            <div class="nav-item" data-page="employees" onclick="navigate('employees',this)"><i
+                class="ti ti-id-badge nav-icon"></i><span class="nav-text">Employees</span></div>
           </div>
         </div>
 
@@ -4512,15 +4524,7 @@
               <i class="ti ti-truck nav-icon"></i>
               <span class="nav-text">Delivery Notes</span>
             </div>
-            <div class="nav-item" data-page="sal-adv-payment" onclick="navigate('sal-adv-payment',this)">
-              <i class="ti ti-cash nav-icon"></i>
-              <span class="nav-text">Advance Payment</span>
-              <span class="nav-badge gold">NEW</span>
-            </div>
-            <div class="nav-item" data-page="sal-adv-adjustment" onclick="navigate('sal-adv-adjustment',this)">
-              <i class="ti ti-adjustments nav-icon"></i>
-              <span class="nav-text">Adv. Adjustment</span>
-            </div>
+
             <div class="nav-item" data-page="sal-returns" onclick="navigate('sal-returns',this)">
               <i class="ti ti-backspace nav-icon"></i>
               <span class="nav-text">Sales Returns</span>
@@ -4818,12 +4822,17 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
-            <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
+            <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i
+                class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
+            <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i
+                class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
             <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)"><i class="ti ti-tool nav-icon"></i><span class="nav-text">Service Reports</span></div>
-            <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
-            <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
-            <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
+            <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i
+                class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
+            <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i
+                class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
+            <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i
+                class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
           </div>
         </div>
 
@@ -4835,9 +4844,12 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="ai-assistant" onclick="navigate('ai-assistant',this)"><i class="ti ti-message-chatbot nav-icon"></i><span class="nav-text">Assistant</span></div>
-            <div class="nav-item" data-page="ai-dashboard" onclick="navigate('ai-dashboard',this)"><i class="ti ti-cpu nav-icon"></i><span class="nav-text">AI Dashboard</span></div>
-            <div class="nav-item" data-page="ai-insights" onclick="navigate('ai-insights',this)"><i class="ti ti-bulb nav-icon"></i><span class="nav-text">AI Insights</span></div>
+            <div class="nav-item" data-page="ai-assistant" onclick="navigate('ai-assistant',this)"><i
+                class="ti ti-message-chatbot nav-icon"></i><span class="nav-text">Assistant</span></div>
+            <div class="nav-item" data-page="ai-dashboard" onclick="navigate('ai-dashboard',this)"><i
+                class="ti ti-cpu nav-icon"></i><span class="nav-text">AI Dashboard</span></div>
+            <div class="nav-item" data-page="ai-insights" onclick="navigate('ai-insights',this)"><i
+                class="ti ti-bulb nav-icon"></i><span class="nav-text">AI Insights</span></div>
           </div>
         </div>
 
@@ -6792,8 +6804,7 @@
 
           <!-- ══════════════════════════════════════════════
                STEP 12 — SALES MODULE
-               sal-dashboard · sal-quotations · sal-quotation-detail
-               sal-orders · sal-invoice · sal-delivery
+               sal-quotations · sal-orders · sal-invoice · sal-delivery
                sal-customer-ledger
                ══════════════════════════════════════════════ -->
 
@@ -6851,55 +6862,6 @@
               <div id="quo-pagination"></div>
             </div>
           </div><!-- /#page-sal-quotations -->
-
-          <!-- ── QUOTATION DETAIL ───────────────────────── -->
-          <div class="page" id="page-sal-quotation-detail">
-            <div class="page-header">
-              <div>
-                <div class="page-title" id="quod-title">Quotation Detail</div>
-                <div class="page-sub" id="quod-sub"></div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-outline" onclick="navigate('sal-quotations',this)"><i
-                    class="ti ti-arrow-left"></i> Back</button>
-                <button class="btn btn-outline" onclick="showToast('default','Print','Printing quotation…')"><i
-                    class="ti ti-printer"></i> Print</button>
-                <button class="btn btn-primary" onclick="navigate('sal-orders',this)"><i
-                    class="ti ti-shopping-cart"></i> Convert to SO</button>
-              </div>
-            </div>
-            <div class="grid-3 mb-4" id="quod-kpi"></div>
-            <div class="card mb-4">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-info-circle"></i> Quotation Info</div>
-              </div>
-              <div class="card-body" style="padding:16px;">
-                <div class="detail-grid" id="quod-info"></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Product</th>
-                      <th>SKU</th>
-                      <th>Qty</th>
-                      <th>Discount%</th>
-                      <th>Rate (₹)</th>
-                      <th>Amount (₹)</th>
-                    </tr>
-                  </thead>
-                  <tbody id="quod-items"></tbody>
-                  <tfoot id="quod-totals"></tfoot>
-                </table>
-              </div>
-            </div>
-          </div><!-- /#page-sal-quotation-detail -->
 
           <!-- ── SALES ORDERS ───────────────────────────── -->
           <div class="page" id="page-sal-orders">
@@ -8827,117 +8789,7 @@
             </div>
           </div><!-- /#page-admin-audit -->
 
-          <!-- ── SALES: ADVANCE PAYMENT ──────────────────────── -->
-          <div class="page" id="page-sal-adv-payment">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Advance Payment</div>
-                <div class="page-sub">Issue advance payment receipts for customer orders</div>
-              </div>
-              <div class="page-actions">
-                <button class="btn btn-primary" onclick="openModal('modal-sal-adv-payment')"><i class="ti ti-plus"></i>
-                  New Advance Receipt</button>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="sal-adv-kpi"></div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-cash"></i> Advance Receipts <span class="badge badge-navy ml-8"
-                    id="sal-adv-count">0</span></div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                  <input class="search-input" id="sal-adv-search" placeholder="Search receipt, customer…"
-                    oninput="filterSalAdv()">
-                  <select class="select-sm" id="sal-adv-status" onchange="filterSalAdv()">
-                    <option value="">All Status</option>
-                    <option>Pending</option>
-                    <option>Approved</option>
-                    <option>Adjusted</option>
-                    <option>Cancelled</option>
-                  </select>
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Receipt #</th>
-                      <th>Customer</th>
-                      <th>Date</th>
-                      <th>Amount</th>
-                      <th>Payment Mode</th>
-                      <th>Status</th>
-                      <th>Approved By</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sal-adv-tbody"></tbody>
-                </table>
-              </div>
-              <div class="pagination-bar" id="sal-adv-pagination"></div>
-            </div>
-          </div>
 
-          <!-- ── SALES: ADVANCE APPROVAL ──────────────────────── -->
-          <div class="page" id="page-sal-adv-approval">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Advance Approval</div>
-                <div class="page-sub">Review and approve customer advance payments</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-check-circle"></i> Pending Approvals</div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Receipt #</th>
-                      <th>Customer</th>
-                      <th>Date</th>
-                      <th>Amount</th>
-                      <th>Payment Mode</th>
-                      <th>Submitted By</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sal-adv-app-tbody"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <!-- ── SALES: ADVANCE ADJUSTMENT ──────────────────────── -->
-          <div class="page" id="page-sal-adv-adjustment">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Advance Adjustment</div>
-                <div class="page-sub">Adjust customer advances against sales invoices</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-adjustments"></i> Adjustment Register</div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Adj #</th>
-                      <th>Customer</th>
-                      <th>Advance Ref</th>
-                      <th>Invoice Ref</th>
-                      <th>Adj Amount</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sal-adv-adj-tbody"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
 
           <!-- ── SALES: MARGIN APPROVAL ──────────────────────── -->
           <div class="page" id="page-sal-margin-approval">
@@ -10565,51 +10417,7 @@
             </div>
           </div>
 
-          <div class="modal-wrap" id="modal-sal-adv-payment">
-            <div class="modal modal-md">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-cash"></i> New Advance Receipt</div>
-                <button class="modal-close" onclick="closeModal('modal-sal-adv-payment')"><i
-                    class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body">
-                <div class="form-grid-2">
-                  <div class="form-group"><label class="form-label">Customer *</label>
-                    <select class="form-control" id="madv-cust">
-                      <option value="">Select Customer…</option>
-                    </select>
-                  </div>
-                  <div class="form-group"><label class="form-label">Sales Order (Optional)</label>
-                    <select class="form-control" id="madv-so">
-                      <option value="">Direct Advance (No SO)</option>
-                    </select>
-                  </div>
-                  <div class="form-group"><label class="form-label">Amount *</label><input class="form-control"
-                      type="number" id="madv-amount" placeholder="0.00"></div>
-                  <div class="form-group"><label class="form-label">Date *</label><input class="form-control"
-                      type="date" id="madv-date"></div>
-                  <div class="form-group"><label class="form-label">Payment Mode</label>
-                    <select class="form-control" id="madv-mode">
-                      <option>Bank Transfer</option>
-                      <option>UPI</option>
-                      <option>Cheque</option>
-                      <option>Cash</option>
-                    </select>
-                  </div>
-                  <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
-                      id="madv-ref" placeholder="Txn ID / Cheque #"></div>
-                </div>
-                <div class="form-group"><label class="form-label">Internal Notes</label><textarea class="form-control"
-                    id="madv-notes" rows="2" placeholder="Purpose of advance…"></textarea></div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-sal-adv-payment')">Cancel</button>
-                <button class="btn btn-primary"
-                  onclick="showToast('success','Submitted','Advance receipt submitted for approval.')"><i
-                    class="ti ti-check"></i> Submit Receipt</button>
-              </div>
-            </div>
-          </div>
+
 
           <!-- ══ STEP 14 MODALS ══ -->
           <div class="modal-wrap" id="modal-crm-lead">
@@ -10669,36 +10477,60 @@
             <div class="modal modal-xl">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-briefcase"></i> New Opportunity</div>
-                <button class="modal-close" onclick="closeModal('modal-crm-opportunity')"><i class="ti ti-x"></i></button>
+                <button class="modal-close" onclick="closeModal('modal-crm-opportunity')"><i
+                    class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
                 <div class="form-grid-2 mb-4">
-                  <div class="form-group"><label class="form-label">Title *</label><input class="form-control" id="mcopp-title" placeholder="Q4 Enterprise Deal"></div>
-                  <div class="form-group"><label class="form-label">Company</label><input class="form-control" id="mcopp-company" placeholder="Acme Corp"></div>
+                  <div class="form-group"><label class="form-label">Title *</label><input class="form-control"
+                      id="mcopp-title" placeholder="Q4 Enterprise Deal"></div>
+                  <div class="form-group"><label class="form-label">Company</label><input class="form-control"
+                      id="mcopp-company" placeholder="Acme Corp"></div>
                   <div class="form-group"><label class="form-label">Stage</label>
                     <select class="form-control" id="mcopp-stage">
-                      <option>Prospect</option><option>Qualification</option><option>Proposal</option>
-                      <option>Negotiation</option><option>Closed Won</option><option>Closed Lost</option>
+                      <option>Prospect</option>
+                      <option>Qualification</option>
+                      <option>Proposal</option>
+                      <option>Negotiation</option>
+                      <option>Closed Won</option>
+                      <option>Closed Lost</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Probability %</label><input class="form-control" type="number" id="mcopp-prob" min="0" max="100" placeholder="60"></div>
-                  <div class="form-group"><label class="form-label">Expected Close</label><input class="form-control" type="date" id="mcopp-close"></div>
+                  <div class="form-group"><label class="form-label">Probability %</label><input class="form-control"
+                      type="number" id="mcopp-prob" min="0" max="100" placeholder="60"></div>
+                  <div class="form-group"><label class="form-label">Expected Close</label><input class="form-control"
+                      type="date" id="mcopp-close"></div>
                   <div class="form-group"><label class="form-label">Owner</label>
-                    <select class="form-control" id="mcopp-owner"><option value="">Select…</option></select>
+                    <select class="form-control" id="mcopp-owner">
+                      <option value="">Select…</option>
+                    </select>
                   </div>
                 </div>
                 <div class="divider mb-3"></div>
                 <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
                 <div class="table-wrap">
                   <table class="data-tbl">
-                    <thead><tr><th>Item / Product</th><th>Qty</th><th>Rate (₹)</th><th>Amount (₹)</th><th></th></tr></thead>
+                    <thead>
+                      <tr>
+                        <th>Item / Product</th>
+                        <th>Qty</th>
+                        <th>Rate (₹)</th>
+                        <th>Amount (₹)</th>
+                        <th></th>
+                      </tr>
+                    </thead>
                     <tbody id="mcopp-items-body">
                       <tr>
-                        <td><input class="form-control" placeholder="Item name" oninput="moppCalcTotals()" style="min-width:200px;"></td>
-                        <td><input type="number" class="form-control" value="1" min="1" style="width:70px;" oninput="moppCalcTotals()"></td>
-                        <td><input type="number" class="form-control" value="0" style="width:110px;" oninput="moppCalcTotals()"></td>
+                        <td><input class="form-control" placeholder="Item name" oninput="moppCalcTotals()"
+                            style="min-width:200px;"></td>
+                        <td><input type="number" class="form-control" value="1" min="1" style="width:70px;"
+                            oninput="moppCalcTotals()"></td>
+                        <td><input type="number" class="form-control" value="0" style="width:110px;"
+                            oninput="moppCalcTotals()"></td>
                         <td class="amount-cell mopp-amt">₹0</td>
-                        <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();moppCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
+                        <td><button class="btn btn-ghost btn-icon-sm"
+                            onclick="this.closest('tr').remove();moppCalcTotals()"><i class="ti ti-trash"
+                              style="color:var(--red);"></i></button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -10707,13 +10539,15 @@
                   <button class="btn btn-ghost" onclick="moppAddRow()"><i class="ti ti-plus"></i> Add Item</button>
                   <div style="text-align:right;font-size:13px;color:var(--tx-2);">
                     Subtotal: <b id="mopp-subtotal">₹0</b> &nbsp;|&nbsp; GST (18%): <b id="mopp-tax">₹0</b>
-                    &nbsp;|&nbsp; <span style="font-size:15px;font-weight:800;color:var(--navy);">Total: <span id="mopp-total">₹0</span></span>
+                    &nbsp;|&nbsp; <span style="font-size:15px;font-weight:800;color:var(--navy);">Total: <span
+                        id="mopp-total">₹0</span></span>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-opportunity')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveOpportunity()"><i class="ti ti-check"></i> Save Opportunity</button>
+                <button class="btn btn-primary" onclick="saveOpportunity()"><i class="ti ti-check"></i> Save
+                  Opportunity</button>
               </div>
             </div>
           </div>
@@ -11157,6 +10991,159 @@
                   Save Draft</button>
                 <button class="btn btn-primary" onclick="saveQuotation('Sent')"><i class="ti ti-send"></i> Send
                   Quotation</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Quotation -->
+          <div class="modal-wrap" id="modal-quo-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-text"></i> <span id="vquo-title">Quotation</span></div>
+                <button class="modal-close" onclick="closeModal('modal-quo-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;"
+                  id="vquo-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Quotation Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vquo-info"></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="data-tbl">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product</th>
+                          <th>SKU</th>
+                          <th>Qty</th>
+                          <th>Discount%</th>
+                          <th>Rate (₹)</th>
+                          <th>Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vquo-items"></tbody>
+                      <tfoot id="vquo-totals"></tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-quo-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing quotation…')"><i
+                    class="ti ti-printer"></i> Print</button>
+                <button class="btn btn-primary" onclick="navigate('sal-orders',null);closeModal('modal-quo-view')"><i
+                    class="ti ti-shopping-cart"></i> Convert to SO</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Sales Order -->
+          <div class="modal-wrap" id="modal-so-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-shopping-cart"></i> <span id="vso-title">Sales Order</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modal-so-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vso-kpi">
+                </div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Order Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vso-info"></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="data-tbl">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product</th>
+                          <th>SKU</th>
+                          <th>Qty</th>
+                          <th>Rate (₹)</th>
+                          <th>Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vso-items"></tbody>
+                      <tfoot id="vso-totals"></tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-so-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing order…')"><i
+                    class="ti ti-printer"></i> Print</button>
+                <button class="btn btn-primary" onclick="navigate('sal-invoice',null);closeModal('modal-so-view')"><i
+                    class="ti ti-file-invoice"></i> Create Invoice</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- View Sales Invoice -->
+          <div class="modal-wrap" id="modal-sinv-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-invoice"></i> <span id="vsinv-title">Invoice</span></div>
+                <button class="modal-close" onclick="closeModal('modal-sinv-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;"
+                  id="vsinv-kpi"></div>
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Invoice Info</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vsinv-info"></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="data-tbl">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product</th>
+                          <th>Qty</th>
+                          <th>Discount%</th>
+                          <th>Rate (₹)</th>
+                          <th>Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vsinv-items"></tbody>
+                      <tfoot id="vsinv-totals"></tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-sinv-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing invoice…')"><i
+                    class="ti ti-printer"></i> Print</button>
+                <button class="btn btn-primary"
+                  onclick="openModal('modal-sal-receipt');closeModal('modal-sinv-view')"><i
+                    class="ti ti-credit-card"></i> Record Payment</button>
               </div>
             </div>
           </div>
@@ -11617,44 +11604,58 @@
                   <div class="form-group">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
                       <label class="form-label" style="margin-bottom:0;">Category <span class="req">*</span></label>
-                      <button class="btn btn-ghost btn-xs" id="fp-cat-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleCategoryField()"><i class="ti ti-plus"></i> Add New</button>
+                      <button class="btn btn-ghost btn-xs" id="fp-cat-toggle"
+                        style="color:var(--sky-blue);font-weight:600;" onclick="toggleCategoryField()"><i
+                          class="ti ti-plus"></i> Add New</button>
                     </div>
                     <select class="form-control" id="fp-cat">
                       ${CATEGORIES.map(c=>`<option>${c.name}</option>`).join('')}
                     </select>
                     <div id="fp-cat-new-wrapper" style="display:none; gap:6px;">
-                      <input class="form-control" id="fp-cat-new" placeholder="Type new category name..." style="flex:1;" />
-                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewCategoryInline()">Add</button>
+                      <input class="form-control" id="fp-cat-new" placeholder="Type new category name..."
+                        style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;"
+                        onclick="addNewCategoryInline()">Add</button>
                     </div>
                   </div>
                   <div class="form-group">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
                       <label class="form-label" style="margin-bottom:0;">Brand</label>
-                      <button class="btn btn-ghost btn-xs" id="fp-brand-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleBrandField()"><i class="ti ti-plus"></i> Add New</button>
+                      <button class="btn btn-ghost btn-xs" id="fp-brand-toggle"
+                        style="color:var(--sky-blue);font-weight:600;" onclick="toggleBrandField()"><i
+                          class="ti ti-plus"></i> Add New</button>
                     </div>
                     <select class="form-control" id="fp-brand">
                       ${BRANDS.map(b=>`<option>${b.name}</option>`).join('')}
                     </select>
                     <div id="fp-brand-new-wrapper" style="display:none; gap:6px;">
-                      <input class="form-control" id="fp-brand-new" placeholder="Type new brand name..." style="flex:1;" />
-                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewBrandInline()">Add</button>
+                      <input class="form-control" id="fp-brand-new" placeholder="Type new brand name..."
+                        style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;"
+                        onclick="addNewBrandInline()">Add</button>
                     </div>
                   </div>
                   <div class="form-group">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
-                      <label class="form-label" style="margin-bottom:0;">Unit of Measure <span class="req">*</span></label>
-                      <button class="btn btn-ghost btn-xs" id="fp-unit-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleUnitField()"><i class="ti ti-plus"></i> Add New</button>
+                      <label class="form-label" style="margin-bottom:0;">Unit of Measure <span
+                          class="req">*</span></label>
+                      <button class="btn btn-ghost btn-xs" id="fp-unit-toggle"
+                        style="color:var(--sky-blue);font-weight:600;" onclick="toggleUnitField()"><i
+                          class="ti ti-plus"></i> Add New</button>
                     </div>
                     <select class="form-control" id="fp-unit">
                       ${UNITS.map(u=>`<option value="${u.abbr}">${u.name} (${u.abbr})</option>`).join('')}
                     </select>
                     <div id="fp-unit-new-wrapper" style="display:none; gap:6px;">
-                      <input class="form-control" id="fp-unit-new" placeholder="Type new unit (e.g. KG)" style="flex:1;" />
-                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewUnitInline()">Add</button>
+                      <input class="form-control" id="fp-unit-new" placeholder="Type new unit (e.g. KG)"
+                        style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;"
+                        onclick="addNewUnitInline()">Add</button>
                     </div>
                   </div>
                   <div class="form-group">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px; min-height: 24px;">
+                    <div
+                      style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px; min-height: 24px;">
                       <label class="form-label" style="margin-bottom:0;">Warehouse</label>
                     </div>
                     <select class="form-control" id="fp-wh">
@@ -12087,7 +12088,6 @@
       'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Purchase', 'Supplier Ledger'], module: 'purchase' },
       // Sales
       'sal-quotations': { title: 'Quotations', crumbs: ['Sales', 'Quotations'], module: 'sales' },
-      'sal-quotation-detail': { title: 'Quotation Detail', crumbs: ['Sales', 'Quotations', 'Detail'], module: 'sales' },
       'sal-orders': { title: 'Sales Orders', crumbs: ['Sales', 'Orders'], module: 'sales' },
       'sal-invoice': { title: 'Sales Invoice', crumbs: ['Sales', 'Invoice'], module: 'sales' },
       'sal-customer-ledger': { title: 'Customer Ledger', crumbs: ['Sales', 'Customer Ledger'], module: 'sales' },
@@ -12131,10 +12131,6 @@
       'ai-dashboard': { title: 'AI Dashboard', crumbs: ['AI', 'Dashboard'], module: 'ai' },
       'ai-insights': { title: 'AI Insights', crumbs: ['AI', 'Insights'], module: 'ai' },
       'ai-recommendations': { title: 'AI Recommendations', crumbs: ['AI', 'Recommendations'], module: 'ai' },
-      // Advance Payment (Extended)
-      'sal-adv-payment': { title: 'Advance Payment', crumbs: ['Sales', 'Advance Payment'], module: 'sales' },
-      'sal-adv-approval': { title: 'Adv. Approval', crumbs: ['Sales', 'Adv. Approval'], module: 'sales' },
-      'sal-adv-adjustment': { title: 'Adv. Adjustment', crumbs: ['Sales', 'Adv. Adjustment'], module: 'sales' },
       // Low Margin Approval
       'sal-margin-approval': { title: 'Margin Approvals', crumbs: ['Approvals', 'Margin Approval'], module: 'approvals' },
       // Returns & Buy Back
@@ -12365,7 +12361,7 @@
       if (!subGroup) return;
       parentEl.classList.add('open');
       subGroup.classList.add('open');
-      
+
       if (document.getElementById('sidebar').classList.contains('collapsed')) {
         // Close other popups to avoid overlapping
         document.querySelectorAll('.sb-sub-group.open').forEach(el => {
@@ -12374,11 +12370,11 @@
             if (el.previousElementSibling) el.previousElementSibling.classList.remove('open');
           }
         });
-        
+
         const rect = parentEl.getBoundingClientRect();
         subGroup.style.top = rect.top + 'px';
         subGroup.style.maxHeight = 'none';
-        
+
         // Prevent it from going off the bottom of the screen
         setTimeout(() => {
           const subRect = subGroup.getBoundingClientRect();
@@ -12455,7 +12451,7 @@
       document.querySelectorAll('.modal-wrap.open').forEach(m => m.classList.remove('open'));
       document.querySelectorAll('.drawer.open').forEach(d => d.classList.remove('open'));
       document.getElementById('overlay').classList.remove('open');
-      
+
       if (document.getElementById('sidebar').classList.contains('collapsed')) {
         document.querySelectorAll('.sb-sub-group.open').forEach(el => {
           el.classList.remove('open');
@@ -13312,25 +13308,25 @@
     /* ─────────────────────────────────────────────────────
        CRM OPPORTUNITIES — 25
        ───────────────────────────────────────────────────── */
-    const OPP_ITEM_NAMES = ['Industrial Pump Set','HDPE Pipes (100m)','Control Panel Unit','Solar Inverter 5KW','Compressor System','Valve Assembly Kit','Steel Fabrication','Electrical Wiring Bundle','Filtration Unit','Generator Set 25KVA','Conveyor Belt System','Hydraulic Press','Fire Safety Equipment','CCTV System (16ch)','Water Treatment Plant'];
+    const OPP_ITEM_NAMES = ['Industrial Pump Set', 'HDPE Pipes (100m)', 'Control Panel Unit', 'Solar Inverter 5KW', 'Compressor System', 'Valve Assembly Kit', 'Steel Fabrication', 'Electrical Wiring Bundle', 'Filtration Unit', 'Generator Set 25KVA', 'Conveyor Belt System', 'Hydraulic Press', 'Fire Safety Equipment', 'CCTV System (16ch)', 'Water Treatment Plant'];
     DB.opportunities = Array.from({ length: 25 }, (_, i) => {
-      const lead  = DB.leads[i % DB.leads.length];
+      const lead = DB.leads[i % DB.leads.length];
       const items = Array.from({ length: si(1, 4) }, () => {
-        const qty  = si(1, 20);
+        const qty = si(1, 20);
         const rate = si(5000, 150000);
         return { name: spick(OPP_ITEM_NAMES), qty, rate };
       });
-      const sub   = items.reduce((s, it) => s + it.qty * it.rate, 0);
+      const sub = items.reduce((s, it) => s + it.qty * it.rate, 0);
       return {
-        id:          `OPP-${String(i + 1).padStart(3, '0')}`,
-        name:        lead.name + ' — ' + spick(['Bulk Order', 'Annual Contract', 'Project Supply', 'Service Agreement', 'Framework Deal']),
-        customer:    lead.name,
-        value:       Math.round(sub * 1.18),
-        stage:       spick(['Qualification', 'Needs Analysis', 'Proposal', 'Negotiation', 'Closing']),
+        id: `OPP-${String(i + 1).padStart(3, '0')}`,
+        name: lead.name + ' — ' + spick(['Bulk Order', 'Annual Contract', 'Project Supply', 'Service Agreement', 'Framework Deal']),
+        customer: lead.name,
+        value: Math.round(sub * 1.18),
+        stage: spick(['Qualification', 'Needs Analysis', 'Proposal', 'Negotiation', 'Closing']),
         probability: si(20, 90),
-        closeDate:   new Date(Date.now() + si(7, 90) * 86400000).toISOString(),
-        assignedTo:  spick(DB.employees).name,
-        createdAt:   new Date(Date.now() - si(5, 60) * 86400000).toISOString(),
+        closeDate: new Date(Date.now() + si(7, 90) * 86400000).toISOString(),
+        assignedTo: spick(DB.employees).name,
+        createdAt: new Date(Date.now() - si(5, 60) * 86400000).toISOString(),
         items,
       };
     });
@@ -13344,7 +13340,7 @@
       subject: spick(['Follow-up on quotation', 'Product demonstration', 'Contract discussion', 'Technical clarification', 'Order confirmation', 'Pricing negotiation', 'Requirements gathering', 'Post-sale check-in']),
       customer: DB.leads[i % DB.leads.length].name,
       date: new Date(Date.now() - si(1, 60) * 86400000).toISOString(),
-      time: `${si(9,17).toString().padStart(2,'0')}:${spick(['00','30'])}`,
+      time: `${si(9, 17).toString().padStart(2, '0')}:${spick(['00', '30'])}`,
       duration: spick([10, 15, 30, 45, 60, 90]),
       direction: spick(['Outbound', 'Inbound']),
       outcome: spick(['Connected', 'No Answer', 'Voicemail', 'Connected', 'Connected']),
@@ -13554,15 +13550,7 @@
     };
 
     /* ─── NEW MODULE DATA ─── */
-    DB.advances = Array.from({ length: 25 }, (_, i) => ({
-      id: `ADV-${String(i + 1).padStart(4, '0')}`,
-      customer: spick(DB.customers).name,
-      date: new Date(Date.now() - si(1, 30) * 86400000).toISOString(),
-      amount: si(10, 100) * 1000,
-      mode: spick(PAYMENT_METHODS),
-      status: spick(['Pending', 'Approved', 'Approved', 'Adjusted', 'Cancelled']),
-      approvedBy: spick(['Admin User', 'Finance Dir', 'Manager'])
-    }));
+
     DB.marginApprovals = Array.from({ length: 8 }, (_, i) => ({
       id: `QT-${si(5000, 5999)}`,
       customer: spick(DB.customers).name,
@@ -14139,7 +14127,7 @@
       const wrapper = document.getElementById('fp-cat-new-wrapper');
       const input = document.getElementById('fp-cat-new');
       const btn = document.getElementById('fp-cat-toggle');
-      
+
       if (select.style.display !== 'none') {
         select.style.display = 'none';
         wrapper.style.display = 'flex';
@@ -14157,12 +14145,12 @@
       const input = document.getElementById('fp-cat-new');
       const select = document.getElementById('fp-cat');
       const val = input.value.trim();
-      
+
       if (!val) {
         showToast('error', 'Required', 'Please enter a category name.');
         return;
       }
-      
+
       let exists = false;
       for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
@@ -14171,7 +14159,7 @@
           break;
         }
       }
-      
+
       if (!exists) {
         const opt = document.createElement('option');
         opt.value = val;
@@ -14183,7 +14171,7 @@
       } else {
         showToast('info', 'Selected', `Category "${val}" already exists.`);
       }
-      
+
       toggleCategoryField();
     }
 
@@ -14192,7 +14180,7 @@
       const wrapper = document.getElementById('fp-brand-new-wrapper');
       const input = document.getElementById('fp-brand-new');
       const btn = document.getElementById('fp-brand-toggle');
-      
+
       if (select.style.display !== 'none') {
         select.style.display = 'none';
         wrapper.style.display = 'flex';
@@ -14210,12 +14198,12 @@
       const input = document.getElementById('fp-brand-new');
       const select = document.getElementById('fp-brand');
       const val = input.value.trim();
-      
+
       if (!val) {
         showToast('error', 'Required', 'Please enter a brand name.');
         return;
       }
-      
+
       let exists = false;
       for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
@@ -14224,7 +14212,7 @@
           break;
         }
       }
-      
+
       if (!exists) {
         const opt = document.createElement('option');
         opt.value = val;
@@ -14236,7 +14224,7 @@
       } else {
         showToast('info', 'Selected', `Brand "${val}" already exists.`);
       }
-      
+
       toggleBrandField();
     }
 
@@ -14245,7 +14233,7 @@
       const wrapper = document.getElementById('fp-unit-new-wrapper');
       const input = document.getElementById('fp-unit-new');
       const btn = document.getElementById('fp-unit-toggle');
-      
+
       if (select.style.display !== 'none') {
         select.style.display = 'none';
         wrapper.style.display = 'flex';
@@ -14263,12 +14251,12 @@
       const input = document.getElementById('fp-unit-new');
       const select = document.getElementById('fp-unit');
       const val = input.value.trim().toUpperCase();
-      
+
       if (!val) {
         showToast('error', 'Required', 'Please enter a unit abbreviation.');
         return;
       }
-      
+
       let exists = false;
       for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].value.toUpperCase() === val) {
@@ -14277,7 +14265,7 @@
           break;
         }
       }
-      
+
       if (!exists) {
         const opt = document.createElement('option');
         opt.value = val;
@@ -14289,7 +14277,7 @@
       } else {
         showToast('info', 'Selected', `Unit "${val}" already exists.`);
       }
-      
+
       toggleUnitField();
     }
 
@@ -14332,7 +14320,6 @@
       once('pur-invoice', initPurchaseInvoicePage);
       once('pur-supplier-ledger', initSupplierLedgerPage);
       once('sal-quotations', initQuotationsPage);
-      once('sal-quotation-detail', () => { });
       once('sal-orders', initSalesOrdersPage);
       once('sal-invoice', initSalesInvoicePage);
       once('sal-delivery', initDeliveryPage);
@@ -14371,9 +14358,7 @@
       once('admin-settings', () => { });
       once('admin-audit', initAdminAudit);
       // New Modules
-      once('sal-adv-payment', initSalAdvPayment);
-      once('sal-adv-approval', initSalAdvApproval);
-      once('sal-adv-adjustment', initSalAdvAdjustment);
+
       once('sal-margin-approval', initSalMarginApproval);
       once('sal-returns', initSalReturns);
       once('sal-buyback', initSalBuyback);
@@ -16144,25 +16129,22 @@
 
     function viewQuotationDetail(qId) {
       const q = DB.quotations.find(x => x.id === qId); if (!q) return;
-      navigate('sal-quotation-detail', null);
-      setTimeout(() => {
-        const t = document.getElementById('quod-title'); if (t) t.textContent = q.id;
-        const s = document.getElementById('quod-sub'); if (s) s.textContent = q.customer + ' · ' + fmtDate(q.date);
-        const kpi = document.getElementById('quod-kpi');
-        if (kpi) kpi.innerHTML = `
+      const t = document.getElementById('vquo-title'); if (t) t.textContent = q.id;
+      const kpi = document.getElementById('vquo-kpi');
+      if (kpi) kpi.innerHTML = `
         <div class="kpi-card gold"><div class="kpi-label">Total</div><div class="kpi-val">₹${fmt(q.total)}</div></div>
         <div class="kpi-card blue"><div class="kpi-label">Items</div><div class="kpi-val">${q.itemCount}</div></div>
         <div class="kpi-card ${QUO_STATUS_CLS[q.status] || 'gray'}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${q.status}</div></div>`;
-        const info = document.getElementById('quod-info');
-        if (info) info.innerHTML = `
+      const info = document.getElementById('vquo-info');
+      if (info) info.innerHTML = `
         <div class="detail-row"><div class="detail-label">Quotation #</div><div class="detail-val">${q.id}</div></div>
         <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${q.customer}</div></div>
         <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(q.date)}</div></div>
         <div class="detail-row"><div class="detail-label">Valid Till</div><div class="detail-val">${fmtDate(q.validTill)}</div></div>
         <div class="detail-row"><div class="detail-label">Created By</div><div class="detail-val">${q.createdBy}</div></div>
         <div class="detail-row"><div class="detail-label">Notes</div><div class="detail-val">${q.notes || '—'}</div></div>`;
-        const items = document.getElementById('quod-items');
-        if (items) items.innerHTML = q.items.map((it, i) => `
+      const items = document.getElementById('vquo-items');
+      if (items) items.innerHTML = q.items.map((it, i) => `
         <tr>
           <td class="text-muted">${i + 1}</td>
           <td class="entity-name">${it.product}</td>
@@ -16172,12 +16154,81 @@
           <td class="amount-cell">₹${fmt(it.rate)}</td>
           <td class="amount-cell" style="font-weight:700;">₹${fmt(it.amount)}</td>
         </tr>`).join('');
-        const totals = document.getElementById('quod-totals');
-        if (totals) totals.innerHTML = `
+      const totals = document.getElementById('vquo-totals');
+      if (totals) totals.innerHTML = `
         <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(q.subtotal)}</td></tr>
         <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(q.tax)}</td></tr>
         <tr style="background:#0F1C2E;color:#fff;"><td colspan="5"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(q.total)}</td></tr>`;
-      }, 60);
+      openModal('modal-quo-view');
+    }
+
+    function viewSODetail(oId) {
+      const o = DB.salesOrders.find(x => x.id === oId); if (!o) return;
+      const t = document.getElementById('vso-title'); if (t) t.textContent = o.id;
+      const kpi = document.getElementById('vso-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-label">Total</div><div class="kpi-val">₹${fmt(o.total)}</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Items</div><div class="kpi-val">${o.itemCount}</div></div>
+        <div class="kpi-card ${SO_STATUS_CLS[o.status] || 'gray'}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${o.status}</div></div>`;
+      const info = document.getElementById('vso-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Order #</div><div class="detail-val">${o.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${o.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(o.date)}</div></div>
+        <div class="detail-row"><div class="detail-label">Payment Term</div><div class="detail-val">${o.paymentTerm}</div></div>
+        <div class="detail-row"><div class="detail-label">Warehouse</div><div class="detail-val">${o.warehouse}</div></div>
+        <div class="detail-row"><div class="detail-label">Created By</div><div class="detail-val">${o.createdBy}</div></div>`;
+      const items = document.getElementById('vso-items');
+      if (items) items.innerHTML = o.items.map((it, i) => `
+        <tr>
+          <td class="text-muted">${i + 1}</td>
+          <td class="entity-name">${it.product}</td>
+          <td><span class="id-cell" style="font-size:10px;">${it.sku}</span></td>
+          <td style="font-weight:600;">${it.qty}</td>
+          <td class="amount-cell">₹${fmt(it.rate)}</td>
+          <td class="amount-cell" style="font-weight:700;">₹${fmt(it.amount)}</td>
+        </tr>`).join('');
+      const totals = document.getElementById('vso-totals');
+      if (totals) totals.innerHTML = `
+        <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(o.subtotal)}</td></tr>
+        <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;color:var(--green);">Discount</td><td class="amount-cell" style="color:var(--green);">-₹${fmt(o.discount)}</td></tr>
+        <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(o.tax)}</td></tr>
+        <tr style="background:#0F1C2E;color:#fff;"><td colspan="4"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(o.total)}</td></tr>`;
+      openModal('modal-so-view');
+    }
+
+    function viewSInvDetail(iId) {
+      const inv = DB.invoices.find(x => x.id === iId); if (!inv) return;
+      const t = document.getElementById('vsinv-title'); if (t) t.textContent = inv.id;
+      const kpi = document.getElementById('vsinv-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-label">Total</div><div class="kpi-val">₹${fmt(inv.total)}</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Paid</div><div class="kpi-val">₹${fmt(inv.paid)}</div></div>
+        <div class="kpi-card ${inv.balance > 0 ? 'red' : 'green'}"><div class="kpi-label">Balance</div><div class="kpi-val" style="font-size:14px;">₹${fmt(inv.balance)}</div></div>`;
+      const info = document.getElementById('vsinv-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Invoice #</div><div class="detail-val">${inv.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${inv.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(inv.date)}</div></div>
+        <div class="detail-row"><div class="detail-label">Due Date</div><div class="detail-val">${fmtDate(inv.dueDate)}</div></div>
+        <div class="detail-row"><div class="detail-label">Status</div><div class="detail-val"><span class="badge badge-${INV_STATUS_CLS[inv.status] || 'gray'}">${inv.status}</span></div></div>
+        <div class="detail-row"><div class="detail-label">Created By</div><div class="detail-val">${inv.createdBy}</div></div>`;
+      const items = document.getElementById('vsinv-items');
+      if (items) items.innerHTML = inv.items.map((it, i) => `
+        <tr>
+          <td class="text-muted">${i + 1}</td>
+          <td class="entity-name">${it.product}</td>
+          <td style="font-weight:600;">${it.qty}</td>
+          <td class="text-secondary">${it.discount}%</td>
+          <td class="amount-cell">₹${fmt(it.rate)}</td>
+          <td class="amount-cell" style="font-weight:700;">₹${fmt(it.amount)}</td>
+        </tr>`).join('');
+      const totals = document.getElementById('vsinv-totals');
+      if (totals) totals.innerHTML = `
+        <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(inv.subtotal)}</td></tr>
+        <tr style="background:#F7F9FB;"><td colspan="4"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(inv.tax)}</td></tr>
+        <tr style="background:#0F1C2E;color:#fff;"><td colspan="4"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(inv.total)}</td></tr>`;
+      openModal('modal-sinv-view');
     }
 
     /* Quotation modal helpers */
@@ -16322,7 +16373,7 @@
       const start = (soPage - 1) * SO_PER;
       const slice = soFiltered.slice(start, start + SO_PER);
       tbody.innerHTML = slice.map(o => `
-      <tr>
+      <tr style="cursor:pointer;" onclick="viewSODetail('${o.id}')">
         <td><span class="id-cell">${o.id}</span></td>
         <td>
           <div class="entity-cell">
@@ -16339,8 +16390,9 @@
         <td class="amount-cell" style="color:var(--green);">₹${fmt(o.paid)}</td>
         <td class="amount-cell" style="color:var(--${o.balance > 0 ? 'red' : 'green'});font-weight:600;">₹${fmt(o.balance)}</td>
         <td><span class="badge badge-${SO_STATUS_CLS[o.status] || 'gray'}">${o.status}</span></td>
-        <td>
+        <td onclick="event.stopPropagation()">
           <div style="display:flex;gap:4px;">
+            <button class="btn btn-ghost btn-icon-sm" onclick="viewSODetail('${o.id}')"><i class="ti ti-eye"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="navigate('sal-invoice',null)"><i class="ti ti-file-invoice"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="navigate('sal-delivery',null)"><i class="ti ti-truck-delivery"></i></button>
           </div>
@@ -16394,7 +16446,7 @@
       const start = (sinvPage - 1) * SINV_PER;
       const slice = sinvFiltered.slice(start, start + SINV_PER);
       tbody.innerHTML = slice.map(i => `
-      <tr>
+      <tr style="cursor:pointer;" onclick="viewSInvDetail('${i.id}')">
         <td><span class="id-cell">${i.id}</span></td>
         <td>
           <div class="entity-cell">
@@ -16410,8 +16462,9 @@
         <td class="amount-cell" style="color:var(--green);">₹${fmt(i.paid)}</td>
         <td class="amount-cell" style="color:var(--${i.balance > 0 ? 'red' : 'green'});font-weight:600;">₹${fmt(i.balance)}</td>
         <td><span class="badge badge-${INV_STATUS_CLS[i.status] || 'gray'}">${i.status}</span></td>
-        <td>
+        <td onclick="event.stopPropagation()">
           <div style="display:flex;gap:4px;">
+            <button class="btn btn-ghost btn-icon-sm" onclick="viewSInvDetail('${i.id}')"><i class="ti ti-eye"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="openModal('modal-sal-receipt')"><i class="ti ti-credit-card"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing invoice…')"><i class="ti ti-printer"></i></button>
             <button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','Email','Invoice emailed to customer.')"><i class="ti ti-mail"></i></button>
@@ -17225,13 +17278,13 @@
       badge.textContent = lead.status;
       badge.className = 'badge badge-' + (LEAD_STATUS_CLS[lead.status] || 'gray');
       /* Pre-fill date with today */
-      const today = new Date().toISOString().slice(0,10);
+      const today = new Date().toISOString().slice(0, 10);
       const dateEl = document.getElementById('lf-act-date');
       if (dateEl) dateEl.value = today;
       /* Open panel */
       document.getElementById('lead-side-panel').style.right = '0';
       document.getElementById('lead-panel-overlay').style.display = 'block';
-      try { _lspRenderActivities(lead); } catch(e) {}
+      try { _lspRenderActivities(lead); } catch (e) { }
     }
     function closeLeadPanel() {
       document.getElementById('lead-side-panel').style.right = '-70vw';
@@ -17243,14 +17296,16 @@
       if (!lead) return;
       navigate('crm-opportunities', null);
       setTimeout(() => {
-        const stageMap = { New:'Prospect', Contacted:'Qualification', Qualified:'Qualification',
-                           Proposal:'Proposal', Negotiation:'Negotiation' };
+        const stageMap = {
+          New: 'Prospect', Contacted: 'Qualification', Qualified: 'Qualification',
+          Proposal: 'Proposal', Negotiation: 'Negotiation'
+        };
         openNewOppPanel();
-        document.getElementById('osp-title').value   = lead.name + ' — Opportunity';
+        document.getElementById('osp-title').value = lead.name + ' — Opportunity';
         document.getElementById('osp-company').value = lead.name;
         document.getElementById('osp-avatar').textContent = lead.name.charAt(0).toUpperCase();
-        document.getElementById('osp-stage').value   = stageMap[lead.status] || 'Prospect';
-        document.getElementById('osp-prob').value    = lead.probability || 50;
+        document.getElementById('osp-stage').value = stageMap[lead.status] || 'Prospect';
+        document.getElementById('osp-prob').value = lead.probability || 50;
         _ospPopulateOwner(lead.assignedTo);
       }, 150);
     }
@@ -17276,68 +17331,72 @@
     function _lspEmpty(icon, msg) { return `<div class="lsp-empty"><i class="${icon}"></i>${msg}</div>`; }
     /* icon + color per activity type */
     const ACT_ICON = {
-      Call:'ti ti-phone', Email:'ti ti-mail', Meeting:'ti ti-calendar-event',
-      Demo:'ti ti-presentation', 'Site Visit':'ti ti-map-pin',
-      'Proposal Sent':'ti ti-file-text', 'Follow Up':'ti ti-bell',
-      WhatsApp:'ti ti-brand-whatsapp'
+      Call: 'ti ti-phone', Email: 'ti ti-mail', Meeting: 'ti ti-calendar-event',
+      Demo: 'ti ti-presentation', 'Site Visit': 'ti ti-map-pin',
+      'Proposal Sent': 'ti ti-file-text', 'Follow Up': 'ti ti-bell',
+      WhatsApp: 'ti ti-brand-whatsapp'
     };
-    const ACT_BG   = { Call:'#ECFDF5', Email:'#EFF6FF', Meeting:'#F5F3FF', Demo:'#FFF7ED',
-                       'Site Visit':'#F0FDF4', 'Proposal Sent':'#EFF6FF',
-                       'Follow Up':'#FFFBEB', WhatsApp:'#F0FDF4' };
-    const ACT_CLR  = { Call:'#16A34A', Email:'#1479C9', Meeting:'#7C3AED', Demo:'#EA580C',
-                       'Site Visit':'#15803D', 'Proposal Sent':'#0A5096',
-                       'Follow Up':'#D97706', WhatsApp:'#16A34A' };
-    const ACT_SCLS = { Completed:'green', Cancelled:'red', Scheduled:'blue' };
+    const ACT_BG = {
+      Call: '#ECFDF5', Email: '#EFF6FF', Meeting: '#F5F3FF', Demo: '#FFF7ED',
+      'Site Visit': '#F0FDF4', 'Proposal Sent': '#EFF6FF',
+      'Follow Up': '#FFFBEB', WhatsApp: '#F0FDF4'
+    };
+    const ACT_CLR = {
+      Call: '#16A34A', Email: '#1479C9', Meeting: '#7C3AED', Demo: '#EA580C',
+      'Site Visit': '#15803D', 'Proposal Sent': '#0A5096',
+      'Follow Up': '#D97706', WhatsApp: '#16A34A'
+    };
+    const ACT_SCLS = { Completed: 'green', Cancelled: 'red', Scheduled: 'blue' };
 
     function _lspRenderActivities(lead) {
       const acts = (DB.activities || []).filter(a => a.customer === lead.name);
       const rows = acts.map(a => {
         const icon = ACT_ICON[a.type] || 'ti ti-activity';
-        const bg   = ACT_BG[a.type]   || '#EFF6FF';
-        const clr  = ACT_CLR[a.type]  || '#1479C9';
+        const bg = ACT_BG[a.type] || '#EFF6FF';
+        const clr = ACT_CLR[a.type] || '#1479C9';
         let sub = `${a.type} · ${fmtDate(a.date)}`;
-        if (a.time)       sub += ` ${a.time}`;
-        if (a.duration)   sub += ` · ${a.duration}min`;
-        if (a.location)   sub += ` · ${a.location}`;
-        if (a.direction)  sub += ` · ${a.direction}`;
-        if (a.outcome)    sub += ` · ${a.outcome}`;
-        if (a.priority)   sub += ` · ${a.priority}`;
+        if (a.time) sub += ` ${a.time}`;
+        if (a.duration) sub += ` · ${a.duration}min`;
+        if (a.location) sub += ` · ${a.location}`;
+        if (a.direction) sub += ` · ${a.direction}`;
+        if (a.outcome) sub += ` · ${a.outcome}`;
+        if (a.priority) sub += ` · ${a.priority}`;
         if (a.assignedTo) sub += ` · ${a.assignedTo}`;
-        const extra = [a.nextStep ? `Next: ${a.nextStep}` : '', a.notes||''].filter(Boolean).join(' — ');
-        return _lspEntry(icon, bg, clr, a.subject||a.type, sub, ACT_SCLS[a.status]||'gray', a.status, extra);
+        const extra = [a.nextStep ? `Next: ${a.nextStep}` : '', a.notes || ''].filter(Boolean).join(' — ');
+        return _lspEntry(icon, bg, clr, a.subject || a.type, sub, ACT_SCLS[a.status] || 'gray', a.status, extra);
       }).join('');
       document.getElementById('lsp-act-list').innerHTML =
         `<div style="font-size:11px;font-weight:700;color:#4A6888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
            Activities <span style="background:#EFF6FF;color:#1479C9;border-radius:10px;padding:1px 7px;">${acts.length}</span>
-         </div>` + (rows || _lspEmpty('ti ti-activity','No activities yet'));
+         </div>` + (rows || _lspEmpty('ti ti-activity', 'No activities yet'));
     }
 
 
     /* ── Save helpers ── */
     let _lspCurrentLead = null;
 
-    function _lspVal(id) { return (document.getElementById(id)||{}).value||''; }
-    function _lspClear(ids) { ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = el.tagName==='SELECT'?(el.options[0]?.value||''):''; }); }
-    function _todayStr() { return new Date().toISOString().slice(0,10); }
+    function _lspVal(id) { return (document.getElementById(id) || {}).value || ''; }
+    function _lspClear(ids) { ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = el.tagName === 'SELECT' ? (el.options[0]?.value || '') : ''; }); }
+    function _todayStr() { return new Date().toISOString().slice(0, 10); }
 
     function lspSaveActivity() {
       const subj = _lspVal('lf-act-subject').trim();
-      if (!subj) { showToast('warn','Required','Please enter a subject.'); return; }
+      if (!subj) { showToast('warn', 'Required', 'Please enter a subject.'); return; }
       DB.activities.unshift({
-        id:         'act_' + Date.now(),
-        customer:   _lspCurrentLead.name,
-        type:       _lspVal('lf-act-type'),
-        subject:    subj,
-        date:       _lspVal('lf-act-date') || _todayStr(),
-        time:       _lspVal('lf-act-time'),
-        status:     _lspVal('lf-act-status'),
-        notes:      _lspVal('lf-act-notes'),
+        id: 'act_' + Date.now(),
+        customer: _lspCurrentLead.name,
+        type: _lspVal('lf-act-type'),
+        subject: subj,
+        date: _lspVal('lf-act-date') || _todayStr(),
+        time: _lspVal('lf-act-time'),
+        status: _lspVal('lf-act-status'),
+        notes: _lspVal('lf-act-notes'),
         assignedTo: _lspCurrentLead.assignedTo || ''
       });
-      _lspClear(['lf-act-subject','lf-act-time','lf-act-notes']);
+      _lspClear(['lf-act-subject', 'lf-act-time', 'lf-act-notes']);
       document.getElementById('lf-act-date').value = _todayStr();
       _lspRenderActivities(_lspCurrentLead);
-      showToast('success','Activity','Activity logged successfully.');
+      showToast('success', 'Activity', 'Activity logged successfully.');
     }
 
     function filterLeads() {
@@ -17464,9 +17523,9 @@
       let sub = 0;
       document.querySelectorAll('#mcopp-items-body tr').forEach(row => {
         const inputs = row.querySelectorAll('input[type=number]');
-        const qty  = parseFloat(inputs[0]?.value) || 0;
+        const qty = parseFloat(inputs[0]?.value) || 0;
         const rate = parseFloat(inputs[1]?.value) || 0;
-        const amt  = qty * rate;
+        const amt = qty * rate;
         sub += amt;
         const amtEl = row.querySelector('.mopp-amt');
         if (amtEl) amtEl.textContent = '₹' + fmt(Math.round(amt));
@@ -17482,29 +17541,29 @@
       const items = [];
       document.querySelectorAll('#mcopp-items-body tr').forEach(row => {
         const nameEl = row.querySelector('input[type=text],input:not([type])');
-        const inputs  = row.querySelectorAll('input[type=number]');
+        const inputs = row.querySelectorAll('input[type=number]');
         const name = nameEl?.value?.trim();
         if (!name) return;
-        items.push({ name, qty: parseFloat(inputs[0]?.value)||1, rate: parseFloat(inputs[1]?.value)||0 });
+        items.push({ name, qty: parseFloat(inputs[0]?.value) || 1, rate: parseFloat(inputs[1]?.value) || 0 });
       });
       return items;
     }
 
     function saveOpportunity() {
-      const title   = document.getElementById('mcopp-title')?.value?.trim();
+      const title = document.getElementById('mcopp-title')?.value?.trim();
       const company = document.getElementById('mcopp-company')?.value?.trim();
-      if (!title) { showToast('error','Validation','Title is required.'); return; }
+      if (!title) { showToast('error', 'Validation', 'Title is required.'); return; }
       const items = _moppGetItems();
       const totalVal = items.reduce((s, i) => s + i.qty * i.rate, 0) * 1.18;
       const opp = {
-        id:          'OPP-' + Date.now(),
-        name:        title,
-        customer:    company || title,
-        value:       Math.round(totalVal) || parseInt(document.getElementById('mcopp-value')?.value) || 0,
-        stage:       document.getElementById('mcopp-stage')?.value || 'Prospect',
+        id: 'OPP-' + Date.now(),
+        name: title,
+        customer: company || title,
+        value: Math.round(totalVal) || parseInt(document.getElementById('mcopp-value')?.value) || 0,
+        stage: document.getElementById('mcopp-stage')?.value || 'Prospect',
         probability: parseInt(document.getElementById('mcopp-prob')?.value) || 50,
-        closeDate:   document.getElementById('mcopp-close')?.value || '',
-        assignedTo:  document.getElementById('mcopp-owner')?.selectedOptions[0]?.text || '',
+        closeDate: document.getElementById('mcopp-close')?.value || '',
+        assignedTo: document.getElementById('mcopp-owner')?.selectedOptions[0]?.text || '',
         items
       };
       DB.opportunities.unshift(opp);
@@ -17516,16 +17575,16 @@
         <td><input type="number" class="form-control" value="1" min="1" style="width:70px;" oninput="moppCalcTotals()"></td>
         <td><input type="number" class="form-control" value="0" style="width:110px;" oninput="moppCalcTotals()"></td>
         <td class="amount-cell mopp-amt">₹0</td><td></td></tr>`;
-      ['mopp-subtotal','mopp-tax','mopp-total'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent='₹0'; });
+      ['mopp-subtotal', 'mopp-tax', 'mopp-total'].forEach(id => { const e = document.getElementById(id); if (e) e.textContent = '₹0'; });
       initCRMOpportunities();
-      showToast('success','Opportunity Saved', `${title} added to pipeline.`);
+      showToast('success', 'Opportunity Saved', `${title} added to pipeline.`);
     }
 
     /* ── Opportunity panel helpers ── */
     function _ospPopulateOwner(val) {
       const sel = document.getElementById('osp-owner');
       if (!sel) return;
-      if (sel.options.length <= 1) DB.employees.slice(0,20).forEach(e => sel.add(new Option(e.name, e.name)));
+      if (sel.options.length <= 1) DB.employees.slice(0, 20).forEach(e => sel.add(new Option(e.name, e.name)));
       sel.value = val || '';
     }
 
@@ -17536,14 +17595,16 @@
 
     function ospUpdateStageBadge() {
       const sel = document.getElementById('osp-stage');
-      const clsMap = { Prospect:'gray', Qualification:'blue', 'Needs Analysis':'blue',
-                       Proposal:'amber', Negotiation:'amber', Closing:'green',
-                       'Closed Won':'green', 'Closed Lost':'red' };
+      const clsMap = {
+        Prospect: 'gray', Qualification: 'blue', 'Needs Analysis': 'blue',
+        Proposal: 'amber', Negotiation: 'amber', Closing: 'green',
+        'Closed Won': 'green', 'Closed Lost': 'red'
+      };
       sel.style.background = '';
       sel.style.color = '';
     }
 
-    function ospAddRow(name='', qty=1, rate=0) {
+    function ospAddRow(name = '', qty = 1, rate = 0) {
       const tbody = document.getElementById('osp-items-body');
       if (!tbody) return;
       const tr = document.createElement('tr');
@@ -17551,7 +17612,7 @@
         <td><input class="osp-item-input" value="${name}" placeholder="Item name" oninput="ospCalcTotals()"></td>
         <td><input class="osp-item-input" type="number" value="${qty}" min="1" style="width:55px;text-align:center;" oninput="ospCalcTotals()"></td>
         <td><input class="osp-item-input" type="number" value="${rate}" style="width:100px;text-align:right;" oninput="ospCalcTotals()"></td>
-        <td style="text-align:right;font-weight:600;color:#0A1830;" class="osp-amt">₹${fmt(Math.round(qty*rate))}</td>
+        <td style="text-align:right;font-weight:600;color:#0A1830;" class="osp-amt">₹${fmt(Math.round(qty * rate))}</td>
         <td><button style="background:none;border:none;cursor:pointer;padding:2px 4px;" onclick="this.closest('tr').remove();ospCalcTotals()"><i class="ti ti-trash" style="color:#E53935;font-size:13px;"></i></button></td>`;
       tbody.appendChild(tr);
       ospCalcTotals();
@@ -17561,9 +17622,9 @@
       let sub = 0;
       document.querySelectorAll('#osp-items-body tr').forEach(row => {
         const inputs = row.querySelectorAll('input[type=number]');
-        const qty  = parseFloat(inputs[0]?.value) || 0;
+        const qty = parseFloat(inputs[0]?.value) || 0;
         const rate = parseFloat(inputs[1]?.value) || 0;
-        const amt  = qty * rate;
+        const amt = qty * rate;
         sub += amt;
         const amtEl = row.querySelector('.osp-amt');
         if (amtEl) amtEl.textContent = '₹' + fmt(Math.round(amt));
@@ -17582,20 +17643,20 @@
 
     function openNewOppPanel() {
       window._ospCurrentId = null;
-      document.getElementById('osp-title').value   = '';
+      document.getElementById('osp-title').value = '';
       document.getElementById('osp-company').value = '';
       document.getElementById('osp-avatar').textContent = '+';
-      document.getElementById('osp-stage').value   = 'Prospect';
-      document.getElementById('osp-prob').value    = '';
-      document.getElementById('osp-close').value   = '';
+      document.getElementById('osp-stage').value = 'Prospect';
+      document.getElementById('osp-prob').value = '';
+      document.getElementById('osp-close').value = '';
       document.getElementById('osp-value-display').textContent = '₹0';
       document.getElementById('osp-items-body').innerHTML = '';
       document.getElementById('osp-subtotal').textContent = '₹0';
-      document.getElementById('osp-tax').textContent      = '₹0';
-      document.getElementById('osp-total').textContent    = '₹0';
+      document.getElementById('osp-tax').textContent = '₹0';
+      document.getElementById('osp-total').textContent = '₹0';
       document.getElementById('osp-save-label').textContent = 'Save Opportunity';
       document.getElementById('osp-quote-btn').style.display = 'none';
-      document.getElementById('osp-won-btn').style.display   = 'none';
+      document.getElementById('osp-won-btn').style.display = 'none';
       _ospPopulateOwner('');
       ospAddRow();
       _ospOpen();
@@ -17605,21 +17666,21 @@
       const opp = DB.opportunities.find(o => o.id === id);
       if (!opp) return;
       window._ospCurrentId = id;
-      document.getElementById('osp-avatar').textContent  = (opp.customer||opp.name).charAt(0).toUpperCase();
-      document.getElementById('osp-title').value         = opp.name;
-      document.getElementById('osp-company').value       = opp.customer || '';
-      document.getElementById('osp-stage').value         = opp.stage || 'Prospect';
-      document.getElementById('osp-prob').value          = opp.probability || '';
-      document.getElementById('osp-close').value         = opp.closeDate ? opp.closeDate.slice(0,10) : '';
+      document.getElementById('osp-avatar').textContent = (opp.customer || opp.name).charAt(0).toUpperCase();
+      document.getElementById('osp-title').value = opp.name;
+      document.getElementById('osp-company').value = opp.customer || '';
+      document.getElementById('osp-stage').value = opp.stage || 'Prospect';
+      document.getElementById('osp-prob').value = opp.probability || '';
+      document.getElementById('osp-close').value = opp.closeDate ? opp.closeDate.slice(0, 10) : '';
       document.getElementById('osp-value-display').textContent = '₹' + fmt(opp.value);
-      document.getElementById('osp-save-label').textContent    = 'Save Changes';
-      document.getElementById('osp-quote-btn').style.display   = '';
-      document.getElementById('osp-won-btn').style.display     = '';
+      document.getElementById('osp-save-label').textContent = 'Save Changes';
+      document.getElementById('osp-quote-btn').style.display = '';
+      document.getElementById('osp-won-btn').style.display = '';
       _ospPopulateOwner(opp.assignedTo);
       /* Populate editable items */
       document.getElementById('osp-items-body').innerHTML = '';
       (opp.items || []).forEach(it => ospAddRow(it.name, it.qty, it.rate));
-      if (!(opp.items||[]).length) ospAddRow();
+      if (!(opp.items || []).length) ospAddRow();
       _ospOpen();
     }
 
@@ -17630,44 +17691,44 @@
 
     function ospSave() {
       const title = document.getElementById('osp-title').value.trim();
-      if (!title) { showToast('warn','Required','Please enter an opportunity title.'); return; }
+      if (!title) { showToast('warn', 'Required', 'Please enter an opportunity title.'); return; }
       const items = [];
       document.querySelectorAll('#osp-items-body tr').forEach(row => {
         const nameEl = row.querySelector('input:not([type=number])');
-        const nums   = row.querySelectorAll('input[type=number]');
-        const name   = nameEl?.value?.trim();
+        const nums = row.querySelectorAll('input[type=number]');
+        const name = nameEl?.value?.trim();
         if (!name) return;
-        items.push({ name, qty: parseFloat(nums[0]?.value)||1, rate: parseFloat(nums[1]?.value)||0 });
+        items.push({ name, qty: parseFloat(nums[0]?.value) || 1, rate: parseFloat(nums[1]?.value) || 0 });
       });
-      const sub   = items.reduce((s, it) => s + it.qty * it.rate, 0);
+      const sub = items.reduce((s, it) => s + it.qty * it.rate, 0);
       const total = Math.round(sub * 1.18);
       if (window._ospCurrentId) {
         const opp = DB.opportunities.find(o => o.id === window._ospCurrentId);
         if (opp) {
-          opp.name        = title;
-          opp.customer    = document.getElementById('osp-company').value.trim() || title;
-          opp.stage       = document.getElementById('osp-stage').value;
+          opp.name = title;
+          opp.customer = document.getElementById('osp-company').value.trim() || title;
+          opp.stage = document.getElementById('osp-stage').value;
           opp.probability = parseInt(document.getElementById('osp-prob').value) || opp.probability;
-          opp.closeDate   = document.getElementById('osp-close').value;
-          opp.assignedTo  = document.getElementById('osp-owner').value;
-          opp.value       = total;
-          opp.items       = items;
+          opp.closeDate = document.getElementById('osp-close').value;
+          opp.assignedTo = document.getElementById('osp-owner').value;
+          opp.value = total;
+          opp.items = items;
         }
-        showToast('success','Saved','Opportunity updated.');
+        showToast('success', 'Saved', 'Opportunity updated.');
       } else {
         DB.opportunities.unshift({
-          id:          'OPP-' + Date.now(),
-          name:        title,
-          customer:    document.getElementById('osp-company').value.trim() || title,
-          stage:       document.getElementById('osp-stage').value,
+          id: 'OPP-' + Date.now(),
+          name: title,
+          customer: document.getElementById('osp-company').value.trim() || title,
+          stage: document.getElementById('osp-stage').value,
           probability: parseInt(document.getElementById('osp-prob').value) || 50,
-          closeDate:   document.getElementById('osp-close').value,
-          assignedTo:  document.getElementById('osp-owner').value,
-          value:       total,
+          closeDate: document.getElementById('osp-close').value,
+          assignedTo: document.getElementById('osp-owner').value,
+          value: total,
           items,
-          createdAt:   new Date().toISOString(),
+          createdAt: new Date().toISOString(),
         });
-        showToast('success','Created',`${title} added to pipeline.`);
+        showToast('success', 'Created', `${title} added to pipeline.`);
       }
       closeOppPanel();
       if (typeof initCRMOpportunities === 'function') initCRMOpportunities();
@@ -17684,9 +17745,9 @@
         /* Set date + valid till (30 days) */
         const today = new Date();
         const valid = new Date(today); valid.setDate(valid.getDate() + 30);
-        const fmt8 = d => d.toISOString().slice(0,10);
+        const fmt8 = d => d.toISOString().slice(0, 10);
         const set = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
-        set('mquo-date',  fmt8(today));
+        set('mquo-date', fmt8(today));
         set('mquo-valid', fmt8(valid));
         set('mquo-notes', `From Opportunity: ${opp.name}`);
         /* Populate line items from opportunity */
@@ -19151,70 +19212,7 @@
        STEP 20 — EXTENDED MODULES JS (NEW)
        ════════════════════════════════════════════════════════ */
 
-    /* ─── SALES: ADVANCE PAYMENTS ─── */
-    function initSalAdvPayment() {
-      const custSel = document.getElementById('madv-cust');
-      if (custSel && custSel.options.length === 1) DB.customers.forEach(c => custSel.add(new Option(c.name, c.id)));
-      const soSel = document.getElementById('madv-so');
-      if (soSel && soSel.options.length === 1) DB.salesOrders.forEach(s => soSel.add(new Option(s.id + ' — ' + s.customer, s.id)));
 
-      const kpi = document.getElementById('sal-adv-kpi');
-      if (kpi) {
-        const approved = DB.advances.filter(a => a.status === 'Approved').reduce((s, a) => s + a.amount, 0);
-        const pending = DB.advances.filter(a => a.status === 'Pending').reduce((s, a) => s + a.amount, 0);
-        kpi.innerHTML = `
-          <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Advances</div><div class="kpi-val">₹${fmt(DB.advances.reduce((s, a) => s + a.amount, 0))}</div></div><div class="kpi-icon navy"><i class="ti ti-cash"></i></div></div></div>
-          <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Approved</div><div class="kpi-val">₹${fmt(approved)}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div></div>
-          <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending</div><div class="kpi-val">₹${fmt(pending)}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div></div>
-          <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Adjusted</div><div class="kpi-val">₹${fmt(DB.advances.filter(a => a.status === 'Adjusted').reduce((s, a) => s + a.amount, 0))}</div></div><div class="kpi-icon blue"><i class="ti ti-adjustments"></i></div></div></div>`;
-      }
-      filterSalAdv();
-    }
-    function filterSalAdv() {
-      const tbody = document.getElementById('sal-adv-tbody'); if (!tbody) return;
-      document.getElementById('sal-adv-count').textContent = DB.advances.length;
-      tbody.innerHTML = DB.advances.map(a => `
-        <tr>
-          <td><span class="id-cell">${a.id}</span></td>
-          <td><div class="entity-name">${a.customer}</div></td>
-          <td class="text-muted">${fmtDate(a.date)}</td>
-          <td class="amount-cell" style="font-weight:700;">₹${fmt(a.amount)}</td>
-          <td>${a.mode}</td>
-          <td><span class="badge badge-${a.status === 'Approved' ? 'green' : (a.status === 'Pending' ? 'amber' : (a.status === 'Adjusted' ? 'blue' : 'gray'))}">${a.status}</span></td>
-          <td class="text-secondary">${a.approvedBy || '—'}</td>
-          <td><button class="btn btn-ghost btn-icon-sm" onclick="showToast('info','View','Opening receipt...')"><i class="ti ti-eye"></i></button></td>
-        </tr>`).join('');
-    }
-    function initSalAdvApproval() {
-      const tbody = document.getElementById('sal-adv-app-tbody'); if (!tbody) return;
-      const pending = DB.advances.filter(a => a.status === 'Pending');
-      tbody.innerHTML = pending.map(a => `
-        <tr>
-          <td><span class="id-cell">${a.id}</span></td>
-          <td><div class="entity-name">${a.customer}</div></td>
-          <td class="text-muted">${fmtDate(a.date)}</td>
-          <td class="amount-cell">₹${fmt(a.amount)}</td>
-          <td>${a.mode}</td>
-          <td>Operator-01</td>
-          <td>
-            <button class="btn btn-primary btn-sm" onclick="showToast('success','Approved','Advance payment approved.')">Approve</button>
-            <button class="btn btn-outline btn-sm" onclick="showToast('error','Rejected','Advance payment rejected.')">Reject</button>
-          </td>
-        </tr>`).join('');
-    }
-    function initSalAdvAdjustment() {
-      const tbody = document.getElementById('sal-adv-adj-tbody'); if (!tbody) return;
-      tbody.innerHTML = DB.advances.filter(a => a.status === 'Adjusted').map((a, i) => `
-        <tr>
-          <td><span class="id-cell">ADJ-${2000 + i}</span></td>
-          <td>${a.customer}</td>
-          <td>${a.id}</td>
-          <td>INV-${si(3000, 3999)}</td>
-          <td class="amount-cell">₹${fmt(a.amount)}</td>
-          <td class="text-muted">${fmtDate(a.date)}</td>
-          <td><span class="badge badge-green">Closed</span></td>
-        </tr>`).join('');
-    }
 
     /* ─── SALES: MARGIN APPROVALS ─── */
     function initSalMarginApproval() {
@@ -19516,8 +19514,7 @@
   <!-- ═══════════════════════════════════════════
        LEAD SIDE PANEL (Activities · Meetings · Follow Ups · Call Logs)
        ═══════════════════════════════════════════ -->
-  <div id="lead-panel-overlay" onclick="closeLeadPanel()"
-    style="display:none;position:fixed;inset:0;z-index:1099;">
+  <div id="lead-panel-overlay" onclick="closeLeadPanel()" style="display:none;position:fixed;inset:0;z-index:1099;">
   </div>
 
   <div id="lead-side-panel" style="position:fixed;top:0;right:-70vw;width:70vw;height:100vh;
@@ -19531,8 +19528,7 @@
                 background:linear-gradient(180deg,#FAFCFF,#EEF4FF);flex-shrink:0;">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div id="lsp-avatar"
-               style="width:44px;height:44px;border-radius:12px;
+          <div id="lsp-avatar" style="width:44px;height:44px;border-radius:12px;
                       background:linear-gradient(145deg,#4AAAF8,#0A5096);
                       color:#fff;font-size:18px;font-weight:700;
                       display:flex;align-items:center;justify-content:center;
@@ -19548,9 +19544,12 @@
         </div>
       </div>
       <div style="display:flex;gap:20px;font-size:11px;color:#2A4060;">
-        <span><i class="ti ti-coin" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span id="lsp-value">—</span></span>
-        <span><i class="ti ti-database" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span id="lsp-source">—</span></span>
-        <span><i class="ti ti-user" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span id="lsp-owner">—</span></span>
+        <span><i class="ti ti-coin" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
+            id="lsp-value">—</span></span>
+        <span><i class="ti ti-database" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
+            id="lsp-source">—</span></span>
+        <span><i class="ti ti-user" style="font-size:12px;margin-right:4px;color:#1479C9;"></i><span
+            id="lsp-owner">—</span></span>
       </div>
     </div>
 
@@ -19585,7 +19584,8 @@
           <!-- Subject -->
           <div class="lsp-frow">
             <label class="lsp-label">Subject</label>
-            <input class="search-input" id="lf-act-subject" placeholder="Brief description of this activity" style="width:100%;">
+            <input class="search-input" id="lf-act-subject" placeholder="Brief description of this activity"
+              style="width:100%;">
           </div>
 
           <!-- Date + Time -->
@@ -19604,18 +19604,21 @@
           <div class="lsp-frow">
             <label class="lsp-label">Status</label>
             <select class="select-sm" id="lf-act-status" style="width:100%;">
-              <option>Scheduled</option><option>Completed</option><option>Cancelled</option>
+              <option>Scheduled</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
             </select>
           </div>
 
           <!-- Notes -->
           <div class="lsp-frow">
             <label class="lsp-label">Notes</label>
-            <textarea class="search-input" id="lf-act-notes" rows="3" placeholder="Additional details…" style="width:100%;resize:vertical;"></textarea>
+            <textarea class="search-input" id="lf-act-notes" rows="3" placeholder="Additional details…"
+              style="width:100%;resize:vertical;"></textarea>
           </div>
 
-          <button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px;"
-            onclick="lspSaveActivity()"><i class="ti ti-check"></i> Save Activity</button>
+          <button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px;" onclick="lspSaveActivity()"><i
+              class="ti ti-check"></i> Save Activity</button>
         </div>
       </div>
 
@@ -19637,8 +19640,15 @@
       gap: 6px;
       transition: color 0.15s, border-color 0.15s;
     }
-    .lsp-tab.active { color: #1479C9 !important; border-bottom-color: #1479C9 !important; }
-    .lsp-tab:hover  { color: #0A1830 !important; }
+
+    .lsp-tab.active {
+      color: #1479C9 !important;
+      border-bottom-color: #1479C9 !important;
+    }
+
+    .lsp-tab:hover {
+      color: #0A1830 !important;
+    }
 
     /* List column — left 55% */
     .lsp-list-col {
@@ -19668,9 +19678,16 @@
       padding-bottom: 10px;
       border-bottom: 1px solid #AECAE8;
     }
-    .lsp-form-title i { color: #1479C9; font-size: 16px; }
 
-    .lsp-frow { margin-bottom: 12px; }
+    .lsp-form-title i {
+      color: #1479C9;
+      font-size: 16px;
+    }
+
+    .lsp-frow {
+      margin-bottom: 12px;
+    }
+
     .lsp-label {
       display: block;
       font-size: 11px;
@@ -19687,7 +19704,10 @@
       padding: 10px 0;
       border-bottom: 1px solid #AECAE8;
     }
-    .lsp-entry:last-child { border-bottom: none; }
+
+    .lsp-entry:last-child {
+      border-bottom: none;
+    }
 
     .lsp-ico {
       width: 34px;
@@ -19706,7 +19726,12 @@
       color: #9AB8D8;
       font-size: 12px;
     }
-    .lsp-empty i { font-size: 32px; display: block; margin-bottom: 8px; }
+
+    .lsp-empty i {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 8px;
+    }
   </style>
 
   <!-- ── Opportunity Side Panel (inline editable) ── -->
@@ -19727,19 +19752,22 @@
                display:flex;align-items:center;justify-content:center;
                box-shadow:0 3px 10px rgba(124,58,237,0.35);">W</div>
           <div style="flex:1;min-width:0;">
-            <input id="osp-title" placeholder="Opportunity title…"
-              style="font-size:15px;font-weight:700;color:#0A1830;border:none;background:transparent;
-                     outline:none;width:100%;padding:0;margin-bottom:3px;"
-              oninput="ospUpdateAvatar()">
+            <input id="osp-title" placeholder="Opportunity title…" style="font-size:15px;font-weight:700;color:#0A1830;border:none;background:transparent;
+                     outline:none;width:100%;padding:0;margin-bottom:3px;" oninput="ospUpdateAvatar()">
             <input id="osp-company" placeholder="Company name…"
               style="font-size:11px;color:#6A88A8;border:none;background:transparent;outline:none;width:100%;padding:0;">
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
           <select id="osp-stage" onchange="ospUpdateStageBadge()" class="osp-stage-sel">
-            <option>Prospect</option><option>Qualification</option><option>Needs Analysis</option>
-            <option>Proposal</option><option>Negotiation</option><option>Closing</option>
-            <option>Closed Won</option><option>Closed Lost</option>
+            <option>Prospect</option>
+            <option>Qualification</option>
+            <option>Needs Analysis</option>
+            <option>Proposal</option>
+            <option>Negotiation</option>
+            <option>Closing</option>
+            <option>Closed Won</option>
+            <option>Closed Lost</option>
           </select>
           <button class="btn btn-ghost btn-icon-sm" onclick="closeOppPanel()"><i class="ti ti-x"></i></button>
         </div>
@@ -19765,7 +19793,8 @@
         </label>
         <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
           <i class="ti ti-user" style="color:#7C3AED;"></i>
-          <select id="osp-owner" style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+          <select id="osp-owner"
+            style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
             <option value="">Select owner…</option>
           </select>
         </label>
@@ -19777,7 +19806,9 @@
 
       <!-- Line items -->
       <div style="margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:700;color:#4A6888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Line Items</div>
+        <div
+          style="font-size:11px;font-weight:700;color:#4A6888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
+          Line Items</div>
         <div style="border:1px solid #AECAE8;border-radius:8px;overflow:hidden;">
           <table style="width:100%;border-collapse:collapse;font-size:12px;">
             <thead>
@@ -19794,9 +19825,11 @@
           <div style="padding:8px 12px;border-top:1px solid #AECAE8;">
             <button class="btn btn-ghost btn-sm" onclick="ospAddRow()"><i class="ti ti-plus"></i> Add Item</button>
           </div>
-          <div style="padding:10px 12px;text-align:right;font-size:12px;color:#2A4060;border-top:1px solid #AECAE8;background:#FAFCFF;">
+          <div
+            style="padding:10px 12px;text-align:right;font-size:12px;color:#2A4060;border-top:1px solid #AECAE8;background:#FAFCFF;">
             Subtotal: <b id="osp-subtotal">₹0</b> &nbsp;|&nbsp; GST (18%): <b id="osp-tax">₹0</b>
-            &nbsp;|&nbsp; <span style="font-size:14px;font-weight:800;color:#0A1830;">Total: <span id="osp-total">₹0</span></span>
+            &nbsp;|&nbsp; <span style="font-size:14px;font-weight:800;color:#0A1830;">Total: <span
+                id="osp-total">₹0</span></span>
           </div>
         </div>
       </div>
@@ -19821,16 +19854,39 @@
 
   <style>
     .osp-stage-sel {
-      font-size:11px;font-weight:700;padding:3px 8px;border-radius:12px;
-      border:1px solid #AECAE8;background:#EEF4FF;color:#1479C9;cursor:pointer;outline:none;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1px solid #AECAE8;
+      background: #EEF4FF;
+      color: #1479C9;
+      cursor: pointer;
+      outline: none;
     }
-    #osp-items-body tr { border-top:1px solid #AECAE8; }
-    #osp-items-body td { padding:6px 8px; }
+
+    #osp-items-body tr {
+      border-top: 1px solid #AECAE8;
+    }
+
+    #osp-items-body td {
+      padding: 6px 8px;
+    }
+
     .osp-item-input {
-      border:none;background:transparent;outline:none;font-size:12px;color:#0A1830;width:100%;
-      padding:2px 4px;border-radius:4px;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 12px;
+      color: #0A1830;
+      width: 100%;
+      padding: 2px 4px;
+      border-radius: 4px;
     }
-    .osp-item-input:focus { background:#EEF4FF; }
+
+    .osp-item-input:focus {
+      background: #EEF4FF;
+    }
   </style>
 
 </body>
