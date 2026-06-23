@@ -4537,10 +4537,7 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="pur-dashboard" onclick="navigate('pur-dashboard',this)">
-              <i class="ti ti-chart-bar nav-icon"></i>
-              <span class="nav-text">Pur. Dashboard</span>
-            </div>
+
             <div class="nav-item" data-page="pur-orders" onclick="navigate('pur-orders',this)">
               <i class="ti ti-file-invoice nav-icon"></i>
               <span class="nav-text">Purchase Orders</span>
@@ -4553,10 +4550,7 @@
               <i class="ti ti-receipt nav-icon"></i>
               <span class="nav-text">Purchase Invoice</span>
             </div>
-            <div class="nav-item" data-page="pur-supplier-ledger" onclick="navigate('pur-supplier-ledger',this)">
-              <i class="ti ti-address-book nav-icon"></i>
-              <span class="nav-text">Supplier Ledger</span>
-            </div>
+
           </div>
         </div>
 
@@ -4607,6 +4601,10 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
+            <div class="nav-item" data-page="pur-supplier-ledger" onclick="navigate('pur-supplier-ledger',this)">
+              <i class="ti ti-address-book nav-icon"></i>
+              <span class="nav-text">Supplier Ledger</span>
+            </div>
             <div class="nav-item" data-page="fin-payments" onclick="navigate('fin-payments',this)">
               <i class="ti ti-credit-card nav-icon"></i>
               <span class="nav-text">Payments</span>
@@ -6398,65 +6396,13 @@
 
           <!-- ══════════════════════════════════════════════
                STEP 11 — PURCHASE MODULE
-               pur-dashboard · pur-orders · pur-order-detail
+               pur-orders · pur-order-detail
                pur-grn · pur-grn-detail · pur-invoice
                pur-supplier-ledger
                ══════════════════════════════════════════════ -->
 
           <!-- ── PURCHASE DASHBOARD ───────────────────── -->
-          <div class="page" id="page-pur-dashboard">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Purchase Dashboard</div>
-                <div class="page-sub">Overview of procurement, GRNs and vendor performance</div>
-              </div>
-            </div>
-            <div class="kpi-grid kpi-grid-4 mb-4" id="purd-kpi"></div>
-            <div class="grid-2 mb-4">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-area"></i> Monthly Purchase Trend</div>
-                </div>
-                <div id="chart-pur-trend" style="height:220px;"></div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-chart-donut"></i> PO Status Distribution</div>
-                </div>
-                <div id="chart-pur-status" style="height:220px;"></div>
-              </div>
-            </div>
-            <div class="grid-2">
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-clock"></i> Recent Purchase Orders</div>
-                  <div class="card-tools"><button class="btn btn-sm btn-outline"
-                      onclick="navigate('pur-orders',this)">View All</button></div>
-                </div>
-                <div class="table-wrap">
-                  <table class="data-tbl">
-                    <thead>
-                      <tr>
-                        <th>PO #</th>
-                        <th>Supplier</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody id="purd-recent-pos"></tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <div class="card-title"><i class="ti ti-star"></i> Top Suppliers</div>
-                  <div class="card-tools"><button class="btn btn-sm btn-outline"
-                      onclick="navigate('suppliers',this)">View All</button></div>
-                </div>
-                <div id="purd-top-suppliers" style="padding:8px 16px;"></div>
-              </div>
-            </div>
-          </div><!-- /#page-pur-dashboard -->
+
 
           <!-- ── PURCHASE ORDERS ────────────────────────── -->
           <div class="page" id="page-pur-orders">
@@ -12066,13 +12012,13 @@
       'inv-serial': { title: 'Serial Tracking', crumbs: ['Inventory', 'Serial Numbers'], module: 'inventory' },
       'inv-lowstock': { title: 'Low Stock Report', crumbs: ['Inventory', 'Low Stock'], module: 'inventory' },
       // Purchase
-      'pur-dashboard': { title: 'Purchase Dashboard', crumbs: ['Purchase', 'Dashboard'], module: 'purchase' },
+
       'pur-orders': { title: 'Purchase Orders', crumbs: ['Purchase', 'Orders'], module: 'purchase' },
       'pur-order-detail': { title: 'PO Details', crumbs: ['Purchase', 'Orders', 'PO Detail'], module: 'purchase' },
       'pur-grn': { title: 'GRN', crumbs: ['Purchase', 'GRN'], module: 'purchase' },
       'pur-grn-detail': { title: 'GRN Detail', crumbs: ['Purchase', 'GRN', 'GRN Detail'], module: 'purchase' },
       'pur-invoice': { title: 'Purchase Invoice', crumbs: ['Purchase', 'Invoice'], module: 'purchase' },
-      'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Purchase', 'Supplier Ledger'], module: 'purchase' },
+
       // Sales
       'sal-quotations': { title: 'Quotations', crumbs: ['Sales', 'Quotations'], module: 'sales' },
       'sal-orders': { title: 'Sales Orders', crumbs: ['Sales', 'Orders'], module: 'sales' },
@@ -12081,6 +12027,7 @@
       'sal-delivery': { title: 'Delivery Notes', crumbs: ['Sales', 'Delivery Notes'], module: 'sales' },
       // Finance
       'fin-payments': { title: 'Payments', crumbs: ['Finance', 'Payments'], module: 'finance' },
+      'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Finance', 'Supplier Ledger'], module: 'finance' },
       'fin-receipts': { title: 'Receipts', crumbs: ['Finance', 'Receipts'], module: 'finance' },
       'fin-expenses': { title: 'Expenses', crumbs: ['Finance', 'Expenses'], module: 'finance' },
       'fin-income': { title: 'Income', crumbs: ['Finance', 'Income'], module: 'finance' },
@@ -14299,7 +14246,7 @@
       once('inv-serial', initSerialPage);
       once('inv-lowstock', initLowStockPage);
       once('inv-opening', initOpeningPage);
-      once('pur-dashboard', initPurDashboard);
+
       once('pur-orders', initPOsPage);
       once('pur-order-detail', () => { });
       once('pur-grn', initGRNPage);
@@ -15520,85 +15467,7 @@
       'Partial GRN': 'amber', 'Fully Received': 'green', Cancelled: 'red'
     };
 
-    /* ─── PURCHASE DASHBOARD ─── */
-    function initPurDashboard() {
-      const pos = DB.purchaseOrders;
-      const totalVal = pos.reduce((s, p) => s + p.total, 0);
-      const pending = pos.filter(p => ['Draft', 'Sent', 'Confirmed'].includes(p.status)).length;
-      const thisMonth = pos.filter(p => new Date(p.date) > new Date(Date.now() - 30 * 86400000));
-      const monthVal = thisMonth.reduce((s, p) => s + p.total, 0);
-      const payable = DB.suppliers.filter(s => s.balance < 0).reduce((s, x) => s + Math.abs(x.balance), 0);
 
-      const kpi = document.getElementById('purd-kpi');
-      if (kpi) kpi.innerHTML = `
-      <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Purchases</div><div class="kpi-val">₹${fmt(totalVal)}</div></div><div class="kpi-icon gold"><i class="ti ti-shopping-cart"></i></div></div><div class="kpi-sub up">${pos.length} POs</div></div>
-      <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">This Month</div><div class="kpi-val">₹${fmt(monthVal)}</div></div><div class="kpi-icon blue"><i class="ti ti-calendar"></i></div></div><div class="kpi-sub neutral">${thisMonth.length} orders</div></div>
-      <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending POs</div><div class="kpi-val">${pending}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Awaiting receipt</div></div>
-      <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Total Payable</div><div class="kpi-val">₹${fmt(payable)}</div></div><div class="kpi-icon red"><i class="ti ti-file-invoice"></i></div></div><div class="kpi-sub warn">Outstanding</div></div>`;
-
-      /* Recent POs mini-table */
-      const tbody = document.getElementById('purd-recent-pos');
-      if (tbody) tbody.innerHTML = pos.slice(0, 6).map(p => `
-      <tr style="cursor:pointer;" onclick="viewPODetail('${p.id}')">
-        <td><span class="id-cell" style="font-size:10px;">${p.id}</span></td>
-        <td class="entity-name truncate" style="max-width:130px;">${p.supplier}</td>
-        <td class="amount-cell">₹${fmt(p.total)}</td>
-        <td><span class="badge badge-${PO_STATUS_CLS[p.status] || 'gray'}">${p.status}</span></td>
-      </tr>`).join('');
-
-      /* Top suppliers bar list */
-      const supEl = document.getElementById('purd-top-suppliers');
-      if (supEl) {
-        const topSups = [...DB.suppliers].sort((a, b) => b.totalValue - a.totalValue).slice(0, 5);
-        const maxV = topSups[0]?.totalValue || 1;
-        supEl.innerHTML = topSups.map((s, i) => `
-        <div style="margin-bottom:12px;">
-          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
-            <span style="font-weight:600;color:var(--tx-1);">${s.name}</span>
-            <span style="color:var(--gold);font-weight:700;">₹${fmt(s.totalValue)}</span>
-          </div>
-          <div style="background:#E4E7EC;border-radius:6px;height:6px;">
-            <div style="width:${(s.totalValue / maxV * 100).toFixed(0)}%;background:var(--gold);height:6px;border-radius:6px;"></div>
-          </div>
-        </div>`).join('');
-      }
-
-      registerChart('pur-dashboard', () => {
-        /* Monthly trend — last 12 months */
-        const months = []; const vals = [];
-        for (let i = 11; i >= 0; i--) {
-          const d = new Date(); d.setMonth(d.getMonth() - i);
-          months.push(d.toLocaleString('default', { month: 'short' }));
-          const mv = pos.filter(p => {
-            const pd = new Date(p.date);
-            return pd.getFullYear() === d.getFullYear() && pd.getMonth() === d.getMonth();
-          }).reduce((s, p) => s + p.total, 0);
-          vals.push(mv);
-        }
-        new ApexCharts(document.getElementById('chart-pur-trend'), {
-          chart: { type: 'area', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif', sparkline: { enabled: false } },
-          series: [{ name: 'Purchase Value', data: vals }],
-          xaxis: { categories: months, labels: { style: { fontSize: '11px' } } },
-          colors: ['#3B82F6'], fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: .4, opacityTo: .05 } },
-          stroke: { width: 2 }, dataLabels: { enabled: false },
-          grid: { borderColor: '#E4E7EC' }, yaxis: { labels: { formatter: v => '₹' + fmt(v) } }
-        }).render();
-
-        /* PO Status donut */
-        const statusCounts = {};
-        pos.forEach(p => { statusCounts[p.status] = (statusCounts[p.status] || 0) + 1; });
-        const se = Object.entries(statusCounts);
-        new ApexCharts(document.getElementById('chart-pur-status'), {
-          chart: { type: 'donut', height: 220, toolbar: { show: false }, fontFamily: 'Inter,sans-serif' },
-          series: se.map(e => e[1]), labels: se.map(e => e[0]),
-          colors: ['#94A3B8', '#3B82F6', '#0F1C2E', '#F59E0B', '#22c55e', '#ef4444'],
-          legend: { position: 'bottom', fontSize: '11px' },
-          dataLabels: { enabled: false },
-          plotOptions: { pie: { donut: { size: '65%' } } }
-        }).render();
-      });
-      setTimeout(() => initPageCharts('pur-dashboard'), 20);
-    }
 
     /* ─── PURCHASE ORDERS ─── */
     let poPage = 1; const PO_PER = 15;
