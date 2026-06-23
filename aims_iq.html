@@ -4449,9 +4449,6 @@
           </div>
           <div class="sb-sub-group">
             <div class="nav-item" data-page="products" onclick="navigate('products',this)"><i class="ti ti-box nav-icon"></i><span class="nav-text">Products</span></div>
-            <div class="nav-item" data-page="categories" onclick="navigate('categories',this)"><i class="ti ti-category nav-icon"></i><span class="nav-text">Categories</span></div>
-            <div class="nav-item" data-page="brands" onclick="navigate('brands',this)"><i class="ti ti-badge-tm nav-icon"></i><span class="nav-text">Brands</span></div>
-            <div class="nav-item" data-page="units" onclick="navigate('units',this)"><i class="ti ti-ruler-2 nav-icon"></i><span class="nav-text">Units</span></div>
             <div class="nav-item" data-page="warehouses" onclick="navigate('warehouses',this)"><i class="ti ti-building-warehouse nav-icon"></i><span class="nav-text">Warehouses</span></div>
             <div class="nav-item" data-page="customers" onclick="navigate('customers',this)"><i class="ti ti-users nav-icon"></i><span class="nav-text">Customers</span></div>
             <div class="nav-item" data-page="suppliers" onclick="navigate('suppliers',this)"><i class="ti ti-truck-delivery nav-icon"></i><span class="nav-text">Suppliers</span></div>
@@ -11679,25 +11676,48 @@
                     <input class="form-control" id="fp-hsn" placeholder="853690" />
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Category <span class="req">*</span></label>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                      <label class="form-label" style="margin-bottom:0;">Category <span class="req">*</span></label>
+                      <button class="btn btn-ghost btn-xs" id="fp-cat-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleCategoryField()"><i class="ti ti-plus"></i> Add New</button>
+                    </div>
                     <select class="form-control" id="fp-cat">
                       ${CATEGORIES.map(c=>`<option>${c.name}</option>`).join('')}
                     </select>
+                    <div id="fp-cat-new-wrapper" style="display:none; gap:6px;">
+                      <input class="form-control" id="fp-cat-new" placeholder="Type new category name..." style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewCategoryInline()">Add</button>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Brand</label>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                      <label class="form-label" style="margin-bottom:0;">Brand</label>
+                      <button class="btn btn-ghost btn-xs" id="fp-brand-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleBrandField()"><i class="ti ti-plus"></i> Add New</button>
+                    </div>
                     <select class="form-control" id="fp-brand">
                       ${BRANDS.map(b=>`<option>${b.name}</option>`).join('')}
                     </select>
+                    <div id="fp-brand-new-wrapper" style="display:none; gap:6px;">
+                      <input class="form-control" id="fp-brand-new" placeholder="Type new brand name..." style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewBrandInline()">Add</button>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Unit of Measure <span class="req">*</span></label>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                      <label class="form-label" style="margin-bottom:0;">Unit of Measure <span class="req">*</span></label>
+                      <button class="btn btn-ghost btn-xs" id="fp-unit-toggle" style="color:var(--sky-blue);font-weight:600;" onclick="toggleUnitField()"><i class="ti ti-plus"></i> Add New</button>
+                    </div>
                     <select class="form-control" id="fp-unit">
                       ${UNITS.map(u=>`<option value="${u.abbr}">${u.name} (${u.abbr})</option>`).join('')}
                     </select>
+                    <div id="fp-unit-new-wrapper" style="display:none; gap:6px;">
+                      <input class="form-control" id="fp-unit-new" placeholder="Type new unit (e.g. KG)" style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;" onclick="addNewUnitInline()">Add</button>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Warehouse</label>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px; min-height: 24px;">
+                      <label class="form-label" style="margin-bottom:0;">Warehouse</label>
+                    </div>
                     <select class="form-control" id="fp-wh">
                       ${WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('')}
                     </select>
@@ -11773,108 +11793,9 @@
             </div>
           </div>
 
-          <!-- Add Category Modal -->
-          <div class="modal-wrap" id="modal-category">
-            <div class="modal modal-md">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-category"></i> Add Category</div>
-                <button class="modal-close" onclick="closeModal('modal-category')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body">
-                <div class="form-grid">
-                  <div class="form-group"><label class="form-label">Category Name <span
-                        class="req">*</span></label><input class="form-control" id="fc-name"
-                      placeholder="e.g. Electronics" /></div>
-                  <div class="form-group"><label class="form-label">Icon (Tabler Icon class)</label><input
-                      class="form-control" id="fc-icon" placeholder="ti-cpu" /></div>
-                  <div class="form-group"><label class="form-label">Parent Category</label>
-                    <select class="form-control" id="fc-parent">
-                      <option value="">None (Top Level)</option>${CATEGORIES.map(c=>`<option>${c.name}</option>
-                      `).join('')}
-                    </select>
-                  </div>
-                  <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
-                      id="fc-desc" rows="2" placeholder="Category description…"></textarea></div>
-                  <div class="form-group"><label class="form-label">Status</label><select class="form-control"
-                      id="fc-status">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select></div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-category')">Cancel</button>
-                <button class="btn btn-primary"
-                  onclick="closeModal('modal-category');showToast('success','Saved','Category added successfully.')"><i
-                    class="ti ti-check"></i> Save</button>
-              </div>
-            </div>
-          </div>
 
-          <!-- Add Brand Modal -->
-          <div class="modal-wrap" id="modal-brand">
-            <div class="modal modal-md">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-badge-tm"></i> Add Brand</div>
-                <button class="modal-close" onclick="closeModal('modal-brand')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body">
-                <div class="form-grid">
-                  <div class="form-group"><label class="form-label">Brand Name <span class="req">*</span></label><input
-                      class="form-control" id="fb-name" placeholder="e.g. Siemens" /></div>
-                  <div class="form-group"><label class="form-label">Country of Origin</label><input class="form-control"
-                      id="fb-country" placeholder="e.g. Germany" /></div>
-                  <div class="form-group"><label class="form-label">Website</label><input class="form-control"
-                      id="fb-web" placeholder="https://brand.com" /></div>
-                  <div class="form-group"><label class="form-label">Status</label><select class="form-control"
-                      id="fb-status">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select></div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-brand')">Cancel</button>
-                <button class="btn btn-primary"
-                  onclick="closeModal('modal-brand');showToast('success','Saved','Brand added successfully.')"><i
-                    class="ti ti-check"></i> Save</button>
-              </div>
-            </div>
-          </div>
 
-          <!-- Add Unit Modal -->
-          <div class="modal-wrap" id="modal-unit">
-            <div class="modal modal-sm">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-ruler-2"></i> Add Unit</div>
-                <button class="modal-close" onclick="closeModal('modal-unit')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body">
-                <div class="form-grid">
-                  <div class="form-group"><label class="form-label">Unit Name <span class="req">*</span></label><input
-                      class="form-control" id="fu-name" placeholder="e.g. Kilograms" /></div>
-                  <div class="form-group"><label class="form-label">Abbreviation <span
-                        class="req">*</span></label><input class="form-control" id="fu-abbr" placeholder="e.g. KG" />
-                  </div>
-                  <div class="form-group"><label class="form-label">Type</label>
-                    <select class="form-control" id="fu-type">
-                      <option>Weight</option>
-                      <option>Length</option>
-                      <option>Volume</option>
-                      <option>Count</option>
-                      <option>Area</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-unit')">Cancel</button>
-                <button class="btn btn-primary"
-                  onclick="closeModal('modal-unit');showToast('success','Saved','Unit added successfully.')"><i
-                    class="ti ti-check"></i> Save</button>
-              </div>
-            </div>
-          </div>
+
 
           <!-- Add Variant Modal -->
           <div class="modal-wrap" id="modal-variant">
@@ -14278,6 +14199,165 @@
         </div>
       </div>`;
       openDrawer('drawer-product');
+    }
+
+    function toggleCategoryField() {
+      const select = document.getElementById('fp-cat');
+      const wrapper = document.getElementById('fp-cat-new-wrapper');
+      const input = document.getElementById('fp-cat-new');
+      const btn = document.getElementById('fp-cat-toggle');
+      
+      if (select.style.display !== 'none') {
+        select.style.display = 'none';
+        wrapper.style.display = 'flex';
+        input.focus();
+        btn.innerHTML = '<i class="ti ti-list"></i> Select Existing';
+      } else {
+        select.style.display = 'block';
+        wrapper.style.display = 'none';
+        input.value = '';
+        btn.innerHTML = '<i class="ti ti-plus"></i> Add New';
+      }
+    }
+
+    function addNewCategoryInline() {
+      const input = document.getElementById('fp-cat-new');
+      const select = document.getElementById('fp-cat');
+      const val = input.value.trim();
+      
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a category name.');
+        return;
+      }
+      
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        select.add(opt);
+        select.value = val;
+        CATEGORIES.push({ id: 'CAT-NEW-' + Date.now(), name: val, icon: 'ti-category', color: 'blue' });
+        showToast('success', 'Added', `Category "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Category "${val}" already exists.`);
+      }
+      
+      toggleCategoryField();
+    }
+
+    function toggleBrandField() {
+      const select = document.getElementById('fp-brand');
+      const wrapper = document.getElementById('fp-brand-new-wrapper');
+      const input = document.getElementById('fp-brand-new');
+      const btn = document.getElementById('fp-brand-toggle');
+      
+      if (select.style.display !== 'none') {
+        select.style.display = 'none';
+        wrapper.style.display = 'flex';
+        input.focus();
+        btn.innerHTML = '<i class="ti ti-list"></i> Select Existing';
+      } else {
+        select.style.display = 'block';
+        wrapper.style.display = 'none';
+        input.value = '';
+        btn.innerHTML = '<i class="ti ti-plus"></i> Add New';
+      }
+    }
+
+    function addNewBrandInline() {
+      const input = document.getElementById('fp-brand-new');
+      const select = document.getElementById('fp-brand');
+      const val = input.value.trim();
+      
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a brand name.');
+        return;
+      }
+      
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        select.add(opt);
+        select.value = val;
+        BRANDS.push({ id: 'BRD-NEW-' + Date.now(), name: val, items: 0, val: 0 });
+        showToast('success', 'Added', `Brand "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Brand "${val}" already exists.`);
+      }
+      
+      toggleBrandField();
+    }
+
+    function toggleUnitField() {
+      const select = document.getElementById('fp-unit');
+      const wrapper = document.getElementById('fp-unit-new-wrapper');
+      const input = document.getElementById('fp-unit-new');
+      const btn = document.getElementById('fp-unit-toggle');
+      
+      if (select.style.display !== 'none') {
+        select.style.display = 'none';
+        wrapper.style.display = 'flex';
+        input.focus();
+        btn.innerHTML = '<i class="ti ti-list"></i> Select Existing';
+      } else {
+        select.style.display = 'block';
+        wrapper.style.display = 'none';
+        input.value = '';
+        btn.innerHTML = '<i class="ti ti-plus"></i> Add New';
+      }
+    }
+
+    function addNewUnitInline() {
+      const input = document.getElementById('fp-unit-new');
+      const select = document.getElementById('fp-unit');
+      const val = input.value.trim().toUpperCase();
+      
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a unit abbreviation.');
+        return;
+      }
+      
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toUpperCase() === val) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = `${val} (${val})`;
+        select.add(opt);
+        select.value = val;
+        UNITS.push({ abbr: val, name: val, type: 'Other' });
+        showToast('success', 'Added', `Unit "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Unit "${val}" already exists.`);
+      }
+      
+      toggleUnitField();
     }
 
     function saveProduct() {
