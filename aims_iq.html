@@ -4958,6 +4958,10 @@
               <i class="ti ti-shield-lock nav-icon"></i>
               <span class="nav-text">AMC &amp; Warranty</span>
             </div>
+            <div class="nav-item" data-page="svc-amc-quotes" onclick="navigate('svc-amc-quotes',this)">
+              <i class="ti ti-file-text nav-icon"></i>
+              <span class="nav-text">AMC Quotes</span>
+            </div>
             <div class="nav-item" data-page="svc-visits" onclick="navigate('svc-visits',this)">
               <i class="ti ti-map-pin nav-icon"></i>
               <span class="nav-text">Service Visits</span>
@@ -5218,22 +5222,6 @@
           </div>
         </div>
 
-        <!-- ── AI ASSISTANT ── -->
-        <div class="nav-group">
-          <div class="nav-parent" onclick="toggleGroup(this)">
-            <i class="ti ti-brain nav-icon"></i>
-            <span class="nav-text">AI Assistant</span>
-            <i class="ti ti-chevron-right nav-arrow"></i>
-          </div>
-          <div class="sb-sub-group">
-            <div class="nav-item" data-page="ai-assistant" onclick="navigate('ai-assistant',this)"><i
-                class="ti ti-message-chatbot nav-icon"></i><span class="nav-text">Assistant</span></div>
-            <div class="nav-item" data-page="ai-dashboard" onclick="navigate('ai-dashboard',this)"><i
-                class="ti ti-cpu nav-icon"></i><span class="nav-text">AI Dashboard</span></div>
-            <div class="nav-item" data-page="ai-insights" onclick="navigate('ai-insights',this)"><i
-                class="ti ti-bulb nav-icon"></i><span class="nav-text">AI Insights</span></div>
-          </div>
-        </div>
 
         <!-- Bottom spacer -->
         <div style="height:16px;"></div>
@@ -5285,6 +5273,10 @@
         <!-- Right cluster -->
         <div class="tb-right">
 
+          <!-- Ask AI -->
+          <button onclick="toggleAskAI()" title="Ask AI" style="display:flex;align-items:center;gap:6px;background:#E53935;color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:background .2s;" onmouseover="this.style.background='#C62828'" onmouseout="this.style.background='#E53935'">
+            <i class="ti ti-sparkles" style="font-size:13px;"></i> Ask AI
+          </button>
 
           <!-- Fullscreen -->
           <button class="tb-icon-btn" title="Fullscreen" onclick="toggleFullscreen()">
@@ -10448,6 +10440,53 @@
             </div>
           </div>
 
+          <!-- ── SERVICE: AMC QUOTES ──────────────────────────── -->
+          <div class="page" id="page-svc-amc-quotes">
+            <div class="page-header">
+              <div>
+                <div class="page-title">AMC Quotes</div>
+                <div class="page-sub">Generate and track annual maintenance contract quotations</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-primary" onclick="openAmcQuoteModal()"><i class="ti ti-file-plus"></i> Generate AMC Quote</button>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="amcq-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-file-text"></i> AMC Quotations <span class="badge badge-blue no-dot ml-2" id="amcq-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="amcq-search" type="text" placeholder="Search quote #, customer…" oninput="filterAmcQuotes()"></div>
+                  <select class="form-control" style="width:160px;" id="amcq-approval-filter" onchange="filterAmcQuotes()">
+                    <option value="">All Approvals</option>
+                    <option>Sales</option>
+                    <option>Manager</option>
+                    <option>MD</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Quote #</th>
+                      <th>Customer</th>
+                      <th>Scope</th>
+                      <th>Coverage</th>
+                      <th>Frequency</th>
+                      <th>Annual Value</th>
+                      <th>Validity</th>
+                      <th>Approval Level</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="amcq-tbody"></tbody>
+                </table>
+              </div>
+              <div id="amcq-pagination"></div>
+            </div>
+          </div>
+
           <!-- ── SERVICE: VISITS ─────────────────────────────── -->
           <div class="page" id="page-svc-visits">
             <div class="page-header">
@@ -12081,6 +12120,103 @@
             </div>
           </div>
 
+          <!-- AMC Quote Modal -->
+          <div class="modal-wrap" id="modal-amcq">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-plus" style="color:#C9A84C;"></i> <span id="amcq-modal-title">Generate AMC Quote</span></div>
+                <button class="modal-close" onclick="closeModal('modal-amcq')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div style="font-size:11px;color:#6A88A8;margin-bottom:14px;">Quote #: <b id="amcq-modal-code" style="color:#0A1830;"></b></div>
+                <div class="form-grid-2">
+                  <div class="form-group" style="grid-column:span 2;">
+                    <label class="form-label">Customer <span style="color:var(--red);">*</span></label>
+                    <select class="form-control" id="amcq-modal-customer">
+                      <option value="">— Select Customer —</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-grid-2">
+                  <div class="form-group" style="grid-column:span 2;">
+                    <label class="form-label">Coverage / Equipment Scope <span style="color:var(--red);">*</span></label>
+                    <input class="form-control" id="amcq-modal-scope" type="text" placeholder="e.g. UPS systems, Welding equipment, HVAC units">
+                  </div>
+                </div>
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Annual Value (₹) <span style="color:var(--red);">*</span></label>
+                    <input class="form-control" id="amcq-modal-value" type="number" placeholder="e.g. 125000" min="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Validity Date <span style="color:var(--red);">*</span></label>
+                    <input class="form-control" id="amcq-modal-validity" type="date">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Coverage Type</label>
+                    <select class="form-control" id="amcq-modal-coverage">
+                      <option>Comprehensive</option>
+                      <option>Parts Only</option>
+                      <option>Labour Only</option>
+                      <option>Preventive Only</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Visit Frequency</label>
+                    <select class="form-control" id="amcq-modal-frequency">
+                      <option>Quarterly</option>
+                      <option>Bi-annual</option>
+                      <option>Monthly</option>
+                      <option>Annual</option>
+                      <option>On-call</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Approval Level</label>
+                    <select class="form-control" id="amcq-modal-approval">
+                      <option value="Sales">Sales</option>
+                      <option value="Manager">Manager</option>
+                      <option value="MD">MD</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Scope Notes / Terms</label>
+                  <textarea class="form-control" id="amcq-modal-notes" rows="3" placeholder="Describe the AMC scope, SLAs, exclusions…"></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-amcq')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAmcQuote()"><i class="ti ti-device-floppy"></i> Save Quote</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AMC Quote View Modal -->
+          <div class="modal-wrap" id="modal-amcq-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-text" style="color:#C9A84C;"></i> <span id="vamcq-title">AMC Quote</span></div>
+                <button class="modal-close" onclick="closeModal('modal-amcq-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" id="vamcq-kpi"></div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div>
+                  </div>
+                  <div class="card-body" style="padding:16px;">
+                    <div class="detail-grid" id="vamcq-info"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-amcq-view')">Close</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing AMC quote…')"><i class="ti ti-printer"></i> Print</button>
+              </div>
+            </div>
+          </div>
+
           <!-- New Sales Order -->
           <div class="modal-wrap" id="modal-sal-order">
             <div class="modal modal-lg">
@@ -13284,6 +13420,7 @@
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
       // AMC & Warranty
       'svc-amc': { title: 'AMC & Warranty', crumbs: ['Service', 'AMC'], module: 'service' },
+      'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
       // Service Management (Extended)
       'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
       'svc-feedback': { title: 'Service Feedback', crumbs: ['Service', 'Feedback'], module: 'service' },
@@ -15588,6 +15725,7 @@
       once('sal-buyback', initSalBuyback);
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
+      once('svc-amc-quotes', initAmcQuotesPage);
       once('svc-visits', initSvcVisits);
       once('svc-feedback', initSvcFeedback);
       once('svc-rca', initSvcRCA);
@@ -20922,6 +21060,159 @@
       const atbody = document.getElementById('svc-amc-renew-tbody');
       atbody.innerHTML = `<tr><td>AMC-2026-001</td><td>Reliance Ind.</td><td>25 May 2026</td><td>₹45,000</td></tr>`;
     }
+    /* ── AMC QUOTES ── */
+    let amcqData = [];
+    let amcqFiltered = [];
+    let amcqPage = 1;
+    const AMCQ_PER = 15;
+    let _amcqSeq = 46;
+    const AMCQ_APPROVAL_CLS = { Sales: 'blue', Manager: 'amber', MD: 'green' };
+
+    function initAmcQuotesPage() {
+      if (!amcqData.length) {
+        const customers = DB.customers || [];
+        const coverages = ['Comprehensive', 'Parts Only', 'Labour Only', 'Preventive Only'];
+        const frequencies = ['Quarterly', 'Bi-annual', 'Monthly', 'Annual', 'On-call'];
+        const approvals = ['Sales', 'Sales', 'Manager', 'Manager', 'MD'];
+        const scopes = ['UPS & Power systems', 'HVAC & Cooling units', 'Welding & Fabrication equipment', 'Electrical panels & switchgear', 'Compressors & pneumatic tools', 'Gensets & diesel equipment'];
+        amcqData = Array.from({ length: 20 }, (_, i) => ({
+          id: `AMC/Q/2026/${45 - i}`,
+          customer: spick(customers).name,
+          scope: spick(scopes),
+          coverage: spick(coverages),
+          frequency: spick(frequencies),
+          value: si(30000, 250000),
+          validity: new Date(Date.now() + si(15, 90) * 86400000).toISOString().slice(0, 10),
+          approval: spick(approvals),
+          notes: '',
+        }));
+        _amcqSeq = 46;
+      }
+      const pending = amcqData.filter(q => q.approval === 'Sales').length;
+      const manager = amcqData.filter(q => q.approval === 'Manager').length;
+      const approved = amcqData.filter(q => q.approval === 'MD').length;
+      const totalVal = amcqData.reduce((s, q) => s + q.value, 0);
+      const kpi = document.getElementById('amcq-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Total Quotes</div><div class="kpi-val">${amcqData.length}</div></div><div class="kpi-icon gold"><i class="ti ti-file-text"></i></div></div><div class="kpi-sub neutral">All AMC quotes</div></div>
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">At Sales Level</div><div class="kpi-val">${pending}</div></div><div class="kpi-icon blue"><i class="ti ti-clock"></i></div></div><div class="kpi-sub neutral">Awaiting manager</div></div>
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">At Manager Level</div><div class="kpi-val">${manager}</div></div><div class="kpi-icon amber"><i class="ti ti-user-check"></i></div></div><div class="kpi-sub warn">Awaiting MD</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">MD Approved</div><div class="kpi-val">${approved}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">₹${fmt(totalVal)}</div></div>`;
+      /* populate customer dropdown */
+      const custSel = document.getElementById('amcq-modal-customer');
+      if (custSel && custSel.options.length === 1) (DB.customers || []).forEach(c => custSel.add(new Option(c.name, c.name)));
+      amcqFiltered = [...amcqData];
+      const sc = document.getElementById('amcq-count'); if (sc) sc.textContent = amcqData.length;
+      renderAmcQuoteTable();
+    }
+
+    function filterAmcQuotes() {
+      const search = (document.getElementById('amcq-search')?.value || '').toLowerCase();
+      const appr = document.getElementById('amcq-approval-filter')?.value || '';
+      amcqFiltered = amcqData.filter(q => {
+        const ms = !search || q.id.toLowerCase().includes(search) || q.customer.toLowerCase().includes(search);
+        const ma = !appr || q.approval === appr;
+        return ms && ma;
+      });
+      const sc = document.getElementById('amcq-count'); if (sc) sc.textContent = amcqFiltered.length;
+      amcqPage = 1; renderAmcQuoteTable();
+    }
+
+    function renderAmcQuoteTable() {
+      const tbody = document.getElementById('amcq-tbody'); if (!tbody) return;
+      const start = (amcqPage - 1) * AMCQ_PER;
+      const slice = amcqFiltered.slice(start, start + AMCQ_PER);
+      if (!slice.length) { tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state">No AMC quotes found.</div></td></tr>`; return; }
+      tbody.innerHTML = slice.map(q => {
+        const approvalBadges = q.approval === 'Sales'
+          ? `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-gray no-dot">Manager</span> <span class="badge badge-gray no-dot">MD</span>`
+          : q.approval === 'Manager'
+          ? `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-green no-dot">Manager ✓</span> <span class="badge badge-amber no-dot">MD Pending</span>`
+          : `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-green no-dot">Manager ✓</span> <span class="badge badge-green no-dot">MD ✓</span>`;
+        return `
+        <tr style="cursor:pointer;" onclick="viewAmcQuote('${q.id}')">
+          <td><span class="id-cell">${q.id}</span></td>
+          <td><div class="entity-cell"><div class="entity-av gold">${q.customer.charAt(0)}</div><div class="entity-name truncate" style="max-width:120px;">${q.customer}</div></div></td>
+          <td class="text-secondary" style="font-size:12px;max-width:150px;">${q.scope}</td>
+          <td><span class="badge badge-blue no-dot">${q.coverage}</span></td>
+          <td class="text-secondary" style="font-size:12px;">${q.frequency}</td>
+          <td class="amount-cell" style="font-weight:700;">₹${fmt(q.value)}</td>
+          <td class="text-muted" style="font-size:12px;">${fmtDate(q.validity)}</td>
+          <td><div style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></td>
+          <td onclick="event.stopPropagation()">
+            <button class="btn btn-ghost btn-icon-sm" onclick="viewAmcQuote('${q.id}')"><i class="ti ti-eye"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing AMC quote…')"><i class="ti ti-printer"></i></button>
+          </td>
+        </tr>`; }).join('');
+      renderPagination('amcq-pagination', amcqFiltered.length, amcqPage, AMCQ_PER, `function(p){amcqPage=p;renderAmcQuoteTable()}`);
+    }
+
+    function openAmcQuoteModal() {
+      const code = `AMC/Q/2026/${_amcqSeq}`;
+      document.getElementById('amcq-modal-title').textContent = 'Generate AMC Quote';
+      document.getElementById('amcq-modal-code').textContent = code;
+      ['amcq-modal-scope','amcq-modal-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = '';
+      const dateEl = document.getElementById('amcq-modal-validity'); if (dateEl) dateEl.value = '';
+      const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = '';
+      openModal('modal-amcq');
+    }
+
+    function saveAmcQuote() {
+      const customer = document.getElementById('amcq-modal-customer')?.value;
+      const scope = document.getElementById('amcq-modal-scope')?.value.trim();
+      const value = parseFloat(document.getElementById('amcq-modal-value')?.value) || 0;
+      const validity = document.getElementById('amcq-modal-validity')?.value;
+      if (!customer) { showToast('error', 'Validation', 'Please select a customer.'); return; }
+      if (!scope) { showToast('error', 'Validation', 'Coverage / Equipment Scope is required.'); return; }
+      if (!value) { showToast('error', 'Validation', 'Annual Value is required.'); return; }
+      if (!validity) { showToast('error', 'Validation', 'Validity Date is required.'); return; }
+      const newQ = {
+        id: `AMC/Q/2026/${_amcqSeq++}`,
+        customer,
+        scope,
+        coverage: document.getElementById('amcq-modal-coverage')?.value || 'Comprehensive',
+        frequency: document.getElementById('amcq-modal-frequency')?.value || 'Quarterly',
+        value,
+        validity,
+        approval: document.getElementById('amcq-modal-approval')?.value || 'Sales',
+        notes: document.getElementById('amcq-modal-notes')?.value.trim() || '',
+      };
+      amcqData.unshift(newQ);
+      amcqFiltered = [...amcqData];
+      closeModal('modal-amcq');
+      showToast('success', 'AMC Quote', `Quote ${newQ.id} generated successfully.`);
+      renderAmcQuoteTable();
+      const sc = document.getElementById('amcq-count'); if (sc) sc.textContent = amcqData.length;
+    }
+
+    function viewAmcQuote(id) {
+      const q = amcqData.find(x => x.id === id); if (!q) return;
+      document.getElementById('vamcq-title').textContent = q.id;
+      const approvalBadges = q.approval === 'Sales'
+        ? `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-gray no-dot">Manager</span> <span class="badge badge-gray no-dot">MD</span>`
+        : q.approval === 'Manager'
+        ? `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-green no-dot">Manager ✓</span> <span class="badge badge-amber no-dot">MD Pending</span>`
+        : `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-green no-dot">Manager ✓</span> <span class="badge badge-green no-dot">MD ✓</span>`;
+      const kpi = document.getElementById('vamcq-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-label">Annual Value</div><div class="kpi-val">₹${fmt(q.value)}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Coverage</div><div class="kpi-val" style="font-size:13px;">${q.coverage}</div></div>
+        <div class="kpi-card ${AMCQ_APPROVAL_CLS[q.approval] || 'gray'}"><div class="kpi-label">Approval Level</div><div class="kpi-val" style="font-size:13px;">${q.approval}</div></div>`;
+      const info = document.getElementById('vamcq-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Quote #</div><div class="detail-val">${q.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${q.customer}</div></div>
+        <div class="detail-row"><div class="detail-label">Scope</div><div class="detail-val">${q.scope}</div></div>
+        <div class="detail-row"><div class="detail-label">Coverage Type</div><div class="detail-val">${q.coverage}</div></div>
+        <div class="detail-row"><div class="detail-label">Visit Frequency</div><div class="detail-val">${q.frequency}</div></div>
+        <div class="detail-row"><div class="detail-label">Annual Value</div><div class="detail-val" style="font-weight:700;color:var(--navy);">₹${fmt(q.value)}</div></div>
+        <div class="detail-row"><div class="detail-label">Validity</div><div class="detail-val">${fmtDate(q.validity)}</div></div>
+        <div class="detail-row"><div class="detail-label">Approval Status</div><div class="detail-val" style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></div>
+        ${q.notes ? `<div class="detail-row"><div class="detail-label">Notes</div><div class="detail-val">${q.notes}</div></div>` : ''}`;
+      openModal('modal-amcq-view');
+    }
+
     function initSvcVisits() {
       const tbody = document.getElementById('svc-visits-tbody'); if (!tbody) return;
       tbody.innerHTML = Array.from({ length: 8 }, (_, i) => `
@@ -21607,6 +21898,138 @@
       background: #EEF4FF;
     }
   </style>
+
+<!-- ── ASK AI CHAT PANEL ── -->
+<div id="ask-ai-overlay" onclick="closeAskAI()" style="display:none;position:fixed;inset:0;z-index:2000;"></div>
+<div id="ask-ai-panel" style="display:none;position:fixed;top:calc(var(--topbar-h) + 8px);right:16px;width:340px;
+     height:calc(100vh - var(--topbar-h) - 24px);max-height:560px;
+     background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(10,24,48,.26);
+     z-index:2001;flex-direction:column;overflow:hidden;">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-bottom:1px solid #F0F2F5;">
+    <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#E53935,#B71C1C);
+         display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <i class="ti ti-sparkles" style="color:#fff;font-size:16px;"></i>
+    </div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:13px;font-weight:700;color:#0A1830;">AIMS IQ AI</div>
+      <div style="font-size:11px;color:#6A88A8;">Your intelligent ERP assistant</div>
+    </div>
+    <button onclick="closeAskAI()" style="background:none;border:none;cursor:pointer;color:#8AA0B8;font-size:18px;padding:2px;line-height:1;"><i class="ti ti-x"></i></button>
+  </div>
+
+  <!-- Messages -->
+  <div id="askai-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;min-height:0;">
+    <!-- Initial AI message -->
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E53935,#B71C1C);
+           display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+        <i class="ti ti-sparkles" style="color:#fff;font-size:12px;"></i>
+      </div>
+      <div style="background:#F4F6FA;border-radius:0 12px 12px 12px;padding:10px 14px;max-width:240px;">
+        <div style="font-size:12px;color:#0A1830;line-height:1.5;">Hi! I'm AIMS IQ AI. I can help you with sales orders, inventory levels, customer data, reports, and more. How can I help?</div>
+      </div>
+    </div>
+
+    <!-- Suggested questions -->
+    <div>
+      <div style="font-size:10px;font-weight:700;color:#8AA0B8;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;">Suggested Questions</div>
+      <div style="display:flex;flex-direction:column;gap:6px;" id="askai-suggestions">
+        <button onclick="askAIQuestion(this)" style="text-align:left;background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:8px 12px;font-size:12px;color:#2A4060;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='#fff'">What are today's pending sales orders?</button>
+        <button onclick="askAIQuestion(this)" style="text-align:left;background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:8px 12px;font-size:12px;color:#2A4060;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='#fff'">Show low stock items</button>
+        <button onclick="askAIQuestion(this)" style="text-align:left;background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:8px 12px;font-size:12px;color:#2A4060;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='#fff'">Which customers have overdue invoices?</button>
+        <button onclick="askAIQuestion(this)" style="text-align:left;background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:8px 12px;font-size:12px;color:#2A4060;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#F4F6FA'" onmouseout="this.style.background='#fff'">Summarize this month's revenue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div style="padding:12px 14px;border-top:1px solid #F0F2F5;background:#fff;display:flex;gap:8px;align-items:flex-end;">
+    <input id="askai-input" type="text" placeholder="Ask a question…"
+      style="flex:1;border:1.5px solid #E4E7EC;border-radius:20px;padding:9px 14px;font-size:12px;color:#0A1830;outline:none;resize:none;background:#FAFBFC;transition:border .15s;"
+      onfocus="this.style.border='1.5px solid #E53935'" onblur="this.style.border='1.5px solid #E4E7EC'"
+      onkeydown="if(event.key==='Enter')sendAIMessage()">
+    <button onclick="sendAIMessage()" style="width:34px;height:34px;border-radius:50%;background:#E53935;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;" onmouseover="this.style.background='#B71C1C'" onmouseout="this.style.background='#E53935'">
+      <i class="ti ti-send" style="color:#fff;font-size:13px;"></i>
+    </button>
+  </div>
+  <div style="text-align:center;font-size:10px;color:#B0BEC5;padding:4px 0 8px;">AIMS IQ AI can make mistakes. Verify critical data.</div>
+</div>
+
+<style>
+  #ask-ai-panel { display:none; }
+  #ask-ai-panel.open { display:flex !important; }
+</style>
+
+<script>
+  function toggleAskAI() {
+    const panel = document.getElementById('ask-ai-panel');
+    const overlay = document.getElementById('ask-ai-overlay');
+    const isOpen = panel.classList.contains('open');
+    if (isOpen) { closeAskAI(); } else {
+      panel.classList.add('open');
+      overlay.style.display = 'block';
+      document.getElementById('askai-input').focus();
+    }
+  }
+  function closeAskAI() {
+    document.getElementById('ask-ai-panel').classList.remove('open');
+    document.getElementById('ask-ai-overlay').style.display = 'none';
+  }
+  function askAIQuestion(btn) {
+    document.getElementById('askai-input').value = btn.textContent;
+    sendAIMessage();
+  }
+  function sendAIMessage() {
+    const input = document.getElementById('askai-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    const msgs = document.getElementById('askai-messages');
+    /* Hide suggestions after first message */
+    const sugg = document.getElementById('askai-suggestions');
+    if (sugg) sugg.closest('div').style.display = 'none';
+    /* User bubble */
+    msgs.innerHTML += `
+      <div style="display:flex;justify-content:flex-end;">
+        <div style="background:#E53935;color:#fff;border-radius:12px 0 12px 12px;padding:9px 14px;max-width:260px;font-size:12px;line-height:1.5;">${text}</div>
+      </div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    /* Typing indicator */
+    const typingId = 'askai-typing-' + Date.now();
+    msgs.innerHTML += `
+      <div id="${typingId}" style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E53935,#B71C1C);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+          <i class="ti ti-sparkles" style="color:#fff;font-size:12px;"></i>
+        </div>
+        <div style="background:#F4F6FA;border-radius:0 12px 12px 12px;padding:10px 14px;">
+          <span style="font-size:20px;color:#8AA0B8;letter-spacing:2px;">···</span>
+        </div>
+      </div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+    /* Simulated AI reply */
+    const replies = {
+      'pending sales orders': `There are <b>${(DB && DB.salesOrders) ? DB.salesOrders.filter(o=>['Pending','Draft'].includes(o.status)).length : 8}</b> pending sales orders today. Would you like me to navigate there?`,
+      'low stock': `I found <b>${(DB && DB.products) ? DB.products.filter(p=>p.stock<p.minStock).length : 12}</b> items below minimum stock level. You can view them in <b>Inventory → Low Stock</b>.`,
+      'overdue': `<b>${(DB && DB.invoices) ? DB.invoices.filter(i=>i.status==='Overdue').length : 7}</b> customers have overdue invoices totalling ${(DB && DB.invoices) ? '₹'+fmt(DB.invoices.filter(i=>i.status==='Overdue').reduce((s,i)=>s+i.balance,0)) : '₹2,34,500'}.`,
+      'revenue': `This month's total invoiced revenue is <b>${(DB && DB.invoices) ? '₹'+fmt(DB.invoices.reduce((s,i)=>s+i.total,0)) : '₹48,20,000'}</b>. Collected: ${(DB && DB.invoices) ? '₹'+fmt(DB.invoices.reduce((s,i)=>s+i.paid,0)) : '₹36,50,000'}.`,
+    };
+    const key = Object.keys(replies).find(k => text.toLowerCase().includes(k));
+    const answer = key ? replies[key] : `I understand you're asking about "<b>${text}</b>". Let me check the data — this feature connects to live ERP data in the full version.`;
+    setTimeout(() => {
+      const el = document.getElementById(typingId);
+      if (el) el.outerHTML = `
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#E53935,#B71C1C);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <i class="ti ti-sparkles" style="color:#fff;font-size:12px;"></i>
+          </div>
+          <div style="background:#F4F6FA;border-radius:0 12px 12px 12px;padding:10px 14px;max-width:240px;font-size:12px;color:#0A1830;line-height:1.6;">${answer}</div>
+        </div>`;
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 900);
+  }
+</script>
 
 </body>
 
