@@ -21542,7 +21542,6 @@
         <td class="text-secondary" style="font-size:12px;">${o.assignedTo}</td>
         <td onclick="event.stopPropagation()">
           <button class="btn btn-ghost btn-icon-sm" title="Create Sales Quote" onclick="createQuoteFromOpportunity('${o.id}')"><i class="ti ti-file-invoice" style="color:var(--blue);"></i></button>
-          <button class="btn btn-ghost btn-icon-sm" title="Mark Won" onclick="showToast('success','Won','Opportunity marked Closed Won!')"><i class="ti ti-trophy" style="color:var(--green);"></i></button>
         </td>
       </tr>`}).join('');
       renderPagination('crm-opp-pagination', cOppFiltered.length, cOppPage, COPP_PER, `function(p){cOppPage=p;renderOpportunitiesTable()}`);
