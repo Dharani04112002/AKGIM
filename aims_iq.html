@@ -13333,8 +13333,8 @@
                       <option value="">— Select —</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Amount (₹) *</label><input class="form-control"
-                      type="number" id="mfrec-amount" placeholder="0.00"></div>
+                  <div class="form-group"><label class="form-label">Total Invoice Amount (₹) *</label><input class="form-control"
+                      type="number" id="mfrec-amount" placeholder="0.00" oninput="calcFinAdvPct()"></div>
                   <div class="form-group"><label class="form-label">Receipt Date</label><input class="form-control"
                       type="date" id="mfrec-date"></div>
                   <div class="form-group"><label class="form-label">Method</label>
@@ -13361,6 +13361,24 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="form-group" style="margin-top: 16px;"><label class="form-label">Payment Status</label>
+                  <select class="form-control" id="mfrec-status" onchange="toggleFinAdvanceFields()">
+                    <option value="full">Full Paid</option>
+                    <option value="partial">Partially Paid</option>
+                    <option value="advance">Advance Paid</option>
+                  </select>
+                </div>
+                
+                <div id="mfrec-advance-fields" style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                  <div class="form-group" style="margin-bottom:0;"><label class="form-label">Advance %</label>
+                    <input class="form-control" type="number" id="mfrec-adv-percent" placeholder="e.g. 50" oninput="calcFinAdvAmt()">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;"><label class="form-label">Paid Advance (₹)</label>
+                    <input class="form-control" type="number" id="mfrec-adv-amount" placeholder="0.00" oninput="calcFinAdvPct()">
+                  </div>
+                </div>
+
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-fin-receipt')">Cancel</button>
@@ -14423,8 +14441,23 @@
                     <option value="">— Select Invoice —</option>
                   </select>
                 </div>
-                <div class="form-group"><label class="form-label">Amount (₹)</label><input class="form-control"
-                    type="number" id="mrec-amount" placeholder="0.00"></div>
+                <div class="form-group"><label class="form-label">Payment Status</label>
+                  <select class="form-control" id="mrec-status" onchange="toggleAdvanceFields()">
+                    <option value="full">Full Paid</option>
+                    <option value="partial">Partially Paid</option>
+                    <option value="advance">Advance Paid</option>
+                  </select>
+                </div>
+                <div class="form-group"><label class="form-label">Total Invoice Amount (₹)</label><input class="form-control"
+                    type="number" id="mrec-amount" placeholder="0.00" oninput="calcAdvPct()"></div>
+                <div id="mrec-advance-fields" style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group" style="margin-bottom:0;"><label class="form-label">Advance %</label>
+                    <input class="form-control" type="number" id="mrec-adv-percent" placeholder="e.g. 50" oninput="calcAdvAmt()">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;"><label class="form-label">Paid Advance (₹)</label>
+                    <input class="form-control" type="number" id="mrec-adv-amount" placeholder="0.00" oninput="calcAdvPct()">
+                  </div>
+                </div>
                 <div class="form-group"><label class="form-label">Receipt Date</label><input class="form-control"
                     type="date" id="mrec-date"></div>
                 <div class="form-group"><label class="form-label">Payment Method</label>
@@ -20074,12 +20107,50 @@
       if (!entries.length) tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state" style="padding:32px;"><i class="ti ti-file-off" style="font-size:28px;color:var(--tx-3);"></i><div class="empty-title">No transactions found</div></div></td></tr>`;
     }
 
+    function toggleAdvanceFields() {
+      const status = document.getElementById('mrec-status').value;
+      const advFields = document.getElementById('mrec-advance-fields');
+      if (status === 'advance') {
+        advFields.style.display = 'grid';
+      } else {
+        advFields.style.display = 'none';
+        document.getElementById('mrec-adv-percent').value = '';
+        document.getElementById('mrec-adv-amount').value = '';
+      }
+    }
+
+    function calcAdvAmt() {
+      const total = parseFloat(document.getElementById('mrec-amount').value) || 0;
+      const pct = parseFloat(document.getElementById('mrec-adv-percent').value) || 0;
+      if (total > 0 && pct >= 0) {
+        document.getElementById('mrec-adv-amount').value = (total * (pct / 100)).toFixed(2);
+      }
+    }
+
+    function calcAdvPct() {
+      const total = parseFloat(document.getElementById('mrec-amount').value) || 0;
+      const adv = parseFloat(document.getElementById('mrec-adv-amount').value) || 0;
+      if (total > 0 && adv >= 0) {
+        document.getElementById('mrec-adv-percent').value = ((adv / total) * 100).toFixed(2);
+      }
+    }
+
     function saveReceipt() {
       const cust = document.getElementById('mrec-cust')?.value;
       const amt = document.getElementById('mrec-amount')?.value;
+      const status = document.getElementById('mrec-status')?.value;
       if (!cust || !amt) { showToast('error', 'Validation', 'Select customer and enter amount.'); return; }
+      
+      let msg = `₹${fmt(parseFloat(amt))} receipt recorded.`;
+      if (status === 'advance') {
+        const advAmt = document.getElementById('mrec-adv-amount')?.value;
+        msg = `₹${fmt(parseFloat(advAmt || 0))} advance recorded against ₹${fmt(parseFloat(amt))} total.`;
+      } else if (status === 'partial') {
+        msg = `Partial payment of ₹${fmt(parseFloat(amt))} recorded.`;
+      }
+      
       closeModal('modal-sal-receipt');
-      showToast('success', 'Receipt Saved', `₹${fmt(parseFloat(amt))} receipt recorded.`);
+      showToast('success', 'Receipt Saved', msg);
     }
 
     /* Helper — populate all sales modal dropdowns once */
@@ -20242,12 +20313,50 @@
       renderPagination('frec-pagination', frecFiltered.length, frecPage, FREC_PER, `function(p){frecPage=p;renderReceiptsTable()}`);
     }
 
+    function toggleFinAdvanceFields() {
+      const status = document.getElementById('mfrec-status').value;
+      const advFields = document.getElementById('mfrec-advance-fields');
+      if (status === 'advance') {
+        advFields.style.display = 'grid';
+      } else {
+        advFields.style.display = 'none';
+        document.getElementById('mfrec-adv-percent').value = '';
+        document.getElementById('mfrec-adv-amount').value = '';
+      }
+    }
+
+    function calcFinAdvAmt() {
+      const total = parseFloat(document.getElementById('mfrec-amount').value) || 0;
+      const pct = parseFloat(document.getElementById('mfrec-adv-percent').value) || 0;
+      if (total > 0 && pct >= 0) {
+        document.getElementById('mfrec-adv-amount').value = (total * (pct / 100)).toFixed(2);
+      }
+    }
+
+    function calcFinAdvPct() {
+      const total = parseFloat(document.getElementById('mfrec-amount').value) || 0;
+      const adv = parseFloat(document.getElementById('mfrec-adv-amount').value) || 0;
+      if (total > 0 && adv >= 0) {
+        document.getElementById('mfrec-adv-percent').value = ((adv / total) * 100).toFixed(2);
+      }
+    }
+
     function saveFinReceipt() {
       const party = document.getElementById('mfrec-party')?.value;
       const amt = document.getElementById('mfrec-amount')?.value;
+      const status = document.getElementById('mfrec-status')?.value;
       if (!party || !amt) { showToast('error', 'Validation', 'Select customer and enter amount.'); return; }
+      
+      let msg = `₹${fmt(parseFloat(amt))} receipt recorded.`;
+      if (status === 'advance') {
+        const advAmt = document.getElementById('mfrec-adv-amount')?.value;
+        msg = `₹${fmt(parseFloat(advAmt || 0))} advance recorded against ₹${fmt(parseFloat(amt))} total.`;
+      } else if (status === 'partial') {
+        msg = `Partial payment of ₹${fmt(parseFloat(amt))} recorded.`;
+      }
+      
       closeModal('modal-fin-receipt');
-      showToast('success', 'Receipt Recorded', `₹${fmt(parseFloat(amt))} receipt saved.`);
+      showToast('success', 'Receipt Recorded', msg);
     }
 
     /* ─── EXPENSES ─── */
