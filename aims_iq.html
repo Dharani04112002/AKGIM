@@ -7677,32 +7677,9 @@
             <i class="ti ti-chevron-right nav-arrow"></i>
           </div>
           <div class="sb-sub-group">
-            <div class="nav-item" data-page="warehouses" onclick="navigate('warehouses',this)">
-              <i class="ti ti-building-warehouse nav-icon"></i>
-              <span class="nav-text">Warehouses</span>
-            </div>
-
             <div class="nav-item" data-page="inv-stock" onclick="navigate('inv-stock',this)">
               <i class="ti ti-list-details nav-icon"></i>
               <span class="nav-text">Stock List</span>
-            </div>
-            <div class="nav-item" data-page="inv-ledger" onclick="navigate('inv-ledger',this)">
-              <i class="ti ti-book nav-icon"></i>
-              <span class="nav-text">Stock Movements</span>
-            </div>
-            <div class="nav-item" data-page="inv-adjustment" onclick="navigate('inv-adjustment',this)">
-              <i class="ti ti-adjustments nav-icon"></i>
-              <span class="nav-text">Stock Adjustment</span>
-            </div>
-            <div class="nav-item" data-page="inv-transfer" onclick="navigate('inv-transfer',this)">
-              <i class="ti ti-transfer nav-icon"></i>
-              <span class="nav-text">Stock Transfer</span>
-            </div>
-
-
-            <div class="nav-item" data-page="inv-lowstock" onclick="navigate('inv-lowstock',this)">
-              <i class="ti ti-alert-triangle nav-icon"></i>
-              <span class="nav-text">Low Stock Report</span>
             </div>
             <div class="nav-item" data-page="sal-buyback" onclick="navigate('sal-buyback',this)">
               <i class="ti ti-refresh nav-icon"></i>
@@ -9376,8 +9353,8 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="openModal('modal-inv-adjustment')"><i class="ti ti-plus"></i>
-                  Add Stock</button>
+                <button class="btn btn-primary" onclick="showToast('success', 'Sync', 'Synchronising with Tally...')"><i class="ti ti-refresh"></i>
+                  Sync with Tally</button>
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="stock-kpi"></div>
