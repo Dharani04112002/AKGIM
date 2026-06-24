@@ -5324,6 +5324,48 @@
     .amob-photo-zone span { font-size: 13px; font-weight: 700; color: #1479C9; display: block; }
     .amob-photo-zone small { font-size: 11px; color: #64748B; margin-top: 3px; display: block; }
 
+    /* ── QUOTATION VERSIONING ── */
+    .quo-ver-badge { display:inline-flex; align-items:center; padding:2px 7px; border-radius:20px; font-size:10px; font-weight:700; background:#EFF6FF; color:#1479C9; border:1px solid #BFDBFE; margin-left:5px; vertical-align:middle; line-height:1; }
+    .quo-ver-badge.multi { background:#FEF3C7; color:#B45309; border-color:#FDE68A; }
+    .quo-ver-badge.v3up { background:#FDF4FF; color:#7C3AED; border-color:#E9D5FF; }
+    .quo-revise-banner { background:linear-gradient(90deg,#EFF6FF,#F0FDF4); border:1px solid #BFDBFE; border-radius:10px; padding:10px 14px; margin-bottom:16px; display:none; font-size:12px; color:#0F172A; }
+    .quo-revise-banner b { color:#1479C9; }
+    /* tabs in view modal */
+    .quo-tabs { display:flex; gap:0; border-bottom:2px solid #E2E8F0; margin-bottom:16px; }
+    .quo-tab { padding:10px 20px; font-size:13px; font-weight:600; color:#64748B; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:color .15s,border-color .15s; display:flex; align-items:center; gap:6px; }
+    .quo-tab.active { color:#1479C9; border-bottom-color:#1479C9; }
+    .quo-tab-pane { display:none; }
+    .quo-tab-pane.active { display:block; }
+    /* version history timeline */
+    .quo-hist-wrap { padding:4px 0 8px; }
+    .quo-ver-timeline { position:relative; padding-left:28px; }
+    .quo-ver-timeline::before { content:''; position:absolute; left:10px; top:6px; bottom:6px; width:2px; background:#E2E8F0; border-radius:2px; }
+    .quo-ver-item { position:relative; margin-bottom:14px; }
+    .quo-ver-dot { position:absolute; left:-22px; top:14px; width:12px; height:12px; border-radius:50%; background:#94A3B8; border:2.5px solid #fff; box-shadow:0 0 0 2px #E2E8F0; z-index:1; }
+    .quo-ver-dot.current { background:#16A34A; box-shadow:0 0 0 2px #BBF7D0; }
+    .quo-ver-dot.mid { background:#1479C9; box-shadow:0 0 0 2px #BFDBFE; }
+    .quo-ver-card { background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:12px 14px; transition:border-color .15s; }
+    .quo-ver-card.current-ver { background:#F0FDF4; border-color:#86EFAC; }
+    .quo-ver-card:hover { border-color:#BFDBFE; }
+    .quo-delta-pill { display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; }
+    .quo-delta-up { background:#DCFCE7; color:#16A34A; }
+    .quo-delta-dn { background:#FEE2E2; color:#DC2626; }
+    .quo-delta-neu { background:#F1F5F9; color:#64748B; }
+    /* activity log */
+    .quo-act-log { border-left:2px solid #E2E8F0; padding-left:16px; margin-top:6px; }
+    .quo-act-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+    .quo-act-icon { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-left:-22px; border:2px solid #fff; font-size:11px; }
+    .quo-act-icon.create { background:#DBEAFE; color:#1479C9; }
+    .quo-act-icon.send { background:#D1FAE5; color:#059669; }
+    .quo-act-icon.revise { background:#FEF3C7; color:#B45309; }
+    .quo-act-icon.sys { background:#F1F5F9; color:#64748B; }
+    /* version items compare table */
+    .quo-cmp-tbl { width:100%; font-size:11px; border-collapse:collapse; }
+    .quo-cmp-tbl th { background:#F1F5F9; padding:6px 10px; text-align:left; font-weight:700; color:#374151; border-bottom:1px solid #E2E8F0; }
+    .quo-cmp-tbl td { padding:6px 10px; border-bottom:1px solid #F1F5F9; color:#0F172A; }
+    .quo-cmp-tbl tr:last-child td { border-bottom:none; }
+    .quo-cmp-changed { background:#FFFBEB; }
+
     /* ── PHOTO PREVIEW ── */
     .amob-photo-preview {
       border-radius: 14px; overflow: hidden;
@@ -8253,6 +8295,7 @@
                       <th>Customer</th>
                       <th>Date</th>
                       <th>Valid Till</th>
+                      <th>Ver</th>
                       <th>Items</th>
                       <th>Subtotal</th>
                       <th>GST</th>
@@ -13486,10 +13529,14 @@
           <div class="modal-wrap" id="modal-sal-quotation">
             <div class="modal modal-xl">
               <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-file-text"></i> New Quotation</div>
+                <div class="modal-title" id="mquo-modal-title"><i class="ti ti-file-text"></i> New Quotation</div>
                 <button class="modal-close" onclick="closeModal('modal-sal-quotation')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
+                <div class="quo-revise-banner" id="mquo-revise-banner">
+                  <i class="ti ti-git-branch" style="color:#1479C9;margin-right:6px;"></i>
+                  <span id="mquo-revise-banner-text"></span>
+                </div>
                 <div class="form-grid-2 mb-4">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mquo-customer">
@@ -13564,51 +13611,94 @@
 
           <!-- View Quotation -->
           <div class="modal-wrap" id="modal-quo-view">
-            <div class="modal">
+            <div class="modal modal-xl">
               <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-file-text"></i> <span id="vquo-title">Quotation</span></div>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                  <div class="modal-title"><i class="ti ti-file-text"></i> <span id="vquo-title">Quotation</span></div>
+                  <span class="quo-ver-badge" id="vquo-ver-badge" style="font-size:12px;padding:3px 10px;"></span>
+                  <span class="badge" id="vquo-status-badge"></span>
+                </div>
                 <button class="modal-close" onclick="closeModal('modal-quo-view')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;"
-                  id="vquo-kpi"></div>
-                <div class="card mb-4">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-info-circle"></i> Quotation Info</div>
+                <!-- KPI strip -->
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;" id="vquo-kpi"></div>
+                <!-- tabs -->
+                <div class="quo-tabs">
+                  <div class="quo-tab active" id="qtab-details" onclick="quoSwitchTab('details')">
+                    <i class="ti ti-file-description"></i> Details
                   </div>
-                  <div class="card-body" style="padding:16px;">
-                    <div class="detail-grid" id="vquo-info"></div>
+                  <div class="quo-tab" id="qtab-history" onclick="quoSwitchTab('history')">
+                    <i class="ti ti-history"></i> Version History
+                    <span class="badge badge-blue no-dot" id="vquo-ver-count" style="margin-left:4px;font-size:10px;padding:2px 6px;"></span>
                   </div>
                 </div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                <!-- Details pane -->
+                <div class="quo-tab-pane active" id="qpane-details">
+                  <div class="card mb-4">
+                    <div class="card-header">
+                      <div class="card-title"><i class="ti ti-info-circle"></i> Quotation Info</div>
+                    </div>
+                    <div class="card-body" style="padding:16px;">
+                      <div class="detail-grid" id="vquo-info"></div>
+                    </div>
                   </div>
-                  <div class="table-wrap">
-                    <table class="data-tbl">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Product</th>
-                          <th>SKU</th>
-                          <th>Qty</th>
-                          <th>Discount%</th>
-                          <th>Rate (₹)</th>
-                          <th>Amount (₹)</th>
-                        </tr>
-                      </thead>
-                      <tbody id="vquo-items"></tbody>
-                      <tfoot id="vquo-totals"></tfoot>
-                    </table>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                    </div>
+                    <div class="table-wrap">
+                      <table class="data-tbl">
+                        <thead><tr><th>#</th><th>Product</th><th>SKU</th><th>Qty</th><th>Disc%</th><th>Rate (₹)</th><th>Amount (₹)</th></tr></thead>
+                        <tbody id="vquo-items"></tbody>
+                        <tfoot id="vquo-totals"></tfoot>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- History pane -->
+                <div class="quo-tab-pane" id="qpane-history">
+                  <div class="quo-hist-wrap">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+                      <!-- Left: version timeline -->
+                      <div>
+                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                          <i class="ti ti-git-branch" style="color:#1479C9;"></i> Version Timeline
+                        </div>
+                        <div class="quo-ver-timeline" id="vquo-ver-timeline"></div>
+                      </div>
+                      <!-- Right: activity log -->
+                      <div>
+                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                          <i class="ti ti-activity" style="color:#1479C9;"></i> Activity Log
+                        </div>
+                        <div class="quo-act-log" id="vquo-act-log"></div>
+                      </div>
+                    </div>
+                    <!-- Version detail expand area -->
+                    <div id="vquo-ver-detail" style="display:none;margin-top:20px;">
+                      <div class="card">
+                        <div class="card-header">
+                          <div class="card-title" id="vquo-ver-detail-title"><i class="ti ti-file-text"></i> Version Detail</div>
+                          <button class="btn btn-ghost btn-icon-sm" onclick="document.getElementById('vquo-ver-detail').style.display='none'"><i class="ti ti-x"></i></button>
+                        </div>
+                        <div class="table-wrap">
+                          <table class="quo-cmp-tbl" id="vquo-ver-detail-tbl">
+                            <thead><tr><th>#</th><th>Product</th><th>SKU</th><th>Qty</th><th>Disc%</th><th>Rate (₹)</th><th>Amount (₹)</th></tr></thead>
+                            <tbody id="vquo-ver-detail-body"></tbody>
+                            <tfoot id="vquo-ver-detail-foot"></tfoot>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-quo-view')">Close</button>
-                <button class="btn btn-outline" onclick="showToast('default','Print','Printing quotation…')"><i
-                    class="ti ti-printer"></i> Print</button>
-                <button class="btn btn-primary" id="btn-convert-so"><i
-                    class="ti ti-shopping-cart"></i> Convert to SO</button>
+                <button class="btn btn-outline" id="btn-quo-revise"><i class="ti ti-pencil"></i> Revise</button>
+                <button class="btn btn-outline" onclick="showToast('default','Print','Printing quotation…')"><i class="ti ti-printer"></i> Print</button>
+                <button class="btn btn-primary" id="btn-convert-so"><i class="ti ti-shopping-cart"></i> Convert to SO</button>
               </div>
             </div>
           </div>
@@ -16435,19 +16525,65 @@
       const subtotal = items.reduce((s, it) => s + it.amount, 0);
       const tax = Math.round(subtotal * 0.18);
       const total = subtotal + tax;
+      const emp = spick(DB.employees).name;
+      const quoNotes = spick(['Subject to availability', 'Prices valid for 30 days', 'GST extra as applicable', '', '']);
+      const v1 = { version: 1, date: date.toISOString(), items: JSON.parse(JSON.stringify(items)), subtotal, tax, total, status: 'Draft', notes: quoNotes, createdBy: emp, changeNote: 'Initial quotation created' };
       return {
         id: `QUO-2024-${String(idx).padStart(4, '0')}`,
         customerId: cust.id,
         customer: cust.name,
         date: date.toISOString(),
         validTill: validTill.toISOString(),
+        version: 1,
         status: spick(['Draft', 'Sent', 'Accepted', 'Rejected', 'Expired']),
         items, itemCount,
         subtotal, tax, total,
-        notes: spick(['Subject to availability', 'Prices valid for 30 days', 'GST extra as applicable', '', '']),
-        createdBy: spick(DB.employees).name,
+        notes: quoNotes,
+        createdBy: emp,
+        versions: [v1],
+        activity: [{ ts: date.toISOString(), actor: emp, action: 'Created', detail: 'Quotation v1 created' }],
       };
     });
+
+    /* ── inject multi-version demo data into first 5 quotations ── */
+    (function() {
+      const demoRevisions = [
+        { changeNote: 'Revised discount from 5% to 8% on all items — customer negotiated bulk pricing', actor: 'Ravi Kumar', daysAgo: 3, priceDelta: -0.06 },
+        { changeNote: 'Added 2 additional line items per customer requirement — goggles & harness', actor: 'Priya Sharma', daysAgo: 2, priceDelta: 0.22 },
+        { changeNote: 'Payment terms updated from Net 30 to Net 15 after finance approval', actor: 'Amit Joshi', daysAgo: 5, priceDelta: 0 },
+        { changeNote: 'Rate corrected for Siemens 100A breakers — previous rate was ex-works, now DDP', actor: 'Ravi Kumar', daysAgo: 1, priceDelta: 0.09 },
+        { changeNote: 'GST component corrected from 18% to 12% (HSN code reclassification)', actor: 'Priya Sharma', daysAgo: 4, priceDelta: -0.05 },
+      ];
+      DB.quotations.slice(0, 5).forEach((q, qi) => {
+        const rev = demoRevisions[qi];
+        /* v1 already in versions — push v2 */
+        const v2date = new Date(Date.now() - rev.daysAgo * 86400000 + 3600000);
+        const v2items = JSON.parse(JSON.stringify(q.items)).map(it => ({
+          ...it,
+          rate: Math.round(it.rate * (1 + rev.priceDelta)),
+          amount: Math.round(it.qty * it.rate * (1 + rev.priceDelta)),
+        }));
+        const v2sub = v2items.reduce((s, it) => s + it.amount, 0);
+        const v2tax = Math.round(v2sub * 0.18);
+        const v2total = v2sub + v2tax;
+        q.versions.push({ version: 2, date: v2date.toISOString(), items: v2items, subtotal: v2sub, tax: v2tax, total: v2total, status: q.status, notes: q.notes, createdBy: rev.actor, changeNote: rev.changeNote });
+        q.version = 2;
+        q.items = v2items; q.subtotal = v2sub; q.tax = v2tax; q.total = v2total;
+        q.activity.push({ ts: new Date(Date.now() - rev.daysAgo * 86400000 + 1800000).toISOString(), actor: rev.actor, action: 'Sent to Customer', detail: 'v1 shared via email' });
+        q.activity.push({ ts: v2date.toISOString(), actor: rev.actor, action: 'Revised to v2', detail: rev.changeNote });
+        /* first quotation gets v3 as well */
+        if (qi === 0) {
+          const v3date = new Date(Date.now() - 1 * 86400000);
+          const v3items = JSON.parse(JSON.stringify(v2items)).map(it => ({ ...it, qty: it.qty + 5, amount: (it.qty + 5) * it.rate }));
+          const v3sub = v3items.reduce((s, it) => s + it.amount, 0);
+          const v3tax = Math.round(v3sub * 0.18);
+          q.versions.push({ version: 3, date: v3date.toISOString(), items: v3items, subtotal: v3sub, tax: v3tax, total: v3sub + v3tax, status: 'Sent', notes: 'Final revised quantity as per PO draft', createdBy: 'Ravi Kumar', changeNote: 'Quantity increased per customer confirmed PO draft quantities' });
+          q.version = 3; q.items = v3items; q.subtotal = v3sub; q.tax = v3tax; q.total = v3sub + v3tax;
+          q.activity.push({ ts: v3date.toISOString(), actor: 'Ravi Kumar', action: 'Revised to v3', detail: 'Quantity updated per PO draft' });
+          q.activity.push({ ts: new Date(v3date.getTime() + 3600000).toISOString(), actor: 'System', action: 'Email Sent', detail: 'Quotation v3 dispatched to TATA Steel procurement' });
+        }
+      });
+    })();
 
     /* ─────────────────────────────────────────────────────
        SALES ORDERS — 60
@@ -19352,7 +19488,7 @@
        STEP 12 — SALES MODULE JS
        ════════════════════════════════════════════════════════ */
 
-    const QUO_STATUS_CLS = { Draft: 'gray', Sent: 'blue', Accepted: 'green', Rejected: 'red', Expired: 'amber' };
+    const QUO_STATUS_CLS = { Draft: 'gray', Sent: 'blue', Accepted: 'green', Rejected: 'red', Expired: 'amber', Superseded: 'gray' };
     const SO_STATUS_CLS = { Draft: 'gray', Pending: 'amber', Confirmed: 'blue', Processing: 'navy', Shipped: 'sky', Delivered: 'green', Cancelled: 'red' };
     const DN_STATUS_CLS = { Pending: 'amber', Dispatched: 'blue', 'In Transit': 'navy', Delivered: 'green', Returned: 'red' };
 
@@ -19395,9 +19531,16 @@
       const now = new Date();
       tbody.innerHTML = slice.map(q => {
         const expired = new Date(q.validTill) < now && q.status !== 'Accepted' && q.status !== 'Rejected';
+        const ver = q.version || 1;
+        const verCls = ver >= 3 ? 'v3up' : ver >= 2 ? 'multi' : '';
         return `
       <tr style="cursor:pointer;" onclick="viewQuotationDetail('${q.id}')">
-        <td><span class="id-cell">${q.id}</span></td>
+        <td>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="id-cell">${q.id}</span>
+            <span class="quo-ver-badge ${verCls}">v${ver}</span>
+          </div>
+        </td>
         <td>
           <div class="entity-cell">
             <div class="entity-av blue">${q.customer.charAt(0)}</div>
@@ -19406,6 +19549,10 @@
         </td>
         <td class="text-muted" style="font-size:12px;">${fmtDate(q.date)}</td>
         <td class="text-muted" style="font-size:12px;${expired ? 'color:var(--red);font-weight:600;' : ''}">${fmtDate(q.validTill)}</td>
+        <td class="text-center">
+          <span class="quo-ver-badge ${verCls}" style="margin:0;">v${ver}</span>
+          ${ver > 1 ? `<div style="font-size:10px;color:#94A3B8;margin-top:2px;">${ver} revisions</div>` : ''}
+        </td>
         <td class="text-center">${q.itemCount}</td>
         <td class="amount-cell">₹${fmt(q.subtotal)}</td>
         <td class="amount-cell">₹${fmt(q.tax)}</td>
@@ -19413,8 +19560,10 @@
         <td><span class="badge badge-${QUO_STATUS_CLS[q.status] || 'gray'}">${q.status}</span></td>
         <td onclick="event.stopPropagation()">
           <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" onclick="viewQuotationDetail('${q.id}')"><i class="ti ti-eye"></i></button>
-            <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing…')"><i class="ti ti-printer"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="View" onclick="viewQuotationDetail('${q.id}')"><i class="ti ti-eye"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Version History" onclick="viewQuotationDetail('${q.id}','history')"><i class="ti ti-history" style="color:#B45309;"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Revise" onclick="reviseQuotation('${q.id}')"><i class="ti ti-pencil" style="color:#1479C9;"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Print" onclick="showToast('default','Print','Printing…')"><i class="ti ti-printer"></i></button>
             <button class="btn btn-ghost btn-icon-sm" title="Convert to SO" onclick="convertQuoToSO('${q.id}')"><i class="ti ti-shopping-cart"></i></button>
           </div>
         </td>
@@ -19422,41 +19571,157 @@
       renderPagination('quo-pagination', quoFiltered.length, quoPage, QUO_PER, `function(p){quoPage=p;renderQuotationTable()}`);
     }
 
-    function viewQuotationDetail(qId) {
+    let _vquoCurrentId = null;
+
+    function viewQuotationDetail(qId, tab) {
       const q = DB.quotations.find(x => x.id === qId); if (!q) return;
+      _vquoCurrentId = qId;
+      const ver = q.version || 1;
+      const verCls = ver >= 3 ? 'v3up' : ver >= 2 ? 'multi' : '';
+
+      /* header */
       const t = document.getElementById('vquo-title'); if (t) t.textContent = q.id;
+      const vb = document.getElementById('vquo-ver-badge');
+      if (vb) { vb.textContent = 'v' + ver; vb.className = 'quo-ver-badge ' + verCls; }
+      const sb = document.getElementById('vquo-status-badge');
+      if (sb) { sb.textContent = q.status; sb.className = 'badge badge-' + (QUO_STATUS_CLS[q.status] || 'gray'); }
+
+      /* KPI */
       const kpi = document.getElementById('vquo-kpi');
       if (kpi) kpi.innerHTML = `
         <div class="kpi-card gold"><div class="kpi-label">Total</div><div class="kpi-val">₹${fmt(q.total)}</div></div>
         <div class="kpi-card blue"><div class="kpi-label">Items</div><div class="kpi-val">${q.itemCount}</div></div>
+        <div class="kpi-card ${verCls === 'multi' || verCls === 'v3up' ? 'amber' : 'gray'}"><div class="kpi-label">Version</div><div class="kpi-val">v${ver}</div></div>
         <div class="kpi-card ${QUO_STATUS_CLS[q.status] || 'gray'}"><div class="kpi-label">Status</div><div class="kpi-val" style="font-size:14px;">${q.status}</div></div>`;
+
+      /* version count badge */
+      const vc = document.getElementById('vquo-ver-count');
+      if (vc) vc.textContent = (q.versions?.length || 1);
+
+      /* details */
       const info = document.getElementById('vquo-info');
       if (info) info.innerHTML = `
         <div class="detail-row"><div class="detail-label">Quotation #</div><div class="detail-val">${q.id}</div></div>
         <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${q.customer}</div></div>
         <div class="detail-row"><div class="detail-label">Date</div><div class="detail-val">${fmtDate(q.date)}</div></div>
         <div class="detail-row"><div class="detail-label">Valid Till</div><div class="detail-val">${fmtDate(q.validTill)}</div></div>
+        <div class="detail-row"><div class="detail-label">Current Version</div><div class="detail-val"><span class="quo-ver-badge ${verCls}">v${ver}</span></div></div>
         <div class="detail-row"><div class="detail-label">Created By</div><div class="detail-val">${q.createdBy}</div></div>
         <div class="detail-row"><div class="detail-label">Notes</div><div class="detail-val">${q.notes || '—'}</div></div>`;
-      const items = document.getElementById('vquo-items');
-      if (items) items.innerHTML = q.items.map((it, i) => `
+
+      /* items */
+      _renderQuoItems(q.items, q.subtotal, q.tax, q.total, 'vquo-items', 'vquo-totals');
+
+      /* footer buttons */
+      const btnConvert = document.getElementById('btn-convert-so');
+      if (btnConvert) btnConvert.onclick = () => { closeModal('modal-quo-view'); convertQuoToSO(q.id); };
+      const btnRevise = document.getElementById('btn-quo-revise');
+      if (btnRevise) btnRevise.onclick = () => { closeModal('modal-quo-view'); reviseQuotation(q.id); };
+
+      /* history tab */
+      _renderQuoHistory(q);
+
+      openModal('modal-quo-view');
+      quoSwitchTab(tab || 'details');
+    }
+
+    function _renderQuoItems(items, subtotal, tax, total, tbodyId, tfootId) {
+      const tbody = document.getElementById(tbodyId);
+      if (tbody) tbody.innerHTML = (items || []).map((it, i) => `
         <tr>
           <td class="text-muted">${i + 1}</td>
           <td class="entity-name">${it.product}</td>
-          <td><span class="id-cell" style="font-size:10px;">${it.sku}</span></td>
+          <td><span class="id-cell" style="font-size:10px;">${it.sku || '—'}</span></td>
           <td style="font-weight:600;">${it.qty}</td>
-          <td class="text-secondary">${it.discount}%</td>
+          <td class="text-secondary">${it.discount || 0}%</td>
           <td class="amount-cell">₹${fmt(it.rate)}</td>
           <td class="amount-cell" style="font-weight:700;">₹${fmt(it.amount)}</td>
         </tr>`).join('');
-      const totals = document.getElementById('vquo-totals');
-      if (totals) totals.innerHTML = `
-        <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(q.subtotal)}</td></tr>
-        <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(q.tax)}</td></tr>
-        <tr style="background:#0F1C2E;color:#fff;"><td colspan="5"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(q.total)}</td></tr>`;
-      const btnConvert = document.getElementById('btn-convert-so');
-      if (btnConvert) btnConvert.onclick = () => { closeModal('modal-quo-view'); convertQuoToSO(q.id); };
-      openModal('modal-quo-view');
+      const tfoot = document.getElementById(tfootId);
+      if (tfoot) tfoot.innerHTML = `
+        <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(subtotal)}</td></tr>
+        <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(tax)}</td></tr>
+        <tr style="background:#0F1C2E;color:#fff;"><td colspan="5"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(total)}</td></tr>`;
+    }
+
+    function _renderQuoHistory(q) {
+      const versions = q.versions || [{ version: 1, date: q.date, total: q.total, subtotal: q.subtotal, tax: q.tax, items: q.items, status: q.status, createdBy: q.createdBy, changeNote: 'Initial quotation' }];
+      const timeline = document.getElementById('vquo-ver-timeline');
+      if (timeline) {
+        timeline.innerHTML = [...versions].reverse().map((v, ri) => {
+          const isCurrent = v.version === (q.version || 1);
+          const prev = versions[versions.indexOf(v) - 1];
+          let delta = '';
+          if (prev) {
+            const diff = v.total - prev.total;
+            const pct = prev.total ? ((diff / prev.total) * 100).toFixed(1) : 0;
+            if (diff > 0) delta = `<span class="quo-delta-pill quo-delta-up"><i class="ti ti-trending-up" style="font-size:10px;"></i> +₹${fmt(Math.abs(diff))} (+${pct}%)</span>`;
+            else if (diff < 0) delta = `<span class="quo-delta-pill quo-delta-dn"><i class="ti ti-trending-down" style="font-size:10px;"></i> -₹${fmt(Math.abs(diff))} (${pct}%)</span>`;
+            else delta = `<span class="quo-delta-pill quo-delta-neu">No price change</span>`;
+          }
+          const dotCls = isCurrent ? 'current' : ri === versions.length - 1 ? '' : 'mid';
+          return `
+          <div class="quo-ver-item">
+            <div class="quo-ver-dot ${dotCls}"></div>
+            <div class="quo-ver-card ${isCurrent ? 'current-ver' : ''}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span class="quo-ver-badge ${v.version >= 3 ? 'v3up' : v.version >= 2 ? 'multi' : ''}" style="margin:0;">v${v.version}</span>
+                  ${isCurrent ? '<span style="font-size:10px;font-weight:700;color:#16A34A;">CURRENT</span>' : ''}
+                  <span class="badge badge-${QUO_STATUS_CLS[v.status] || 'gray'}" style="font-size:10px;">${v.status || 'Draft'}</span>
+                </div>
+                <div style="text-align:right;font-size:11px;font-weight:700;color:#0F172A;">₹${fmt(v.total)}</div>
+              </div>
+              <div style="font-size:11px;color:#374151;margin-bottom:6px;font-style:italic;">"${v.changeNote || 'No change note'}"</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                <div style="font-size:10px;color:#64748B;">${fmtDate(v.date)} · ${v.createdBy || q.createdBy}</div>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  ${delta}
+                  ${!isCurrent ? `<button class="btn btn-ghost" style="padding:3px 10px;font-size:11px;" onclick="quoViewVersion('${q.id}',${v.version})"><i class="ti ti-eye" style="font-size:11px;"></i> View</button>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      /* activity log */
+      const actLog = document.getElementById('vquo-act-log');
+      if (actLog) {
+        const acts = q.activity || [{ ts: q.date, actor: q.createdBy, action: 'Created', detail: 'Initial quotation v1 created' }];
+        const iconMap = { 'Created': ['create','ti-plus'], 'Sent to Customer': ['send','ti-send'], 'Email Sent': ['send','ti-mail'], 'Revised': ['revise','ti-pencil'] };
+        actLog.innerHTML = [...acts].reverse().map(a => {
+          const key = Object.keys(iconMap).find(k => a.action.startsWith(k)) || '';
+          const [cls, ico] = iconMap[key] || ['sys', 'ti-circle'];
+          return `
+          <div class="quo-act-item">
+            <div class="quo-act-icon ${cls}"><i class="ti ${ico}"></i></div>
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:700;color:#0F172A;">${a.action}</div>
+              <div style="font-size:11px;color:#64748B;margin-top:2px;">${a.detail}</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:2px;">${fmtDate(a.ts)} · ${a.actor}</div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+      const vd = document.getElementById('vquo-ver-detail'); if (vd) vd.style.display = 'none';
+    }
+
+    function quoSwitchTab(tab) {
+      ['details','history'].forEach(t => {
+        document.getElementById('qtab-' + t)?.classList.toggle('active', t === tab);
+        document.getElementById('qpane-' + t)?.classList.toggle('active', t === tab);
+      });
+    }
+
+    function quoViewVersion(qId, verNum) {
+      const q = DB.quotations.find(x => x.id === qId); if (!q) return;
+      const v = (q.versions || []).find(vv => vv.version === verNum); if (!v) return;
+      const detailDiv = document.getElementById('vquo-ver-detail');
+      const titleEl = document.getElementById('vquo-ver-detail-title');
+      if (titleEl) titleEl.innerHTML = `<i class="ti ti-file-text"></i> ${qId} — v${verNum} <span style="font-size:11px;color:#94A3B8;font-weight:400;">(historical snapshot · ${fmtDate(v.date)})</span>`;
+      _renderQuoItems(v.items, v.subtotal, v.tax, v.total, 'vquo-ver-detail-body', 'vquo-ver-detail-foot');
+      if (detailDiv) { detailDiv.style.display = 'block'; detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
     }
 
     function convertQuoToSO(qId) {
@@ -19724,11 +19989,100 @@
       const tx = document.getElementById('mquo-tax'); if (tx) tx.textContent = '₹' + fmt(tax);
       const tt = document.getElementById('mquo-total'); if (tt) tt.textContent = '₹' + fmt(sub + tax);
     }
+    let _quoReviseId = null;
+
+    function reviseQuotation(qId) {
+      const q = DB.quotations.find(x => x.id === qId); if (!q) return;
+      _quoReviseId = qId;
+      populateSalDropdowns();
+      /* fill header fields */
+      const custSel = document.getElementById('mquo-customer'); if (custSel) custSel.value = q.customerId;
+      const dateInp = document.getElementById('mquo-date'); if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
+      const validInp = document.getElementById('mquo-valid');
+      if (validInp) { const d = new Date(); d.setDate(d.getDate() + 30); validInp.value = d.toISOString().split('T')[0]; }
+      const notesInp = document.getElementById('mquo-notes'); if (notesInp) notesInp.value = q.notes || '';
+      /* fill items */
+      const tbody = document.getElementById('mquo-items-body');
+      if (tbody) tbody.innerHTML = q.items.map(it => `
+        <tr>
+          <td><select class="form-control" onchange="mquoCalc(this)" style="min-width:200px;">
+            <option value="${it.product}" selected>${it.product}</option>
+            ${DB.products.map(p => `<option value="${p.name}" data-price="${p.price}"${p.name === it.product ? ' selected' : ''}>${p.name}</option>`).join('')}
+          </select></td>
+          <td><input type="number" class="form-control" style="width:70px;" value="${it.qty}" min="1" oninput="mquoCalcTotals()"></td>
+          <td><input type="number" class="form-control" style="width:100px;" value="${it.rate}" oninput="mquoCalcTotals()"></td>
+          <td><input type="number" class="form-control" style="width:60px;" value="${it.discount || 0}" min="0" max="100" oninput="mquoCalcTotals()"></td>
+          <td class="amount-cell mquo-amt">₹${fmt(it.amount)}</td>
+          <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mquoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
+        </tr>`).join('');
+      mquoCalcTotals();
+      /* modal title */
+      const titleEl = document.getElementById('mquo-modal-title');
+      if (titleEl) titleEl.innerHTML = `<i class="ti ti-git-branch" style="color:#1479C9;"></i> Revise ${q.id} &nbsp;<span class="quo-ver-badge" style="font-size:12px;">v${q.version || 1} → v${(q.version || 1) + 1}</span>`;
+      /* revision banner */
+      const banner = document.getElementById('mquo-revise-banner');
+      const bannerTxt = document.getElementById('mquo-revise-banner-text');
+      if (banner) banner.style.display = 'block';
+      if (bannerTxt) bannerTxt.innerHTML = `Revising <b>${q.id}</b> (${q.customer}) · Current version: <b>v${q.version || 1}</b> · New version will be <b>v${(q.version || 1) + 1}</b> · Previous version is preserved in history.`;
+      openModal('modal-sal-quotation');
+    }
+
     function saveQuotation(status) {
       const cust = document.getElementById('mquo-customer')?.value;
       if (!cust) { showToast('error', 'Validation', 'Select a customer.'); return; }
-      closeModal('modal-sal-quotation');
-      showToast('success', 'Quotation ' + status, `Quotation saved as "${status}".`);
+
+      if (_quoReviseId) {
+        /* ── REVISION MODE ── */
+        const q = DB.quotations.find(x => x.id === _quoReviseId);
+        if (q) {
+          /* snapshot current state as old version */
+          if (!q.versions) q.versions = [];
+          if (!q.versions.find(v => v.version === (q.version || 1))) {
+            q.versions.push({ version: q.version || 1, date: q.date, items: JSON.parse(JSON.stringify(q.items)), subtotal: q.subtotal, tax: q.tax, total: q.total, status: q.status, notes: q.notes, createdBy: q.createdBy, changeNote: 'Previous version' });
+          }
+          /* read new totals */
+          const subRaw = document.getElementById('mquo-subtotal')?.textContent?.replace(/[₹,]/g, '') || '0';
+          const taxRaw = document.getElementById('mquo-tax')?.textContent?.replace(/[₹,]/g, '') || '0';
+          const totRaw = document.getElementById('mquo-total')?.textContent?.replace(/[₹,]/g, '') || '0';
+          const newSub = parseFloat(subRaw) || q.subtotal;
+          const newTax = parseFloat(taxRaw) || q.tax;
+          const newTotal = parseFloat(totRaw) || q.total;
+          /* collect items from form */
+          const newItems = [];
+          document.querySelectorAll('#mquo-items-body tr').forEach(row => {
+            const sel = row.querySelector('select');
+            const inputs = row.querySelectorAll('input[type="number"]');
+            if (!sel?.value) return;
+            const qty = parseFloat(inputs[0]?.value) || 1;
+            const rate = parseFloat(inputs[1]?.value) || 0;
+            const disc = parseFloat(inputs[2]?.value) || 0;
+            newItems.push({ product: sel.value, sku: DB.products.find(p => p.name === sel.value)?.sku || '—', qty, rate, discount: disc, amount: Math.round(qty * rate * (1 - disc / 100)) });
+          });
+          /* bump version */
+          const newVer = (q.version || 1) + 1;
+          const newNotes = document.getElementById('mquo-notes')?.value || q.notes;
+          /* push new version snapshot */
+          q.versions.push({ version: newVer, date: new Date().toISOString(), items: JSON.parse(JSON.stringify(newItems.length ? newItems : q.items)), subtotal: newSub, tax: newTax, total: newTotal, status, notes: newNotes, createdBy: 'Ravi Kumar', changeNote: 'Revised — ' + status });
+          /* update main record */
+          q.version = newVer; q.status = status; q.date = new Date().toISOString();
+          q.notes = newNotes; q.subtotal = newSub; q.tax = newTax; q.total = newTotal;
+          if (newItems.length) { q.items = newItems; q.itemCount = newItems.length; }
+          if (!q.activity) q.activity = [];
+          q.activity.push({ ts: new Date().toISOString(), actor: 'Ravi Kumar', action: `Revised to v${newVer}`, detail: `Status set to ${status}` });
+          showToast('success', `Revised to v${newVer}`, `${q.id} updated — v${newVer} saved, all history preserved.`);
+        }
+        _quoReviseId = null;
+        /* reset modal */
+        const banner = document.getElementById('mquo-revise-banner'); if (banner) banner.style.display = 'none';
+        const titleEl = document.getElementById('mquo-modal-title'); if (titleEl) titleEl.innerHTML = '<i class="ti ti-file-text"></i> New Quotation';
+        closeModal('modal-sal-quotation');
+        initQuotationsPage();
+      } else {
+        /* ── NEW QUOTATION ── */
+        closeModal('modal-sal-quotation');
+        showToast('success', 'Quotation ' + status, `Quotation saved as "${status}".`);
+        initQuotationsPage();
+      }
     }
 
     /* Sales Invoice modal helpers */
