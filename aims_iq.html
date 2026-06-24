@@ -4778,6 +4778,178 @@
       background: var(--blue-gl);
       border-left: 3px solid var(--blue);
     }
+
+    /* ── LAUNCHER CARD STYLES ── */
+    .launcher-section {
+      margin-bottom: 32px;
+    }
+    .ls-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+    .ls-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+    .ls-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0A1830;
+      white-space: nowrap;
+    }
+    .ls-line {
+      flex: 1;
+      height: 1px;
+      background: #E2E8F0;
+    }
+    .ls-count {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .ls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .ls-card {
+      position: relative;
+      background: #FFFFFF;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    }
+    .ls-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0) 40%, rgba(var(--glow-color), 0.04) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .ls-card::after {
+       content: '';
+       position: absolute;
+       width: 140px;
+       height: 140px;
+       background: radial-gradient(circle, rgba(var(--glow-color), 0.15) 0%, transparent 70%);
+       top: -40px;
+       right: -40px;
+       border-radius: 50%;
+       opacity: 0;
+       transition: all 0.5s ease;
+       z-index: -1;
+       pointer-events: none;
+    }
+    .ls-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(var(--glow-color), 0.12), 0 4px 12px rgba(0,0,0,0.04);
+      border-color: rgba(var(--glow-color), 0.3);
+    }
+    .ls-card:hover::before, .ls-card:hover::after {
+      opacity: 1;
+    }
+    .ls-card:hover::after {
+      transform: scale(1.3);
+    }
+
+    .ls-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgb(var(--glow-color));
+      background: rgba(var(--glow-color), 0.1);
+      font-size: 24px;
+      margin-bottom: 18px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .ls-card:hover .ls-card-icon {
+      background: rgb(var(--glow-color));
+      color: white;
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 20px rgba(var(--glow-color), 0.3);
+    }
+
+    .ls-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 8px;
+      transition: color 0.3s ease;
+    }
+    .ls-card:hover .ls-card-title {
+       color: rgb(var(--glow-color));
+    }
+
+    .ls-card-desc {
+      font-size: 13px;
+      color: #64748B;
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+    .ls-card:hover .ls-card-desc {
+      color: #475569;
+    }
+
+    /* Colors for sections */
+    .theme-blue { --glow-color: 37, 99, 235; }
+    .theme-blue .ls-icon { background: #2563EB; }
+    .theme-blue .ls-count { color: #2563EB; }
+
+    .theme-green { --glow-color: 22, 163, 74; }
+    .theme-green .ls-icon { background: #16A34A; }
+    .theme-green .ls-count { color: #16A34A; }
+
+    .theme-orange { --glow-color: 234, 88, 12; }
+    .theme-orange .ls-icon { background: #EA580C; }
+    .theme-orange .ls-count { color: #EA580C; }
+
+    .theme-purple { --glow-color: 147, 51, 234; }
+    .theme-purple .ls-icon { background: #9333EA; }
+    .theme-purple .ls-count { color: #9333EA; }
+
+    .theme-red { --glow-color: 220, 38, 38; }
+    .theme-red .ls-icon { background: #DC2626; }
+    .theme-red .ls-count { color: #DC2626; }
+
+    .theme-teal { --glow-color: 13, 148, 136; }
+    .theme-teal .ls-icon { background: #0D9488; }
+    .theme-teal .ls-count { color: #0D9488; }
+
+    .theme-amber { --glow-color: 217, 119, 6; }
+    .theme-amber .ls-icon { background: #D97706; }
+    .theme-amber .ls-count { color: #D97706; }
+
+    .theme-gold { --glow-color: 217, 119, 6; }
+    .theme-gold .ls-icon { background: #D97706; }
+    .theme-gold .ls-count { color: #D97706; }
+
+    .theme-indigo { --glow-color: 79, 70, 229; }
+    .theme-indigo .ls-icon { background: #4F46E5; }
+    .theme-indigo .ls-count { color: #4F46E5; }
   </style>
 </head>
 
@@ -4812,7 +4984,12 @@
 
         <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard', this)">
           <i class="ti ti-layout-dashboard nav-icon"></i>
-          <span class="nav-text">Dashboard</span>
+          <span class="nav-text">Main Dashboard</span>
+        </div>
+
+        <div class="nav-item" data-page="launcher" onclick="navigate('launcher', this)">
+          <i class="ti ti-apps nav-icon"></i>
+          <span class="nav-text">Launcher</span>
         </div>
 
 
@@ -5440,7 +5617,7 @@
           <nav class="breadcrumb page-breadcrumb" id="breadcrumb" style="margin-bottom: 8px;">
             <span class="bc-item">AIMS IQ</span>
             <i class="ti ti-chevron-right bc-sep"></i>
-            <span class="bc-item active" id="bc-current">Dashboard</span>
+            <span class="bc-item active" id="bc-current">Main Dashboard</span>
           </nav>
 
           <!-- ═══════════════════════════════════════════════════════
@@ -5455,7 +5632,7 @@
             <!-- Header -->
             <div class="page-header">
               <div>
-                <div class="page-title">Dashboard</div>
+                <div class="page-title">Main Dashboard</div>
                 <div class="page-subtitle" id="dash-greeting">Welcome back, Admin</div>
               </div>
               <div class="page-actions">
@@ -5657,6 +5834,234 @@
             </div>
 
           </div><!-- /#page-dashboard -->
+
+          <!-- ── LAUNCHER DASHBOARD ────────────────────────── -->
+          <div class="page" id="page-launcher">
+            <div class="page-header" style="margin-bottom: 30px;">
+              <div>
+                <div class="page-title">Launcher</div>
+                <div class="page-sub">Quickly navigate to all modules and features</div>
+              </div>
+            </div>
+            
+            <div style="max-width: 1400px;">
+              
+              <!-- Section: Masters -->
+              <div class="launcher-section theme-blue">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-package"></i></div>
+                  <div class="ls-title">Masters</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">4 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('products',null)"><div class="ls-card-icon"><i class="ti ti-box"></i></div><div class="ls-card-title">Products</div><div class="ls-card-desc">Manage products</div></div>
+                  <div class="ls-card" onclick="navigate('customers',null)"><div class="ls-card-icon"><i class="ti ti-users"></i></div><div class="ls-card-title">Customers</div><div class="ls-card-desc">Customer details</div></div>
+                  <div class="ls-card" onclick="navigate('suppliers',null)"><div class="ls-card-icon"><i class="ti ti-truck-delivery"></i></div><div class="ls-card-title">Suppliers</div><div class="ls-card-desc">Supplier details</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-employees',null)"><div class="ls-card-icon"><i class="ti ti-id-badge"></i></div><div class="ls-card-title">Employees</div><div class="ls-card-desc">Employee records</div></div>
+                </div>
+              </div>
+
+              <!-- Section: CRM -->
+              <div class="launcher-section theme-purple">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-heart-handshake"></i></div>
+                  <div class="ls-title">CRM</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">3 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('atp',null)"><div class="ls-card-icon"><i class="ti ti-circle-check"></i></div><div class="ls-card-title">Available to Promise</div><div class="ls-card-desc">Check stock availability</div></div>
+                  <div class="ls-card" onclick="navigate('crm-leads',null)"><div class="ls-card-icon"><i class="ti ti-target"></i></div><div class="ls-card-title">Leads</div><div class="ls-card-desc">Track early-stage prospects</div></div>
+                  <div class="ls-card" onclick="navigate('crm-opportunities',null)"><div class="ls-card-icon"><i class="ti ti-diamond"></i></div><div class="ls-card-title">Opportunities</div><div class="ls-card-desc">Active deal progression</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Sales -->
+              <div class="launcher-section theme-green">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-currency-rupee"></i></div>
+                  <div class="ls-title">Sales</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">6 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('sal-quotations',null)"><div class="ls-card-icon"><i class="ti ti-file-description"></i></div><div class="ls-card-title">Quotations</div><div class="ls-card-desc">Price quotes to clients</div></div>
+                  <div class="ls-card" onclick="navigate('sal-orders',null)"><div class="ls-card-icon"><i class="ti ti-shopping-bag"></i></div><div class="ls-card-title">Sales Orders</div><div class="ls-card-desc">Confirmed sales</div></div>
+                  <div class="ls-card" onclick="navigate('sal-invoice',null)"><div class="ls-card-icon"><i class="ti ti-file-invoice"></i></div><div class="ls-card-title">Sales Invoice</div><div class="ls-card-desc">Bill your customers</div></div>
+                  <div class="ls-card" onclick="navigate('sal-delivery',null)"><div class="ls-card-icon"><i class="ti ti-truck"></i></div><div class="ls-card-title">Delivery Notes</div><div class="ls-card-desc">Dispatch records</div></div>
+                  <div class="ls-card" onclick="navigate('sal-returns',null)"><div class="ls-card-icon"><i class="ti ti-backspace"></i></div><div class="ls-card-title">Sales Returns</div><div class="ls-card-desc">Customer returns</div></div>
+                  <div class="ls-card" onclick="navigate('sal-credit-note',null)"><div class="ls-card-icon"><i class="ti ti-receipt-refund"></i></div><div class="ls-card-title">Credit Note</div><div class="ls-card-desc">Refunds and credits</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Purchase -->
+              <div class="launcher-section theme-amber">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-shopping-cart"></i></div>
+                  <div class="ls-title">Purchase</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">1 module</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('pur-invoice',null)"><div class="ls-card-icon"><i class="ti ti-receipt"></i></div><div class="ls-card-title">Purchase Invoice</div><div class="ls-card-desc">Track vendor bills</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Service -->
+              <div class="launcher-section theme-red">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-tools"></i></div>
+                  <div class="ls-title">Service</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">7 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('svc-requests',null)"><div class="ls-card-icon"><i class="ti ti-message-dots"></i></div><div class="ls-card-title">Service Requests</div><div class="ls-card-desc">Client support tickets</div></div>
+                  <div class="ls-card" onclick="navigate('svc-assignjobs',null)"><div class="ls-card-icon"><i class="ti ti-user-check"></i></div><div class="ls-card-title">Assign Jobs</div><div class="ls-card-desc">Technician job allocation</div></div>
+                  <div class="ls-card" onclick="navigate('svc-installation',null)"><div class="ls-card-icon"><i class="ti ti-settings-automation"></i></div><div class="ls-card-title">Installation Mgmt</div><div class="ls-card-desc">Manage installations</div></div>
+                  <div class="ls-card" onclick="navigate('svc-amc',null)"><div class="ls-card-icon"><i class="ti ti-shield-lock"></i></div><div class="ls-card-title">AMC & Warranty</div><div class="ls-card-desc">Contract management</div></div>
+                  <div class="ls-card" onclick="navigate('svc-amc-quotes',null)"><div class="ls-card-icon"><i class="ti ti-file-text"></i></div><div class="ls-card-title">AMC Quotes</div><div class="ls-card-desc">Service quotations</div></div>
+                  <div class="ls-card" onclick="navigate('svc-visits',null)"><div class="ls-card-icon"><i class="ti ti-map-pin"></i></div><div class="ls-card-title">Service Visits</div><div class="ls-card-desc">On-site service visits</div></div>
+                  <div class="ls-card" onclick="navigate('svc-feedback',null)"><div class="ls-card-icon"><i class="ti ti-thumb-up"></i></div><div class="ls-card-title">Service Feedback</div><div class="ls-card-desc">Customer feedback</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Finance -->
+              <div class="launcher-section theme-gold">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-report-money"></i></div>
+                  <div class="ls-title">Finance</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">5 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('fin-payments',null)"><div class="ls-card-icon"><i class="ti ti-credit-card"></i></div><div class="ls-card-title">Payments</div><div class="ls-card-desc">Outgoing payments</div></div>
+                  <div class="ls-card" onclick="navigate('fin-receipts',null)"><div class="ls-card-icon"><i class="ti ti-receipt-2"></i></div><div class="ls-card-title">Receipts</div><div class="ls-card-desc">Incoming collections</div></div>
+                  <div class="ls-card" onclick="navigate('fin-expenses',null)"><div class="ls-card-icon"><i class="ti ti-minus-vertical"></i></div><div class="ls-card-title">Expenses</div><div class="ls-card-desc">Company expenditure logs</div></div>
+                  <div class="ls-card" onclick="navigate('pur-supplier-ledger',null)"><div class="ls-card-icon"><i class="ti ti-address-book"></i></div><div class="ls-card-title">Supplier Ledger</div><div class="ls-card-desc">Vendor statements</div></div>
+                  <div class="ls-card" onclick="navigate('sal-customer-ledger',null)"><div class="ls-card-icon"><i class="ti ti-address-book"></i></div><div class="ls-card-title">Customer Ledger</div><div class="ls-card-desc">Client statements</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Inventory -->
+              <div class="launcher-section theme-teal">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-stack-2"></i></div>
+                  <div class="ls-title">Inventory</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">7 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('warehouses',null)"><div class="ls-card-icon"><i class="ti ti-building-warehouse"></i></div><div class="ls-card-title">Warehouses</div><div class="ls-card-desc">Location management</div></div>
+                  <div class="ls-card" onclick="navigate('inv-stock',null)"><div class="ls-card-icon"><i class="ti ti-list-details"></i></div><div class="ls-card-title">Stock List</div><div class="ls-card-desc">Current inventory valuation</div></div>
+                  <div class="ls-card" onclick="navigate('inv-ledger',null)"><div class="ls-card-icon"><i class="ti ti-book"></i></div><div class="ls-card-title">Stock Movements</div><div class="ls-card-desc">Inventory flow history</div></div>
+                  <div class="ls-card" onclick="navigate('inv-adjustment',null)"><div class="ls-card-icon"><i class="ti ti-adjustments"></i></div><div class="ls-card-title">Stock Adjustment</div><div class="ls-card-desc">Modify stock levels</div></div>
+                  <div class="ls-card" onclick="navigate('inv-transfer',null)"><div class="ls-card-icon"><i class="ti ti-transfer"></i></div><div class="ls-card-title">Stock Transfer</div><div class="ls-card-desc">Move stock between locations</div></div>
+                  <div class="ls-card" onclick="navigate('inv-lowstock',null)"><div class="ls-card-icon"><i class="ti ti-alert-triangle"></i></div><div class="ls-card-title">Low Stock Report</div><div class="ls-card-desc">Items needing replenishment</div></div>
+                  <div class="ls-card" onclick="navigate('sal-buyback',null)"><div class="ls-card-icon"><i class="ti ti-refresh"></i></div><div class="ls-card-title">Buy Back</div><div class="ls-card-desc">Buy back stock</div></div>
+                </div>
+              </div>
+
+              <!-- Section: HRMS -->
+              <div class="launcher-section theme-indigo">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-user-plus"></i></div>
+                  <div class="ls-title">HRMS</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">10 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('hrm-departments',null)"><div class="ls-card-icon"><i class="ti ti-building"></i></div><div class="ls-card-title">Departments & Designations</div><div class="ls-card-desc">Org structure</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-attendance',null)"><div class="ls-card-icon"><i class="ti ti-calendar-check"></i></div><div class="ls-card-title">Attendance</div><div class="ls-card-desc">Staff time tracking</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-shifts',null)"><div class="ls-card-icon"><i class="ti ti-clock-hour-4"></i></div><div class="ls-card-title">Shift Management</div><div class="ls-card-desc">Manage shifts</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-leave',null)"><div class="ls-card-icon"><i class="ti ti-calendar-off"></i></div><div class="ls-card-title">Leave Management</div><div class="ls-card-desc">Process time off requests</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-allowance',null)"><div class="ls-card-icon"><i class="ti ti-receipt"></i></div><div class="ls-card-title">Allowance & Deduction</div><div class="ls-card-desc">Salary components</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-promotion',null)"><div class="ls-card-icon"><i class="ti ti-trending-up"></i></div><div class="ls-card-title">Promotion & Increment</div><div class="ls-card-desc">Career growth</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-loans',null)"><div class="ls-card-icon"><i class="ti ti-credit-card"></i></div><div class="ls-card-title">Loans</div><div class="ls-card-desc">Employee loans</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-incentives',null)"><div class="ls-card-icon"><i class="ti ti-star"></i></div><div class="ls-card-title">Performance & Incentives</div><div class="ls-card-desc">Rewards</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-payroll',null)"><div class="ls-card-icon"><i class="ti ti-wallet"></i></div><div class="ls-card-title">Payroll</div><div class="ls-card-desc">Salary processing</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-ot',null)"><div class="ls-card-icon"><i class="ti ti-clock-play"></i></div><div class="ls-card-title">OT Calculation</div><div class="ls-card-desc">Overtime hours</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Approvals -->
+              <div class="launcher-section theme-orange">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-checks"></i></div>
+                  <div class="ls-title">Approvals</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">8 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('sal-margin-approval',null)"><div class="ls-card-icon"><i class="ti ti-shield-check"></i></div><div class="ls-card-title">Margin Approval</div><div class="ls-card-desc">Approve margins</div></div>
+                  <div class="ls-card" onclick="navigate('appr-sal-quote',null)"><div class="ls-card-icon"><i class="ti ti-file-description"></i></div><div class="ls-card-title">Sales Quote Approval</div><div class="ls-card-desc">Approve quotes</div></div>
+                  <div class="ls-card" onclick="navigate('appr-amc-quote',null)"><div class="ls-card-icon"><i class="ti ti-shield-check"></i></div><div class="ls-card-title">AMC Quote Approval</div><div class="ls-card-desc">Approve AMC quotes</div></div>
+                  <div class="ls-card" onclick="navigate('appr-po',null)"><div class="ls-card-icon"><i class="ti ti-shopping-cart"></i></div><div class="ls-card-title">Purchase Order Approval</div><div class="ls-card-desc">Approve POs</div></div>
+                  <div class="ls-card" onclick="navigate('appr-payment',null)"><div class="ls-card-icon"><i class="ti ti-credit-card"></i></div><div class="ls-card-title">Payment Approval</div><div class="ls-card-desc">Approve payments</div></div>
+                  <div class="ls-card" onclick="navigate('appr-credit-note',null)"><div class="ls-card-icon"><i class="ti ti-receipt-refund"></i></div><div class="ls-card-title">Credit Note Approval</div><div class="ls-card-desc">Approve credit notes</div></div>
+                  <div class="ls-card" onclick="navigate('appr-discount',null)"><div class="ls-card-icon"><i class="ti ti-percentage"></i></div><div class="ls-card-title">Discount Approval</div><div class="ls-card-desc">Approve discounts</div></div>
+                  <div class="ls-card" onclick="navigate('appr-leave',null)"><div class="ls-card-icon"><i class="ti ti-calendar-off"></i></div><div class="ls-card-title">Leave Approval</div><div class="ls-card-desc">Approve leaves</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Reports -->
+              <div class="launcher-section theme-teal">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-chart-pie"></i></div>
+                  <div class="ls-title">Reports</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">8 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('rep-leads',null)"><div class="ls-card-icon"><i class="ti ti-users-group"></i></div><div class="ls-card-title">Leads Reports</div><div class="ls-card-desc">Lead analytics</div></div>
+                  <div class="ls-card" onclick="navigate('rep-sales',null)"><div class="ls-card-icon"><i class="ti ti-trending-up"></i></div><div class="ls-card-title">Sales Reports</div><div class="ls-card-desc">Sales analytics</div></div>
+                  <div class="ls-card" onclick="navigate('rep-purchase',null)"><div class="ls-card-icon"><i class="ti ti-shopping-cart"></i></div><div class="ls-card-title">Purchase Reports</div><div class="ls-card-desc">Purchase analytics</div></div>
+                  <div class="ls-card" onclick="navigate('svc-reports',null)"><div class="ls-card-icon"><i class="ti ti-tool"></i></div><div class="ls-card-title">Service Reports</div><div class="ls-card-desc">Service analytics</div></div>
+                  <div class="ls-card" onclick="navigate('rep-inventory',null)"><div class="ls-card-icon"><i class="ti ti-stack-2"></i></div><div class="ls-card-title">Inventory Reports</div><div class="ls-card-desc">Inventory analytics</div></div>
+                  <div class="ls-card" onclick="navigate('rep-financial',null)"><div class="ls-card-icon"><i class="ti ti-report-money"></i></div><div class="ls-card-title">Financial Reports</div><div class="ls-card-desc">Financial analytics</div></div>
+                  <div class="ls-card" onclick="navigate('rep-productivity',null)"><div class="ls-card-icon"><i class="ti ti-chart-arrows-vertical"></i></div><div class="ls-card-title">Productivity</div><div class="ls-card-desc">Productivity tracking</div></div>
+                  <div class="ls-card" onclick="navigate('hrm-reports',null)"><div class="ls-card-icon"><i class="ti ti-file-analytics"></i></div><div class="ls-card-title">HRMS Reports</div><div class="ls-card-desc">HR analytics</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Ai Intelligence -->
+              <div class="launcher-section theme-blue">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-bolt"></i></div>
+                  <div class="ls-title">Ai Intelligence</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">4 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('crm-c360',null)"><div class="ls-card-icon"><i class="ti ti-chart-bubble"></i></div><div class="ls-card-title">Customer 360°</div><div class="ls-card-desc">Master directory of all clients</div></div>
+                  <div class="ls-card" onclick="navigate('crm-personas',null)"><div class="ls-card-icon"><i class="ti ti-chart-pie-2"></i></div><div class="ls-card-title">Personas</div><div class="ls-card-desc">Detailed customer segmentations</div></div>
+                  <div class="ls-card" onclick="navigate('crm-planner',null)"><div class="ls-card-icon"><i class="ti ti-calendar-event"></i></div><div class="ls-card-title">Visit Planner</div><div class="ls-card-desc">Daily routes & visits overview</div></div>
+                  <div class="ls-card" onclick="navigate('crm-assignments',null)"><div class="ls-card-icon"><i class="ti ti-calendar-plus"></i></div><div class="ls-card-title">Visit Assignments</div><div class="ls-card-desc">Delegate tasks and visits</div></div>
+                </div>
+              </div>
+
+              <!-- Section: Administration -->
+              <div class="launcher-section theme-red">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-settings"></i></div>
+                  <div class="ls-title">Administration</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">7 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('admin-users',null)"><div class="ls-card-icon"><i class="ti ti-users-group"></i></div><div class="ls-card-title">Users</div><div class="ls-card-desc">System access control</div></div>
+                  <div class="ls-card" onclick="navigate('admin-roles',null)"><div class="ls-card-icon"><i class="ti ti-shield"></i></div><div class="ls-card-title">Roles</div><div class="ls-card-desc">Define user roles</div></div>
+                  <div class="ls-card" onclick="navigate('admin-permissions',null)"><div class="ls-card-icon"><i class="ti ti-lock"></i></div><div class="ls-card-title">Permissions</div><div class="ls-card-desc">Manage permissions</div></div>
+                  <div class="ls-card" onclick="navigate('admin-audit',null)"><div class="ls-card-icon"><i class="ti ti-history"></i></div><div class="ls-card-title">Audit Logs</div><div class="ls-card-desc">System audit trails</div></div>
+                  <div class="ls-card" onclick="navigate('admin-settings',null)"><div class="ls-card-icon"><i class="ti ti-adjustments"></i></div><div class="ls-card-title">Settings</div><div class="ls-card-desc">Global app configurations</div></div>
+                  <div class="ls-card" onclick="navigate('com-email',null)"><div class="ls-card-icon"><i class="ti ti-mail"></i></div><div class="ls-card-title">Email Templates</div><div class="ls-card-desc">Email configs</div></div>
+                  <div class="ls-card" onclick="navigate('com-whatsapp',null)"><div class="ls-card-icon"><i class="ti ti-brand-whatsapp"></i></div><div class="ls-card-title">WhatsApp Setup</div><div class="ls-card-desc">WhatsApp integration</div></div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /#page-launcher -->
 
           <!-- ══════════════════════════════════
                PAGE: PRODUCTS
@@ -14201,7 +14606,8 @@
        Maps every page-id → { title, breadcrumb[], module }
        ═══════════════════════════════════════════ */
     const PAGE_META = {
-      'dashboard': { title: 'Dashboard', crumbs: ['Dashboard'], module: 'main' },
+      'dashboard': { title: 'Main Dashboard', crumbs: ['Main Dashboard'], module: 'main' },
+      'launcher': { title: 'Launcher', crumbs: ['Launcher'], module: 'main' },
       // Masters
       'products': { title: 'Products', crumbs: ['Masters', 'Products'], module: 'masters' },
       'categories': { title: 'Categories', crumbs: ['Masters', 'Categories'], module: 'masters' },
@@ -14413,7 +14819,7 @@
             Full content for <strong>${meta.title}</strong> will be implemented in the next build steps.
           </div>
           <button class="btn btn-primary" onclick="navigate('dashboard',null)">
-            <i class="ti ti-home"></i> Back to Dashboard
+            <i class="ti ti-home"></i> Back to Main Dashboard
           </button>
         </div>
       </div>`;
