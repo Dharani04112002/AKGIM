@@ -7759,10 +7759,7 @@
               <i class="ti ti-shield-check nav-icon"></i>
               <span class="nav-text">AMC Quote Approval</span>
             </div>
-            <div class="nav-item" data-page="appr-po" onclick="navigate('appr-po',this)">
-              <i class="ti ti-shopping-cart nav-icon"></i>
-              <span class="nav-text">Purchase Order Approval</span>
-            </div>
+
             <div class="nav-item" data-page="appr-payment" onclick="navigate('appr-payment',this)">
               <i class="ti ti-credit-card nav-icon"></i>
               <span class="nav-text">Payment Approval</span>
@@ -7794,12 +7791,10 @@
                 class="ti ti-users-group nav-icon"></i><span class="nav-text">Leads Reports</span></div>
             <div class="nav-item" data-page="rep-sales" onclick="navigate('rep-sales',this)"><i
                 class="ti ti-trending-up nav-icon"></i><span class="nav-text">Sales Reports</span></div>
-            <div class="nav-item" data-page="rep-purchase" onclick="navigate('rep-purchase',this)"><i
-                class="ti ti-shopping-cart nav-icon"></i><span class="nav-text">Purchase Reports</span></div>
+
             <div class="nav-item" data-page="svc-reports" onclick="navigate('svc-reports',this)"><i
                 class="ti ti-tool nav-icon"></i><span class="nav-text">Service Reports</span></div>
-            <div class="nav-item" data-page="rep-inventory" onclick="navigate('rep-inventory',this)"><i
-                class="ti ti-stack-2 nav-icon"></i><span class="nav-text">Inventory Reports</span></div>
+
             <div class="nav-item" data-page="rep-financial" onclick="navigate('rep-financial',this)"><i
                 class="ti ti-report-money nav-icon"></i><span class="nav-text">Financial Reports</span></div>
             <div class="nav-item" data-page="rep-productivity" onclick="navigate('rep-productivity',this)"><i
@@ -8584,38 +8579,13 @@
                   <div class="ls-icon"><i class="ti ti-stack-2"></i></div>
                   <div class="ls-title">Inventory</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">7 modules</div>
+                  <div class="ls-count">2 modules</div>
                 </div>
                 <div class="ls-grid">
-                  <div class="ls-card" onclick="navigate('warehouses',null)">
-                    <div class="ls-card-icon"><i class="ti ti-building-warehouse"></i></div>
-                    <div class="ls-card-title">Warehouses</div>
-                    <div class="ls-card-desc">Location management</div>
-                  </div>
                   <div class="ls-card" onclick="navigate('inv-stock',null)">
                     <div class="ls-card-icon"><i class="ti ti-list-details"></i></div>
                     <div class="ls-card-title">Stock List</div>
                     <div class="ls-card-desc">Current inventory valuation</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('inv-ledger',null)">
-                    <div class="ls-card-icon"><i class="ti ti-book"></i></div>
-                    <div class="ls-card-title">Stock Movements</div>
-                    <div class="ls-card-desc">Inventory flow history</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('inv-adjustment',null)">
-                    <div class="ls-card-icon"><i class="ti ti-adjustments"></i></div>
-                    <div class="ls-card-title">Stock Adjustment</div>
-                    <div class="ls-card-desc">Modify stock levels</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('inv-transfer',null)">
-                    <div class="ls-card-icon"><i class="ti ti-transfer"></i></div>
-                    <div class="ls-card-title">Stock Transfer</div>
-                    <div class="ls-card-desc">Move stock between locations</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('inv-lowstock',null)">
-                    <div class="ls-card-icon"><i class="ti ti-alert-triangle"></i></div>
-                    <div class="ls-card-title">Low Stock Report</div>
-                    <div class="ls-card-desc">Items needing replenishment</div>
                   </div>
                   <div class="ls-card" onclick="navigate('sal-buyback',null)">
                     <div class="ls-card-icon"><i class="ti ti-refresh"></i></div>
@@ -8693,7 +8663,7 @@
                   <div class="ls-icon"><i class="ti ti-checks"></i></div>
                   <div class="ls-title">Approvals</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">8 modules</div>
+                  <div class="ls-count">7 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('sal-margin-approval',null)">
@@ -8711,11 +8681,7 @@
                     <div class="ls-card-title">AMC Quote Approval</div>
                     <div class="ls-card-desc">Approve AMC quotes</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('appr-po',null)">
-                    <div class="ls-card-icon"><i class="ti ti-shopping-cart"></i></div>
-                    <div class="ls-card-title">Purchase Order Approval</div>
-                    <div class="ls-card-desc">Approve POs</div>
-                  </div>
+
                   <div class="ls-card" onclick="navigate('appr-payment',null)">
                     <div class="ls-card-icon"><i class="ti ti-credit-card"></i></div>
                     <div class="ls-card-title">Payment Approval</div>
@@ -8745,7 +8711,7 @@
                   <div class="ls-icon"><i class="ti ti-chart-pie"></i></div>
                   <div class="ls-title">Reports</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">8 modules</div>
+                  <div class="ls-count">6 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('rep-leads',null)">
@@ -8758,21 +8724,13 @@
                     <div class="ls-card-title">Sales Reports</div>
                     <div class="ls-card-desc">Sales analytics</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('rep-purchase',null)">
-                    <div class="ls-card-icon"><i class="ti ti-shopping-cart"></i></div>
-                    <div class="ls-card-title">Purchase Reports</div>
-                    <div class="ls-card-desc">Purchase analytics</div>
-                  </div>
+
                   <div class="ls-card" onclick="navigate('svc-reports',null)">
                     <div class="ls-card-icon"><i class="ti ti-tool"></i></div>
                     <div class="ls-card-title">Service Reports</div>
                     <div class="ls-card-desc">Service analytics</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('rep-inventory',null)">
-                    <div class="ls-card-icon"><i class="ti ti-stack-2"></i></div>
-                    <div class="ls-card-title">Inventory Reports</div>
-                    <div class="ls-card-desc">Inventory analytics</div>
-                  </div>
+
                   <div class="ls-card" onclick="navigate('rep-financial',null)">
                     <div class="ls-card-icon"><i class="ti ti-report-money"></i></div>
                     <div class="ls-card-title">Financial Reports</div>
@@ -18734,15 +18692,7 @@
       'customers': { title: 'Customers', crumbs: ['Masters', 'Customers'], module: 'masters' },
       'suppliers': { title: 'Suppliers', crumbs: ['Masters', 'Suppliers'], module: 'masters' },
       // Inventory
-      'inv-dashboard': { title: 'Stock Dashboard', crumbs: ['Inventory', 'Stock Dashboard'], module: 'inventory' },
       'inv-stock': { title: 'Stock List', crumbs: ['Inventory', 'Stock List'], module: 'inventory' },
-      'inv-ledger': { title: 'Stock Movements', crumbs: ['Inventory', 'Stock Movements'], module: 'inventory' },
-      'inv-adjustment': { title: 'Stock Adjustment', crumbs: ['Inventory', 'Adjustment'], module: 'inventory' },
-      'inv-transfer': { title: 'Stock Transfer', crumbs: ['Inventory', 'Transfer'], module: 'inventory' },
-      'inv-opening': { title: 'Opening Stock', crumbs: ['Inventory', 'Opening Stock'], module: 'inventory' },
-      'inv-batch': { title: 'Batch Tracking', crumbs: ['Inventory', 'Batch Tracking'], module: 'inventory' },
-      'inv-serial': { title: 'Serial Tracking', crumbs: ['Inventory', 'Serial Numbers'], module: 'inventory' },
-      'inv-lowstock': { title: 'Low Stock Report', crumbs: ['Inventory', 'Low Stock'], module: 'inventory' },
       // Purchase
 
       'pur-orders': { title: 'Purchase Orders', crumbs: ['Purchase', 'Orders'], module: 'purchase' },
@@ -18783,8 +18733,8 @@
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
-      'rep-purchase': { title: 'Purchase Reports', crumbs: ['Reports', 'Purchase'], module: 'reports' },
-      'rep-inventory': { title: 'Inventory Reports', crumbs: ['Reports', 'Inventory'], module: 'reports' },
+
+
       'rep-customer': { title: 'Customer Reports', crumbs: ['Reports', 'Customers'], module: 'reports' },
       'rep-supplier': { title: 'Supplier Reports', crumbs: ['Reports', 'Suppliers'], module: 'reports' },
       'rep-financial': { title: 'Financial Reports', crumbs: ['Reports', 'Financial'], module: 'reports' },
@@ -18844,7 +18794,7 @@
       // Approvals
       'appr-sal-quote': { title: 'Sales Quote Approval', crumbs: ['Approvals', 'Sales Quote'], module: 'approvals' },
       'appr-amc-quote': { title: 'AMC Quote Approval', crumbs: ['Approvals', 'AMC Quote'], module: 'approvals' },
-      'appr-po': { title: 'Purchase Order Approval', crumbs: ['Approvals', 'Purchase Order'], module: 'approvals' },
+
       'appr-payment': { title: 'Payment Approval', crumbs: ['Approvals', 'Payment'], module: 'approvals' },
       'appr-credit-note': { title: 'Credit Note Approval', crumbs: ['Approvals', 'Credit Note'], module: 'approvals' },
       'appr-discount': { title: 'Discount Approval', crumbs: ['Approvals', 'Discount'], module: 'approvals' },
