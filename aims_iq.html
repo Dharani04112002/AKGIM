@@ -3040,6 +3040,67 @@
       box-shadow: none;
     }
 
+    .tag-select-wrap {
+      border: 1px solid var(--border, #d1d5db);
+      border-radius: 6px;
+      padding: 6px 10px;
+      min-height: 42px;
+      background: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .tag-select-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .tag-select-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #e8f0fe;
+      color: #1a56db;
+      border-radius: 4px;
+      padding: 3px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tag-select-tag .tag-remove {
+      cursor: pointer;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1;
+      border: none;
+      background: none;
+      padding: 0;
+      margin-left: 2px;
+    }
+
+    .tag-select-tag .tag-remove:hover {
+      color: #ef4444;
+    }
+
+    .tag-select-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      color: var(--text, #374151);
+      flex: 1;
+      min-width: 160px;
+      padding: 2px 0;
+      cursor: pointer;
+    }
+
     .input-addon {
       display: flex;
       align-items: center;
@@ -7610,6 +7671,11 @@
               <span class="nav-text">Service Requests</span>
             </div>
 
+            <div class="nav-item" data-page="svc-checklist" onclick="navigate('svc-checklist',this)">
+              <i class="ti ti-checklist nav-icon"></i>
+              <span class="nav-text">Service Checklist</span>
+            </div>
+
             <div class="nav-item" data-page="svc-installation" onclick="navigate('svc-installation',this)">
               <i class="ti ti-settings-automation nav-icon"></i>
               <span class="nav-text">Installation Mgmt</span>
@@ -11530,6 +11596,49 @@
             </div>
           </div><!-- /#page-svc-requests -->
 
+          <!-- SERVICE CHECKLIST PAGE -->
+          <div class="page" id="page-svc-checklist">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Service Checklist</div>
+                <div class="page-sub">Configure checklist items per product type and service call type</div>
+              </div>
+              <button class="btn btn-primary" onclick="openSvcChecklist()"><i class="ti ti-plus"></i> New
+                Checklist</button>
+            </div>
+            <div class="kpi-grid kpi-grid-3 mb-4" id="svc-cl-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-checklist"></i> Configured Checklists <span
+                    class="badge badge-navy ml-8" id="svc-cl-count">0</span></div>
+                <div style="display:flex;gap:8px;">
+                  <input class="search-input" id="svc-cl-search" placeholder="Search…" oninput="filterSvcChecklists()">
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Product Types</th>
+                      <th>Call Types</th>
+                      <th>Checklist Item (Option)</th>
+                      <th style="text-align:center;">Yes/No</th>
+                      <th>Remarks</th>
+                      <th>Installation Form</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="svc-cl-tbody"></tbody>
+                </table>
+              </div>
+              <div id="svc-cl-empty" style="display:none; text-align:center; padding:40px; color:var(--text-muted);">
+                <i class="ti ti-checklist" style="font-size:36px; display:block; margin-bottom:12px; opacity:0.3;"></i>
+                No checklist configured yet. Click <strong>New Checklist</strong> to add one.
+              </div>
+            </div>
+          </div><!-- /#page-svc-checklist -->
+
           <!-- ASSIGN JOBS -->
           <div class="page" id="page-svc-assignjobs">
             <div class="page-header">
@@ -11803,6 +11912,133 @@
             </div>
           </div>
 
+          <div class="modal-wrap" id="modal-svc-request-view">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-layout-details"></i> Service Request Details — <span
+                    id="vreq-id"></span></div>
+                <div class="modal-actions" style="margin-left:auto; margin-right:12px;">
+                  <button class="btn btn-outline btn-sm"
+                    onclick="showToast('info','Print','Generating service report PDF...')"><i class="ti ti-printer"></i>
+                    Print</button>
+                  <button class="btn btn-primary btn-sm" onclick="closeModal('modal-svc-request-view')">Close</button>
+                </div>
+                <button class="modal-close" onclick="closeModal('modal-svc-request-view')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="background:#f9fafb;">
+                <!-- Header Info -->
+                <div class="card mb-4">
+                  <div class="card-body" style="padding:16px;">
+                    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;">
+                      <div>
+                        <div class="text-muted" style="font-size:11px; text-transform:uppercase; margin-bottom:4px;">
+                          Customer</div>
+                        <div id="vreq-customer" style="font-weight:600; font-size:14px;"></div>
+                        <div id="vreq-address" class="text-secondary" style="font-size:12px;"></div>
+                      </div>
+                      <div>
+                        <div class="text-muted" style="font-size:11px; text-transform:uppercase; margin-bottom:4px;">
+                          Service Type</div>
+                        <div id="vreq-type" class="tag tag-blue"></div>
+                        <div id="vreq-scheduled" class="text-secondary" style="font-size:12px; margin-top:4px;"></div>
+                      </div>
+                      <div>
+                        <div class="text-muted" style="font-size:11px; text-transform:uppercase; margin-bottom:4px;">
+                          Equipment / Serial</div>
+                        <div id="vreq-product" style="font-weight:600; font-size:14px;"></div>
+                        <div id="vreq-serial" class="text-secondary" style="font-size:12px;"></div>
+                      </div>
+                      <div>
+                        <div class="text-muted" style="font-size:11px; text-transform:uppercase; margin-bottom:4px;">
+                          Status</div>
+                        <div id="vreq-status"></div>
+                        <div id="vreq-technician" class="text-secondary" style="font-size:12px; margin-top:4px;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TABLE 1: SERVICE DETAILS (Line Items style) -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <div class="card-title text-primary"><i class="ti ti-list"></i> Service Details & Spare Parts</div>
+                  </div>
+                  <div class="table-wrap" style="box-shadow:none; border:none; border-top:1px solid var(--border);">
+                    <table class="data-tbl" style="width:100%; border-collapse:collapse;">
+                      <thead style="background:#f8fafc;">
+                        <tr>
+                          <th style="text-align:left; padding:12px 16px;">Service/Part Code</th>
+                          <th style="text-align:left; padding:12px 16px;">Description</th>
+                          <th style="text-align:center; padding:12px 16px; width:80px;">Qty</th>
+                          <th style="text-align:right; padding:12px 16px; width:120px;">Unit Rate</th>
+                          <th style="text-align:right; padding:12px 16px; width:120px;">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vreq-details-tbody"></tbody>
+                      <tfoot id="vreq-details-tfoot"></tfoot>
+                    </table>
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                  <!-- TABLE 2: CUSTOMER HISTORY (Invoices & Services) -->
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title text-success"><i class="ti ti-history"></i> Customer History</div>
+                    </div>
+                    <div class="table-wrap"
+                      style="box-shadow:none; border:none; border-top:1px solid var(--border); max-height:300px; overflow-y:auto;">
+                      <table class="data-tbl">
+                        <thead style="background:#f8fafc; position:sticky; top:0; z-index:10;">
+                          <tr>
+                            <th>Type</th>
+                            <th>Ref #</th>
+                            <th>Date</th>
+                            <th class="text-right">Value</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="vreq-history-tbody"></tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- TABLE 3: CHECKLIST TABLE -->
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title text-amber"><i class="ti ti-checklist"></i> Service Checklist</div>
+                    </div>
+                    <div class="table-wrap" style="box-shadow:none; border:none; border-top:1px solid var(--border);">
+                      <table class="data-tbl">
+                        <thead style="background:#f8fafc;">
+                          <tr>
+                            <th style="width:40px;">#</th>
+                            <th>Checkpoint</th>
+                            <th style="width:80px; text-align:center;">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="vreq-checklist-tbody"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description/Notes -->
+                <div class="card mt-4">
+                  <div class="card-header" style="background:#fff;">
+                    <div class="card-title" style="font-size:13px; color:var(--text-muted);">Request Description & Notes
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p id="vreq-desc" class="text-secondary" style="font-size:13px; margin:0; line-height:1.5;"></p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
           <div class="modal-wrap" id="modal-svc-technician">
             <div class="modal modal-sm">
               <div class="modal-header">
@@ -11834,6 +12070,93 @@
                 <button class="btn btn-outline" onclick="closeModal('modal-svc-technician')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveTechnician()"><i class="ti ti-check"></i> Add
                   Technician</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SERVICE CHECKLIST MODAL -->
+          <div class="modal-wrap" id="modal-svc-checklist" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-checklist"></i> Service Checklist</div>
+                <button class="modal-close" onclick="closeModal('modal-svc-checklist')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div style="display:flex;flex-direction:column;gap:18px;">
+
+                  <!-- Type of Product -->
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Type of Product</label>
+                    <div class="tag-select-wrap" style="min-height:42px;">
+                      <div class="tag-select-tags" id="msc-product-tags"></div>
+                      <select class="tag-select-input" id="msc-product-select"
+                        onchange="addChecklistTag('product',this)" style="flex:1;min-width:160px;">
+                        <option value="">— select product —</option>
+                        <option>Online UPS</option>
+                        <option>SMF Batteries</option>
+                        <option>Online UPS and SMF Batteries</option>
+                        <option>Inverter</option>
+                        <option>Solar Panel</option>
+                        <option>Servo Stabilizer</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Type -->
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Type</label>
+                    <div class="tag-select-wrap" style="min-height:42px;">
+                      <div class="tag-select-tags" id="msc-type-tags"></div>
+                      <select class="tag-select-input" id="msc-type-select" onchange="addChecklistTag('type',this)"
+                        style="flex:1;min-width:160px;">
+                        <option value="">— select type —</option>
+                        <option>PM Call</option>
+                        <option>Breakdown Call</option>
+                        <option>Installation</option>
+                        <option>Inspection</option>
+                        <option>Warranty Call</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Option -->
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Option <span
+                        style="color:#ef4444;">*</span></label>
+                    <input class="form-control" id="msc-option" style="width:100%;box-sizing:border-box;">
+                  </div>
+
+                  <!-- Yes/No -->
+                  <div
+                    style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg,#f9fafb);border:1px solid var(--border,#e5e7eb);border-radius:6px;">
+                    <input type="checkbox" id="msc-yesno"
+                      style="width:17px;height:17px;cursor:pointer;accent-color:var(--blue,#2563eb);flex-shrink:0;">
+                    <label for="msc-yesno"
+                      style="margin:0;cursor:pointer;font-size:13px;font-weight:500;color:var(--text,#111);user-select:none;">Yes
+                      / No</label>
+                  </div>
+
+                  <!-- Remarks -->
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Remarks</label>
+                    <input class="form-control" id="msc-remarks" style="width:100%;box-sizing:border-box;">
+                  </div>
+
+                  <!-- Installation Form -->
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Installation Form</label>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                      <select class="form-control" id="msc-install-form" style="flex:1;"></select>
+                      <button class="btn btn-icon btn-outline" title="Clear" type="button"
+                        onclick="document.getElementById('msc-install-form').value=''"><i class="ti ti-x"></i></button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="resetSvcChecklist()">Reset</button>
+                <button class="btn btn-primary" onclick="submitSvcChecklist()">Submit</button>
               </div>
             </div>
           </div>
@@ -13986,6 +14309,8 @@
                 <div class="page-title">Installation Management</div>
                 <div class="page-sub">Track new product installations and checklists</div>
               </div>
+              <button class="btn btn-primary" onclick="openNewInstModal()"><i class="ti ti-plus"></i> New
+                Installation</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="svc-inst-kpi"></div>
             <div class="card">
@@ -14009,6 +14334,108 @@
                   </thead>
                   <tbody id="svc-inst-tbody"></tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- INSTALLATION CHECKLIST MODAL -->
+          <div class="modal-wrap" id="modal-inst-checklist" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-checklist"></i> Installation Checklist — <span
+                    id="mic-id"></span></div>
+                <button class="modal-close" onclick="closeModal('modal-inst-checklist')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <!-- Install info -->
+                <div
+                  style="background:var(--bg,#f9fafb);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:14px 16px;margin-bottom:18px;">
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Customer</div>
+                      <div id="mic-customer" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Product</div>
+                      <div id="mic-product" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Technician</div>
+                      <div id="mic-tech" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Progress -->
+                <div style="margin-bottom:20px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+                    <span style="font-size:12px;font-weight:600;">Completion Progress</span>
+                    <span id="mic-pct" style="font-size:13px;font-weight:700;color:var(--blue,#2563eb);">0%</span>
+                  </div>
+                  <div class="progress-bar" style="height:10px;border-radius:5px;">
+                    <div class="progress-fill blue" id="mic-progress-fill"
+                      style="width:0%;border-radius:5px;transition:width 0.3s ease;"></div>
+                  </div>
+                  <div id="mic-progress-label" style="font-size:11px;color:var(--text-muted);margin-top:5px;">0 of 0
+                    items completed</div>
+                </div>
+                <!-- Checklist items -->
+                <div id="mic-items" style="display:flex;flex-direction:column;gap:0;"></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-inst-checklist')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveInstChecklist()"><i class="ti ti-device-floppy"></i> Save &
+                  Update</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- NEW INSTALLATION MODAL -->
+          <div class="modal-wrap" id="modal-inst-new" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-settings-automation"></i> New Installation</div>
+                <button class="modal-close" onclick="closeModal('modal-inst-new')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Customer <span
+                        style="color:#ef4444;">*</span></label>
+                    <select class="form-control" id="nin-customer"></select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Product <span
+                        style="color:#ef4444;">*</span></label>
+                    <select class="form-control" id="nin-product"></select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Scope</label>
+                    <select class="form-control" id="nin-scope">
+                      <option>AKGIM Scope</option>
+                      <option>Customer Scope</option>
+                      <option>Partial AKGIM</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Technician <span
+                        style="color:#ef4444;">*</span></label>
+                    <select class="form-control" id="nin-tech"></select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Due Date <span
+                        style="color:#ef4444;">*</span></label>
+                    <input class="form-control" type="date" id="nin-due">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-inst-new')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveNewInstallation()"><i class="ti ti-plus"></i>
+                  Create</button>
               </div>
             </div>
           </div>
@@ -19640,6 +20067,7 @@
       // Service
       'svc-tickets': { title: 'Tickets', crumbs: ['Service', 'Tickets'], module: 'service' },
       'svc-requests': { title: 'Service Requests', crumbs: ['Service', 'Requests'], module: 'service' },
+      'svc-checklist': { title: 'Service Checklist', crumbs: ['Service', 'Checklist'], module: 'service' },
       'svc-assignjobs': { title: 'Assign Jobs', crumbs: ['Service', 'Assign Jobs'], module: 'service' },
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
@@ -21121,6 +21549,8 @@
     /* ─────────────────────────────────────────────────────
        SERVICE REQUESTS — 20
        ───────────────────────────────────────────────────── */
+    DB.svcChecklists = [];
+
     DB.serviceRequests = Array.from({ length: 20 }, (_, i) => ({
       id: `SR-${String(i + 1).padStart(4, '0')}`,
       customer: spick(DB.customers).name,
@@ -21242,14 +21672,15 @@
       priority: spick(['High', 'Critical', 'Medium'])
     }));
     DB.installations = Array.from({ length: 12 }, (_, i) => ({
-      id: `INS-${si(2000, 2999)}`,
+      id: `INS-${2000 + i}`,
       customer: spick(DB.customers).name,
       product: spick(PRODUCT_NAMES),
       scope: spick(['AKGIM Scope', 'Customer Scope', 'Partial AKGIM']),
-      progress: si(10, 90),
+      progress: 0,
       tech: spick(DB.employees).name,
       due: new Date(Date.now() + si(1, 20) * 86400000).toISOString(),
-      status: spick(['Scheduled', 'In Progress', 'In Progress', 'Pending'])
+      status: spick(['Scheduled', 'In Progress', 'In Progress', 'Pending']),
+      checklistItems: null
     }));
     DB.attendanceToday = DB.employees.slice(0, 40).map(e => ({
       name: e.name, dept: e.department, shift: 'Day Shift',
@@ -22203,6 +22634,7 @@
       once('sal-returns', initSalReturns);
       once('sal-credit-note', initCreditNotePage);
       once('sal-buyback', initSalBuyback);
+      once('svc-checklist', initSvcChecklist);
       once('svc-pm', initSvcPM);
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
@@ -27058,10 +27490,139 @@
         <td class="text-secondary" style="font-size:12px;">${r.technician || 'Unassigned'}</td>
         <td><span class="badge badge-${SVC_STATUS_CLS[r.status] || 'gray'}">${r.status}</span></td>
         <td>
-          <button class="btn btn-ghost btn-icon-sm" onclick="showToast('success','Done','Service request completed.')"><i class="ti ti-check" style="color:var(--green);"></i></button>
+          <div class="tbl-actions">
+            <button class="btn btn-ghost btn-icon-sm" title="View Details" onclick="openSvcRequestView('${r.id}')"><i class="ti ti-eye" style="color:var(--blue);"></i></button>
+            <button class="btn btn-ghost btn-icon-sm" title="Mark Completed" onclick="showToast('success','Done','Service request completed.')"><i class="ti ti-check" style="color:var(--green);"></i></button>
+          </div>
         </td>
       </tr>`).join('');
       renderPagination('svc-req-pagination', sReqFiltered.length, sReqPage, SREQ_PER, `function(p){sReqPage=p;renderServiceRequestsTable()}`);
+    }
+
+    let _svcChecklistTags = { product: [], type: [] };
+    let _svcClFiltered = [];
+
+    function initSvcChecklist() {
+      renderSvcChecklistTable();
+    }
+
+    function filterSvcChecklists() {
+      const q = (document.getElementById('svc-cl-search')?.value || '').toLowerCase();
+      _svcClFiltered = (DB.svcChecklists || []).filter(c =>
+        !q || c.option.toLowerCase().includes(q) ||
+        c.productTypes.join(' ').toLowerCase().includes(q) ||
+        c.callTypes.join(' ').toLowerCase().includes(q)
+      );
+      renderSvcChecklistTable(_svcClFiltered);
+    }
+
+    function renderSvcChecklistTable(rows) {
+      rows = rows || DB.svcChecklists || [];
+      const tbody = document.getElementById('svc-cl-tbody');
+      const empty = document.getElementById('svc-cl-empty');
+      const cnt = document.getElementById('svc-cl-count');
+      if (cnt) cnt.textContent = rows.length;
+      const kpi = document.getElementById('svc-cl-kpi');
+      if (kpi) {
+        const total = (DB.svcChecklists || []).length;
+        const withYesNo = (DB.svcChecklists || []).filter(c => c.yesNo).length;
+        kpi.innerHTML = `
+          <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Configs</div><div class="kpi-val">${total}</div></div><div class="kpi-icon navy"><i class="ti ti-checklist"></i></div></div><div class="kpi-sub neutral">All configured checklists</div></div>
+          <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Product Types</div><div class="kpi-val">${[...new Set((DB.svcChecklists || []).flatMap(c => c.productTypes))].length}</div></div><div class="kpi-icon blue"><i class="ti ti-package"></i></div></div><div class="kpi-sub neutral">Distinct products</div></div>
+          <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Yes/No Items</div><div class="kpi-val">${withYesNo}</div></div><div class="kpi-icon amber"><i class="ti ti-checkbox"></i></div></div><div class="kpi-sub neutral">Confirmation items</div></div>`;
+      }
+      if (!tbody) return;
+      if (!rows.length) {
+        tbody.innerHTML = '';
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      if (empty) empty.style.display = 'none';
+      tbody.innerHTML = rows.map((c, i) => `
+        <tr>
+          <td class="text-muted" style="font-size:11px;">${i + 1}</td>
+          <td>${c.productTypes.map(p => `<span class="tag tag-blue" style="font-size:11px;margin:2px;">${p}</span>`).join('') || '<span class="text-muted">All</span>'}</td>
+          <td>${c.callTypes.map(t => `<span class="tag tag-amber" style="font-size:11px;margin:2px;">${t}</span>`).join('') || '<span class="text-muted">All</span>'}</td>
+          <td style="font-size:13px; font-weight:500;">${c.option}</td>
+          <td class="text-center"><input type="checkbox" ${c.yesNo ? 'checked' : ''} disabled style="width:15px;height:15px;accent-color:var(--blue);"></td>
+          <td class="text-secondary" style="font-size:12px;">${c.remarks || '—'}</td>
+          <td class="text-secondary" style="font-size:12px;">${c.installFormId || '—'}</td>
+          <td>
+            <div class="tbl-actions">
+              <button class="btn btn-ghost btn-icon-sm" title="Delete" onclick="deleteSvcChecklist('${c.id}')"><i class="ti ti-trash" style="color:var(--red);"></i></button>
+            </div>
+          </td>
+        </tr>`).join('');
+    }
+
+    function deleteSvcChecklist(id) {
+      DB.svcChecklists = (DB.svcChecklists || []).filter(c => c.id !== id);
+      renderSvcChecklistTable();
+      showToast('success', 'Deleted', 'Checklist config removed.');
+    }
+
+    function openSvcChecklist() {
+      resetSvcChecklist();
+      const installSel = document.getElementById('msc-install-form');
+      if (installSel) {
+        const forms = (DB.salesOrders || []).slice(0, 30);
+        installSel.innerHTML = '<option value="">-Select-</option>' +
+          forms.map(f => `<option value="${f.id}">${f.id}</option>`).join('');
+      }
+      openModal('modal-svc-checklist');
+    }
+
+    function addChecklistTag(field, sel) {
+      const val = sel.value;
+      if (!val || _svcChecklistTags[field].includes(val)) { sel.value = ''; return; }
+      _svcChecklistTags[field].push(val);
+      renderChecklistTags(field);
+      sel.value = '';
+    }
+
+    function renderChecklistTags(field) {
+      const container = document.getElementById('msc-' + field + '-tags');
+      if (!container) return;
+      container.innerHTML = _svcChecklistTags[field].map(t =>
+        `<span class="tag-select-tag">${t}<button class="tag-remove" onclick="removeChecklistTag('${field}','${t.replace(/'/g, "\\'")}')" type="button">×</button></span>`
+      ).join('');
+    }
+
+    function removeChecklistTag(field, val) {
+      _svcChecklistTags[field] = _svcChecklistTags[field].filter(t => t !== val);
+      renderChecklistTags(field);
+    }
+
+    function resetSvcChecklist() {
+      _svcChecklistTags = { product: [], type: [] };
+      ['product', 'type'].forEach(f => {
+        const c = document.getElementById('msc-' + f + '-tags'); if (c) c.innerHTML = '';
+        const s = document.getElementById('msc-' + f + '-select'); if (s) s.value = '';
+      });
+      const opt = document.getElementById('msc-option'); if (opt) opt.value = '';
+      const yn = document.getElementById('msc-yesno'); if (yn) yn.checked = false;
+      const rem = document.getElementById('msc-remarks'); if (rem) rem.value = '';
+      const inst = document.getElementById('msc-install-form'); if (inst) inst.value = '';
+    }
+
+    function submitSvcChecklist() {
+      const option = document.getElementById('msc-option')?.value?.trim();
+      if (!option) { showToast('warning', 'Required', 'Please fill in the Option field.'); return; }
+      const newId = 'SCL-' + String((DB.svcChecklists || []).length + 1).padStart(3, '0');
+      const record = {
+        id: newId,
+        productTypes: [..._svcChecklistTags.product],
+        callTypes: [..._svcChecklistTags.type],
+        option,
+        yesNo: document.getElementById('msc-yesno')?.checked || false,
+        remarks: document.getElementById('msc-remarks')?.value?.trim() || '',
+        installFormId: document.getElementById('msc-install-form')?.value || '',
+      };
+      if (!DB.svcChecklists) DB.svcChecklists = [];
+      DB.svcChecklists.push(record);
+      renderSvcChecklistTable();
+      showToast('success', 'Saved', `Checklist "${option}" configured successfully.`);
+      closeModal('modal-svc-checklist');
     }
 
     function loadCustomerHistory() {
@@ -27130,6 +27691,104 @@
 
       closeModal('modal-svc-request');
       showToast('success', 'Request Created', 'Service request logged.');
+    }
+
+    const SVC_CHECKLISTS = {
+      'Installation': ['Site inspection completed', 'Power supply verified', 'Physical mounting finished', 'Software configuration done', 'User training provided', 'Customer sign-off obtained'],
+      'Maintenance': ['Filter cleaning', 'Coolant level check', 'Belt tension adjustment', 'General lubrication', 'System performance test'],
+      'Repair': ['Issue diagnostic completed', 'Faulty parts identified', 'Parts replaced', 'Functionality test passed', 'Safety check performed'],
+      'Inspection': ['Visual inspection', 'Electrical safety test', 'Compliance check', 'Report generation']
+    };
+
+    function openSvcRequestView(reqId) {
+      const req = DB.serviceRequests.find(r => r.id === reqId);
+      if (!req) return;
+
+      document.getElementById('vreq-id').textContent = req.id;
+      document.getElementById('vreq-customer').textContent = req.customer;
+      document.getElementById('vreq-address').textContent = req.address || 'Address not specified';
+      document.getElementById('vreq-type').textContent = req.type;
+      document.getElementById('vreq-type').className = 'tag tag-' + ({ Installation: 'blue', Maintenance: 'amber', Repair: 'red', Inspection: 'navy' }[req.type] || 'gray');
+      document.getElementById('vreq-scheduled').innerHTML = `<i class="ti ti-calendar"></i> ${fmtDate(req.scheduledDate)}`;
+      document.getElementById('vreq-product').textContent = req.product || 'Product N/A';
+      document.getElementById('vreq-serial').textContent = req.serialNo || 'SN-8829910';
+      document.getElementById('vreq-status').innerHTML = `<span class="badge badge-${SVC_STATUS_CLS[req.status] || 'gray'}">${req.status}</span>`;
+      document.getElementById('vreq-technician').innerHTML = `<i class="ti ti-user"></i> Tech: ${req.technician || 'Pending Assignment'}`;
+      document.getElementById('vreq-desc').textContent = req.description || 'No additional notes provided for this service request.';
+
+      // Table 1: Service Details (Corrected Alignment)
+      const detailsTbody = document.getElementById('vreq-details-tbody');
+      const detailsTfoot = document.getElementById('vreq-details-tfoot');
+      const mockItems = [
+        { code: 'SVC-001', desc: 'General Service & Diagnostic', qty: 1, rate: 1200, total: 1200 },
+        { code: 'PRT-882', desc: 'Replacement Filter Element', qty: 1, rate: 850, total: 850 },
+        { code: 'PRT-102', desc: 'Lubricant Oil (Ltr)', qty: 2, rate: 450, total: 900 }
+      ];
+      detailsTbody.innerHTML = mockItems.map(item => `
+        <tr>
+          <td style="padding:10px 16px;"><span class="badge badge-outline">${item.code}</span></td>
+          <td style="padding:10px 16px;">${item.desc}</td>
+          <td class="text-center" style="padding:10px 16px;">${item.qty}</td>
+          <td class="text-right" style="padding:10px 16px;">₹${fmt(item.rate)}</td>
+          <td class="text-right" style="padding:10px 16px; font-weight:600; color:var(--navy);">₹${fmt(item.total)}</td>
+        </tr>
+      `).join('');
+      detailsTfoot.innerHTML = `
+        <tr style="background:#f8fafc; font-weight:700; border-top:2px solid var(--border);">
+          <td colspan="4" class="text-right" style="padding:12px 16px;">Total Payable</td>
+          <td class="text-right" style="padding:12px 16px; font-size:15px; color:var(--blue);">₹${fmt(2950)}</td>
+        </tr>`;
+
+      // Table 2: Customer History
+      const historyTbody = document.getElementById('vreq-history-tbody');
+      const history = [
+        { type: 'Invoice', ref: 'INV-2024-088', date: '10 May 2026', val: 12500, status: 'Paid' },
+        { type: 'Service', ref: 'SR-1022', date: '15 Apr 2026', val: 2200, status: 'Completed' },
+        { type: 'Invoice', ref: 'INV-2024-042', date: '12 Mar 2026', val: 8900, status: 'Paid' }
+      ];
+      historyTbody.innerHTML = history.map(h => `
+        <tr>
+          <td><span class="badge badge-${h.type === 'Invoice' ? 'purple' : 'blue'}">${h.type}</span></td>
+          <td><a href="#" class="text-primary" onclick="event.preventDefault();" style="text-decoration:none;font-weight:500;">${h.ref}</a></td>
+          <td class="text-muted" style="font-size:11px;">${h.date}</td>
+          <td class="text-right">₹${fmt(h.val)}</td>
+          <td><span class="badge badge-green">${h.status}</span></td>
+        </tr>
+      `).join('');
+
+      // Table 3: Configured Service Checklist
+      const checklistTbody = document.getElementById('vreq-checklist-tbody');
+      const matchedConfigs = (DB.svcChecklists || []).filter(cfg => {
+        const prodMatch = !cfg.productTypes.length || cfg.productTypes.some(p =>
+          (req.product || '').toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes((req.product || '').toLowerCase()));
+        const typeMatch = !cfg.callTypes.length || cfg.callTypes.some(t =>
+          (req.type || '').toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes((req.type || '').toLowerCase()));
+        return prodMatch && typeMatch;
+      });
+      if (matchedConfigs.length > 0) {
+        checklistTbody.innerHTML = matchedConfigs.map((cfg, idx) => `
+          <tr>
+            <td style="color:var(--text-muted); font-size:11px;">${idx + 1}</td>
+            <td style="font-size:13px; color:var(--text-main);">${cfg.option}</td>
+            <td class="text-center">
+              <input type="checkbox" ${cfg.yesNo ? 'checked' : ''} style="width:16px; height:16px; cursor:pointer; accent-color:var(--blue);">
+            </td>
+          </tr>
+        `).join('');
+      } else {
+        const fallback = SVC_CHECKLISTS[req.type] || ['General Inspection'];
+        checklistTbody.innerHTML = fallback.map((item, idx) => `
+          <tr>
+            <td style="color:var(--text-muted); font-size:11px;">${idx + 1}</td>
+            <td style="font-size:13px; color:var(--text-main);">${item}</td>
+            <td class="text-center">
+              <input type="checkbox" checked style="width:16px; height:16px; cursor:pointer; accent-color:var(--blue);">
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      openModal('modal-svc-request-view');
     }
 
     /* ─── ASSIGN JOBS ─── */
@@ -28546,31 +29205,192 @@
       showToast('success', 'PM Record Saved', 'The PM record has been saved as ' + status);
       closeModal('modal-svc-pm');
     }
+    /* ── INSTALLATION MANAGEMENT ── */
+    const INST_DEFAULT_CHECKLIST = [
+      'Site inspection completed',
+      'Power supply verified',
+      'Physical mounting & positioning done',
+      'Cabling & wiring completed',
+      'System powered on — functional test passed',
+      'Battery backup test passed',
+      'Software / firmware configuration done',
+      'Customer demonstration conducted',
+      'Customer sign-off obtained',
+      'Installation form submitted'
+    ];
+
+    let _instChecklistId = null;
+
+    function _getInstChecklistItems(ins) {
+      if (ins.checklistItems) return ins.checklistItems;
+      const matched = (DB.svcChecklists || []).filter(cfg => {
+        const prodMatch = !cfg.productTypes.length || cfg.productTypes.some(p =>
+          (ins.product || '').toLowerCase().includes(p.toLowerCase()) ||
+          p.toLowerCase().includes((ins.product || '').toLowerCase()));
+        const typeMatch = !cfg.callTypes.length || cfg.callTypes.some(t =>
+          t.toLowerCase().includes('install'));
+        return prodMatch && typeMatch;
+      });
+      const labels = matched.length
+        ? matched.map(c => c.option)
+        : INST_DEFAULT_CHECKLIST;
+      return labels.map(label => ({ label, done: false }));
+    }
+
+    function _calcProgress(items) {
+      if (!items || !items.length) return 0;
+      return Math.round((items.filter(i => i.done).length / items.length) * 100);
+    }
+
+    function _instStatusColor(status) {
+      return { 'In Progress': 'blue', 'Completed': 'green', 'Pending': 'amber', 'Scheduled': 'navy' }[status] || 'gray';
+    }
+
+    function _progressColor(pct) {
+      if (pct === 100) return 'green';
+      if (pct >= 50) return 'blue';
+      return 'amber';
+    }
+
     function initSvcInstallation() {
+      renderInstallationTable();
+    }
+
+    function renderInstallationTable() {
+      const list = DB.installations || [];
+      const pending = list.filter(i => i.status === 'Pending' || i.status === 'Scheduled').length;
+      const inProg = list.filter(i => i.status === 'In Progress').length;
+      const complete = list.filter(i => i.status === 'Completed').length;
+      const avgPct = list.length ? Math.round(list.reduce((s, i) => s + i.progress, 0) / list.length) : 0;
+
       const kpi = document.getElementById('svc-inst-kpi');
       if (kpi) kpi.innerHTML = `
-        <div class="kpi-card gold"><div class="kpi-label">Pending Installs</div><div class="kpi-val">12</div></div>
-        <div class="kpi-card blue"><div class="kpi-label">In Progress</div><div class="kpi-val">7</div></div>
-        <div class="kpi-card green"><div class="kpi-label">Completed This Month</div><div class="kpi-val">48</div></div>
-        <div class="kpi-card navy"><div class="kpi-label">Service TAT</div><div class="kpi-val">14 Hrs</div></div>`;
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending / Scheduled</div><div class="kpi-val">${pending}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Awaiting start</div></div>
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">In Progress</div><div class="kpi-val">${inProg}</div></div><div class="kpi-icon blue"><i class="ti ti-settings-automation"></i></div></div><div class="kpi-sub neutral">Active jobs</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Completed</div><div class="kpi-val">${complete}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Fully done</div></div>
+        <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Avg Completion</div><div class="kpi-val">${avgPct}%</div></div><div class="kpi-icon navy"><i class="ti ti-chart-pie"></i></div></div><div class="kpi-sub neutral">Across all jobs</div></div>`;
+
       const tbody = document.getElementById('svc-inst-tbody'); if (!tbody) return;
-      tbody.innerHTML = DB.installations.map(ins => `
+      tbody.innerHTML = list.map(ins => {
+        const pct = ins.progress;
+        const pcol = _progressColor(pct);
+        return `
         <tr>
           <td><span class="id-cell">${ins.id}</span></td>
-          <td class="entity-name">${ins.customer}</td>
-          <td class="text-secondary" style="font-size:11px;">${ins.product}</td>
-          <td class="text-muted">${ins.scope}</td>
           <td>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div class="progress-bar" style="width:60px;height:6px;"><div class="progress-fill" style="width:${ins.progress}%;"></div></div>
-              <span style="font-size:10px;">${ins.progress}%</span>
+            <div class="entity-cell">
+              <div class="entity-av blue">${ins.customer.charAt(0)}</div>
+              <div class="entity-name">${ins.customer}</div>
             </div>
           </td>
-          <td>${ins.tech}</td>
-          <td class="text-muted">${fmtDate(ins.due)}</td>
-          <td><span class="badge badge-${ins.status === 'In Progress' ? 'blue' : 'amber'}">${ins.status}</span></td>
-          <td><button class="btn btn-primary btn-sm" onclick="showToast('info','Checklist','Opening installation checklist...')">Checklist</button></td>
-        </tr>`).join('');
+          <td class="text-secondary" style="font-size:12px;">${ins.product}</td>
+          <td class="text-muted" style="font-size:12px;">${ins.scope}</td>
+          <td style="min-width:110px;">
+            <div style="display:flex;align-items:center;gap:7px;">
+              <div class="progress-bar" style="flex:1;height:7px;border-radius:4px;">
+                <div class="progress-fill ${pcol}" style="width:${pct}%;border-radius:4px;"></div>
+              </div>
+              <span style="font-size:11px;font-weight:600;color:var(--${pcol === 'amber' ? 'amber' : pcol},#2563eb);min-width:30px;">${pct}%</span>
+            </div>
+          </td>
+          <td class="text-secondary" style="font-size:12px;">${ins.tech}</td>
+          <td class="text-muted" style="font-size:11px;">${fmtDate(ins.due)}</td>
+          <td><span class="badge badge-${_instStatusColor(ins.status)}">${ins.status}</span></td>
+          <td>
+            <div class="tbl-actions">
+              <button class="btn btn-outline btn-sm" onclick="openInstChecklist('${ins.id}')"><i class="ti ti-checklist"></i> Checklist</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function openInstChecklist(insId) {
+      const ins = (DB.installations || []).find(i => i.id === insId);
+      if (!ins) return;
+      if (!ins.checklistItems) ins.checklistItems = _getInstChecklistItems(ins);
+      _instChecklistId = insId;
+
+      document.getElementById('mic-id').textContent = ins.id;
+      document.getElementById('mic-customer').textContent = ins.customer;
+      document.getElementById('mic-product').textContent = ins.product;
+      document.getElementById('mic-tech').textContent = ins.tech;
+
+      _renderInstChecklistItems(ins.checklistItems);
+      openModal('modal-inst-checklist');
+    }
+
+    function _renderInstChecklistItems(items) {
+      const done = items.filter(i => i.done).length;
+      const total = items.length;
+      const pct = _calcProgress(items);
+
+      document.getElementById('mic-pct').textContent = pct + '%';
+      document.getElementById('mic-progress-fill').style.width = pct + '%';
+      document.getElementById('mic-progress-fill').className = 'progress-fill ' + _progressColor(pct);
+      document.getElementById('mic-progress-label').textContent = `${done} of ${total} items completed`;
+
+      const container = document.getElementById('mic-items');
+      container.innerHTML = items.map((item, idx) => `
+        <label style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;border-bottom:1px solid var(--border,#e5e7eb);transition:background 0.15s;" onmouseover="this.style.background='var(--bg,#f9fafb)'" onmouseout="this.style.background=''">
+          <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleInstCheckItem(${idx},this)"
+            style="width:17px;height:17px;cursor:pointer;accent-color:var(--blue,#2563eb);flex-shrink:0;">
+          <span style="font-size:13px;${item.done ? 'text-decoration:line-through;color:var(--text-muted);' : 'color:var(--text,#111);'}">${idx + 1}. ${item.label}</span>
+          ${item.done ? '<i class="ti ti-circle-check" style="color:var(--green);margin-left:auto;font-size:15px;"></i>' : ''}
+        </label>`).join('');
+    }
+
+    function toggleInstCheckItem(idx, cb) {
+      const ins = (DB.installations || []).find(i => i.id === _instChecklistId);
+      if (!ins || !ins.checklistItems) return;
+      ins.checklistItems[idx].done = cb.checked;
+      _renderInstChecklistItems(ins.checklistItems);
+    }
+
+    function saveInstChecklist() {
+      const ins = (DB.installations || []).find(i => i.id === _instChecklistId);
+      if (!ins) return;
+      ins.progress = _calcProgress(ins.checklistItems);
+      const doneCount = ins.checklistItems.filter(i => i.done).length;
+      const total = ins.checklistItems.length;
+      if (ins.progress === 100) ins.status = 'Completed';
+      else if (doneCount > 0) ins.status = 'In Progress';
+      renderInstallationTable();
+      closeModal('modal-inst-checklist');
+      showToast('success', 'Saved', `Checklist updated — ${ins.progress}% complete.`);
+    }
+
+    function openNewInstModal() {
+      const custSel = document.getElementById('nin-customer');
+      const prodSel = document.getElementById('nin-product');
+      const techSel = document.getElementById('nin-tech');
+      if (custSel) custSel.innerHTML = '<option value="">— select —</option>' +
+        (DB.customers || []).map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+      if (prodSel) prodSel.innerHTML = '<option value="">— select —</option>' +
+        (DB.products || []).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+      if (techSel) techSel.innerHTML = '<option value="">— select —</option>' +
+        (DB.technicians || []).map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+      const dueFld = document.getElementById('nin-due');
+      if (dueFld) dueFld.value = '';
+      openModal('modal-inst-new');
+    }
+
+    function saveNewInstallation() {
+      const customer = document.getElementById('nin-customer')?.value;
+      const product = document.getElementById('nin-product')?.value;
+      const tech = document.getElementById('nin-tech')?.value;
+      const due = document.getElementById('nin-due')?.value;
+      if (!customer || !product || !tech || !due) {
+        showToast('warning', 'Required', 'Please fill in all required fields.'); return;
+      }
+      const scope = document.getElementById('nin-scope')?.value || 'AKGIM Scope';
+      const newId = `INS-${2000 + (DB.installations || []).length}`;
+      const record = { id: newId, customer, product, scope, progress: 0, tech, due: new Date(due).toISOString(), status: 'Scheduled', checklistItems: null };
+      if (!DB.installations) DB.installations = [];
+      DB.installations.unshift(record);
+      renderInstallationTable();
+      closeModal('modal-inst-new');
+      showToast('success', 'Created', `Installation ${newId} created successfully.`);
     }
     function initSvcAMC() {
       const kpi = document.getElementById('svc-amc-kpi');
