@@ -18156,6 +18156,24 @@
                   </div>
 
                   <div class="form-group">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                      <label class="form-label" style="margin-bottom:0;">Quote Type</label>
+                      <button class="btn btn-ghost btn-xs" id="fp-quote-toggle"
+                        style="color:var(--sky-blue);font-weight:600;" onclick="toggleQuoteTypeField()"><i
+                          class="ti ti-plus"></i> Add New</button>
+                    </div>
+                    <select class="form-control" id="fp-quote">
+                      <option>Fixed Price</option>
+                      <option>Variable / Estimate</option>
+                    </select>
+                    <div id="fp-quote-new-wrapper" style="display:none; gap:6px;">
+                      <input class="form-control" id="fp-quote-new" placeholder="Type new quote type..."
+                        style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;"
+                        onclick="addNewQuoteTypeInline()">Add</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
                     <label class="form-label">GST Rate (%)</label>
                     <select class="form-control" id="fp-gst">
                       <option>0</option>
@@ -21103,6 +21121,60 @@
       }
 
       toggleTypeField();
+    }
+
+    function toggleQuoteTypeField() {
+      const select = document.getElementById('fp-quote');
+      const wrapper = document.getElementById('fp-quote-new-wrapper');
+      const input = document.getElementById('fp-quote-new');
+      const btn = document.getElementById('fp-quote-toggle');
+
+      if (select.style.display !== 'none') {
+        select.style.display = 'none';
+        wrapper.style.display = 'flex';
+        input.focus();
+        btn.innerHTML = '<i class="ti ti-x"></i> Cancel';
+        btn.style.color = 'var(--danger)';
+      } else {
+        select.style.display = 'block';
+        wrapper.style.display = 'none';
+        input.value = '';
+        btn.innerHTML = '<i class="ti ti-plus"></i> Add New';
+        btn.style.color = 'var(--sky-blue)';
+      }
+    }
+
+    function addNewQuoteTypeInline() {
+      const input = document.getElementById('fp-quote-new');
+      const select = document.getElementById('fp-quote');
+      const val = input.value.trim();
+
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a quote type.');
+        return;
+      }
+
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        select.add(opt);
+        select.value = val;
+        showToast('success', 'Added', `Quote Type "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Quote Type "${val}" already exists.`);
+      }
+
+      toggleQuoteTypeField();
     }
 
     function addNewBrandInline() {
