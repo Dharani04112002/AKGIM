@@ -13391,7 +13391,7 @@
                 <div class="page-sub">Process product buy-backs and credit notes</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary"><i class="ti ti-refresh"></i> New Buy Back</button>
+                <button class="btn btn-primary" onclick="openModal('modal-sal-buyback')"><i class="ti ti-refresh"></i> New Buy Back</button>
               </div>
             </div>
             <div class="card">
@@ -17878,6 +17878,69 @@
                   Save Draft</button>
                 <button class="btn btn-primary" onclick="saveCreditNote('Issued')"><i class="ti ti-send"></i>
                   Issue</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── SALES: BUY BACK MODAL ──────────────────────── -->
+          <div class="modal-wrap" id="modal-sal-buyback">
+            <div class="modal" style="max-width: 800px;">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-refresh"></i> New Buy Back</div>
+                <button class="modal-close" onclick="closeModal('modal-sal-buyback')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div class="form-grid-2 mb-4">
+                  <div class="form-group"><label class="form-label">SI.No</label>
+                    <input class="form-control" type="text" id="mbb-slno" placeholder="Enter SI.No">
+                  </div>
+                  <div class="form-group"><label class="form-label">Product</label>
+                    <select class="form-control" id="mbb-product">
+                      <option value="">— Select Product —</option>
+                    </select>
+                  </div>
+                  <div class="form-group form-col-2"><label class="form-label">Buyback Details *</label>
+                    <textarea class="form-control" id="mbb-details" rows="3" placeholder="Enter buyback details..."></textarea>
+                  </div>
+                  <div class="form-group"><label class="form-label">Price *</label>
+                    <input class="form-control" type="number" id="mbb-price" value="0" oninput="mbbCalcTotals()">
+                  </div>
+                  <div class="form-group"><label class="form-label">Qty *</label>
+                    <input class="form-control" type="number" id="mbb-qty" value="0" min="1" oninput="mbbCalcTotals()">
+                  </div>
+                  <div class="form-group"><label class="form-label">GST %</label>
+                    <select class="form-control" id="mbb-gst-pct" onchange="mbbCalcTotals()">
+                      <option value="0">0%</option>
+                      <option value="5">5%</option>
+                      <option value="12">12%</option>
+                      <option value="18" selected>18%</option>
+                      <option value="28">28%</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Buyback Amount *</label>
+                    <input class="form-control" type="number" id="mbb-amount" value="0" readonly>
+                  </div>
+                  <div class="form-group"><label class="form-label">GST Amount</label>
+                    <input class="form-control" type="number" id="mbb-gst-amount" value="0" readonly>
+                  </div>
+                  <div class="form-group"><label class="form-label">Final Amount</label>
+                    <input class="form-control" type="number" id="mbb-final-amount" value="0" readonly>
+                  </div>
+                </div>
+                <div class="divider mb-3"></div>
+                <div class="form-group">
+                   <div style="display: flex; align-items: center; gap: 8px;">
+                      <input type="checkbox" id="mbb-validate" style="width: 18px; height: 18px;">
+                      <label class="form-label" for="mbb-validate" style="margin-bottom: 0;">Validate Details</label>
+                   </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="resetBuyBack()">Reset</button>
+                <div style="display: flex; gap: 8px;">
+                   <button class="btn btn-outline" onclick="saveBuyBack('Draft')">Save as Draft</button>
+                   <button class="btn btn-primary" onclick="saveBuyBack('Submitted')">Submit</button>
+                </div>
               </div>
             </div>
           </div>
@@ -27557,6 +27620,78 @@
     function initSalBuyback() {
       const tbody = document.getElementById('sal-buyback-tbody'); if (!tbody) return;
       tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No buy back transactions found.</div></td></tr>`;
+      
+      // Populate product select
+      const prodSel = document.getElementById('mbb-product');
+      if (prodSel && DB.products) {
+        prodSel.innerHTML = '<option value="">— Select Product —</option>' + 
+          DB.products.slice(0, 50).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+      }
+    }
+
+    function mbbCalcTotals() {
+      const price = parseFloat(document.getElementById('mbb-price').value) || 0;
+      const qty = parseFloat(document.getElementById('mbb-qty').value) || 0;
+      const gstPct = parseFloat(document.getElementById('mbb-gst-pct').value) || 0;
+      
+      const amount = price * qty;
+      const gstAmount = amount * (gstPct / 100);
+      const finalAmount = amount + gstAmount;
+      
+      document.getElementById('mbb-amount').value = amount.toFixed(2);
+      document.getElementById('mbb-gst-amount').value = gstAmount.toFixed(2);
+      document.getElementById('mbb-final-amount').value = finalAmount.toFixed(2);
+    }
+
+    function saveBuyBack(status) {
+      const slno = document.getElementById('mbb-slno').value;
+      const product = document.getElementById('mbb-product').value;
+      const details = document.getElementById('mbb-details').value;
+      const finalAmount = document.getElementById('mbb-final-amount').value;
+      const validated = document.getElementById('mbb-validate').checked;
+      
+      if (!product || !details) {
+        showToast('warning', 'Missing Details', 'Please fill in all required fields.');
+        return;
+      }
+      
+      showToast('success', 'Buy Back ' + status, 'Buy back transaction has been saved.');
+      closeModal('modal-sal-buyback');
+      
+      const tbody = document.getElementById('sal-buyback-tbody');
+      if (tbody) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><span class="id-cell">BB-ORD-${Math.floor(Math.random() * 10000)}</span></td>
+          <td class="entity-name">General Customer</td>
+          <td class="text-secondary">${slno || 'ORD-' + si(1000, 9999)}</td>
+          <td class="text-secondary">${product}</td>
+          <td class="amount-cell">₹${fmt(finalAmount)}</td>
+          <td><span class="badge badge-outline">${validated ? 'Yes' : 'No'}</span></td>
+          <td><span class="badge badge-${status === 'Submitted' ? 'success' : 'gray'}">${status}</span></td>
+          <td>
+            <div class="tbl-actions">
+              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-eye"></i></button>
+              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-edit"></i></button>
+            </div>
+          </td>
+        `;
+        if (tbody.querySelector('.empty-state')) tbody.innerHTML = '';
+        tbody.prepend(row);
+      }
+    }
+
+    function resetBuyBack() {
+      document.getElementById('mbb-slno').value = '';
+      document.getElementById('mbb-product').value = '';
+      document.getElementById('mbb-details').value = '';
+      document.getElementById('mbb-price').value = '0';
+      document.getElementById('mbb-qty').value = '0';
+      document.getElementById('mbb-gst-pct').value = '18';
+      document.getElementById('mbb-amount').value = '0.00';
+      document.getElementById('mbb-gst-amount').value = '0.00';
+      document.getElementById('mbb-final-amount').value = '0.00';
+      document.getElementById('mbb-validate').checked = false;
     }
 
     /* ─── SERVICE MODULE EXTENSIONS ─── */
