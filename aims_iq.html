@@ -9220,7 +9220,7 @@
                       <th>Supplier</th>
                       <th>Contact</th>
                       <th>City</th>
-                      <th>Lead Time</th>
+                      <th>Delivery Days</th>
                       <th>Total POs</th>
                       <th>Total Value</th>
                       <th>Rating</th>
@@ -16447,7 +16447,15 @@
                       id="mquo-notes" placeholder="Terms and conditions…"></div>
                 </div>
                 <div class="divider mb-3"></div>
-                <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
+                <div style="display:flex; justify-content:space-between; align-items:center;" class="mb-3">
+                  <div class="card-title mb-0"><i class="ti ti-list"></i> Line Items</div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <label class="form-label mb-0" style="white-space:nowrap;">Filter Products by Type:</label>
+                    <select class="form-control" style="width: 200px;" id="mquo-product-type" onchange="mquoFilterProductsByType()">
+                      <option value="">— All Types —</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="table-wrap">
                   <table class="data-tbl">
                     <thead>
@@ -16462,7 +16470,7 @@
                     </thead>
                     <tbody id="mquo-items-body">
                       <tr>
-                        <td><select class="form-control" onchange="mquoCalc(this)" style="min-width:200px;">
+                        <td><select class="form-control mquo-product-sel" onchange="mquoCalc(this)" style="min-width:200px;">
                             <option value="">— Select —</option>
                           </select></td>
                         <td><input type="number" class="form-control" style="width:70px;" value="1" min="1"
@@ -18055,17 +18063,31 @@
               </div>
               <div class="modal-body">
                 <div class="form-grid form-grid-2">
-                  <div class="form-group span-2">
+                  <div class="form-group">
                     <label class="form-label">Product Name <span class="req">*</span></label>
                     <input class="form-control" id="fp-name" placeholder="e.g. Circuit Breaker 16A" />
                   </div>
-                  <div class="form-group">
-                    <label class="form-label">SKU / Code <span class="req">*</span></label>
-                    <input class="form-control" id="fp-sku" placeholder="SKU-00001" />
-                  </div>
+
                   <div class="form-group">
                     <label class="form-label">HSN Code</label>
                     <input class="form-control" id="fp-hsn" placeholder="853690" />
+                  </div>
+                  <div class="form-group">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
+                      <label class="form-label" style="margin-bottom:0;">Product Type <span class="req">*</span></label>
+                      <button class="btn btn-ghost btn-xs" id="fp-type-toggle"
+                        style="color:var(--sky-blue);font-weight:600;" onclick="toggleTypeField()"><i
+                          class="ti ti-plus"></i> Add New</button>
+                    </div>
+                    <select class="form-control" id="fp-type">
+                      ${PRODUCT_TYPES.map(pt=>`<option>${pt.name}</option>`).join('')}
+                    </select>
+                    <div id="fp-type-new-wrapper" style="display:none; gap:6px;">
+                      <input class="form-control" id="fp-type-new" placeholder="Type new product type..."
+                        style="flex:1;" />
+                      <button class="btn btn-primary" style="padding:0 12px; border-radius: 6px; white-space: nowrap;"
+                        onclick="addNewTypeInline()">Add</button>
+                    </div>
                   </div>
                   <div class="form-group">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px;">
@@ -18119,29 +18141,7 @@
                         onclick="addNewUnitInline()">Add</button>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div
-                      style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 6px; min-height: 24px;">
-                      <label class="form-label" style="margin-bottom:0;">Warehouse</label>
-                    </div>
-                    <select class="form-control" id="fp-wh">
-                      ${WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('')}
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Selling Price (₹) <span class="req">*</span></label>
-                    <div class="input-group">
-                      <span class="input-addon">₹</span>
-                      <input class="form-control" id="fp-price" type="number" placeholder="0.00" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Cost Price (₹)</label>
-                    <div class="input-group">
-                      <span class="input-addon">₹</span>
-                      <input class="form-control" id="fp-cost" type="number" placeholder="0.00" />
-                    </div>
-                  </div>
+
                   <div class="form-group">
                     <label class="form-label">GST Rate (%)</label>
                     <select class="form-control" id="fp-gst">
@@ -18153,27 +18153,44 @@
                     </select>
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Opening Stock</label>
-                    <input class="form-control" id="fp-stock" type="number" placeholder="0" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Minimum Stock Level</label>
-                    <input class="form-control" id="fp-minstock" type="number" placeholder="10" />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Weight (kg)</label>
-                    <input class="form-control" id="fp-weight" type="number" step="0.01" placeholder="0.00" />
-                  </div>
-                  <div class="form-group span-2">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control" id="fp-desc" rows="3" placeholder="Product description…"></textarea>
-                  </div>
-                  <div class="form-group">
                     <label class="form-label">Status</label>
                     <select class="form-control" id="fp-status">
                       <option>Active</option>
                       <option>Inactive</option>
                     </select>
+                  </div>
+                  <div class="form-group span-2">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="fp-desc" rows="3" placeholder="Product description…"></textarea>
+                  </div>
+                  
+                  <div class="form-group span-2" style="margin-top: 10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                      <label class="form-label" style="margin-bottom:0; font-weight:600;"><i class="ti ti-layers-intersect" style="margin-right: 4px;"></i> Product Variants</label>
+                      <button class="btn btn-ghost btn-xs" onclick="addProdVariantRow()" type="button" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Variant</button>
+                    </div>
+                    <div class="table-wrap" style="border-radius: 8px; border: 1px solid #eef1f5; overflow-x: auto; box-shadow: none;">
+                      <table class="data-tbl" style="margin: 0; min-width: 100%;">
+                        <thead>
+                          <tr style="background: #f8fafc;">
+                            <th style="padding: 10px; font-size: 11px;">Variant Name</th>
+                            <th style="padding: 10px; font-size: 11px;">Attribute</th>
+                            <th style="padding: 10px; font-size: 11px;">Value</th>
+                            <th style="padding: 10px; font-size: 11px;">SKU</th>
+                            <th style="padding: 10px; font-size: 11px;">Sell (₹)</th>
+                            <th style="padding: 10px; font-size: 11px;">Cost (₹)</th>
+                            <th style="padding: 10px; font-size: 11px;">Warehouse</th>
+                            <th style="padding: 10px; font-size: 11px;">Stock</th>
+                            <th style="padding: 10px; font-size: 11px;">Min Stock</th>
+                            <th style="padding: 10px; font-size: 11px;">Warranty</th>
+                            <th style="padding: 10px; font-size: 11px;">Custom Specs</th>
+                            <th style="padding: 10px; width: 30px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="fp-variants-body">
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
                 </div>
@@ -18287,9 +18304,22 @@
               </div>
               <div class="modal-body">
                 <div class="form-grid-2">
-                  <div class="form-group form-col-2"><label class="form-label">Company Name *</label><input
+                  <div class="form-group form-col-2">
+                    <label class="form-label">Customer Type</label>
+                    <div style="display:flex; gap:20px; align-items:center; height: 38px;">
+                      <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin:0;">
+                        <input type="radio" name="fc-type" value="Industry" checked onchange="toggleCustomerType()"> Industry / B2B
+                      </label>
+                      <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin:0;">
+                        <input type="radio" name="fc-type" value="Domestic" onchange="toggleCustomerType()"> Domestic / B2C
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group form-col-2" id="fc-name-wrap"><label class="form-label">Company Name *</label><input
                       class="form-control" id="fc-name" placeholder="Company name"></div>
-                  <div class="form-group"><label class="form-label">Contact Person</label><input class="form-control"
+                  <div class="form-group" id="fc-legal-wrap"><label class="form-label">Legal Name</label><input class="form-control" id="fc-legal" placeholder="Legal entity name"></div>
+                  <div class="form-group" id="fc-alias-wrap"><label class="form-label">Alias</label><input class="form-control" id="fc-alias" placeholder="Short name"></div>
+                  <div class="form-group"><label class="form-label">Contact Person *</label><input class="form-control"
                       id="fc-contact" placeholder="Full name"></div>
                   <div class="form-group"><label class="form-label">Phone</label><input class="form-control"
                       id="fc-phone" placeholder="+91 9XXXXXXXXX"></div>
@@ -18326,8 +18356,50 @@
                       <option>Inactive</option>
                     </select>
                   </div>
+                  <div class="form-group"><label class="form-label">Vertical</label>
+                    <div style="display:flex; gap:8px;">
+                      <select class="form-control" id="fc-vertical">
+                        <option value="">— Select —</option>
+                        <option>Manufacturing</option>
+                        <option>Retail</option>
+                        <option>IT Services</option>
+                        <option>Healthcare</option>
+                        <option>Construction</option>
+                      </select>
+                      <button class="btn btn-outline" type="button" id="fc-vertical-toggle" onclick="toggleVerticalField()" style="padding: 0 10px;" title="Add new vertical"><i class="ti ti-plus"></i></button>
+                    </div>
+                    <div id="fc-vertical-new-wrapper" style="display:none; margin-top: 8px;">
+                      <div style="display:flex; gap:8px;">
+                        <input type="text" id="fc-vertical-new" class="form-control" placeholder="New vertical name">
+                        <button type="button" class="btn btn-primary" onclick="addNewVerticalInline()">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group"><label class="form-label">Source Channel</label>
+                    <select class="form-control" id="fc-source" onchange="toggleReferralType()">
+                      <option>Direct</option>
+                      <option>Social Media</option>
+                      <option>Website</option>
+                      <option value="Referral">Referral</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group" id="fc-referral-wrap" style="display:none;"><label class="form-label">Referred By</label>
+                    <select class="form-control" id="fc-referral-type">
+                      <option value="">— Select —</option>
+                      <option>Customer</option>
+                      <option>Supplier</option>
+                    </select>
+                  </div>
                   <div class="form-group form-col-2"><label class="form-label">Address</label><textarea
                       class="form-control" id="fc-address" rows="2"></textarea></div>
+                  <div class="form-group form-col-2" style="margin-top: 8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerFieldRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Field</button>
+                    </div>
+                    <div id="fc-custom-fields-wrap" style="display:flex; flex-direction:column; gap:8px;"></div>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -18554,7 +18626,7 @@
                   <div class="form-group"><label class="form-label">State</label><input class="form-control"
                       id="fs-state">
                   </div>
-                  <div class="form-group"><label class="form-label">Lead Time (days)</label><input class="form-control"
+                  <div class="form-group"><label class="form-label">Delivery Days</label><input class="form-control"
                       type="number" id="fs-lead" placeholder="7"></div>
                   <div class="form-group"><label class="form-label">Payment Terms</label>
                     <select class="form-control" id="fs-terms">
@@ -19437,6 +19509,13 @@
       { id: 'CAT-10', name: 'Office Supplies', icon: 'ti-briefcase', color: 'blue' },
     ];
 
+    const PRODUCT_TYPES = [
+      { id: 'PT-01', name: 'Finished Goods' },
+      { id: 'PT-02', name: 'Raw Materials' },
+      { id: 'PT-03', name: 'Consumables' },
+      { id: 'PT-04', name: 'Spare Parts' }
+    ];
+
     const BRANDS = [
       { id: 'BRN-01', name: 'Siemens', country: 'Germany' },
       { id: 'BRN-02', name: 'ABB', country: 'Sweden' },
@@ -19518,6 +19597,7 @@
     /* Generate 100 Products */
     DB.products = Array.from({ length: 100 }, (_, i) => {
       const cat = spick(CATEGORIES);
+      const pt = spick(PRODUCT_TYPES);
       const brn = spick(BRANDS);
       const uom = spick(UNITS);
       const wh = spick(WAREHOUSES);
@@ -19530,6 +19610,7 @@
         id: `PRD-${String(idx).padStart(4, '0')}`,
         name: PRODUCT_NAMES[i % PRODUCT_NAMES.length] + (idx > PRODUCT_NAMES.length ? ' ' + Math.ceil(idx / PRODUCT_NAMES.length) : ''),
         sku: `SKU-${String(idx).padStart(5, '0')}`,
+        type: pt.name, typeId: pt.id,
         category: cat.name, categoryId: cat.id,
         brand: brn.name, brandId: brn.id,
         unit: uom.abbr, unitId: uom.id,
@@ -20958,6 +21039,59 @@
       }
     }
 
+    function toggleTypeField() {
+      const select = document.getElementById('fp-type');
+      const wrapper = document.getElementById('fp-type-new-wrapper');
+      const input = document.getElementById('fp-type-new');
+      const btn = document.getElementById('fp-type-toggle');
+
+      if (select.style.display !== 'none') {
+        select.style.display = 'none';
+        wrapper.style.display = 'flex';
+        input.focus();
+        btn.innerHTML = '<i class="ti ti-list"></i> Select Existing';
+      } else {
+        select.style.display = 'block';
+        wrapper.style.display = 'none';
+        input.value = '';
+        btn.innerHTML = '<i class="ti ti-plus"></i> Add New';
+      }
+    }
+
+    function addNewTypeInline() {
+      const input = document.getElementById('fp-type-new');
+      const select = document.getElementById('fp-type');
+      const val = input.value.trim();
+
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a product type.');
+        return;
+      }
+
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        select.add(opt);
+        select.value = val;
+        PRODUCT_TYPES.push({ id: 'PT-NEW-' + Date.now(), name: val });
+        showToast('success', 'Added', `Product Type "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Product Type "${val}" already exists.`);
+      }
+
+      toggleTypeField();
+    }
+
     function addNewBrandInline() {
       const input = document.getElementById('fp-brand-new');
       const select = document.getElementById('fp-brand');
@@ -21050,6 +21184,55 @@
       if (!name) { showToast('error', 'Validation', 'Product name is required.'); return; }
       closeModal('modal-product');
       showToast('success', 'Product Saved', `"${name}" has been added to the catalogue.`);
+    }
+
+    function addProdVariantRow() {
+      const tbody = document.getElementById('fp-variants-body');
+      if(!tbody) return;
+      const tr = document.createElement('tr');
+      const whOpts = window.WAREHOUSES ? WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('') : '<option>Main Warehouse</option>';
+      tr.innerHTML = `
+        <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="e.g. 16A Red" style="font-size:13px; min-width: 140px;"></td>
+        <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="Size/Color" style="font-size:13px; min-width: 100px;"></td>
+        <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="Value" style="font-size:13px; min-width: 100px;"></td>
+        <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="Auto" style="font-size:13px; min-width: 100px;"></td>
+        <td style="padding: 6px 10px;"><input type="number" class="form-control" placeholder="0.00" style="font-size:13px; min-width: 90px;"></td>
+        <td style="padding: 6px 10px;"><input type="number" class="form-control" placeholder="0.00" style="font-size:13px; min-width: 90px;"></td>
+        <td style="padding: 6px 10px;"><select class="form-control" style="font-size:13px; min-width: 130px;">${whOpts}</select></td>
+        <td style="padding: 6px 10px;"><input type="number" class="form-control" placeholder="0" style="font-size:13px; min-width: 80px;"></td>
+        <td style="padding: 6px 10px;"><input type="number" class="form-control" placeholder="0" style="font-size:13px; min-width: 80px;"></td>
+        <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="e.g. 1 Year" style="font-size:13px; min-width: 90px;"></td>
+        <td style="padding: 6px 10px;">
+          <div class="v-specs-wrap" style="display:flex; flex-direction:column; gap:4px; min-width: 180px;">
+            <div style="display:flex; gap:4px; align-items:center;">
+              <input type="text" class="form-control spec-key" placeholder="Key (Weight)" style="font-size:12px; width:45%;">
+              <input type="text" class="form-control spec-val" placeholder="Value (2kg)" style="font-size:12px; width:45%;">
+              <button type="button" class="btn btn-ghost btn-icon-sm" onclick="addVSpecRow(this)" style="padding:0; min-width:20px; color:var(--sky-blue);" title="Add Spec"><i class="ti ti-plus"></i></button>
+            </div>
+          </div>
+        </td>
+        <td style="padding: 6px 10px; text-align: center;">
+          <button class="btn btn-ghost btn-icon-sm" style="color: var(--danger);" onclick="removeProdVariantRow(this)" type="button" title="Remove Variant"><i class="ti ti-trash"></i></button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function removeProdVariantRow(btn) {
+      const tr = btn.closest('tr');
+      if(tr) tr.remove();
+    }
+
+    function addVSpecRow(btn) {
+      const wrap = btn.closest('.v-specs-wrap');
+      const div = document.createElement('div');
+      div.style.cssText = "display:flex; gap:4px; align-items:center;";
+      div.innerHTML = `
+        <input type="text" class="form-control spec-key" placeholder="Key" style="font-size:12px; width:45%;">
+        <input type="text" class="form-control spec-val" placeholder="Value" style="font-size:12px; width:45%;">
+        <button type="button" class="btn btn-ghost btn-icon-sm" onclick="this.parentElement.remove()" style="padding:0; min-width:20px; color:var(--danger);" title="Remove Spec"><i class="ti ti-minus"></i></button>
+      `;
+      wrap.appendChild(div);
     }
 
     function toggleAllCheck(master, cls) {
@@ -21579,11 +21762,110 @@
       openDrawer('drawer-customer');
     }
 
+    function toggleVerticalField() {
+      const select = document.getElementById('fc-vertical');
+      const wrapper = document.getElementById('fc-vertical-new-wrapper');
+      const input = document.getElementById('fc-vertical-new');
+      const btn = document.getElementById('fc-vertical-toggle');
+
+      if (wrapper.style.display === 'none') {
+        wrapper.style.display = 'block';
+        select.style.display = 'none';
+        btn.innerHTML = '<i class="ti ti-x"></i>';
+        btn.classList.add('btn-danger');
+        btn.classList.remove('btn-outline');
+        input.focus();
+      } else {
+        wrapper.style.display = 'none';
+        select.style.display = 'block';
+        btn.innerHTML = '<i class="ti ti-plus"></i>';
+        btn.classList.remove('btn-danger');
+        btn.classList.add('btn-outline');
+        input.value = '';
+      }
+    }
+
+    function addNewVerticalInline() {
+      const input = document.getElementById('fc-vertical-new');
+      const select = document.getElementById('fc-vertical');
+      const val = input.value.trim();
+
+      if (!val) {
+        showToast('error', 'Required', 'Please enter a vertical name.');
+        return;
+      }
+
+      let exists = false;
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value.toLowerCase() === val.toLowerCase()) {
+          exists = true;
+          select.selectedIndex = i;
+          break;
+        }
+      }
+
+      if (!exists) {
+        const opt = document.createElement('option');
+        opt.value = val;
+        opt.text = val;
+        select.add(opt);
+        select.value = val;
+        showToast('success', 'Added', `Vertical "${val}" added.`);
+      } else {
+        showToast('info', 'Selected', `Vertical "${val}" already exists.`);
+      }
+
+      toggleVerticalField();
+    }
+
+    function toggleReferralType() {
+      const source = document.getElementById('fc-source')?.value;
+      const refWrap = document.getElementById('fc-referral-wrap');
+      if (refWrap) {
+        refWrap.style.display = source === 'Referral' ? 'block' : 'none';
+      }
+    }
+
+    function toggleCustomerType() {
+      const isDomestic = document.querySelector('input[name="fc-type"]:checked')?.value === 'Domestic';
+      const nameWrap = document.getElementById('fc-name-wrap');
+      const legalWrap = document.getElementById('fc-legal-wrap');
+      const aliasWrap = document.getElementById('fc-alias-wrap');
+      
+      if (nameWrap) nameWrap.style.display = isDomestic ? 'none' : 'block';
+      if (legalWrap) legalWrap.style.display = isDomestic ? 'none' : 'block';
+      if (aliasWrap) aliasWrap.style.display = isDomestic ? 'none' : 'block';
+    }
+
+    function addCustomerFieldRow() {
+      const wrap = document.getElementById('fc-custom-fields-wrap');
+      const div = document.createElement('div');
+      div.style.cssText = "display:flex; gap:8px; align-items:center;";
+      div.innerHTML = `
+        <input type="text" class="form-control" placeholder="Field Name (e.g. Website)" style="flex:1;">
+        <input type="text" class="form-control" placeholder="Value" style="flex:1;">
+        <button type="button" class="btn btn-ghost btn-icon" onclick="this.parentElement.remove()" style="color:var(--danger);" title="Remove Field"><i class="ti ti-trash"></i></button>
+      `;
+      wrap.appendChild(div);
+    }
+
     function saveCustomer() {
+      const isDomestic = document.querySelector('input[name="fc-type"]:checked')?.value === 'Domestic';
       const name = document.getElementById('fc-name')?.value.trim();
-      if (!name) { showToast('error', 'Validation', 'Customer name is required.'); return; }
+      const contact = document.getElementById('fc-contact')?.value.trim();
+      
+      if (!isDomestic && !name) { 
+        showToast('error', 'Validation', 'Company name is required for Industry customers.'); 
+        return; 
+      }
+      if (isDomestic && !contact) {
+        showToast('error', 'Validation', 'Contact Person is required for Domestic customers.'); 
+        return; 
+      }
+
+      const displayName = isDomestic ? contact : name;
       closeModal('modal-customer');
-      showToast('success', 'Customer Saved', `"${name}" added to customer master.`);
+      showToast('success', 'Customer Saved', `"${displayName}" added to customer master.`);
       filterCustomers();
     }
 
@@ -21667,7 +21949,7 @@
       <div class="kpi-grid kpi-grid-3 mb-4">
         <div class="kpi-card gold"><div class="kpi-label">Total POs</div><div class="kpi-val">${s.totalPOs}</div></div>
         <div class="kpi-card blue"><div class="kpi-label">Total Value</div><div class="kpi-val">₹${fmt(s.totalValue)}</div></div>
-        <div class="kpi-card amber"><div class="kpi-label">Lead Time</div><div class="kpi-val">${s.leadTime}d</div><div class="kpi-sub neutral">Avg delivery</div></div>
+        <div class="kpi-card amber"><div class="kpi-label">Delivery Days</div><div class="kpi-val">${s.leadTime}d</div><div class="kpi-sub neutral">Avg delivery</div></div>
       </div>
       <div class="detail-grid">
         <div class="detail-row"><div class="detail-label">Supplier ID</div><div class="detail-val">${s.id}</div></div>
@@ -22655,7 +22937,7 @@
       <div class="kpi-card gold"><div class="kpi-label">Total POs</div><div class="kpi-val">${sup.totalPOs}</div></div>
       <div class="kpi-card blue"><div class="kpi-label">Total Value</div><div class="kpi-val">₹${fmt(sup.totalValue)}</div></div>
       <div class="kpi-card ${sup.balance < 0 ? 'amber' : 'green'}"><div class="kpi-label">Balance</div><div class="kpi-val">₹${fmt(Math.abs(sup.balance))}</div><div class="kpi-sub ${sup.balance < 0 ? 'warn' : 'up'}">${sup.balance < 0 ? 'Payable' : 'Advance'}</div></div>
-      <div class="kpi-card navy"><div class="kpi-label">Lead Time</div><div class="kpi-val">${sup.leadTime}d</div></div>`;
+      <div class="kpi-card navy"><div class="kpi-label">Delivery Days</div><div class="kpi-val">${sup.leadTime}d</div></div>`;
 
       /* Build ledger entries — mix of POs (debit) and payments (credit) */
       const supPOs = DB.purchaseOrders.filter(p => p.supplier === sup.name).slice(0, 10);
@@ -23158,12 +23440,31 @@
     }
 
     /* Quotation modal helpers */
+    function mquoFilterProductsByType() {
+      const typeFilter = document.getElementById('mquo-product-type')?.value;
+      const products = typeFilter ? DB.products.filter(p => p.type === typeFilter) : DB.products;
+      const optionsHtml = '<option value="">— Select —</option>' + products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}">${p.name}</option>`).join('');
+      
+      document.querySelectorAll('.mquo-product-sel').forEach(select => {
+        const currentVal = select.value;
+        select.innerHTML = optionsHtml;
+        if (currentVal && Array.from(select.options).some(o => o.value === currentVal)) {
+          select.value = currentVal;
+        } else {
+          select.value = "";
+          mquoCalc(select);
+        }
+      });
+    }
+
     function mquoAddRow() {
       const tbody = document.getElementById('mquo-items-body'); if (!tbody) return;
       const tr = document.createElement('tr');
+      const typeFilter = document.getElementById('mquo-product-type')?.value;
+      const products = typeFilter ? DB.products.filter(p => p.type === typeFilter) : DB.products;
       tr.innerHTML = `
-      <td><select class="form-control" onchange="mquoCalc(this)" style="min-width:200px;"><option value="">— Select —</option>
-        ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}">${p.name}</option>`).join('')}
+      <td><select class="form-control mquo-product-sel" onchange="mquoCalc(this)" style="min-width:200px;"><option value="">— Select —</option>
+        ${products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}">${p.name}</option>`).join('')}
       </select></td>
       <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mquoCalcTotals()"></td>
       <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="mquoCalcTotals()"></td>
@@ -23719,6 +24020,12 @@
         const el = document.getElementById(id); if (!el || el.options.length > 1) return;
         DB.customers.forEach(c => el.add(new Option(c.name, c.id)));
       });
+
+      const ptypeSel = document.getElementById('mquo-product-type');
+      if (ptypeSel && ptypeSel.options.length === 1) {
+        PRODUCT_TYPES.forEach(pt => ptypeSel.add(new Option(pt.name, pt.name)));
+        mquoFilterProductsByType();
+      }
       populateWhSelects('mso-wh', 'mdn-wh');
       const quoSel = document.getElementById('mso-quo');
       if (quoSel && quoSel.options.length === 1) DB.quotations.forEach(q => quoSel.add(new Option(q.id + ' — ' + q.customer, q.id)));
