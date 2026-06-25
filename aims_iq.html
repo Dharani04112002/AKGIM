@@ -11859,6 +11859,11 @@
                       class="form-control" type="time" id="mreq-visit-time"></div>
                   <div class="form-group"><label class="form-label">Branch</label><input class="form-control"
                       id="mreq-branch" placeholder="Branch name"></div>
+                  <div class="form-group"><label class="form-label">Assigned To</label>
+                    <select class="form-control" id="mreq-assignee">
+                      <option value="">Select Technician…</option>
+                    </select>
+                  </div>
                   <div class="form-group"><label class="form-label">Status</label>
                     <select class="form-control" id="mreq-status">
                       <option>Pending</option>
@@ -17948,63 +17953,112 @@
               <div class="modal-body">
                 <div style="font-size:11px;color:#6A88A8;margin-bottom:14px;">Quote #: <b id="amcq-modal-code"
                     style="color:#0A1830;"></b></div>
-                <div class="form-grid-2">
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Customer <span style="color:var(--red);">*</span></label>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label class="form-label" style="color:var(--red);">From Date</label>
+                    <input class="form-control" type="date" id="amcq-from-date">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">AMC Period</label>
+                    <select class="form-control" id="amcq-period">
+                      <option>1 Year</option>
+                      <option>2 Years</option>
+                      <option>3 Years</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">To Date</label>
+                    <input class="form-control" type="date" id="amcq-to-date">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Customer Name</label>
                     <select class="form-control" id="amcq-modal-customer">
-                      <option value="">— Select Customer —</option>
+                      <option value="">-Select-</option>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" style="color:var(--red);">Customer Site</label>
+                    <input class="form-control" id="amcq-client-site">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" style="color:var(--red);">Branch</label>
+                    <select class="form-control" id="amcq-branch">
+                      <option value="">-Select-</option>
+                      <option>Main Branch</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Quotation Type</label>
+                    <select class="form-control" id="amcq-quote-type">
+                      <option value="">-Select-</option>
+                      <option>Domestic</option>
+                      <option>Industrial</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Payment Type</label>
+                    <select class="form-control" id="amcq-payment-type">
+                      <option value="">-Select-</option>
+                      <option>Advance</option>
+                      <option>Postpaid</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Validity</label>
+                    <input class="form-control" id="amcq-modal-validity" placeholder="#######">
                   </div>
                 </div>
-                <div class="form-grid-2">
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Coverage / Equipment Scope <span
-                        style="color:var(--red);">*</span></label>
-                    <input class="form-control" id="amcq-modal-scope" type="text"
-                      placeholder="e.g. UPS systems, Welding equipment, HVAC units">
+
+                <div style="margin-top:24px;">
+                  <h5 style="margin-bottom:12px; font-weight:600; font-size:14px;">Product Details</h5>
+                  <div class="table-wrap" style="overflow-x:auto;">
+                    <table class="data-tbl" style="min-width:800px; margin-bottom:0;">
+                      <thead>
+                        <tr>
+                          <th>S No</th>
+                          <th>Product Name</th>
+                          <th>Serial Numbers</th>
+                          <th>Amount</th>
+                          <th>Quantity</th>
+                          <th>Total Basic</th>
+                          <th>Total GST</th>
+                          <th>Total Value</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="amcq-products-tbody">
+                      </tbody>
+                    </table>
+                  </div>
+                  <div style="margin-top:12px;">
+                    <button class="btn btn-ghost" style="color:#3B82F6; font-size:13px; padding:4px 8px;" onclick="event.preventDefault(); renderAmcqProductRow();"><i class="ti ti-plus"></i> Add New</button>
                   </div>
                 </div>
-                <div class="form-grid-2">
+
+                <div class="form-grid-3" style="margin-top:24px; padding-top:16px; border-top:1px dashed var(--border);">
                   <div class="form-group">
-                    <label class="form-label">Annual Value (₹) <span style="color:var(--red);">*</span></label>
-                    <input class="form-control" id="amcq-modal-value" type="number" placeholder="e.g. 125000" min="0">
+                    <label class="form-label">Total Basic</label>
+                    <input class="form-control" id="amcq-grand-basic" placeholder="#######.##" readonly style="background:#f9fafb;">
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Validity Date <span style="color:var(--red);">*</span></label>
-                    <input class="form-control" id="amcq-modal-validity" type="date">
+                    <label class="form-label">Total GST</label>
+                    <input class="form-control" id="amcq-grand-gst" placeholder="#######.##" readonly style="background:#f9fafb;">
                   </div>
                   <div class="form-group">
-                    <label class="form-label">Coverage Type</label>
-                    <select class="form-control" id="amcq-modal-coverage">
-                      <option>Comprehensive</option>
-                      <option>Parts Only</option>
-                      <option>Labour Only</option>
-                      <option>Preventive Only</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Visit Frequency</label>
-                    <select class="form-control" id="amcq-modal-frequency">
-                      <option>Quarterly</option>
-                      <option>Bi-annual</option>
-                      <option>Monthly</option>
-                      <option>Annual</option>
-                      <option>On-call</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label">Approval Level</label>
-                    <select class="form-control" id="amcq-modal-approval">
-                      <option value="Sales">Sales</option>
-                      <option value="Manager">Manager</option>
-                      <option value="MD">MD</option>
-                    </select>
+                    <label class="form-label">Total Value</label>
+                    <input class="form-control" id="amcq-modal-value" placeholder="#######.##" readonly style="background:#f9fafb;">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Scope Notes / Terms</label>
-                  <textarea class="form-control" id="amcq-modal-notes" rows="3"
-                    placeholder="Describe the AMC scope, SLAs, exclusions…"></textarea>
+
+                <div id="amcq-validate-msg" style="margin-top:24px; display:none;">
+                  <h5 style="margin-bottom:12px; font-weight:600; font-size:14px;">Validate</h5>
+                  <div style="border:1px solid var(--red); color:var(--red); background:#FFF5F5; padding:12px; border-radius:4px; font-weight:600; font-size:12px; text-align:center;">
+                    Mandatory:<br>
+                    <span id="amcq-err-from-date" style="display:none;">Kindly Select From Date<br></span>
+                    <span id="amcq-err-client-site" style="display:none;">Kindly Fill Customer Site<br></span>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -18017,21 +18071,40 @@
 
           <!-- AMC Quote View Modal -->
           <div class="modal-wrap" id="modal-amcq-view">
-            <div class="modal">
+            <div class="modal modal-lg">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-file-text" style="color:#C9A84C;"></i> <span
                     id="vamcq-title">AMC Quote</span></div>
                 <button class="modal-close" onclick="closeModal('modal-amcq-view')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;"
-                  id="vamcq-kpi"></div>
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div>
-                  </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;" id="vamcq-kpi"></div>
+                
+                <div class="card" style="margin-bottom:16px;">
+                  <div class="card-header"><div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div></div>
                   <div class="card-body" style="padding:16px;">
                     <div class="detail-grid" id="vamcq-info"></div>
+                  </div>
+                </div>
+
+                <div class="card">
+                  <div class="card-header"><div class="card-title"><i class="ti ti-list"></i> Product Details</div></div>
+                  <div class="card-body" style="padding:0; overflow-x:auto;">
+                    <table class="data-tbl" style="margin-bottom:0; min-width:800px;">
+                      <thead>
+                        <tr>
+                          <th>S No</th>
+                          <th>Product Name</th>
+                          <th>Serial Numbers</th>
+                          <th>Amount</th>
+                          <th>Qty</th>
+                          <th>Basic</th>
+                          <th>GST</th>
+                          <th>Total</th>
+                        </tr>
+                      </thead>
+                      <tbody id="vamcq-products"></tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -27451,6 +27524,8 @@
       <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total Requests</div><div class="kpi-val">${DB.serviceRequests.length}</div></div><div class="kpi-icon navy"><i class="ti ti-tool"></i></div></div><div class="kpi-sub neutral">All time</div></div>`;
       const mc = document.getElementById('mreq-cust');
       if (mc && mc.options.length === 1) DB.customers.slice(0, 30).forEach(c => mc.add(new Option(c.name, c.id)));
+      const ma = document.getElementById('mreq-assignee');
+      if (ma && ma.options.length === 1) DB.technicians.forEach(t => ma.add(new Option(t.name, t.name)));
       sReqFiltered = [...DB.serviceRequests].sort((a, b) => new Date(b.scheduledDate) - new Date(a.scheduledDate));
       const fc = document.getElementById('svc-req-count'); if (fc) fc.textContent = DB.serviceRequests.length;
       renderServiceRequestsTable();
@@ -29492,36 +29567,158 @@
       renderPagination('amcq-pagination', amcqFiltered.length, amcqPage, AMCQ_PER, `function(p){amcqPage=p;renderAmcQuoteTable()}`);
     }
 
+    let amcqProductRowCount = 0;
+
+    function renderAmcqProductRow() {
+      amcqProductRowCount++;
+      const id = amcqProductRowCount;
+      const tr = document.createElement('tr');
+      tr.id = `amcq-pr-row-${id}`;
+      tr.innerHTML = `
+        <td><input class="form-control amcq-pr-sno" placeholder="#######" style="width:70px;" value="${id}"></td>
+        <td>
+          <select class="form-control amcq-pr-sel" style="width:120px;" onchange="amcqProductSelected(${id})">
+            <option value="">-Select-</option>
+            ${(DB.products || []).slice(0, 100).map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}
+          </select>
+        </td>
+        <td><textarea class="form-control" rows="1" style="width:150px;"></textarea></td>
+        <td><input class="form-control amcq-pr-amount" type="number" oninput="amcqCalcTotals()" placeholder="#######" style="width:100px;"></td>
+        <td><input class="form-control amcq-pr-qty" type="number" value="1" oninput="amcqCalcTotals()" placeholder="#######" style="width:100px;"></td>
+        <td><input class="form-control amcq-pr-basic" placeholder="#######.##" readonly style="width:100px; background:#f9fafb;"></td>
+        <td><input class="form-control amcq-pr-gst" placeholder="#######.##" readonly style="width:100px; background:#f9fafb;"></td>
+        <td><input class="form-control amcq-pr-total" placeholder="#######.##" readonly style="width:100px; background:#f9fafb;"></td>
+        <td style="width:40px;"><button class="btn btn-ghost btn-icon-sm" style="color:var(--red);" onclick="document.getElementById('amcq-pr-row-${id}').remove(); amcqCalcTotals();"><i class="ti ti-trash"></i></button></td>
+      `;
+      document.getElementById('amcq-products-tbody').appendChild(tr);
+      amcqCalcTotals();
+    }
+
+    function amcqProductSelected(id) {
+      const row = document.getElementById(`amcq-pr-row-${id}`);
+      if (!row) return;
+      const sel = row.querySelector('.amcq-pr-sel');
+      const amountInput = row.querySelector('.amcq-pr-amount');
+      const selectedOption = sel.options[sel.selectedIndex];
+      if (selectedOption && selectedOption.value) {
+        amountInput.value = selectedOption.getAttribute('data-price');
+      } else {
+        amountInput.value = '';
+      }
+      amcqCalcTotals();
+    }
+
+    function amcqCalcTotals() {
+      const rows = document.querySelectorAll('#amcq-products-tbody tr');
+      let grandBasic = 0;
+      let grandGst = 0;
+      let grandTotal = 0;
+
+      rows.forEach(row => {
+        const amt = parseFloat(row.querySelector('.amcq-pr-amount').value) || 0;
+        const qty = parseFloat(row.querySelector('.amcq-pr-qty').value) || 0;
+        
+        const basic = amt * qty;
+        const gst = basic * 0.18; // 18% standard GST
+        const total = basic + gst;
+        
+        row.querySelector('.amcq-pr-basic').value = basic.toFixed(2);
+        row.querySelector('.amcq-pr-gst').value = gst.toFixed(2);
+        row.querySelector('.amcq-pr-total').value = total.toFixed(2);
+
+        grandBasic += basic;
+        grandGst += gst;
+        grandTotal += total;
+      });
+
+      const bEl = document.getElementById('amcq-grand-basic'); if (bEl) bEl.value = grandBasic.toFixed(2);
+      const gEl = document.getElementById('amcq-grand-gst'); if (gEl) gEl.value = grandGst.toFixed(2);
+      const tEl = document.getElementById('amcq-modal-value'); if (tEl) tEl.value = grandTotal.toFixed(2);
+    }
+
     function openAmcQuoteModal() {
       const code = `AMC/Q/2026/${_amcqSeq}`;
       document.getElementById('amcq-modal-title').textContent = 'Generate AMC Quote';
       document.getElementById('amcq-modal-code').textContent = code;
-      ['amcq-modal-scope', 'amcq-modal-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      
       const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = '';
-      const dateEl = document.getElementById('amcq-modal-validity'); if (dateEl) dateEl.value = '';
       const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = '';
+      const fromDateEl = document.getElementById('amcq-from-date'); if (fromDateEl) fromDateEl.value = '';
+      const clientSiteEl = document.getElementById('amcq-client-site'); if (clientSiteEl) clientSiteEl.value = '';
+      const msgEl = document.getElementById('amcq-validate-msg'); if (msgEl) msgEl.style.display = 'none';
+
+      document.getElementById('amcq-products-tbody').innerHTML = '';
+      amcqProductRowCount = 0;
+      renderAmcqProductRow();
+
       openModal('modal-amcq');
     }
 
     function saveAmcQuote() {
-      const customer = document.getElementById('amcq-modal-customer')?.value;
-      const scope = document.getElementById('amcq-modal-scope')?.value.trim();
+      const fromDate = document.getElementById('amcq-from-date')?.value;
+      const clientSite = document.getElementById('amcq-client-site')?.value.trim();
+      let hasError = false;
+      const errFromDate = document.getElementById('amcq-err-from-date');
+      const errClientSite = document.getElementById('amcq-err-client-site');
+      
+      if (errFromDate) errFromDate.style.display = 'none';
+      if (errClientSite) errClientSite.style.display = 'none';
+      
+      if (!fromDate) { if (errFromDate) errFromDate.style.display = 'block'; hasError = true; }
+      if (!clientSite) { if (errClientSite) errClientSite.style.display = 'block'; hasError = true; }
+      
+      if (hasError) {
+        const msgEl = document.getElementById('amcq-validate-msg');
+        if (msgEl) msgEl.style.display = 'block';
+        return;
+      }
+      
+      const customer = document.getElementById('amcq-modal-customer')?.value || 'Unknown Client';
+      const period = document.getElementById('amcq-period')?.value || '';
+      const toDate = document.getElementById('amcq-to-date')?.value || '';
+      const branch = document.getElementById('amcq-branch')?.value || '';
+      const quoteType = document.getElementById('amcq-quote-type')?.value || '';
+      const paymentType = document.getElementById('amcq-payment-type')?.value || '';
+      const validity = document.getElementById('amcq-modal-validity')?.value || '30 Days';
+
       const value = parseFloat(document.getElementById('amcq-modal-value')?.value) || 0;
-      const validity = document.getElementById('amcq-modal-validity')?.value;
-      if (!customer) { showToast('error', 'Validation', 'Please select a customer.'); return; }
-      if (!scope) { showToast('error', 'Validation', 'Coverage / Equipment Scope is required.'); return; }
-      if (!value) { showToast('error', 'Validation', 'Annual Value is required.'); return; }
-      if (!validity) { showToast('error', 'Validation', 'Validity Date is required.'); return; }
+
+      let products = [];
+      const rows = document.querySelectorAll('#amcq-products-tbody tr');
+      rows.forEach(row => {
+        const sel = row.querySelector('.amcq-pr-sel');
+        const pname = sel && sel.selectedIndex > 0 ? sel.options[sel.selectedIndex].text : '';
+        const sno = row.querySelector('.amcq-pr-sno')?.value || '';
+        const serials = row.querySelector('textarea')?.value || '';
+        const amt = parseFloat(row.querySelector('.amcq-pr-amount')?.value) || 0;
+        const qty = parseFloat(row.querySelector('.amcq-pr-qty')?.value) || 0;
+        const basic = parseFloat(row.querySelector('.amcq-pr-basic')?.value) || 0;
+        const gst = parseFloat(row.querySelector('.amcq-pr-gst')?.value) || 0;
+        const total = parseFloat(row.querySelector('.amcq-pr-total')?.value) || 0;
+        if (pname) {
+          products.push({ sno, pname, serials, amt, qty, basic, gst, total });
+        }
+      });
+
       const newQ = {
         id: `AMC/Q/2026/${_amcqSeq++}`,
         customer,
-        scope,
-        coverage: document.getElementById('amcq-modal-coverage')?.value || 'Comprehensive',
-        frequency: document.getElementById('amcq-modal-frequency')?.value || 'Quarterly',
+        customerSite: clientSite,
+        fromDate,
+        toDate,
+        period,
+        branch,
+        quoteType,
+        paymentType,
+        scope: 'Comprehensive AMC',
+        coverage: 'Comprehensive',
+        frequency: 'Quarterly',
         value,
         validity,
-        approval: document.getElementById('amcq-modal-approval')?.value || 'Sales',
-        notes: document.getElementById('amcq-modal-notes')?.value.trim() || '',
+        approval: 'Sales',
+        status: 'Draft',
+        date: new Date().toISOString().split('T')[0],
+        products
       };
       amcqData.unshift(newQ);
       amcqFiltered = [...amcqData];
@@ -29542,19 +29739,40 @@
       const kpi = document.getElementById('vamcq-kpi');
       if (kpi) kpi.innerHTML = `
         <div class="kpi-card gold"><div class="kpi-label">Annual Value</div><div class="kpi-val">₹${fmt(q.value)}</div></div>
-        <div class="kpi-card blue"><div class="kpi-label">Coverage</div><div class="kpi-val" style="font-size:13px;">${q.coverage}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Quote Type</div><div class="kpi-val" style="font-size:13px;">${q.quoteType || '-'}</div></div>
+        <div class="kpi-card gray"><div class="kpi-label">Payment Type</div><div class="kpi-val" style="font-size:13px;">${q.paymentType || '-'}</div></div>
         <div class="kpi-card ${AMCQ_APPROVAL_CLS[q.approval] || 'gray'}"><div class="kpi-label">Approval Level</div><div class="kpi-val" style="font-size:13px;">${q.approval}</div></div>`;
       const info = document.getElementById('vamcq-info');
       if (info) info.innerHTML = `
         <div class="detail-row"><div class="detail-label">Quote #</div><div class="detail-val">${q.id}</div></div>
         <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${q.customer}</div></div>
-        <div class="detail-row"><div class="detail-label">Scope</div><div class="detail-val">${q.scope}</div></div>
-        <div class="detail-row"><div class="detail-label">Coverage Type</div><div class="detail-val">${q.coverage}</div></div>
-        <div class="detail-row"><div class="detail-label">Visit Frequency</div><div class="detail-val">${q.frequency}</div></div>
-        <div class="detail-row"><div class="detail-label">Annual Value</div><div class="detail-val" style="font-weight:700;color:var(--navy);">₹${fmt(q.value)}</div></div>
-        <div class="detail-row"><div class="detail-label">Validity</div><div class="detail-val">${fmtDate(q.validity)}</div></div>
-        <div class="detail-row"><div class="detail-label">Approval Status</div><div class="detail-val" style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></div>
-        ${q.notes ? `<div class="detail-row"><div class="detail-label">Notes</div><div class="detail-val">${q.notes}</div></div>` : ''}`;
+        <div class="detail-row"><div class="detail-label">Customer Site</div><div class="detail-val">${q.customerSite || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Branch</div><div class="detail-val">${q.branch || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">From Date</div><div class="detail-val">${fmtDate(q.fromDate) || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">To Date</div><div class="detail-val">${fmtDate(q.toDate) || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">AMC Period</div><div class="detail-val">${q.period || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Validity</div><div class="detail-val">${q.validity || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Approval Status</div><div class="detail-val" style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></div>`;
+
+      const pTbody = document.getElementById('vamcq-products');
+      if (pTbody) {
+        if (q.products && q.products.length > 0) {
+          pTbody.innerHTML = q.products.map(p => `
+            <tr>
+              <td>${p.sno}</td>
+              <td>${p.pname}</td>
+              <td><span style="font-size:12px;color:var(--text-secondary);">${p.serials}</span></td>
+              <td>₹${fmt(p.amt)}</td>
+              <td>${p.qty}</td>
+              <td>₹${fmt(p.basic)}</td>
+              <td>₹${fmt(p.gst)}</td>
+              <td style="font-weight:600;">₹${fmt(p.total)}</td>
+            </tr>
+          `).join('');
+        } else {
+          pTbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No products added</div></td></tr>`;
+        }
+      }
       openModal('modal-amcq-view');
     }
 
