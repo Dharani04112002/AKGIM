@@ -29494,17 +29494,55 @@
         const frequencies = ['Quarterly', 'Bi-annual', 'Monthly', 'Annual', 'On-call'];
         const approvals = ['Sales', 'Sales', 'Manager', 'Manager', 'MD'];
         const scopes = ['UPS & Power systems', 'HVAC & Cooling units', 'Welding & Fabrication equipment', 'Electrical panels & switchgear', 'Compressors & pneumatic tools', 'Gensets & diesel equipment'];
-        amcqData = Array.from({ length: 20 }, (_, i) => ({
-          id: `AMC/Q/2026/${45 - i}`,
-          customer: spick(customers).name,
-          scope: spick(scopes),
-          coverage: spick(coverages),
-          frequency: spick(frequencies),
-          value: si(30000, 250000),
-          validity: new Date(Date.now() + si(15, 90) * 86400000).toISOString().slice(0, 10),
-          approval: spick(approvals),
-          notes: '',
-        }));
+        const quoteTypes = ['Domestic', 'Industrial'];
+        const paymentTypes = ['Advance', 'Postpaid'];
+        const branches = ['Main Branch', 'North Branch', 'South Branch'];
+        amcqData = Array.from({ length: 20 }, (_, i) => {
+          const from = new Date(Date.now() - si(0, 30) * 86400000);
+          const to = new Date(from.getTime() + 365 * 86400000);
+          
+          let mockProducts = [];
+          let mockValue = 0;
+          let pCount = si(1, 4);
+          for(let p=0; p<pCount; p++) {
+             const prd = spick(DB.products && DB.products.length ? DB.products : [{name:'Sample Product', price:5000}]);
+             const qty = si(1, 5);
+             const basic = prd.price * qty;
+             const gst = basic * 0.18;
+             const total = basic + gst;
+             mockProducts.push({
+               sno: p + 1,
+               pname: prd.name,
+               serials: `SN-${si(1000,9999)}`,
+               amt: prd.price,
+               qty: qty,
+               basic: basic,
+               gst: gst,
+               total: total
+             });
+             mockValue += total;
+          }
+
+          return {
+            id: `AMC/Q/2026/${45 - i}`,
+            customer: spick(customers).name,
+            customerSite: 'Site ' + spick(['A', 'B', 'C', 'HQ', 'Annex']),
+            branch: spick(branches),
+            fromDate: from.toISOString().slice(0, 10),
+            toDate: to.toISOString().slice(0, 10),
+            period: '1 Year',
+            quoteType: spick(quoteTypes),
+            paymentType: spick(paymentTypes),
+            scope: spick(scopes),
+            coverage: spick(coverages),
+            frequency: spick(frequencies),
+            value: mockValue,
+            validity: new Date(Date.now() + si(15, 90) * 86400000).toISOString().slice(0, 10),
+            approval: spick(approvals),
+            notes: '',
+            products: mockProducts
+          };
+        });
         _amcqSeq = 46;
       }
       const pending = amcqData.filter(q => q.approval === 'Sales').length;
