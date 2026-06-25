@@ -7622,6 +7622,10 @@
               <i class="ti ti-file-text nav-icon"></i>
               <span class="nav-text">AMC Quotes</span>
             </div>
+            <div class="nav-item" data-page="svc-pm" onclick="navigate('svc-pm',this)">
+              <i class="ti ti-calendar-stats nav-icon"></i>
+              <span class="nav-text">PM Management</span>
+            </div>
             <div class="nav-item" data-page="svc-visits" onclick="navigate('svc-visits',this)">
               <i class="ti ti-map-pin nav-icon"></i>
               <span class="nav-text">Service Visits</span>
@@ -9307,7 +9311,8 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="showToast('success', 'Sync', 'Synchronising with Tally...')"><i class="ti ti-refresh"></i>
+                <button class="btn btn-primary" onclick="showToast('success', 'Sync', 'Synchronising with Tally...')"><i
+                    class="ti ti-refresh"></i>
                   Sync with Tally</button>
               </div>
             </div>
@@ -10480,7 +10485,8 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="showToast('success', 'Sync', 'Synchronising with Tally...')"><i class="ti ti-refresh"></i>
+                <button class="btn btn-primary" onclick="showToast('success', 'Sync', 'Synchronising with Tally...')"><i
+                    class="ti ti-refresh"></i>
                   Sync with Tally</button>
               </div>
             </div>
@@ -11740,8 +11746,8 @@
                       <option>Feedback</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Customer Visit Time</label><input class="form-control"
-                      type="time" id="mreq-visit-time"></div>
+                  <div class="form-group"><label class="form-label">Customer Visit Time</label><input
+                      class="form-control" type="time" id="mreq-visit-time"></div>
                   <div class="form-group"><label class="form-label">Branch</label><input class="form-control"
                       id="mreq-branch" placeholder="Branch name"></div>
                   <div class="form-group"><label class="form-label">Status</label>
@@ -11757,21 +11763,32 @@
                     id="mreq-addr" placeholder="Service location"></div>
                 <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
                     id="mreq-desc" rows="2" placeholder="Description of service request…"></textarea></div>
-                
+
                 <div class="form-group" style="margin-top:16px;">
                   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                     <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
-                    <button class="btn btn-outline" style="padding:4px 8px; font-size:12px;" onclick="event.preventDefault(); addMReqCustomField()"><i class="ti ti-plus"></i> Add Field</button>
+                    <button class="btn btn-outline" style="padding:4px 8px; font-size:12px;"
+                      onclick="event.preventDefault(); addMReqCustomField()"><i class="ti ti-plus"></i> Add
+                      Field</button>
                   </div>
                   <div id="mreq-cf-container"></div>
                 </div>
 
-                <div id="mreq-history-wrap" style="display:none; margin-top:20px; padding-top:16px; border-top:1px dashed var(--border);">
+                <div id="mreq-history-wrap"
+                  style="display:none; margin-top:20px; padding-top:16px; border-top:1px dashed var(--border);">
                   <div style="font-weight:600; margin-bottom:12px; color:var(--text-main);">Customer History</div>
                   <div style="max-height:160px; overflow-y:auto; font-size:13px;">
                     <div class="table-wrap" style="margin-bottom:0; box-shadow:none; border:1px solid var(--border);">
                       <table class="data-tbl" style="margin-bottom:0;">
-                        <thead><tr><th>Type</th><th>Ref#</th><th>Date</th><th class="text-right">Amount</th><th>Status</th></tr></thead>
+                        <thead>
+                          <tr>
+                            <th>Type</th>
+                            <th>Ref#</th>
+                            <th>Date</th>
+                            <th class="text-right">Amount</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
                         <tbody id="mreq-history-tbody"></tbody>
                       </table>
                     </div>
@@ -11945,46 +11962,167 @@
           <div class="page" id="page-ai-demand-forecast">
             <div class="page-header">
               <div>
-                <div class="page-title">Demand Forecast <span class="badge badge-blue" style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
+                <div class="page-title">Demand Forecast <span class="badge badge-blue"
+                    style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
                 <div class="page-sub">Model trained on 24 months of sales history</div>
               </div>
               <div class="page-actions">
-                <select class="form-select" style="font-size:12px;padding:6px 10px;"><option>Next 90 days</option><option>Next 30 days</option><option>Next 6 months</option><option>Next 12 months</option></select>
-                <select class="form-select" style="font-size:12px;padding:6px 10px;"><option>All Categories</option><option>Safety Equipment</option><option>Compressors</option><option>Welding</option></select>
+                <select class="form-select" style="font-size:12px;padding:6px 10px;">
+                  <option>Next 90 days</option>
+                  <option>Next 30 days</option>
+                  <option>Next 6 months</option>
+                  <option>Next 12 months</option>
+                </select>
+                <select class="form-select" style="font-size:12px;padding:6px 10px;">
+                  <option>All Categories</option>
+                  <option>Safety Equipment</option>
+                  <option>Compressors</option>
+                  <option>Welding</option>
+                </select>
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i class="ti ti-refresh"></i> Refresh Analysis</button>
+                <button class="btn btn-primary"
+                  onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i
+                    class="ti ti-refresh"></i> Refresh Analysis</button>
               </div>
             </div>
 
             <div class="kpi-grid kpi-grid-4" style="margin-bottom:16px;">
-              <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Forecasted Demand (90d)</div><div class="kpi-val">AED 1.84M</div></div><div class="kpi-icon gold"><i class="ti ti-chart-bar"></i></div></div><div class="kpi-sub up">↑ 14% vs prior quarter</div></div>
-              <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Forecast Confidence</div><div class="kpi-val">86%</div></div><div class="kpi-icon blue"><i class="ti ti-brain"></i></div></div><div class="kpi-sub up">Model accuracy (MAPE 14%)</div></div>
-              <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Top Growth Category</div><div class="kpi-val">Safety PPE</div></div><div class="kpi-icon green"><i class="ti ti-trending-up"></i></div></div><div class="kpi-sub up">↑ 22% projected</div></div>
-              <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Demand Spikes Flagged</div><div class="kpi-val">3</div></div><div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub warn">Seasonal — review stock</div></div>
+              <div class="kpi-card gold">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Forecasted Demand (90d)</div>
+                    <div class="kpi-val">AED 1.84M</div>
+                  </div>
+                  <div class="kpi-icon gold"><i class="ti ti-chart-bar"></i></div>
+                </div>
+                <div class="kpi-sub up">↑ 14% vs prior quarter</div>
+              </div>
+              <div class="kpi-card blue">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Forecast Confidence</div>
+                    <div class="kpi-val">86%</div>
+                  </div>
+                  <div class="kpi-icon blue"><i class="ti ti-brain"></i></div>
+                </div>
+                <div class="kpi-sub up">Model accuracy (MAPE 14%)</div>
+              </div>
+              <div class="kpi-card green">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Top Growth Category</div>
+                    <div class="kpi-val">Safety PPE</div>
+                  </div>
+                  <div class="kpi-icon green"><i class="ti ti-trending-up"></i></div>
+                </div>
+                <div class="kpi-sub up">↑ 22% projected</div>
+              </div>
+              <div class="kpi-card amber">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Demand Spikes Flagged</div>
+                    <div class="kpi-val">3</div>
+                  </div>
+                  <div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div>
+                </div>
+                <div class="kpi-sub warn">Seasonal — review stock</div>
+              </div>
             </div>
 
             <div class="alert alert-blue">
               <i class="ti ti-sparkles"></i>
-              <div><div class="alert-title">AI Forecast Insight</div><div class="alert-desc">Safety PPE demand is projected to rise 22% over the next quarter, driven by 3 large O&amp;G projects entering execution phase. Recommend pre-positioning stock on safety helmets and coveralls before the Q3 surge. Compressor demand stays flat.</div></div>
+              <div>
+                <div class="alert-title">AI Forecast Insight</div>
+                <div class="alert-desc">Safety PPE demand is projected to rise 22% over the next quarter, driven by 3
+                  large O&amp;G projects entering execution phase. Recommend pre-positioning stock on safety helmets and
+                  coveralls before the Q3 surge. Compressor demand stays flat.</div>
+              </div>
             </div>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-              <div class="card"><div class="card-header"><div class="card-title">Demand Forecast vs Actuals (12-month + 3-month projection)</div></div><div class="card-body"><div id="chart-aidf-area" style="height:260px;"></div></div></div>
-              <div class="card"><div class="card-header"><div class="card-title">Forecasted Demand by Category</div></div><div class="card-body"><div id="chart-aidf-donut" style="height:260px;"></div></div></div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Demand Forecast vs Actuals (12-month + 3-month projection)</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aidf-area" style="height:260px;"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Forecasted Demand by Category</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aidf-donut" style="height:260px;"></div>
+                </div>
+              </div>
             </div>
 
             <div class="card">
-              <div class="card-header"><div class="card-title">Top Products — 90-Day Demand Forecast</div></div>
+              <div class="card-header">
+                <div class="card-title">Top Products — 90-Day Demand Forecast</div>
+              </div>
               <div class="tbl-wrap">
                 <table class="data-tbl">
-                  <thead><tr><th>Product</th><th>Category</th><th>Forecast Qty</th><th>Trend</th><th>Confidence</th><th>Recommended Action</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Forecast Qty</th>
+                      <th>Trend</th>
+                      <th>Confidence</th>
+                      <th>Recommended Action</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr><td class="c-name">MSA V-Gard Safety Helmet</td><td>Safety PPE</td><td>1,240 units</td><td><span style="color:#16A34A;font-weight:600;">↑ 24%</span></td><td><span class="pill pg">High</span></td><td>Pre-stock 1,400 units</td></tr>
-                    <tr><td class="c-name">DuPont Tyvek Coverall</td><td>Safety PPE</td><td>3,800 units</td><td><span style="color:#16A34A;font-weight:600;">↑ 19%</span></td><td><span class="pill pg">High</span></td><td>Raise PR — current stock low</td></tr>
-                    <tr><td class="c-name">Atlas Copco GA 11+ Compressor</td><td>Compressors</td><td>14 units</td><td><span style="color:#6a7f96;font-weight:600;">→ 0%</span></td><td><span class="pill pa">Medium</span></td><td>Hold — stable demand</td></tr>
-                    <tr><td class="c-name">3M Scott Air-Pak SCBA</td><td>Safety PPE</td><td>62 units</td><td><span style="color:#16A34A;font-weight:600;">↑ 31%</span></td><td><span class="pill pa">Medium</span></td><td>Demand spike — verify supply</td></tr>
-                    <tr><td class="c-name">Ansell AlphaTec Gloves</td><td>Safety PPE</td><td>5,100 pairs</td><td><span style="color:#16A34A;font-weight:600;">↑ 12%</span></td><td><span class="pill pg">High</span></td><td>Maintain current stock</td></tr>
-                    <tr><td class="c-name">Lincoln E6013 Welding Rods</td><td>Welding</td><td>2,400 kg</td><td><span style="color:#DC2626;font-weight:600;">↓ 8%</span></td><td><span class="pill pa">Medium</span></td><td>Reduce next order</td></tr>
+                    <tr>
+                      <td class="c-name">MSA V-Gard Safety Helmet</td>
+                      <td>Safety PPE</td>
+                      <td>1,240 units</td>
+                      <td><span style="color:#16A34A;font-weight:600;">↑ 24%</span></td>
+                      <td><span class="pill pg">High</span></td>
+                      <td>Pre-stock 1,400 units</td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">DuPont Tyvek Coverall</td>
+                      <td>Safety PPE</td>
+                      <td>3,800 units</td>
+                      <td><span style="color:#16A34A;font-weight:600;">↑ 19%</span></td>
+                      <td><span class="pill pg">High</span></td>
+                      <td>Raise PR — current stock low</td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Atlas Copco GA 11+ Compressor</td>
+                      <td>Compressors</td>
+                      <td>14 units</td>
+                      <td><span style="color:#6a7f96;font-weight:600;">→ 0%</span></td>
+                      <td><span class="pill pa">Medium</span></td>
+                      <td>Hold — stable demand</td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">3M Scott Air-Pak SCBA</td>
+                      <td>Safety PPE</td>
+                      <td>62 units</td>
+                      <td><span style="color:#16A34A;font-weight:600;">↑ 31%</span></td>
+                      <td><span class="pill pa">Medium</span></td>
+                      <td>Demand spike — verify supply</td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Ansell AlphaTec Gloves</td>
+                      <td>Safety PPE</td>
+                      <td>5,100 pairs</td>
+                      <td><span style="color:#16A34A;font-weight:600;">↑ 12%</span></td>
+                      <td><span class="pill pg">High</span></td>
+                      <td>Maintain current stock</td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Lincoln E6013 Welding Rods</td>
+                      <td>Welding</td>
+                      <td>2,400 kg</td>
+                      <td><span style="color:#DC2626;font-weight:600;">↓ 8%</span></td>
+                      <td><span class="pill pa">Medium</span></td>
+                      <td>Reduce next order</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -11995,45 +12133,161 @@
           <div class="page" id="page-ai-inventory-intel">
             <div class="page-header">
               <div>
-                <div class="page-title">Inventory Intelligence <span class="badge badge-blue" style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
+                <div class="page-title">Inventory Intelligence <span class="badge badge-blue"
+                    style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
                 <div class="page-sub">Reorder points, stock-out predictions &amp; optimization</div>
               </div>
               <div class="page-actions">
-                <span class="badge badge-outline" style="display:inline-flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#16A34A;display:inline-block;"></span> Live Sync</span>
-                <select class="form-select" style="font-size:12px;padding:6px 10px;"><option>Next 90 days</option><option>Next 30 days</option><option>Next 6 months</option></select>
+                <span class="badge badge-outline" style="display:inline-flex;align-items:center;gap:5px;"><span
+                    style="width:6px;height:6px;border-radius:50%;background:#16A34A;display:inline-block;"></span> Live
+                  Sync</span>
+                <select class="form-select" style="font-size:12px;padding:6px 10px;">
+                  <option>Next 90 days</option>
+                  <option>Next 30 days</option>
+                  <option>Next 6 months</option>
+                </select>
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i class="ti ti-refresh"></i> Refresh Analysis</button>
+                <button class="btn btn-primary"
+                  onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i
+                    class="ti ti-refresh"></i> Refresh Analysis</button>
               </div>
             </div>
 
             <div class="kpi-grid kpi-grid-4" style="margin-bottom:16px;">
-              <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Stock-out Risk (14d)</div><div class="kpi-val">7</div></div><div class="kpi-icon red"><i class="ti ti-package-off"></i></div></div><div class="kpi-sub warn">SKUs need reorder now</div></div>
-              <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Below Reorder Point</div><div class="kpi-val">23</div></div><div class="kpi-icon amber"><i class="ti ti-alert-triangle"></i></div></div><div class="kpi-sub warn">Action recommended</div></div>
-              <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Excess / Slow-moving</div><div class="kpi-val">12</div></div><div class="kpi-icon blue"><i class="ti ti-archive"></i></div></div><div class="kpi-sub neutral">AED 142K tied up</div></div>
-              <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Inventory Health</div><div class="kpi-val">82%</div></div><div class="kpi-icon green"><i class="ti ti-heart-rate-monitor"></i></div></div><div class="kpi-sub up">↑ 4% vs last month</div></div>
+              <div class="kpi-card red">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Stock-out Risk (14d)</div>
+                    <div class="kpi-val">7</div>
+                  </div>
+                  <div class="kpi-icon red"><i class="ti ti-package-off"></i></div>
+                </div>
+                <div class="kpi-sub warn">SKUs need reorder now</div>
+              </div>
+              <div class="kpi-card amber">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Below Reorder Point</div>
+                    <div class="kpi-val">23</div>
+                  </div>
+                  <div class="kpi-icon amber"><i class="ti ti-alert-triangle"></i></div>
+                </div>
+                <div class="kpi-sub warn">Action recommended</div>
+              </div>
+              <div class="kpi-card blue">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Excess / Slow-moving</div>
+                    <div class="kpi-val">12</div>
+                  </div>
+                  <div class="kpi-icon blue"><i class="ti ti-archive"></i></div>
+                </div>
+                <div class="kpi-sub neutral">AED 142K tied up</div>
+              </div>
+              <div class="kpi-card green">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Inventory Health</div>
+                    <div class="kpi-val">82%</div>
+                  </div>
+                  <div class="kpi-icon green"><i class="ti ti-heart-rate-monitor"></i></div>
+                </div>
+                <div class="kpi-sub up">↑ 4% vs last month</div>
+              </div>
             </div>
 
             <div class="alert alert-red">
               <i class="ti ti-alert-triangle"></i>
-              <div><div class="alert-title">Critical Stock Alert</div><div class="alert-desc">3M Scott Air-Pak SCBA will stock out in 6 days at current consumption, but forecasted demand rises 31% this quarter. Lead time is 21 days. Raise a purchase requisition today to avoid losing a major order.</div></div>
+              <div>
+                <div class="alert-title">Critical Stock Alert</div>
+                <div class="alert-desc">3M Scott Air-Pak SCBA will stock out in 6 days at current consumption, but
+                  forecasted demand rises 31% this quarter. Lead time is 21 days. Raise a purchase requisition today to
+                  avoid losing a major order.</div>
+              </div>
             </div>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-              <div class="card"><div class="card-header"><div class="card-title">Stock Level vs Reorder Point (top SKUs)</div></div><div class="card-body"><div id="chart-aiii-bar" style="height:260px;"></div></div></div>
-              <div class="card"><div class="card-header"><div class="card-title">Inventory Value by Movement Class</div></div><div class="card-body"><div id="chart-aiii-donut" style="height:260px;"></div></div></div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Stock Level vs Reorder Point (top SKUs)</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aiii-bar" style="height:260px;"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Inventory Value by Movement Class</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aiii-donut" style="height:260px;"></div>
+                </div>
+              </div>
             </div>
 
             <div class="card">
-              <div class="card-header"><div class="card-title">Reorder Recommendations</div></div>
+              <div class="card-header">
+                <div class="card-title">Reorder Recommendations</div>
+              </div>
               <div class="tbl-wrap">
                 <table class="data-tbl">
-                  <thead><tr><th>SKU</th><th>Product</th><th>On Hand</th><th>Reorder Pt</th><th>Days to Stock-out</th><th>Suggested Order</th><th>Status</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product</th>
+                      <th>On Hand</th>
+                      <th>Reorder Pt</th>
+                      <th>Days to Stock-out</th>
+                      <th>Suggested Order</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr><td class="c-name">SKU-30042</td><td>3M Scott Air-Pak SCBA</td><td>4</td><td>15</td><td><span style="color:#DC2626;font-weight:700;">6 days</span></td><td>40 units</td><td><span class="pill pr">Critical</span></td></tr>
-                    <tr><td class="c-name">SKU-20187</td><td>Atlas Copco GA 11+ Compressor</td><td>3</td><td>5</td><td><span style="color:#E65100;font-weight:700;">12 days</span></td><td>6 units</td><td><span class="pill pa">Low</span></td></tr>
-                    <tr><td class="c-name">SKU-10955</td><td>Honeywell Miller Harness</td><td>7</td><td>20</td><td><span style="color:#E65100;font-weight:700;">9 days</span></td><td>50 units</td><td><span class="pill pa">Low</span></td></tr>
-                    <tr><td class="c-name">SKU-10492</td><td>MSA V-Gard Helmet</td><td>84</td><td>60</td><td><span style="color:#16A34A;font-weight:700;">38 days</span></td><td>—</td><td><span class="pill pg">Healthy</span></td></tr>
-                    <tr><td class="c-name">SKU-10771</td><td>DuPont Tyvek Coverall</td><td>220</td><td>150</td><td><span style="color:#16A34A;font-weight:700;">26 days</span></td><td>300 units</td><td><span class="pill pa">Forecast spike</span></td></tr>
+                    <tr>
+                      <td class="c-name">SKU-30042</td>
+                      <td>3M Scott Air-Pak SCBA</td>
+                      <td>4</td>
+                      <td>15</td>
+                      <td><span style="color:#DC2626;font-weight:700;">6 days</span></td>
+                      <td>40 units</td>
+                      <td><span class="pill pr">Critical</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">SKU-20187</td>
+                      <td>Atlas Copco GA 11+ Compressor</td>
+                      <td>3</td>
+                      <td>5</td>
+                      <td><span style="color:#E65100;font-weight:700;">12 days</span></td>
+                      <td>6 units</td>
+                      <td><span class="pill pa">Low</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">SKU-10955</td>
+                      <td>Honeywell Miller Harness</td>
+                      <td>7</td>
+                      <td>20</td>
+                      <td><span style="color:#E65100;font-weight:700;">9 days</span></td>
+                      <td>50 units</td>
+                      <td><span class="pill pa">Low</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">SKU-10492</td>
+                      <td>MSA V-Gard Helmet</td>
+                      <td>84</td>
+                      <td>60</td>
+                      <td><span style="color:#16A34A;font-weight:700;">38 days</span></td>
+                      <td>—</td>
+                      <td><span class="pill pg">Healthy</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">SKU-10771</td>
+                      <td>DuPont Tyvek Coverall</td>
+                      <td>220</td>
+                      <td>150</td>
+                      <td><span style="color:#16A34A;font-weight:700;">26 days</span></td>
+                      <td>300 units</td>
+                      <td><span class="pill pa">Forecast spike</span></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -12045,39 +12299,163 @@
             <div class="page-header">
               <div>
                 <div class="page-title">Supplier Scorecards</div>
-                <div class="page-sub">Vendor performance, reliability &amp; risk · scored on delivery, quality, pricing &amp; responsiveness</div>
+                <div class="page-sub">Vendor performance, reliability &amp; risk · scored on delivery, quality, pricing
+                  &amp; responsiveness</div>
               </div>
               <div class="page-actions">
-                <select class="form-select" style="font-size:12px;padding:6px 10px;"><option>All Suppliers</option><option>Safety Equipment</option><option>Compressors</option></select>
+                <select class="form-select" style="font-size:12px;padding:6px 10px;">
+                  <option>All Suppliers</option>
+                  <option>Safety Equipment</option>
+                  <option>Compressors</option>
+                </select>
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i class="ti ti-refresh"></i> Refresh Analysis</button>
+                <button class="btn btn-primary"
+                  onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i
+                    class="ti ti-refresh"></i> Refresh Analysis</button>
               </div>
             </div>
 
             <div class="kpi-grid kpi-grid-4" style="margin-bottom:16px;">
-              <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Avg Supplier Score</div><div class="kpi-val">8.2</div></div><div class="kpi-icon green"><i class="ti ti-star"></i></div></div><div class="kpi-sub up">↑ 0.3 vs last quarter</div></div>
-              <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">On-Time Delivery</div><div class="kpi-val">91%</div></div><div class="kpi-icon blue"><i class="ti ti-truck"></i></div></div><div class="kpi-sub up">Across all vendors</div></div>
-              <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">At-Risk Suppliers</div><div class="kpi-val">2</div></div><div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub warn">Below 6.0 score</div></div>
-              <div class="kpi-card gold"><div class="kpi-head"><div><div class="kpi-label">Active Suppliers</div><div class="kpi-val">18</div></div><div class="kpi-icon gold"><i class="ti ti-building-store"></i></div></div><div class="kpi-sub neutral">Total vendors</div></div>
+              <div class="kpi-card green">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Avg Supplier Score</div>
+                    <div class="kpi-val">8.2</div>
+                  </div>
+                  <div class="kpi-icon green"><i class="ti ti-star"></i></div>
+                </div>
+                <div class="kpi-sub up">↑ 0.3 vs last quarter</div>
+              </div>
+              <div class="kpi-card blue">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">On-Time Delivery</div>
+                    <div class="kpi-val">91%</div>
+                  </div>
+                  <div class="kpi-icon blue"><i class="ti ti-truck"></i></div>
+                </div>
+                <div class="kpi-sub up">Across all vendors</div>
+              </div>
+              <div class="kpi-card amber">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">At-Risk Suppliers</div>
+                    <div class="kpi-val">2</div>
+                  </div>
+                  <div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div>
+                </div>
+                <div class="kpi-sub warn">Below 6.0 score</div>
+              </div>
+              <div class="kpi-card gold">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Active Suppliers</div>
+                    <div class="kpi-val">18</div>
+                  </div>
+                  <div class="kpi-icon gold"><i class="ti ti-building-store"></i></div>
+                </div>
+                <div class="kpi-sub neutral">Total vendors</div>
+              </div>
             </div>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-              <div class="card"><div class="card-header"><div class="card-title">Top Suppliers — Performance Radar</div></div><div class="card-body"><div id="chart-aiss-radar" style="height:260px;"></div></div></div>
-              <div class="card"><div class="card-header"><div class="card-title">On-Time Delivery Trend</div></div><div class="card-body"><div id="chart-aiss-area" style="height:260px;"></div></div></div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Top Suppliers — Performance Radar</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aiss-radar" style="height:260px;"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">On-Time Delivery Trend</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aiss-area" style="height:260px;"></div>
+                </div>
+              </div>
             </div>
 
             <div class="card">
-              <div class="card-header"><div class="card-title">Supplier Scorecard Ranking</div></div>
+              <div class="card-header">
+                <div class="card-title">Supplier Scorecard Ranking</div>
+              </div>
               <div class="tbl-wrap">
                 <table class="data-tbl">
-                  <thead><tr><th>Supplier</th><th>Category</th><th>On-Time %</th><th>Quality</th><th>Price Index</th><th>Responsiveness</th><th>Overall Score</th><th>Risk</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Supplier</th>
+                      <th>Category</th>
+                      <th>On-Time %</th>
+                      <th>Quality</th>
+                      <th>Price Index</th>
+                      <th>Responsiveness</th>
+                      <th>Overall Score</th>
+                      <th>Risk</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr><td class="c-name">MSA Safety Middle East</td><td>Safety PPE</td><td>96%</td><td><span class="pill pg">Excellent</span></td><td>Competitive</td><td>4.2 hrs</td><td><strong style="color:#16A34A;">9.1</strong></td><td><span class="pill pg">Low</span></td></tr>
-                    <tr><td class="c-name">Atlas Copco UAE</td><td>Compressors</td><td>93%</td><td><span class="pill pg">Excellent</span></td><td>Premium</td><td>6.1 hrs</td><td><strong style="color:#16A34A;">8.7</strong></td><td><span class="pill pg">Low</span></td></tr>
-                    <tr><td class="c-name">DuPont Distribution FZE</td><td>Safety PPE</td><td>89%</td><td><span class="pill pa">Good</span></td><td>Competitive</td><td>8.4 hrs</td><td><strong style="color:#16A34A;">8.2</strong></td><td><span class="pill pg">Low</span></td></tr>
-                    <tr><td class="c-name">Gulf Welding Supplies</td><td>Welding</td><td>78%</td><td><span class="pill pa">Good</span></td><td>Low cost</td><td>12 hrs</td><td><strong style="color:#E65100;">6.4</strong></td><td><span class="pill pa">Medium</span></td></tr>
-                    <tr><td class="c-name">Emirates Industrial Trading</td><td>General</td><td>71%</td><td><span class="pill pr">Variable</span></td><td>Low cost</td><td>18 hrs</td><td><strong style="color:#DC2626;">5.8</strong></td><td><span class="pill pr">High</span></td></tr>
-                    <tr><td class="c-name">RAK Safety Products</td><td>Safety PPE</td><td>68%</td><td><span class="pill pr">Variable</span></td><td>Competitive</td><td>22 hrs</td><td><strong style="color:#DC2626;">5.5</strong></td><td><span class="pill pr">High</span></td></tr>
+                    <tr>
+                      <td class="c-name">MSA Safety Middle East</td>
+                      <td>Safety PPE</td>
+                      <td>96%</td>
+                      <td><span class="pill pg">Excellent</span></td>
+                      <td>Competitive</td>
+                      <td>4.2 hrs</td>
+                      <td><strong style="color:#16A34A;">9.1</strong></td>
+                      <td><span class="pill pg">Low</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Atlas Copco UAE</td>
+                      <td>Compressors</td>
+                      <td>93%</td>
+                      <td><span class="pill pg">Excellent</span></td>
+                      <td>Premium</td>
+                      <td>6.1 hrs</td>
+                      <td><strong style="color:#16A34A;">8.7</strong></td>
+                      <td><span class="pill pg">Low</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">DuPont Distribution FZE</td>
+                      <td>Safety PPE</td>
+                      <td>89%</td>
+                      <td><span class="pill pa">Good</span></td>
+                      <td>Competitive</td>
+                      <td>8.4 hrs</td>
+                      <td><strong style="color:#16A34A;">8.2</strong></td>
+                      <td><span class="pill pg">Low</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Gulf Welding Supplies</td>
+                      <td>Welding</td>
+                      <td>78%</td>
+                      <td><span class="pill pa">Good</span></td>
+                      <td>Low cost</td>
+                      <td>12 hrs</td>
+                      <td><strong style="color:#E65100;">6.4</strong></td>
+                      <td><span class="pill pa">Medium</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Emirates Industrial Trading</td>
+                      <td>General</td>
+                      <td>71%</td>
+                      <td><span class="pill pr">Variable</span></td>
+                      <td>Low cost</td>
+                      <td>18 hrs</td>
+                      <td><strong style="color:#DC2626;">5.8</strong></td>
+                      <td><span class="pill pr">High</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">RAK Safety Products</td>
+                      <td>Safety PPE</td>
+                      <td>68%</td>
+                      <td><span class="pill pr">Variable</span></td>
+                      <td>Competitive</td>
+                      <td>22 hrs</td>
+                      <td><strong style="color:#DC2626;">5.5</strong></td>
+                      <td><span class="pill pr">High</span></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -12088,45 +12466,167 @@
           <div class="page" id="page-ai-credit-risk">
             <div class="page-header">
               <div>
-                <div class="page-title">Credit &amp; Risk <span class="badge badge-red" style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
+                <div class="page-title">Credit &amp; Risk <span class="badge badge-red"
+                    style="font-size:9px;vertical-align:middle;"><i class="ti ti-sparkles"></i> AI</span></div>
                 <div class="page-sub">Customer credit exposure, payment behaviour &amp; risk scoring</div>
               </div>
               <div class="page-actions">
-                <select class="form-select" style="font-size:12px;padding:6px 10px;"><option>All Customers</option><option>High Risk</option><option>Over Limit</option></select>
+                <select class="form-select" style="font-size:12px;padding:6px 10px;">
+                  <option>All Customers</option>
+                  <option>High Risk</option>
+                  <option>Over Limit</option>
+                </select>
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i class="ti ti-refresh"></i> Refresh Analysis</button>
+                <button class="btn btn-primary"
+                  onclick="this.innerHTML='<i class=\'ti ti-loader-2\' style=\'animation:spin 1s linear infinite;\'></i> Refreshing…';setTimeout(()=>this.innerHTML='<i class=\'ti ti-refresh\'></i> Refresh Analysis',1800)"><i
+                    class="ti ti-refresh"></i> Refresh Analysis</button>
               </div>
             </div>
 
             <div class="kpi-grid kpi-grid-4" style="margin-bottom:16px;">
-              <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Total Receivables</div><div class="kpi-val">AED 3.2M</div></div><div class="kpi-icon blue"><i class="ti ti-receipt"></i></div></div><div class="kpi-sub neutral">Across 284 customers</div></div>
-              <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Overdue (90+ days)</div><div class="kpi-val">AED 412K</div></div><div class="kpi-icon red"><i class="ti ti-calendar-x"></i></div></div><div class="kpi-sub warn">13% of receivables</div></div>
-              <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Over Credit Limit</div><div class="kpi-val">5</div></div><div class="kpi-icon amber"><i class="ti ti-credit-card-off"></i></div></div><div class="kpi-sub warn">Orders need approval</div></div>
-              <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Avg Collection Period</div><div class="kpi-val">38d</div></div><div class="kpi-icon green"><i class="ti ti-clock"></i></div></div><div class="kpi-sub up">↓ 4 days vs Q1</div></div>
+              <div class="kpi-card blue">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Total Receivables</div>
+                    <div class="kpi-val">AED 3.2M</div>
+                  </div>
+                  <div class="kpi-icon blue"><i class="ti ti-receipt"></i></div>
+                </div>
+                <div class="kpi-sub neutral">Across 284 customers</div>
+              </div>
+              <div class="kpi-card red">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Overdue (90+ days)</div>
+                    <div class="kpi-val">AED 412K</div>
+                  </div>
+                  <div class="kpi-icon red"><i class="ti ti-calendar-x"></i></div>
+                </div>
+                <div class="kpi-sub warn">13% of receivables</div>
+              </div>
+              <div class="kpi-card amber">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Over Credit Limit</div>
+                    <div class="kpi-val">5</div>
+                  </div>
+                  <div class="kpi-icon amber"><i class="ti ti-credit-card-off"></i></div>
+                </div>
+                <div class="kpi-sub warn">Orders need approval</div>
+              </div>
+              <div class="kpi-card green">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Avg Collection Period</div>
+                    <div class="kpi-val">38d</div>
+                  </div>
+                  <div class="kpi-icon green"><i class="ti ti-clock"></i></div>
+                </div>
+                <div class="kpi-sub up">↓ 4 days vs Q1</div>
+              </div>
             </div>
 
             <div class="alert alert-red">
               <i class="ti ti-shield-half"></i>
-              <div><div class="alert-title">Risk Alert</div><div class="alert-desc">Gulf Metals Trading has a pending order of AED 84,000 that would push them AED 26,000 over their credit limit, and they have AED 38,000 overdue beyond 90 days. AI recommends holding the order pending payment or requesting advance.</div></div>
+              <div>
+                <div class="alert-title">Risk Alert</div>
+                <div class="alert-desc">Gulf Metals Trading has a pending order of AED 84,000 that would push them AED
+                  26,000 over their credit limit, and they have AED 38,000 overdue beyond 90 days. AI recommends holding
+                  the order pending payment or requesting advance.</div>
+              </div>
             </div>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-              <div class="card"><div class="card-header"><div class="card-title">Receivables Aging</div></div><div class="card-body"><div id="chart-aicr-bar" style="height:260px;"></div></div></div>
-              <div class="card"><div class="card-header"><div class="card-title">Customers by Risk Band</div></div><div class="card-body"><div id="chart-aicr-donut" style="height:260px;"></div></div></div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Receivables Aging</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aicr-bar" style="height:260px;"></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Customers by Risk Band</div>
+                </div>
+                <div class="card-body">
+                  <div id="chart-aicr-donut" style="height:260px;"></div>
+                </div>
+              </div>
             </div>
 
             <div class="card">
-              <div class="card-header"><div class="card-title">Customer Credit Exposure</div></div>
+              <div class="card-header">
+                <div class="card-title">Customer Credit Exposure</div>
+              </div>
               <div class="tbl-wrap">
                 <table class="data-tbl">
-                  <thead><tr><th>Customer</th><th>Credit Limit</th><th>Outstanding</th><th>Overdue 90+</th><th>Utilization</th><th>Risk Score</th><th>Status</th></tr></thead>
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Credit Limit</th>
+                      <th>Outstanding</th>
+                      <th>Overdue 90+</th>
+                      <th>Utilization</th>
+                      <th>Risk Score</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
                   <tbody>
-                    <tr><td class="c-name">Gulf Metals Trading</td><td>AED 150,000</td><td>AED 176,000</td><td>AED 38,000</td><td><span style="color:#DC2626;font-weight:700;">117%</span></td><td><strong style="color:#DC2626;">High</strong></td><td><span class="pill pr">Over Limit</span></td></tr>
-                    <tr><td class="c-name">Al-Faris Industrial</td><td>AED 200,000</td><td>AED 184,000</td><td>AED 22,000</td><td><span style="color:#E65100;font-weight:700;">92%</span></td><td><strong style="color:#E65100;">Medium</strong></td><td><span class="pill pa">Watch</span></td></tr>
-                    <tr><td class="c-name">Dragon Oil</td><td>AED 500,000</td><td>AED 312,000</td><td>—</td><td><span style="color:#16A34A;font-weight:700;">62%</span></td><td><strong style="color:#16A34A;">Low</strong></td><td><span class="pill pg">Healthy</span></td></tr>
-                    <tr><td class="c-name">Lamprell Energy Ltd.</td><td>AED 600,000</td><td>AED 284,000</td><td>—</td><td><span style="color:#16A34A;font-weight:700;">47%</span></td><td><strong style="color:#16A34A;">Low</strong></td><td><span class="pill pg">Healthy</span></td></tr>
-                    <tr><td class="c-name">Emirates Steel</td><td>AED 350,000</td><td>AED 298,000</td><td>AED 14,000</td><td><span style="color:#E65100;font-weight:700;">85%</span></td><td><strong style="color:#E65100;">Medium</strong></td><td><span class="pill pa">Watch</span></td></tr>
-                    <tr><td class="c-name">Shelf Drilling</td><td>AED 400,000</td><td>AED 156,000</td><td>—</td><td><span style="color:#16A34A;font-weight:700;">39%</span></td><td><strong style="color:#16A34A;">Low</strong></td><td><span class="pill pg">Healthy</span></td></tr>
+                    <tr>
+                      <td class="c-name">Gulf Metals Trading</td>
+                      <td>AED 150,000</td>
+                      <td>AED 176,000</td>
+                      <td>AED 38,000</td>
+                      <td><span style="color:#DC2626;font-weight:700;">117%</span></td>
+                      <td><strong style="color:#DC2626;">High</strong></td>
+                      <td><span class="pill pr">Over Limit</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Al-Faris Industrial</td>
+                      <td>AED 200,000</td>
+                      <td>AED 184,000</td>
+                      <td>AED 22,000</td>
+                      <td><span style="color:#E65100;font-weight:700;">92%</span></td>
+                      <td><strong style="color:#E65100;">Medium</strong></td>
+                      <td><span class="pill pa">Watch</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Dragon Oil</td>
+                      <td>AED 500,000</td>
+                      <td>AED 312,000</td>
+                      <td>—</td>
+                      <td><span style="color:#16A34A;font-weight:700;">62%</span></td>
+                      <td><strong style="color:#16A34A;">Low</strong></td>
+                      <td><span class="pill pg">Healthy</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Lamprell Energy Ltd.</td>
+                      <td>AED 600,000</td>
+                      <td>AED 284,000</td>
+                      <td>—</td>
+                      <td><span style="color:#16A34A;font-weight:700;">47%</span></td>
+                      <td><strong style="color:#16A34A;">Low</strong></td>
+                      <td><span class="pill pg">Healthy</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Emirates Steel</td>
+                      <td>AED 350,000</td>
+                      <td>AED 298,000</td>
+                      <td>AED 14,000</td>
+                      <td><span style="color:#E65100;font-weight:700;">85%</span></td>
+                      <td><strong style="color:#E65100;">Medium</strong></td>
+                      <td><span class="pill pa">Watch</span></td>
+                    </tr>
+                    <tr>
+                      <td class="c-name">Shelf Drilling</td>
+                      <td>AED 400,000</td>
+                      <td>AED 156,000</td>
+                      <td>—</td>
+                      <td><span style="color:#16A34A;font-weight:700;">39%</span></td>
+                      <td><strong style="color:#16A34A;">Low</strong></td>
+                      <td><span class="pill pg">Healthy</span></td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -13451,7 +13951,8 @@
                 <div class="page-sub">Process product buy-backs and credit notes</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary" onclick="openModal('modal-sal-buyback')"><i class="ti ti-refresh"></i> New Buy Back</button>
+                <button class="btn btn-primary" onclick="openModal('modal-sal-buyback')"><i class="ti ti-refresh"></i>
+                  New Buy Back</button>
               </div>
             </div>
             <div class="card">
@@ -13720,6 +14221,58 @@
                   </table>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- ── SERVICE: PM MANAGEMENT ────────────────────────── -->
+          <div class="page" id="page-svc-pm">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Preventive Maintenance (PM) Management</div>
+                <div class="page-sub">Track and schedule preventive maintenance for customer equipment</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
+                <button class="btn btn-primary" onclick="openModal('modal-svc-pm')"><i class="ti ti-plus"></i> New PM
+                  Record</button>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="svc-pm-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-calendar-stats"></i> PM Schedule <span
+                    class="badge badge-blue no-dot ml-2" id="pm-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="pm-search" type="text"
+                      placeholder="Search invoice, product…" oninput="filterPM()"></div>
+                  <select class="form-control" style="width:160px;" id="pm-status-filter" onchange="filterPM()">
+                    <option value="">All Statuses</option>
+                    <option>Scheduled</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                    <option>Overdue</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Invoice #</th>
+                      <th>Product Name</th>
+                      <th>Serial #</th>
+                      <th>Qty</th>
+                      <th>Last PM</th>
+                      <th>Next PM</th>
+                      <th>Warranty End</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="svc-pm-tbody"></tbody>
+                </table>
+              </div>
+              <div id="pm-pagination"></div>
             </div>
           </div>
 
@@ -14358,7 +14911,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-file-invoice" style="font-size:22px;color:var(--navy);"></i></div>
+                    <i class="ti ti-file-invoice" style="font-size:22px;color:var(--navy);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Pay Register</div>
                     <div style="font-size:12px;color:var(--tx-3);">Monthly salary register with earnings &amp;
@@ -14370,7 +14924,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-calendar-check" style="font-size:22px;color:var(--green);"></i></div>
+                    <i class="ti ti-calendar-check" style="font-size:22px;color:var(--green);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Attendance Register
                     </div>
@@ -14382,7 +14937,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:#FFF8E1;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-building-bank" style="font-size:22px;color:var(--gold);"></i></div>
+                    <i class="ti ti-building-bank" style="font-size:22px;color:var(--gold);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Bank Statement
                     </div>
@@ -14394,7 +14950,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:#E3F2FD;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-file-text" style="font-size:22px;color:var(--blue);"></i></div>
+                    <i class="ti ti-file-text" style="font-size:22px;color:var(--blue);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Payslip</div>
                     <div style="font-size:12px;color:var(--tx-3);">Individual employee payslips for selected month</div>
@@ -14405,7 +14962,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:#FCE4EC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-shield-check" style="font-size:22px;color:var(--red);"></i></div>
+                    <i class="ti ti-shield-check" style="font-size:22px;color:var(--red);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Statutory
                       Deductions</div>
@@ -14417,7 +14975,8 @@
                 <div class="card-body" style="padding:24px;display:flex;gap:16px;align-items:center;">
                   <div
                     style="width:48px;height:48px;border-radius:12px;background:#E8F5E9;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="ti ti-credit-card" style="font-size:22px;color:var(--green);"></i></div>
+                    <i class="ti ti-credit-card" style="font-size:22px;color:var(--green);"></i>
+                  </div>
                   <div>
                     <div style="font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;">Loan Statement
                     </div>
@@ -15988,8 +16547,9 @@
                       <option>Email Campaign</option>
                     </select>
                   </div>
-                  <div class="form-group" id="mclead-referral-wrap" style="display:none;"><label class="form-label">Referred By</label><input class="form-control"
-                      id="mclead-referral-name" placeholder="Customer name"></div>
+                  <div class="form-group" id="mclead-referral-wrap" style="display:none;"><label
+                      class="form-label">Referred By</label><input class="form-control" id="mclead-referral-name"
+                      placeholder="Customer name"></div>
                   <div class="form-group"><label class="form-label">Lead Value (₹)</label><input class="form-control"
                       type="number" id="mclead-value" placeholder="100000"></div>
                   <div class="form-group"><label class="form-label">Assigned To</label>
@@ -16519,7 +17079,8 @@
                   <div class="card-title mb-0"><i class="ti ti-list"></i> Line Items</div>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <label class="form-label mb-0" style="white-space:nowrap;">Filter Products by Type:</label>
-                    <select class="form-control" style="width: 200px;" id="mquo-product-type" onchange="mquoFilterProductsByType()">
+                    <select class="form-control" style="width: 200px;" id="mquo-product-type"
+                      onchange="mquoFilterProductsByType()">
                       <option value="">— All Types —</option>
                     </select>
                   </div>
@@ -16538,7 +17099,8 @@
                     </thead>
                     <tbody id="mquo-items-body">
                       <tr>
-                        <td><select class="form-control mquo-product-sel" onchange="mquoCalc(this)" style="min-width:200px;">
+                        <td><select class="form-control mquo-product-sel" onchange="mquoCalc(this)"
+                            style="min-width:200px;">
                             <option value="">— Select —</option>
                           </select></td>
                         <td><input type="number" class="form-control" style="width:70px;" value="1" min="1"
@@ -17172,10 +17734,10 @@
                         <option>Inactive</option>
                       </select>
                     </div>
-                    <div class="form-group"><label class="form-label">Date of Relieving</label><input class="form-control"
-                        id="memp-dor" type="date"></div>
-                    <div class="form-group"><label class="form-label">Emergency Contact Number</label><input class="form-control"
-                        id="memp-emg-phone" placeholder="Emergency mobile number"></div>
+                    <div class="form-group"><label class="form-label">Date of Relieving</label><input
+                        class="form-control" id="memp-dor" type="date"></div>
+                    <div class="form-group"><label class="form-label">Emergency Contact Number</label><input
+                        class="form-control" id="memp-emg-phone" placeholder="Emergency mobile number"></div>
                     <div class="form-group"><label class="form-label">Reporting To</label>
                       <select class="form-control" id="memp-reporting">
                         <option value="">— Select —</option>
@@ -17239,7 +17801,8 @@
                   <div class="form-group form-col-2">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                       <label class="form-label" style="margin-bottom:0;">Upload Documents</label>
-                      <button type="button" class="btn btn-ghost btn-xs" onclick="addEmpDocRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Document</button>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addEmpDocRow()"
+                        style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Document</button>
                     </div>
                     <div id="emp-docs-wrap" style="display:flex; flex-direction:column; gap:12px;"></div>
                   </div>
@@ -17960,7 +18523,8 @@
                     </select>
                   </div>
                   <div class="form-group form-col-2"><label class="form-label">Buyback Details *</label>
-                    <textarea class="form-control" id="mbb-details" rows="3" placeholder="Enter buyback details..."></textarea>
+                    <textarea class="form-control" id="mbb-details" rows="3"
+                      placeholder="Enter buyback details..."></textarea>
                   </div>
                   <div class="form-group"><label class="form-label">Price *</label>
                     <input class="form-control" type="number" id="mbb-price" value="0" oninput="mbbCalcTotals()">
@@ -17989,17 +18553,92 @@
                 </div>
                 <div class="divider mb-3"></div>
                 <div class="form-group">
-                   <div style="display: flex; align-items: center; gap: 8px;">
-                      <input type="checkbox" id="mbb-validate" style="width: 18px; height: 18px;">
-                      <label class="form-label" for="mbb-validate" style="margin-bottom: 0;">Validate Details</label>
-                   </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="mbb-validate" style="width: 18px; height: 18px;">
+                    <label class="form-label" for="mbb-validate" style="margin-bottom: 0;">Validate Details</label>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="resetBuyBack()">Reset</button>
                 <div style="display: flex; gap: 8px;">
-                   <button class="btn btn-outline" onclick="saveBuyBack('Draft')">Save as Draft</button>
-                   <button class="btn btn-primary" onclick="saveBuyBack('Submitted')">Submit</button>
+                  <button class="btn btn-outline" onclick="saveBuyBack('Draft')">Save as Draft</button>
+                  <button class="btn btn-primary" onclick="saveBuyBack('Submitted')">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── SERVICE: PM MODAL ────────────────────────────── -->
+          <div class="modal-wrap" id="modal-svc-pm">
+            <div class="modal" style="max-width: 900px;">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-calendar-stats"></i> Add PM Template</div>
+                <button class="modal-close" onclick="closeModal('modal-svc-pm')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div class="form-grid-2 mb-4">
+                  <div class="form-group"><label class="form-label">Invoice Number</label>
+                    <select class="form-control" id="mpm-invoice">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Invoice Date</label>
+                    <input class="form-control" type="date" id="mpm-date">
+                  </div>
+                  <div class="form-group"><label class="form-label">Old Product</label>
+                    <select class="form-control" id="mpm-old-product">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Product Name</label>
+                    <select class="form-control" id="mpm-product">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Quantity</label>
+                    <input class="form-control" type="number" id="mpm-qty" placeholder="#######">
+                  </div>
+                  <div class="form-group"><label class="form-label">Service Reason</label>
+                    <input class="form-control" type="text" id="mpm-single-line" placeholder="Enter reason...">
+                  </div>
+                  <div class="form-group form-col-2"><label class="form-label">Maintenance Notes</label>
+                    <textarea class="form-control" id="mpm-multi-line" rows="3"
+                      placeholder="Enter detailed maintenance notes..."></textarea>
+                  </div>
+                  <div class="form-group"><label class="form-label">Serial Numbers</label>
+                    <select class="form-control" id="mpm-serial-select">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group"><label class="form-label">Service Call</label>
+                    <select class="form-control" id="mpm-service-call">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Next PM Date</label>
+                    <input class="form-control" type="date" id="mpm-next-date">
+                  </div>
+                  <div class="form-group"><label class="form-label">Warranty End Date</label>
+                    <input class="form-control" type="date" id="mpm-warranty-date">
+                  </div>
+                  <div class="form-group"><label class="form-label">PM Status</label>
+                    <select class="form-control" id="mpm-status">
+                      <option value="">-Select-</option>
+                      <option>Scheduled</option>
+                      <option>In Progress</option>
+                      <option>Completed</option>
+                      <option>Overdue</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-svc-pm')">Reset</button>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-outline" onclick="savePM('Draft')">Save as Draft</button>
+                  <button class="btn btn-primary" onclick="savePM('Submitted')">Submit</button>
                 </div>
               </div>
             </div>
@@ -18343,13 +18982,16 @@
                     <label class="form-label">Description</label>
                     <textarea class="form-control" id="fp-desc" rows="3" placeholder="Product description…"></textarea>
                   </div>
-                  
+
                   <div class="form-group span-2" style="margin-top: 10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                      <label class="form-label" style="margin-bottom:0; font-weight:600;"><i class="ti ti-layers-intersect" style="margin-right: 4px;"></i> Product Variants</label>
-                      <button class="btn btn-ghost btn-xs" onclick="addProdVariantRow()" type="button" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Variant</button>
+                      <label class="form-label" style="margin-bottom:0; font-weight:600;"><i
+                          class="ti ti-layers-intersect" style="margin-right: 4px;"></i> Product Variants</label>
+                      <button class="btn btn-ghost btn-xs" onclick="addProdVariantRow()" type="button"
+                        style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Variant</button>
                     </div>
-                    <div class="table-wrap" style="border-radius: 8px; border: 1px solid #eef1f5; overflow-x: auto; box-shadow: none;">
+                    <div class="table-wrap"
+                      style="border-radius: 8px; border: 1px solid #eef1f5; overflow-x: auto; box-shadow: none;">
                       <table class="data-tbl" style="margin: 0; min-width: 100%;">
                         <thead>
                           <tr style="background: #f8fafc;">
@@ -18488,17 +19130,21 @@
                     <label class="form-label">Customer Type</label>
                     <div style="display:flex; gap:20px; align-items:center; height: 38px;">
                       <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin:0;">
-                        <input type="radio" name="fc-type" value="Industry" checked onchange="toggleCustomerType()"> Industry / B2B
+                        <input type="radio" name="fc-type" value="Industry" checked onchange="toggleCustomerType()">
+                        Industry / B2B
                       </label>
                       <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin:0;">
-                        <input type="radio" name="fc-type" value="Domestic" onchange="toggleCustomerType()"> Domestic / B2C
+                        <input type="radio" name="fc-type" value="Domestic" onchange="toggleCustomerType()"> Domestic /
+                        B2C
                       </label>
                     </div>
                   </div>
-                  <div class="form-group form-col-2" id="fc-name-wrap"><label class="form-label">Company Name *</label><input
-                      class="form-control" id="fc-name" placeholder="Company name"></div>
-                  <div class="form-group" id="fc-legal-wrap"><label class="form-label">Legal Name</label><input class="form-control" id="fc-legal" placeholder="Legal entity name"></div>
-                  <div class="form-group" id="fc-alias-wrap"><label class="form-label">Alias</label><input class="form-control" id="fc-alias" placeholder="Short name"></div>
+                  <div class="form-group form-col-2" id="fc-name-wrap"><label class="form-label">Company Name
+                      *</label><input class="form-control" id="fc-name" placeholder="Company name"></div>
+                  <div class="form-group" id="fc-legal-wrap"><label class="form-label">Legal Name</label><input
+                      class="form-control" id="fc-legal" placeholder="Legal entity name"></div>
+                  <div class="form-group" id="fc-alias-wrap"><label class="form-label">Alias</label><input
+                      class="form-control" id="fc-alias" placeholder="Short name"></div>
                   <div class="form-group"><label class="form-label">Contact Person *</label><input class="form-control"
                       id="fc-contact" placeholder="Full name"></div>
                   <div class="form-group"><label class="form-label">Phone</label><input class="form-control"
@@ -18546,7 +19192,9 @@
                         <option>Healthcare</option>
                         <option>Construction</option>
                       </select>
-                      <button class="btn btn-outline" type="button" id="fc-vertical-toggle" onclick="toggleVerticalField()" style="padding: 0 10px;" title="Add new vertical"><i class="ti ti-plus"></i></button>
+                      <button class="btn btn-outline" type="button" id="fc-vertical-toggle"
+                        onclick="toggleVerticalField()" style="padding: 0 10px;" title="Add new vertical"><i
+                          class="ti ti-plus"></i></button>
                     </div>
                     <div id="fc-vertical-new-wrapper" style="display:none; margin-top: 8px;">
                       <div style="display:flex; gap:8px;">
@@ -18564,7 +19212,8 @@
                       <option>Other</option>
                     </select>
                   </div>
-                  <div class="form-group" id="fc-referral-wrap" style="display:none;"><label class="form-label">Referred By</label>
+                  <div class="form-group" id="fc-referral-wrap" style="display:none;"><label class="form-label">Referred
+                      By</label>
                     <select class="form-control" id="fc-referral-type">
                       <option value="">— Select —</option>
                       <option>Customer</option>
@@ -18576,14 +19225,16 @@
                   <div class="form-group form-col-2" style="margin-top: 8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                       <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
-                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerFieldRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Field</button>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerFieldRow()"
+                        style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Field</button>
                     </div>
                     <div id="fc-custom-fields-wrap" style="display:flex; flex-direction:column; gap:8px;"></div>
                   </div>
                   <div class="form-group form-col-2" style="margin-top: 16px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                       <label class="form-label" style="margin-bottom:0;">Contact Persons</label>
-                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerContactRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Contact</button>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerContactRow()"
+                        style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Contact</button>
                     </div>
                     <div id="fc-contacts-wrap" style="display:flex; flex-direction:column; gap:12px;"></div>
                   </div>
@@ -18734,21 +19385,24 @@
                     <div style="display:flex;flex-direction:column;gap:10px;">
                       <div>
                         <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
-                          <span>Welding &amp; Fabrication</span><span>45%</span></div>
+                          <span>Welding &amp; Fabrication</span><span>45%</span>
+                        </div>
                         <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;">
                           <div style="width:45%;height:100%;background:#E53935;"></div>
                         </div>
                       </div>
                       <div>
                         <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
-                          <span>Lifting &amp; Handling</span><span>32%</span></div>
+                          <span>Lifting &amp; Handling</span><span>32%</span>
+                        </div>
                         <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;">
                           <div style="width:32%;height:100%;background:#378ADD;"></div>
                         </div>
                       </div>
                       <div>
                         <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
-                          <span>Safety PPE</span><span>18%</span></div>
+                          <span>Safety PPE</span><span>18%</span>
+                        </div>
                         <div style="height:6px;background:#f0f2f5;border-radius:3px;overflow:hidden;">
                           <div style="width:18%;height:100%;background:#1D9E75;"></div>
                         </div>
@@ -18988,7 +19642,8 @@
       'svc-requests': { title: 'Service Requests', crumbs: ['Service', 'Requests'], module: 'service' },
       'svc-assignjobs': { title: 'Assign Jobs', crumbs: ['Service', 'Assign Jobs'], module: 'service' },
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
-      'svc-reports': { title: 'Service Reports', crumbs: ['Service', 'Reports'], module: 'service' },
+      'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
+      'svc-pm': { title: 'PM Management', crumbs: ['Service', 'PM Management'], module: 'service' },
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
@@ -21429,9 +22084,9 @@
 
     function addProdVariantRow() {
       const tbody = document.getElementById('fp-variants-body');
-      if(!tbody) return;
+      if (!tbody) return;
       const tr = document.createElement('tr');
-      const whOpts = window.WAREHOUSES ? WAREHOUSES.map(w=>`<option>${w.name}</option>`).join('') : '<option>Main Warehouse</option>';
+      const whOpts = window.WAREHOUSES ? WAREHOUSES.map(w => `<option>${w.name}</option>`).join('') : '<option>Main Warehouse</option>';
       tr.innerHTML = `
         <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="e.g. 16A Red" style="font-size:13px; min-width: 140px;"></td>
         <td style="padding: 6px 10px;"><input type="text" class="form-control" placeholder="Size/Color" style="font-size:13px; min-width: 100px;"></td>
@@ -21461,7 +22116,7 @@
 
     function removeProdVariantRow(btn) {
       const tr = btn.closest('tr');
-      if(tr) tr.remove();
+      if (tr) tr.remove();
     }
 
     function addVSpecRow(btn) {
@@ -21548,6 +22203,7 @@
       once('sal-returns', initSalReturns);
       once('sal-credit-note', initCreditNotePage);
       once('sal-buyback', initSalBuyback);
+      once('svc-pm', initSvcPM);
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
       once('svc-amc-quotes', initAmcQuotesPage);
@@ -22072,7 +22728,7 @@
       const nameWrap = document.getElementById('fc-name-wrap');
       const legalWrap = document.getElementById('fc-legal-wrap');
       const aliasWrap = document.getElementById('fc-alias-wrap');
-      
+
       if (nameWrap) nameWrap.style.display = isDomestic ? 'none' : 'block';
       if (legalWrap) legalWrap.style.display = isDomestic ? 'none' : 'block';
       if (aliasWrap) aliasWrap.style.display = isDomestic ? 'none' : 'block';
@@ -22110,14 +22766,14 @@
       const isDomestic = document.querySelector('input[name="fc-type"]:checked')?.value === 'Domestic';
       const name = document.getElementById('fc-name')?.value.trim();
       const contact = document.getElementById('fc-contact')?.value.trim();
-      
-      if (!isDomestic && !name) { 
-        showToast('error', 'Validation', 'Company name is required for Industry customers.'); 
-        return; 
+
+      if (!isDomestic && !name) {
+        showToast('error', 'Validation', 'Company name is required for Industry customers.');
+        return;
       }
       if (isDomestic && !contact) {
-        showToast('error', 'Validation', 'Contact Person is required for Domestic customers.'); 
-        return; 
+        showToast('error', 'Validation', 'Contact Person is required for Domestic customers.');
+        return;
       }
 
       const displayName = isDomestic ? contact : name;
@@ -23701,7 +24357,7 @@
       const typeFilter = document.getElementById('mquo-product-type')?.value;
       const products = typeFilter ? DB.products.filter(p => p.type === typeFilter) : DB.products;
       const optionsHtml = '<option value="">— Select —</option>' + products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}">${p.name}</option>`).join('');
-      
+
       document.querySelectorAll('.mquo-product-sel').forEach(select => {
         const currentVal = select.value;
         select.innerHTML = optionsHtml;
@@ -26413,27 +27069,27 @@
       const wrap = document.getElementById('mreq-history-wrap');
       const tbody = document.getElementById('mreq-history-tbody');
       if (!custVal || !wrap || !tbody) {
-        if(wrap) wrap.style.display = 'none';
+        if (wrap) wrap.style.display = 'none';
         return;
       }
-      
+
       const orders = DB.salesOrders ? DB.salesOrders.filter(o => o.customerId === custVal || o.customer === custVal).map(o => ({
         type: 'Order', id: o.id, date: o.date, amount: o.total, status: o.status
       })) : [];
       const invoices = DB.invoices ? DB.invoices.filter(i => i.customerId === custVal || i.customer === custVal).map(i => ({
         type: 'Invoice', id: i.id, date: i.date, amount: i.total, status: i.status
       })) : [];
-      
-      const history = [...orders, ...invoices].sort((a,b) => new Date(b.date) - new Date(a.date));
-      
+
+      const history = [...orders, ...invoices].sort((a, b) => new Date(b.date) - new Date(a.date));
+
       if (history.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No history found</td></tr>';
       } else {
         tbody.innerHTML = history.map(h => {
           let statColor = 'gray';
-          if(['Sent','Confirmed','Shipped','Paid','Completed'].includes(h.status)) statColor = 'green';
-          else if(['Overdue','Cancelled'].includes(h.status)) statColor = 'red';
-          else if(['Processing','In Progress'].includes(h.status)) statColor = 'blue';
+          if (['Sent', 'Confirmed', 'Shipped', 'Paid', 'Completed'].includes(h.status)) statColor = 'green';
+          else if (['Overdue', 'Cancelled'].includes(h.status)) statColor = 'red';
+          else if (['Processing', 'In Progress'].includes(h.status)) statColor = 'blue';
           return `
           <tr>
             <td><span class="badge badge-${h.type === 'Order' ? 'blue' : 'purple'}">${h.type}</span></td>
@@ -26466,7 +27122,7 @@
     function saveServiceRequest() {
       const cust = document.getElementById('mreq-cust')?.value;
       if (!cust) { showToast('error', 'Validation', 'Select customer.'); return; }
-      
+
       const cfContainer = document.getElementById('mreq-cf-container');
       if (cfContainer) cfContainer.innerHTML = '';
       const historyWrap = document.getElementById('mreq-history-wrap');
@@ -26799,27 +27455,27 @@
     const aiGridOpts = { borderColor: '#F0F2F5', strokeDashArray: 4, xaxis: { lines: { show: false } } };
 
     function initAIDemandForecast() {
-      new ApexCharts(document.querySelector('#sp-aidf-1'), { ...aiSpOpts('#C9A84C'), series: [{ data: [1420,1510,1480,1620,1710,1840] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aidf-2'), { ...aiSpOpts('#2563EB'), series: [{ data: [79,81,82,84,85,86] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aidf-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [1,2,1,3,2,3] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aidf-1'), { ...aiSpOpts('#C9A84C'), series: [{ data: [1420, 1510, 1480, 1620, 1710, 1840] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aidf-2'), { ...aiSpOpts('#2563EB'), series: [{ data: [79, 81, 82, 84, 85, 86] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aidf-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [1, 2, 1, 3, 2, 3] }] }).render();
       setTimeout(() => initPageCharts('ai-demand-forecast'), 20);
       registerChart('ai-demand-forecast', () => {
         new ApexCharts(document.querySelector('#chart-aidf-area'), {
           chart: { type: 'area', height: 280, toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: true, speed: 800 } },
-          series: [{ name: 'Actual Demand', data: [820,910,880,960,1020,1180,1240,1310,1290,null,null,null] }, { name: 'Forecast', data: [null,null,null,null,null,null,null,null,1290,1420,1560,1680] }],
-          colors: ['#2563EB','#DC2626'],
-          stroke: { curve: 'smooth', width: 3, dashArray: [0,6] },
-          fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0.04, stops: [0,100] } },
+          series: [{ name: 'Actual Demand', data: [820, 910, 880, 960, 1020, 1180, 1240, 1310, 1290, null, null, null] }, { name: 'Forecast', data: [null, null, null, null, null, null, null, null, 1290, 1420, 1560, 1680] }],
+          colors: ['#2563EB', '#DC2626'],
+          stroke: { curve: 'smooth', width: 3, dashArray: [0, 6] },
+          fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0.04, stops: [0, 100] } },
           dataLabels: { enabled: false },
-          xaxis: { categories: ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
+          xaxis: { categories: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
           yaxis: { labels: { ...aiAxisStyle } }, grid: aiGridOpts,
           legend: { position: 'top', horizontalAlign: 'right', fontSize: '12px', fontWeight: 600, markers: { radius: 12 } },
           tooltip: { theme: 'light' }
         }).render();
         new ApexCharts(document.querySelector('#chart-aidf-donut'), {
           chart: { type: 'donut', height: 280, fontFamily: 'inherit' },
-          series: [44, 18, 22, 16], labels: ['Safety PPE','Compressors','Welding','Other'],
-          colors: ['#2563EB','#DC2626','#C9A84C','#94A3B8'],
+          series: [44, 18, 22, 16], labels: ['Safety PPE', 'Compressors', 'Welding', 'Other'],
+          colors: ['#2563EB', '#DC2626', '#C9A84C', '#94A3B8'],
           legend: { position: 'bottom', fontSize: '12px', fontWeight: 600 },
           dataLabels: { enabled: true, formatter: v => Math.round(v) + '%' },
           plotOptions: { pie: { donut: { size: '62%' } } }, stroke: { width: 2 }
@@ -26828,26 +27484,26 @@
     }
 
     function initAIInventoryIntel() {
-      new ApexCharts(document.querySelector('#sp-aiii-1'), { ...aiSpOpts('#DC2626'), series: [{ data: [3,4,5,6,6,7] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiii-2'), { ...aiSpOpts('#F59E0B'), series: [{ data: [18,20,19,22,21,23] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiii-3'), { ...aiSpOpts('#2563EB'), series: [{ data: [15,14,13,12,12,12] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiii-4'), { ...aiSpOpts('#16A34A'), series: [{ data: [74,76,78,79,80,82] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiii-1'), { ...aiSpOpts('#DC2626'), series: [{ data: [3, 4, 5, 6, 6, 7] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiii-2'), { ...aiSpOpts('#F59E0B'), series: [{ data: [18, 20, 19, 22, 21, 23] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiii-3'), { ...aiSpOpts('#2563EB'), series: [{ data: [15, 14, 13, 12, 12, 12] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiii-4'), { ...aiSpOpts('#16A34A'), series: [{ data: [74, 76, 78, 79, 80, 82] }] }).render();
       setTimeout(() => initPageCharts('ai-inventory-intel'), 20);
       registerChart('ai-inventory-intel', () => {
         new ApexCharts(document.querySelector('#chart-aiii-bar'), {
           chart: { type: 'bar', height: 280, toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: true, speed: 800 } },
-          series: [{ name: 'On Hand', data: [4,3,7,84,220] }, { name: 'Reorder Point', data: [15,5,20,60,150] }],
-          colors: ['#2563EB','#DC2626'],
+          series: [{ name: 'On Hand', data: [4, 3, 7, 84, 220] }, { name: 'Reorder Point', data: [15, 5, 20, 60, 150] }],
+          colors: ['#2563EB', '#DC2626'],
           plotOptions: { bar: { borderRadius: 4, columnWidth: '55%' } }, dataLabels: { enabled: false },
-          xaxis: { categories: ['SCBA','Compressor','Harness','Helmet','Coverall'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
+          xaxis: { categories: ['SCBA', 'Compressor', 'Harness', 'Helmet', 'Coverall'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
           yaxis: { labels: { ...aiAxisStyle } }, grid: aiGridOpts,
           legend: { position: 'top', horizontalAlign: 'right', fontSize: '12px', fontWeight: 600, markers: { radius: 12 } },
           tooltip: { theme: 'light' }
         }).render();
         new ApexCharts(document.querySelector('#chart-aiii-donut'), {
           chart: { type: 'donut', height: 280, fontFamily: 'inherit' },
-          series: [58, 30, 12], labels: ['Fast-moving','Normal','Slow / Excess'],
-          colors: ['#16A34A','#C9A84C','#DC2626'],
+          series: [58, 30, 12], labels: ['Fast-moving', 'Normal', 'Slow / Excess'],
+          colors: ['#16A34A', '#C9A84C', '#DC2626'],
           legend: { position: 'bottom', fontSize: '12px', fontWeight: 600 },
           dataLabels: { enabled: true, formatter: v => Math.round(v) + '%' },
           plotOptions: { pie: { donut: { size: '62%' } } }, stroke: { width: 2 }
@@ -26856,30 +27512,30 @@
     }
 
     function initAISupplierScorecard() {
-      new ApexCharts(document.querySelector('#sp-aiss-1'), { ...aiSpOpts('#16A34A'), series: [{ data: [7.9,8.0,8.1,8.0,8.1,8.2] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiss-2'), { ...aiSpOpts('#2563EB'), series: [{ data: [87,88,89,90,90,91] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiss-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [3,3,2,2,2,2] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aiss-4'), { ...aiSpOpts('#C9A84C'), series: [{ data: [16,17,17,18,18,18] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiss-1'), { ...aiSpOpts('#16A34A'), series: [{ data: [7.9, 8.0, 8.1, 8.0, 8.1, 8.2] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiss-2'), { ...aiSpOpts('#2563EB'), series: [{ data: [87, 88, 89, 90, 90, 91] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiss-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [3, 3, 2, 2, 2, 2] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aiss-4'), { ...aiSpOpts('#C9A84C'), series: [{ data: [16, 17, 17, 18, 18, 18] }] }).render();
       setTimeout(() => initPageCharts('ai-supplier-scorecard'), 20);
       registerChart('ai-supplier-scorecard', () => {
         new ApexCharts(document.querySelector('#chart-aiss-radar'), {
           chart: { type: 'radar', height: 280, toolbar: { show: false }, fontFamily: 'inherit' },
-          series: [{ name: 'MSA Safety ME', data: [96,9,8,9,9] }, { name: 'Emirates Trading', data: [71,6,9,5,5] }],
-          labels: ['On-Time','Quality','Price','Response','Overall'],
-          colors: ['#16A34A','#DC2626'],
-          stroke: { width: 2, colors: ['#16A34A','#DC2626'] },
-          fill: { opacity: [0.2,0.1], colors: ['#16A34A','#DC2626'] },
-          markers: { size: 4, colors: ['#fff','#fff'], strokeColors: ['#16A34A','#DC2626'], strokeWidth: 2 },
+          series: [{ name: 'MSA Safety ME', data: [96, 9, 8, 9, 9] }, { name: 'Emirates Trading', data: [71, 6, 9, 5, 5] }],
+          labels: ['On-Time', 'Quality', 'Price', 'Response', 'Overall'],
+          colors: ['#16A34A', '#DC2626'],
+          stroke: { width: 2, colors: ['#16A34A', '#DC2626'] },
+          fill: { opacity: [0.2, 0.1], colors: ['#16A34A', '#DC2626'] },
+          markers: { size: 4, colors: ['#fff', '#fff'], strokeColors: ['#16A34A', '#DC2626'], strokeWidth: 2 },
           yaxis: { show: false }, xaxis: { labels: { style: { colors: '#6a7f96', fontSize: '11px', fontFamily: 'inherit', fontWeight: 600 } } },
           legend: { position: 'top', horizontalAlign: 'right', fontSize: '12px', fontWeight: 600, markers: { radius: 12 } }
         }).render();
         new ApexCharts(document.querySelector('#chart-aiss-area'), {
           chart: { type: 'area', height: 280, toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: true, speed: 800 } },
-          series: [{ name: 'On-Time Delivery %', data: [85,87,86,89,90,91] }],
+          series: [{ name: 'On-Time Delivery %', data: [85, 87, 86, 89, 90, 91] }],
           colors: ['#2563EB'], stroke: { curve: 'smooth', width: 3 },
-          fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0.04, stops: [0,100] } },
+          fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.3, opacityTo: 0.04, stops: [0, 100] } },
           dataLabels: { enabled: false },
-          xaxis: { categories: ['Jan','Feb','Mar','Apr','May','Jun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
+          xaxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
           yaxis: { min: 70, max: 100, labels: { ...aiAxisStyle, formatter: v => v + '%' } }, grid: aiGridOpts,
           tooltip: { theme: 'light' }
         }).render();
@@ -26887,25 +27543,25 @@
     }
 
     function initAICreditRisk() {
-      new ApexCharts(document.querySelector('#sp-aicr-1'), { ...aiSpOpts('#2563EB'), series: [{ data: [2.8,2.9,3.0,3.1,3.1,3.2] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aicr-2'), { ...aiSpOpts('#DC2626'), series: [{ data: [380,390,400,420,415,412] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aicr-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [4,5,6,5,5,5] }] }).render();
-      new ApexCharts(document.querySelector('#sp-aicr-4'), { ...aiSpOpts('#16A34A'), series: [{ data: [44,42,41,40,39,38] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aicr-1'), { ...aiSpOpts('#2563EB'), series: [{ data: [2.8, 2.9, 3.0, 3.1, 3.1, 3.2] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aicr-2'), { ...aiSpOpts('#DC2626'), series: [{ data: [380, 390, 400, 420, 415, 412] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aicr-3'), { ...aiSpOpts('#F59E0B'), series: [{ data: [4, 5, 6, 5, 5, 5] }] }).render();
+      new ApexCharts(document.querySelector('#sp-aicr-4'), { ...aiSpOpts('#16A34A'), series: [{ data: [44, 42, 41, 40, 39, 38] }] }).render();
       setTimeout(() => initPageCharts('ai-credit-risk'), 20);
       registerChart('ai-credit-risk', () => {
         new ApexCharts(document.querySelector('#chart-aicr-bar'), {
           chart: { type: 'bar', height: 280, toolbar: { show: false }, fontFamily: 'inherit', animations: { enabled: true, speed: 800 } },
           series: [{ name: 'Receivables (AED 000)', data: [1840, 620, 348, 412] }],
           plotOptions: { bar: { borderRadius: 6, columnWidth: '45%', distributed: true } }, dataLabels: { enabled: false },
-          colors: ['#16A34A','#C9A84C','#F59E0B','#DC2626'],
-          xaxis: { categories: ['Current','31-60d','61-90d','90+ days'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
+          colors: ['#16A34A', '#C9A84C', '#F59E0B', '#DC2626'],
+          xaxis: { categories: ['Current', '31-60d', '61-90d', '90+ days'], axisBorder: { show: false }, axisTicks: { show: false }, labels: aiAxisStyle },
           yaxis: { labels: { ...aiAxisStyle } }, grid: aiGridOpts,
           legend: { show: false }, tooltip: { theme: 'light' }
         }).render();
         new ApexCharts(document.querySelector('#chart-aicr-donut'), {
           chart: { type: 'donut', height: 280, fontFamily: 'inherit' },
-          series: [62, 26, 12], labels: ['Low Risk','Medium Risk','High Risk'],
-          colors: ['#16A34A','#F59E0B','#DC2626'],
+          series: [62, 26, 12], labels: ['Low Risk', 'Medium Risk', 'High Risk'],
+          colors: ['#16A34A', '#F59E0B', '#DC2626'],
           legend: { position: 'bottom', fontSize: '12px', fontWeight: 600 },
           dataLabels: { enabled: true, formatter: v => Math.round(v) + '%' },
           plotOptions: { pie: { donut: { size: '62%' } } }, stroke: { width: 2 }
@@ -27741,11 +28397,11 @@
     function initSalBuyback() {
       const tbody = document.getElementById('sal-buyback-tbody'); if (!tbody) return;
       tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No buy back transactions found.</div></td></tr>`;
-      
+
       // Populate product select
       const prodSel = document.getElementById('mbb-product');
       if (prodSel && DB.products) {
-        prodSel.innerHTML = '<option value="">— Select Product —</option>' + 
+        prodSel.innerHTML = '<option value="">— Select Product —</option>' +
           DB.products.slice(0, 50).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
       }
     }
@@ -27754,11 +28410,11 @@
       const price = parseFloat(document.getElementById('mbb-price').value) || 0;
       const qty = parseFloat(document.getElementById('mbb-qty').value) || 0;
       const gstPct = parseFloat(document.getElementById('mbb-gst-pct').value) || 0;
-      
+
       const amount = price * qty;
       const gstAmount = amount * (gstPct / 100);
       const finalAmount = amount + gstAmount;
-      
+
       document.getElementById('mbb-amount').value = amount.toFixed(2);
       document.getElementById('mbb-gst-amount').value = gstAmount.toFixed(2);
       document.getElementById('mbb-final-amount').value = finalAmount.toFixed(2);
@@ -27770,15 +28426,15 @@
       const details = document.getElementById('mbb-details').value;
       const finalAmount = document.getElementById('mbb-final-amount').value;
       const validated = document.getElementById('mbb-validate').checked;
-      
+
       if (!product || !details) {
         showToast('warning', 'Missing Details', 'Please fill in all required fields.');
         return;
       }
-      
+
       showToast('success', 'Buy Back ' + status, 'Buy back transaction has been saved.');
       closeModal('modal-sal-buyback');
-      
+
       const tbody = document.getElementById('sal-buyback-tbody');
       if (tbody) {
         const row = document.createElement('tr');
@@ -27815,7 +28471,81 @@
       document.getElementById('mbb-validate').checked = false;
     }
 
-    /* ─── SERVICE MODULE EXTENSIONS ─── */
+    function initSvcPM() {
+      const tbody = document.getElementById('svc-pm-tbody'); if (!tbody) return;
+      if (!DB.pmRecords) {
+        DB.pmRecords = Array.from({ length: 15 }, (_, i) => ({
+          id: `INV-24-${String(100 + i).padStart(4, '0')}`,
+          product: spick(['Solar Inverter 5kVA', 'Battery Pack 200Ah', 'Panel Array 440W', 'Charge Controller 60A']),
+          serial: `SN-${si(10000, 99999)}`,
+          qty: si(1, 5),
+          lastPm: new Date(Date.now() - si(30, 90) * 86400000).toISOString(),
+          nextPm: new Date(Date.now() + si(10, 60) * 86400000).toISOString(),
+          warrantyEnd: new Date(Date.now() + si(180, 720) * 86400000).toISOString(),
+          status: spick(['Scheduled', 'Scheduled', 'In Progress', 'Completed', 'Overdue']),
+        }));
+      }
+
+      const counts = { Scheduled: 0, Overdue: 0, Completed: 0, Total: DB.pmRecords.length };
+      DB.pmRecords.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
+
+      const kpi = document.getElementById('svc-pm-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card gold"><div class="kpi-label">Total PM Units</div><div class="kpi-val">${counts.Total}</div></div>
+        <div class="kpi-card blue"><div class="kpi-label">Scheduled</div><div class="kpi-val">${counts.Scheduled}</div></div>
+        <div class="kpi-card green"><div class="kpi-label">Completed Month</div><div class="kpi-val">12</div></div>
+        <div class="kpi-card red"><div class="kpi-label">Overdue</div><div class="kpi-val">${counts.Overdue}</div></div>`;
+
+      renderPmTable();
+
+      // Populate selects in modal
+      const invSel = document.getElementById('mpm-invoice');
+      if (invSel) {
+        invSel.innerHTML = '<option value="">-Select-</option>' + DB.pmRecords.map(r => `<option value="${r.id}">${r.id}</option>`).join('');
+      }
+      const prodSel = document.getElementById('mpm-product');
+      if (prodSel && DB.products) {
+        prodSel.innerHTML = '<option value="">-Select-</option>' + DB.products.slice(0, 20).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+      }
+    }
+
+    function renderPmTable(data) {
+      const tbody = document.getElementById('svc-pm-tbody'); if (!tbody) return;
+      const list = data || DB.pmRecords;
+      tbody.innerHTML = list.map(r => `
+        <tr>
+          <td><span class="id-cell">${r.id}</span></td>
+          <td class="entity-name">${r.product}</td>
+          <td class="text-secondary">${r.serial}</td>
+          <td>${r.qty}</td>
+          <td class="text-muted">${fmtDate(r.lastPm)}</td>
+          <td class="text-primary" style="font-weight:600;">${fmtDate(r.nextPm)}</td>
+          <td class="text-muted">${fmtDate(r.warrantyEnd)}</td>
+          <td><span class="badge badge-${r.status === 'Completed' ? 'success' : r.status === 'Overdue' ? 'danger' : r.status === 'In Progress' ? 'blue' : 'amber'}">${r.status}</span></td>
+          <td>
+            <div class="tbl-actions">
+              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-eye"></i></button>
+              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-edit"></i></button>
+            </div>
+          </td>
+        </tr>`).join('');
+      const countEl = document.getElementById('pm-count'); if (countEl) countEl.innerText = list.length;
+    }
+
+    function filterPM() {
+      const search = document.getElementById('pm-search').value.toLowerCase();
+      const status = document.getElementById('pm-status-filter').value;
+      const filtered = DB.pmRecords.filter(r => {
+        return (r.id.toLowerCase().includes(search) || r.product.toLowerCase().includes(search)) &&
+          (!status || r.status === status);
+      });
+      renderPmTable(filtered);
+    }
+
+    function savePM(status) {
+      showToast('success', 'PM Record Saved', 'The PM record has been saved as ' + status);
+      closeModal('modal-svc-pm');
+    }
     function initSvcInstallation() {
       const kpi = document.getElementById('svc-inst-kpi');
       if (kpi) kpi.innerHTML = `
@@ -28311,11 +29041,11 @@
       document.getElementById('memp-email').value = e.email;
       document.getElementById('memp-basic').value = e.salary;
       document.getElementById('memp-status').value = e.status;
-      const mempType = document.getElementById('memp-type'); if(mempType) mempType.value = e.type || 'Full-Time';
-      const lic = document.getElementById('memp-license'); if(lic) lic.value = e.license || '';
-      const docsWrap = document.getElementById('emp-docs-wrap'); if(docsWrap) docsWrap.innerHTML = '';
-      const dor = document.getElementById('memp-dor'); if(dor) dor.value = e.dor || '';
-      const emg = document.getElementById('memp-emg-phone'); if(emg) emg.value = e.emgPhone || '';
+      const mempType = document.getElementById('memp-type'); if (mempType) mempType.value = e.type || 'Full-Time';
+      const lic = document.getElementById('memp-license'); if (lic) lic.value = e.license || '';
+      const docsWrap = document.getElementById('emp-docs-wrap'); if (docsWrap) docsWrap.innerHTML = '';
+      const dor = document.getElementById('memp-dor'); if (dor) dor.value = e.dor || '';
+      const emg = document.getElementById('memp-emg-phone'); if (emg) emg.value = e.emgPhone || '';
       const repSel = document.getElementById('memp-reporting');
       if (repSel) {
         repSel.innerHTML = '<option value="">— Select —</option>';
@@ -28332,10 +29062,10 @@
       if (!wrap) return;
       const div = document.createElement('div');
       div.style.cssText = "display:flex; gap:12px; align-items:flex-start; background: var(--bg-hover); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);";
-      
+
       const fileId = 'file-' + Date.now() + Math.floor(Math.random() * 1000);
       const imgId = 'img-' + Date.now() + Math.floor(Math.random() * 1000);
-      
+
       div.innerHTML = `
         <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
           <input type="text" class="form-control" placeholder="Document Name (e.g. Aadhar Card)">
@@ -28349,11 +29079,11 @@
       `;
       wrap.appendChild(div);
 
-      document.getElementById(fileId).addEventListener('change', function(e) {
+      document.getElementById(fileId).addEventListener('change', function (e) {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
           const reader = new FileReader();
-          reader.onload = function(evt) {
+          reader.onload = function (evt) {
             const img = document.getElementById(imgId);
             const icon = document.getElementById(imgId + '-icon');
             img.src = evt.target.result;
@@ -28362,11 +29092,11 @@
           };
           reader.readAsDataURL(file);
         } else {
-            const img = document.getElementById(imgId);
-            const icon = document.getElementById(imgId + '-icon');
-            img.src = '';
-            img.style.display = 'none';
-            icon.style.display = 'block';
+          const img = document.getElementById(imgId);
+          const icon = document.getElementById(imgId + '-icon');
+          img.src = '';
+          img.style.display = 'none';
+          icon.style.display = 'block';
         }
       });
     }
@@ -28374,7 +29104,7 @@
     function openAddEmpModal() {
       document.getElementById('hrm-emp-modal-title').textContent = 'Add Employee';
       ['memp-fname', 'memp-lname', 'memp-phone', 'memp-email', 'memp-basic', 'memp-da', 'memp-hra', 'memp-conv', 'memp-medical', 'memp-tds', 'memp-acno', 'memp-ifsc', 'memp-aadhar', 'memp-pan', 'memp-uan', 'memp-esino', 'memp-license', 'memp-dor', 'memp-emg-phone', 'memp-reporting', 'memp-type'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-      const docsWrap2 = document.getElementById('emp-docs-wrap'); if(docsWrap2) docsWrap2.innerHTML = '';
+      const docsWrap2 = document.getElementById('emp-docs-wrap'); if (docsWrap2) docsWrap2.innerHTML = '';
       const deptSel = document.getElementById('memp-dept');
       if (deptSel && deptSel.options.length <= 1) DEPARTMENTS.forEach(d => deptSel.add(new Option(d, d)));
       const desigSel = document.getElementById('memp-desig');
