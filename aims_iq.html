@@ -11750,14 +11750,14 @@
           </div><!-- /#page-svc-reports -->
 
           <!-- ══ STEP 16 MODALS ══ -->
-          <div class="modal-wrap" id="modal-svc-ticket">
-            <div class="modal modal-md">
+          <div class="modal-wrap" id="modal-svc-ticket" style="width:70%;">
+            <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-ticket"></i> New Support Ticket</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-ticket')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-grid-2">
+                <div style="display:flex;flex-direction:column;gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mtick-customer">
                       <option value="">Select…</option>
@@ -11800,14 +11800,14 @@
             </div>
           </div>
 
-          <div class="modal-wrap" id="modal-svc-request">
-            <div class="modal modal-md">
+          <div class="modal-wrap" id="modal-svc-request" style="width:70%;">
+            <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-tool"></i> New Service Request</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-request')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-grid-2">
+                <div style="display:flex;flex-direction:column;gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mreq-cust" onchange="loadCustomerHistory()">
                       <option value="">Select…</option>
@@ -12044,15 +12044,15 @@
             </div>
           </div>
 
-          <div class="modal-wrap" id="modal-svc-technician">
-            <div class="modal modal-sm">
+          <div class="modal-wrap" id="modal-svc-technician" style="width:70%;">
+            <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-user-star"></i> Add Technician</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-technician')"><i
                     class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-grid-2">
+                <div style="display:flex; flex-direction:column; gap:16px;">
                   <div class="form-group"><label class="form-label">Name *</label><input class="form-control"
                       id="mtech-name" placeholder="Full name"></div>
                   <div class="form-group"><label class="form-label">Specialisation</label>
@@ -14666,7 +14666,7 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="openModal('modal-svc-pm')"><i class="ti ti-plus"></i> New PM
+                <button class="btn btn-primary" onclick="openPMModal()"><i class="ti ti-plus"></i> New PM
                   Record</button>
               </div>
             </div>
@@ -14706,6 +14706,59 @@
                 </table>
               </div>
               <div id="pm-pagination"></div>
+            </div>
+          </div>
+
+          <!-- PM CHECKLIST MODAL -->
+          <div class="modal-wrap" id="modal-pm-checklist" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-checklist"></i> PM Checklist — <span id="mpc-id"></span></div>
+                <button class="modal-close" onclick="closeModal('modal-pm-checklist')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <!-- PM record info -->
+                <div
+                  style="background:var(--bg,#f9fafb);border:1px solid var(--border,#e5e7eb);border-radius:8px;padding:14px 16px;margin-bottom:18px;">
+                  <div style="display:grid;grid-template-columns:1fr;gap:14px;">
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Product</div>
+                      <div id="mpc-product" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Serial #</div>
+                      <div id="mpc-serial" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                    <div>
+                      <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">
+                        Next PM</div>
+                      <div id="mpc-next" style="font-weight:600;font-size:13px;"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Progress -->
+                <div style="margin-bottom:20px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+                    <span style="font-size:12px;font-weight:600;">Completion Progress</span>
+                    <span id="mpc-pct" style="font-size:13px;font-weight:700;color:var(--blue,#2563eb);">0%</span>
+                  </div>
+                  <div class="progress-bar" style="height:10px;border-radius:5px;">
+                    <div class="progress-fill blue" id="mpc-progress-fill"
+                      style="width:0%;border-radius:5px;transition:width 0.3s ease;"></div>
+                  </div>
+                  <div id="mpc-progress-label" style="font-size:11px;color:var(--text-muted);margin-top:5px;">0 of 0
+                    items completed</div>
+                </div>
+                <!-- Checklist items -->
+                <div id="mpc-items" style="display:flex;flex-direction:column;gap:0;"></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-pm-checklist')">Cancel</button>
+                <button class="btn btn-primary" onclick="savePMChecklist()"><i class="ti ti-device-floppy"></i> Save &
+                  Update</button>
+              </div>
             </div>
           </div>
 
@@ -21623,7 +21676,68 @@
     /* ─────────────────────────────────────────────────────
        SERVICE REQUESTS — 20
        ───────────────────────────────────────────────────── */
-    DB.svcChecklists = [];
+    DB.svcChecklists = [
+      {
+        id: 'SCL-001',
+        productTypes: ['Online UPS'],
+        callTypes: ['PM Call'],
+        option: 'Input Voltage Stability',
+        yesNo: true,
+        remarks: 'Verification of main input voltage levels',
+        installFormId: 'SO-1001',
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'SCL-002',
+        productTypes: ['SMF Batteries'],
+        callTypes: ['Breakdown Call'],
+        option: 'Battery Terminal Corrosion',
+        yesNo: true,
+        remarks: 'Check for sulfuric acid leakage at terminals',
+        installFormId: 'SO-1002',
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'SCL-003',
+        productTypes: ['Online UPS', 'SMF Batteries'],
+        callTypes: ['Installation'],
+        option: 'Load Balancing Check',
+        yesNo: true,
+        remarks: 'Ensuring balanced distribution across phases',
+        installFormId: 'SO-1003',
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'SCL-004',
+        productTypes: ['Solar Panel'],
+        callTypes: ['Inspection'],
+        option: 'Physical Damage on Glass',
+        yesNo: false,
+        remarks: 'Inspection for cracks or micro-fractures',
+        installFormId: 'SO-1004',
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'SCL-005',
+        productTypes: ['Servo Stabilizer'],
+        callTypes: ['Warranty Call'],
+        option: 'Carbon Brush Wear Percentage',
+        yesNo: true,
+        remarks: 'Measuring carbon brush length for wear',
+        installFormId: 'SO-1005',
+        timestamp: new Date().toISOString()
+      },
+      {
+        id: 'SCL-006',
+        productTypes: ['Inverter'],
+        callTypes: ['Breakdown Call'],
+        option: 'Cooling Fan Operation',
+        yesNo: true,
+        remarks: 'Verify if cooling fans are triggering on high temp',
+        installFormId: 'SO-1006',
+        timestamp: new Date().toISOString()
+      }
+    ];
 
     DB.serviceRequests = Array.from({ length: 20 }, (_, i) => ({
       id: `SR-${String(i + 1).padStart(4, '0')}`,
@@ -29206,8 +29320,28 @@
       document.getElementById('mbb-validate').checked = false;
     }
 
+    /* ── PM MANAGEMENT ── */
+    const PM_DEFAULT_CHECKLIST = [
+      'Equipment identification verified',
+      'Visual inspection & cleaning done',
+      'Battery health check (voltage / capacity test)',
+      'Terminal connections tightened & corrosion checked',
+      'Load test passed',
+      'Cooling system / fans operational',
+      'Software / firmware version verified',
+      'Event logs reviewed & cleared',
+      'Replacement parts (if any) recorded',
+      'Next PM date updated in system',
+      'PM report signed by customer'
+    ];
+
+    const PM_STATUS_CLS = { Scheduled: 'amber', 'In Progress': 'blue', Completed: 'green', Overdue: 'red', Draft: 'gray' };
+    let _pmChecklistId = null;
+    let _pmPage = 1;
+    const PM_PER = 10;
+    let _pmFiltered = [];
+
     function initSvcPM() {
-      const tbody = document.getElementById('svc-pm-tbody'); if (!tbody) return;
       if (!DB.pmRecords) {
         DB.pmRecords = Array.from({ length: 15 }, (_, i) => ({
           id: `INV-24-${String(100 + i).padStart(4, '0')}`,
@@ -29218,68 +29352,200 @@
           nextPm: new Date(Date.now() + si(10, 60) * 86400000).toISOString(),
           warrantyEnd: new Date(Date.now() + si(180, 720) * 86400000).toISOString(),
           status: spick(['Scheduled', 'Scheduled', 'In Progress', 'Completed', 'Overdue']),
+          progress: 0,
+          checklistItems: null
         }));
       }
-
-      const counts = { Scheduled: 0, Overdue: 0, Completed: 0, Total: DB.pmRecords.length };
-      DB.pmRecords.forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
-
-      const kpi = document.getElementById('svc-pm-kpi');
-      if (kpi) kpi.innerHTML = `
-        <div class="kpi-card gold"><div class="kpi-label">Total PM Units</div><div class="kpi-val">${counts.Total}</div></div>
-        <div class="kpi-card blue"><div class="kpi-label">Scheduled</div><div class="kpi-val">${counts.Scheduled}</div></div>
-        <div class="kpi-card green"><div class="kpi-label">Completed Month</div><div class="kpi-val">12</div></div>
-        <div class="kpi-card red"><div class="kpi-label">Overdue</div><div class="kpi-val">${counts.Overdue}</div></div>`;
-
       renderPmTable();
-
-      // Populate selects in modal
-      const invSel = document.getElementById('mpm-invoice');
-      if (invSel) {
-        invSel.innerHTML = '<option value="">-Select-</option>' + DB.pmRecords.map(r => `<option value="${r.id}">${r.id}</option>`).join('');
-      }
-      const prodSel = document.getElementById('mpm-product');
-      if (prodSel && DB.products) {
-        prodSel.innerHTML = '<option value="">-Select-</option>' + DB.products.slice(0, 20).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
-      }
     }
 
     function renderPmTable(data) {
+      const list = data !== undefined ? data : DB.pmRecords || [];
+      _pmFiltered = list;
+
+      const counts = { Scheduled: 0, Overdue: 0, Completed: 0, 'In Progress': 0 };
+      (DB.pmRecords || []).forEach(r => { if (counts[r.status] !== undefined) counts[r.status]++; });
+
+      const kpi = document.getElementById('svc-pm-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Total PM Records</div><div class="kpi-val">${(DB.pmRecords || []).length}</div></div><div class="kpi-icon navy"><i class="ti ti-calendar-stats"></i></div></div><div class="kpi-sub neutral">All time</div></div>
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Scheduled</div><div class="kpi-val">${counts.Scheduled}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Upcoming</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Completed</div><div class="kpi-val">${counts.Completed}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Done</div></div>
+        <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Overdue</div><div class="kpi-val">${counts.Overdue}</div></div><div class="kpi-icon red"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub down">Needs attention</div></div>`;
+
       const tbody = document.getElementById('svc-pm-tbody'); if (!tbody) return;
-      const list = data || DB.pmRecords;
-      tbody.innerHTML = list.map(r => `
+      const start = (_pmPage - 1) * PM_PER;
+      const slice = list.slice(start, start + PM_PER);
+
+      tbody.innerHTML = slice.map(r => {
+        const pct = r.progress || 0;
+        const pcol = pct === 100 ? 'green' : pct >= 50 ? 'blue' : 'amber';
+        return `
         <tr>
           <td><span class="id-cell">${r.id}</span></td>
-          <td class="entity-name">${r.product}</td>
-          <td class="text-secondary">${r.serial}</td>
-          <td>${r.qty}</td>
-          <td class="text-muted">${fmtDate(r.lastPm)}</td>
-          <td class="text-primary" style="font-weight:600;">${fmtDate(r.nextPm)}</td>
-          <td class="text-muted">${fmtDate(r.warrantyEnd)}</td>
-          <td><span class="badge badge-${r.status === 'Completed' ? 'success' : r.status === 'Overdue' ? 'danger' : r.status === 'In Progress' ? 'blue' : 'amber'}">${r.status}</span></td>
+          <td class="entity-name" style="font-size:12px;">${r.product}</td>
+          <td class="text-secondary" style="font-size:11px;">${r.serial}</td>
+          <td style="font-size:12px;">${r.qty}</td>
+          <td class="text-muted" style="font-size:11px;">${fmtDate(r.lastPm)}</td>
+          <td style="font-weight:600;font-size:12px;color:var(--blue);">${fmtDate(r.nextPm)}</td>
+          <td class="text-muted" style="font-size:11px;">${fmtDate(r.warrantyEnd)}</td>
+          <td><span class="badge badge-${PM_STATUS_CLS[r.status] || 'gray'}">${r.status}</span></td>
           <td>
             <div class="tbl-actions">
-              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-eye"></i></button>
-              <button class="btn btn-icon-sm btn-ghost"><i class="ti ti-edit"></i></button>
+              <button class="btn btn-outline btn-sm" onclick="openPMChecklist('${r.id}')"><i class="ti ti-checklist"></i> Checklist</button>
             </div>
           </td>
-        </tr>`).join('');
-      const countEl = document.getElementById('pm-count'); if (countEl) countEl.innerText = list.length;
+        </tr>`;
+      }).join('');
+
+      const countEl = document.getElementById('pm-count'); if (countEl) countEl.textContent = list.length;
+      renderPagination('pm-pagination', list.length, _pmPage, PM_PER, `function(p){_pmPage=p;renderPmTable(_pmFiltered)}`);
     }
 
     function filterPM() {
-      const search = document.getElementById('pm-search').value.toLowerCase();
-      const status = document.getElementById('pm-status-filter').value;
-      const filtered = DB.pmRecords.filter(r => {
-        return (r.id.toLowerCase().includes(search) || r.product.toLowerCase().includes(search)) &&
-          (!status || r.status === status);
-      });
+      if (!DB.pmRecords) return;
+      const search = (document.getElementById('pm-search')?.value || '').toLowerCase();
+      const status = document.getElementById('pm-status-filter')?.value || '';
+      const filtered = DB.pmRecords.filter(r =>
+        (r.id.toLowerCase().includes(search) || r.product.toLowerCase().includes(search)) &&
+        (!status || r.status === status)
+      );
+      _pmPage = 1;
       renderPmTable(filtered);
     }
 
-    function savePM(status) {
-      showToast('success', 'PM Record Saved', 'The PM record has been saved as ' + status);
+    function openPMModal() {
+      // Reset form
+      ['mpm-invoice', 'mpm-date', 'mpm-qty', 'mpm-single-line', 'mpm-multi-line', 'mpm-next-date', 'mpm-warranty-date'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+      });
+      ['mpm-status', 'mpm-old-product', 'mpm-product', 'mpm-serial-select', 'mpm-service-call'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+      });
+
+      // Populate invoice select from sales orders
+      const invSel = document.getElementById('mpm-invoice');
+      if (invSel) invSel.innerHTML = '<option value="">-Select-</option>' +
+        (DB.salesOrders || []).slice(0, 30).map(o => `<option value="${o.id}">${o.id}</option>`).join('');
+
+      // Populate product selects
+      const prodOpts = '<option value="">-Select-</option>' +
+        (DB.products || []).slice(0, 30).map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+      const prodSel = document.getElementById('mpm-product'); if (prodSel) prodSel.innerHTML = prodOpts;
+      const oldProdSel = document.getElementById('mpm-old-product'); if (oldProdSel) oldProdSel.innerHTML = prodOpts;
+
+      // Populate serial numbers
+      const serialSel = document.getElementById('mpm-serial-select');
+      if (serialSel) serialSel.innerHTML = '<option value="">-Select-</option>' +
+        Array.from({ length: 10 }, (_, i) => `<option>SN-${si(10000, 99999)}</option>`).join('');
+
+      // Populate service calls
+      const scSel = document.getElementById('mpm-service-call');
+      if (scSel) scSel.innerHTML = '<option value="">-Select-</option>' +
+        (DB.serviceRequests || []).slice(0, 20).map(r => `<option value="${r.id}">${r.id} — ${r.customer}</option>`).join('');
+
+      openModal('modal-svc-pm');
+    }
+
+    function savePM(statusArg) {
+      const invoiceId = document.getElementById('mpm-invoice')?.value;
+      const product = document.getElementById('mpm-product')?.value;
+      const nextDate = document.getElementById('mpm-next-date')?.value;
+      if (!invoiceId || !product || !nextDate) {
+        showToast('warning', 'Required', 'Invoice, Product, and Next PM Date are required.'); return;
+      }
+      const serial = document.getElementById('mpm-serial-select')?.value || `SN-${si(10000, 99999)}`;
+      const qty = parseInt(document.getElementById('mpm-qty')?.value) || 1;
+      const warrantyEnd = document.getElementById('mpm-warranty-date')?.value;
+      const pmStatus = document.getElementById('mpm-status')?.value || statusArg;
+
+      const record = {
+        id: invoiceId,
+        product,
+        serial,
+        qty,
+        lastPm: new Date().toISOString(),
+        nextPm: new Date(nextDate).toISOString(),
+        warrantyEnd: warrantyEnd ? new Date(warrantyEnd).toISOString() : new Date(Date.now() + 365 * 86400000).toISOString(),
+        status: pmStatus || 'Scheduled',
+        progress: 0,
+        checklistItems: null
+      };
+      if (!DB.pmRecords) DB.pmRecords = [];
+      DB.pmRecords.unshift(record);
+      _pmPage = 1;
+      renderPmTable();
       closeModal('modal-svc-pm');
+      showToast('success', 'PM Record Created', `PM record for ${product} saved as ${record.status}.`);
+    }
+
+    /* ── PM CHECKLIST ── */
+    function _getPMChecklistItems(rec) {
+      if (rec.checklistItems) return rec.checklistItems;
+      const matched = (DB.svcChecklists || []).filter(cfg => {
+        const prodMatch = !cfg.productTypes.length || cfg.productTypes.some(p =>
+          (rec.product || '').toLowerCase().includes(p.toLowerCase()) ||
+          p.toLowerCase().includes((rec.product || '').toLowerCase()));
+        const typeMatch = !cfg.callTypes.length || cfg.callTypes.some(t =>
+          t.toLowerCase().includes('pm'));
+        return prodMatch && typeMatch;
+      });
+      const labels = matched.length ? matched.map(c => c.option) : PM_DEFAULT_CHECKLIST;
+      return labels.map(label => ({ label, done: false }));
+    }
+
+    function openPMChecklist(id) {
+      const rec = (DB.pmRecords || []).find(r => r.id === id);
+      if (!rec) return;
+      if (!rec.checklistItems) rec.checklistItems = _getPMChecklistItems(rec);
+      _pmChecklistId = id;
+      document.getElementById('mpc-id').textContent = rec.id;
+      document.getElementById('mpc-product').textContent = rec.product;
+      document.getElementById('mpc-serial').textContent = rec.serial;
+      document.getElementById('mpc-next').textContent = fmtDate(rec.nextPm);
+      _renderPMChecklistItems(rec.checklistItems);
+      openModal('modal-pm-checklist');
+    }
+
+    function _renderPMChecklistItems(items) {
+      const done = items.filter(i => i.done).length;
+      const total = items.length;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      const pcol = pct === 100 ? 'green' : pct >= 50 ? 'blue' : 'amber';
+
+      document.getElementById('mpc-pct').textContent = pct + '%';
+      const fill = document.getElementById('mpc-progress-fill');
+      fill.style.width = pct + '%';
+      fill.className = 'progress-fill ' + pcol;
+      document.getElementById('mpc-progress-label').textContent = `${done} of ${total} items completed`;
+
+      document.getElementById('mpc-items').innerHTML = items.map((item, idx) => `
+        <label style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;border-bottom:1px solid var(--border,#e5e7eb);transition:background 0.15s;" onmouseover="this.style.background='var(--bg,#f9fafb)'" onmouseout="this.style.background=''">
+          <input type="checkbox" ${item.done ? 'checked' : ''} onchange="togglePMCheckItem(${idx},this)"
+            style="width:17px;height:17px;cursor:pointer;accent-color:var(--blue,#2563eb);flex-shrink:0;">
+          <span style="font-size:13px;${item.done ? 'text-decoration:line-through;color:var(--text-muted);' : 'color:var(--text,#111);'}">${idx + 1}. ${item.label}</span>
+          ${item.done ? '<i class="ti ti-circle-check" style="color:var(--green);margin-left:auto;font-size:15px;"></i>' : ''}
+        </label>`).join('');
+    }
+
+    function togglePMCheckItem(idx, cb) {
+      const rec = (DB.pmRecords || []).find(r => r.id === _pmChecklistId);
+      if (!rec || !rec.checklistItems) return;
+      rec.checklistItems[idx].done = cb.checked;
+      _renderPMChecklistItems(rec.checklistItems);
+    }
+
+    function savePMChecklist() {
+      const rec = (DB.pmRecords || []).find(r => r.id === _pmChecklistId);
+      if (!rec) return;
+      const done = rec.checklistItems.filter(i => i.done).length;
+      const total = rec.checklistItems.length;
+      rec.progress = total ? Math.round((done / total) * 100) : 0;
+      if (rec.progress === 100) rec.status = 'Completed';
+      else if (done > 0) rec.status = 'In Progress';
+      renderPmTable();
+      closeModal('modal-pm-checklist');
+      showToast('success', 'Saved', `PM checklist updated — ${rec.progress}% complete.`);
     }
     /* ── INSTALLATION MANAGEMENT ── */
     const INST_DEFAULT_CHECKLIST = [
