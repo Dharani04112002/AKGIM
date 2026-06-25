@@ -17088,11 +17088,29 @@
                         <option>General</option>
                       </select>
                     </div>
+                    <div class="form-group"><label class="form-label">Employee Type</label>
+                      <select class="form-control" id="memp-type">
+                        <option>Full-Time</option>
+                        <option>Part-Time</option>
+                        <option>Contract</option>
+                        <option>Intern</option>
+                        <option>Temporary</option>
+                      </select>
+                    </div>
                     <div class="form-group"><label class="form-label">Status</label>
                       <select class="form-control" id="memp-status">
                         <option>Active</option>
                         <option>On Leave</option>
                         <option>Inactive</option>
+                      </select>
+                    </div>
+                    <div class="form-group"><label class="form-label">Date of Relieving</label><input class="form-control"
+                        id="memp-dor" type="date"></div>
+                    <div class="form-group"><label class="form-label">Emergency Contact Number</label><input class="form-control"
+                        id="memp-emg-phone" placeholder="Emergency mobile number"></div>
+                    <div class="form-group"><label class="form-label">Reporting To</label>
+                      <select class="form-control" id="memp-reporting">
+                        <option value="">— Select —</option>
                       </select>
                     </div>
                   </div>
@@ -28021,8 +28039,19 @@
       document.getElementById('memp-email').value = e.email;
       document.getElementById('memp-basic').value = e.salary;
       document.getElementById('memp-status').value = e.status;
+      const mempType = document.getElementById('memp-type'); if(mempType) mempType.value = e.type || 'Full-Time';
       const lic = document.getElementById('memp-license'); if(lic) lic.value = e.license || '';
       const docsWrap = document.getElementById('emp-docs-wrap'); if(docsWrap) docsWrap.innerHTML = '';
+      const dor = document.getElementById('memp-dor'); if(dor) dor.value = e.dor || '';
+      const emg = document.getElementById('memp-emg-phone'); if(emg) emg.value = e.emgPhone || '';
+      const repSel = document.getElementById('memp-reporting');
+      if (repSel) {
+        repSel.innerHTML = '<option value="">— Select —</option>';
+        DB.employees.forEach(emp => {
+          if (emp.id !== e.id) repSel.add(new Option(emp.name, emp.name));
+        });
+        repSel.value = e.reportingTo || '';
+      }
       openModal('modal-hrm-emp');
     }
 
@@ -28072,12 +28101,17 @@
 
     function openAddEmpModal() {
       document.getElementById('hrm-emp-modal-title').textContent = 'Add Employee';
-      ['memp-fname', 'memp-lname', 'memp-phone', 'memp-email', 'memp-basic', 'memp-da', 'memp-hra', 'memp-conv', 'memp-medical', 'memp-tds', 'memp-acno', 'memp-ifsc', 'memp-aadhar', 'memp-pan', 'memp-uan', 'memp-esino', 'memp-license'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      ['memp-fname', 'memp-lname', 'memp-phone', 'memp-email', 'memp-basic', 'memp-da', 'memp-hra', 'memp-conv', 'memp-medical', 'memp-tds', 'memp-acno', 'memp-ifsc', 'memp-aadhar', 'memp-pan', 'memp-uan', 'memp-esino', 'memp-license', 'memp-dor', 'memp-emg-phone', 'memp-reporting', 'memp-type'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
       const docsWrap2 = document.getElementById('emp-docs-wrap'); if(docsWrap2) docsWrap2.innerHTML = '';
       const deptSel = document.getElementById('memp-dept');
       if (deptSel && deptSel.options.length <= 1) DEPARTMENTS.forEach(d => deptSel.add(new Option(d, d)));
       const desigSel = document.getElementById('memp-desig');
       if (desigSel && desigSel.options.length <= 1) DESIGNATIONS.forEach(d => desigSel.add(new Option(d, d)));
+      const repSel = document.getElementById('memp-reporting');
+      if (repSel) {
+        repSel.innerHTML = '<option value="">— Select —</option>';
+        DB.employees.forEach(e => repSel.add(new Option(e.name, e.name)));
+      }
       openModal('modal-hrm-emp');
     }
 
