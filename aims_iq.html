@@ -17047,6 +17047,7 @@
                   <div class="tab-item active" onclick="switchEmpTab('personal',this)">Personal Info</div>
                   <div class="tab-item" onclick="switchEmpTab('salary',this)">Salary Structure</div>
                   <div class="tab-item" onclick="switchEmpTab('bank',this)">Bank & Statutory</div>
+                  <div class="tab-item" onclick="switchEmpTab('docs',this)">Documents</div>
                 </div>
                 <!-- Personal Tab -->
                 <div class="tab-panel active" id="emp-tab-personal">
@@ -17143,6 +17144,18 @@
                         id="memp-uan" placeholder="Universal Account No"></div>
                     <div class="form-group"><label class="form-label">ESI No</label><input class="form-control"
                         id="memp-esino" placeholder="ESI number"></div>
+                    <div class="form-group"><label class="form-label">License Number</label><input class="form-control"
+                        id="memp-license" placeholder="Driving / Other License"></div>
+                  </div>
+                </div>
+                <!-- Documents Tab -->
+                <div class="tab-panel" id="emp-tab-docs">
+                  <div class="form-group form-col-2">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                      <label class="form-label" style="margin-bottom:0;">Upload Documents</label>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addEmpDocRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Document</button>
+                    </div>
+                    <div id="emp-docs-wrap" style="display:flex; flex-direction:column; gap:12px;"></div>
                   </div>
                 </div>
               </div>
@@ -27913,12 +27926,59 @@
       document.getElementById('memp-email').value = e.email;
       document.getElementById('memp-basic').value = e.salary;
       document.getElementById('memp-status').value = e.status;
+      const lic = document.getElementById('memp-license'); if(lic) lic.value = e.license || '';
+      const docsWrap = document.getElementById('emp-docs-wrap'); if(docsWrap) docsWrap.innerHTML = '';
       openModal('modal-hrm-emp');
+    }
+
+    function addEmpDocRow() {
+      const wrap = document.getElementById('emp-docs-wrap');
+      if (!wrap) return;
+      const div = document.createElement('div');
+      div.style.cssText = "display:flex; gap:12px; align-items:flex-start; background: var(--bg-hover); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);";
+      
+      const fileId = 'file-' + Date.now() + Math.floor(Math.random() * 1000);
+      const imgId = 'img-' + Date.now() + Math.floor(Math.random() * 1000);
+      
+      div.innerHTML = `
+        <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+          <input type="text" class="form-control" placeholder="Document Name (e.g. Aadhar Card)">
+          <input type="file" id="${fileId}" class="form-control" style="padding: 4px;" accept="image/*">
+        </div>
+        <div style="width: 72px; height: 72px; border-radius: 6px; overflow: hidden; background: var(--bg-body); border: 1px solid var(--border-color); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <img id="${imgId}" src="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+          <i class="ti ti-photo" style="color: var(--tx-3); font-size: 24px;" id="${imgId}-icon"></i>
+        </div>
+        <button type="button" class="btn btn-ghost btn-icon" onclick="this.parentElement.remove()" style="color:var(--danger); margin-top: 18px;" title="Remove"><i class="ti ti-trash"></i></button>
+      `;
+      wrap.appendChild(div);
+
+      document.getElementById(fileId).addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            const img = document.getElementById(imgId);
+            const icon = document.getElementById(imgId + '-icon');
+            img.src = evt.target.result;
+            img.style.display = 'block';
+            icon.style.display = 'none';
+          };
+          reader.readAsDataURL(file);
+        } else {
+            const img = document.getElementById(imgId);
+            const icon = document.getElementById(imgId + '-icon');
+            img.src = '';
+            img.style.display = 'none';
+            icon.style.display = 'block';
+        }
+      });
     }
 
     function openAddEmpModal() {
       document.getElementById('hrm-emp-modal-title').textContent = 'Add Employee';
-      ['memp-fname', 'memp-lname', 'memp-phone', 'memp-email', 'memp-basic', 'memp-da', 'memp-hra', 'memp-conv', 'memp-medical', 'memp-tds', 'memp-acno', 'memp-ifsc', 'memp-aadhar', 'memp-pan', 'memp-uan', 'memp-esino'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      ['memp-fname', 'memp-lname', 'memp-phone', 'memp-email', 'memp-basic', 'memp-da', 'memp-hra', 'memp-conv', 'memp-medical', 'memp-tds', 'memp-acno', 'memp-ifsc', 'memp-aadhar', 'memp-pan', 'memp-uan', 'memp-esino', 'memp-license'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      const docsWrap2 = document.getElementById('emp-docs-wrap'); if(docsWrap2) docsWrap2.innerHTML = '';
       const deptSel = document.getElementById('memp-dept');
       if (deptSel && deptSel.options.length <= 1) DEPARTMENTS.forEach(d => deptSel.add(new Option(d, d)));
       const desigSel = document.getElementById('memp-desig');
