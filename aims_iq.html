@@ -7685,6 +7685,10 @@
               <i class="ti ti-file-text nav-icon"></i>
               <span class="nav-text">AMC Quotes</span>
             </div>
+            <div class="nav-item" data-page="svc-amc-contract" onclick="navigate('svc-amc-contract',this)">
+              <i class="ti ti-file-certificate nav-icon"></i>
+              <span class="nav-text">AMC Contract</span>
+            </div>
             <div class="nav-item" data-page="svc-pm" onclick="navigate('svc-pm',this)">
               <i class="ti ti-calendar-stats nav-icon"></i>
               <span class="nav-text">PM Management</span>
@@ -14546,6 +14550,47 @@
             </div>
           </div>
 
+          <!-- ── SERVICE: AMC CONTRACT ──────────────────────────── -->
+          <div class="page" id="page-svc-amc-contract">
+            <div class="page-header">
+              <div>
+                <div class="page-title">AMC Contract</div>
+                <div class="page-sub">Manage Annual Maintenance Contracts</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-primary" onclick="openAmcContractModal()"><i class="ti ti-file-plus"></i> Add AMC Contract</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-file-certificate"></i> AMC Contracts <span
+                    class="badge badge-blue no-dot ml-2" id="amcc-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="amcc-search" type="text"
+                      placeholder="Search contract, company…" oninput="filterAmcContracts()"></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Quotation #</th>
+                      <th>Serial #</th>
+                      <th>Company</th>
+                      <th>AMC Date</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Company PO Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="amcc-tbody"></tbody>
+                </table>
+              </div>
+              <div id="amcc-pagination"></div>
+            </div>
+          </div>
+
           <!-- ── SERVICE: VISITS ─────────────────────────────── -->
           <div class="page" id="page-svc-visits">
             <div class="page-header">
@@ -18447,6 +18492,80 @@
             </div>
           </div>
 
+          <!-- AMC Contract Add Modal -->
+          <div class="modal-wrap" id="modal-amc-contract">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-plus"></i> <span id="amcc-modal-title">Add AMC Contract</span></div>
+                <button class="modal-close" onclick="closeModal('modal-amc-contract')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Quotation Number *</label>
+                    <select class="form-control" id="amcc-quote-no">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Serial Number *</label>
+                    <select class="form-control" id="amcc-serial-no">
+                      <option value="">-Select-</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Company</label>
+                    <select class="form-control" id="amcc-company-type">
+                      <option value="Numeric">Numeric</option>
+                      <option value="AKGIM">AKGIM</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">AMC Date</label>
+                    <input type="date" class="form-control" id="amcc-amc-date">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="amcc-start-date">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="amcc-end-date">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Company PO Date</label>
+                    <input type="date" class="form-control" id="amcc-po-date">
+                  </div>
+                </div>
+                <div id="amcc-validate-msg" style="margin-top:24px; display:none;">
+                  <div style="border:1px solid var(--red); color:var(--red); background:#FFF5F5; padding:12px; border-radius:4px; font-weight:600; font-size:12px; text-align:center;">
+                    Please fill out all mandatory (*) fields.
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-amc-contract')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAmcContract()"><i class="ti ti-device-floppy"></i> Save</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- AMC Contract View Modal -->
+          <div class="modal-wrap" id="modal-amc-contract-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-file-certificate"></i> AMC Contract Details</div>
+                <button class="modal-close" onclick="closeModal('modal-amc-contract-view')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="padding:20px;">
+                <div class="detail-grid" id="vamcc-info"></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-amc-contract-view')">Close</button>
+              </div>
+            </div>
+          </div>
+
           <!-- HRM: Add/Edit Employee -->
           <!-- HRM: New Shift -->
           <div class="modal-wrap" id="modal-hrm-shift">
@@ -20511,6 +20630,7 @@
       // AMC & Warranty
       'svc-amc': { title: 'AMC & Warranty', crumbs: ['Reports', 'AMC & Warranty'], module: 'reports' },
       'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
+      'svc-amc-contract': { title: 'AMC Contract', crumbs: ['Service', 'AMC Contract'], module: 'service' },
       // Service Management (Extended)
       'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
       'svc-feedback': { title: 'Service Feedback', crumbs: ['Service', 'Feedback'], module: 'service' },
@@ -23165,6 +23285,7 @@
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
       once('svc-amc-quotes', initAmcQuotesPage);
+      once('svc-amc-contract', initAmcContractsPage);
       once('svc-visits', initSvcVisits);
       once('svc-feedback', initSvcFeedback);
       once('svc-rca', initSvcRCA);
@@ -30084,6 +30205,130 @@
       const atbody = document.getElementById('svc-amc-renew-tbody');
       atbody.innerHTML = `<tr><td>AMC-2026-001</td><td>Reliance Ind.</td><td>25 May 2026</td><td>₹45,000</td></tr>`;
     }
+    /* ── AMC CONTRACT ── */
+    let amccData = [];
+    let amccFiltered = [];
+    let amccPage = 1;
+    const AMCC_PER = 15;
+
+    function initAmcContractsPage() {
+      if (!amccData.length) {
+        const customers = DB.customers || [];
+        amccData = Array.from({ length: 15 }, (_, i) => {
+          const start = new Date(Date.now() - si(0, 30) * 86400000);
+          const end = new Date(start.getTime() + 365 * 86400000);
+          return {
+            id: `AMC/C/2026/${100 + i}`,
+            quoteNo: `AMC/Q/2026/${45 - i}`,
+            serialNo: `SN-${si(10000, 99999)}`,
+            companyType: spick(['Numeric', 'AKGIM']),
+            amcDate: new Date(start.getTime() - 5 * 86400000).toISOString().slice(0, 10),
+            startDate: start.toISOString().slice(0, 10),
+            endDate: end.toISOString().slice(0, 10),
+            poDate: new Date(start.getTime() - 2 * 86400000).toISOString().slice(0, 10)
+          };
+        });
+      }
+      amccFiltered = [...amccData];
+      const sc = document.getElementById('amcc-count'); if (sc) sc.textContent = amccData.length;
+      
+      const qSel = document.getElementById('amcc-quote-no');
+      if (qSel && qSel.options.length === 1 && amcqData.length) {
+        amcqData.forEach(q => qSel.add(new Option(q.id, q.id)));
+      }
+      const sSel = document.getElementById('amcc-serial-no');
+      if (sSel && sSel.options.length === 1) {
+        ['SN-10293', 'SN-29384', 'SN-38475', 'SN-47586', 'SN-58697'].forEach(s => sSel.add(new Option(s, s)));
+      }
+      renderAmcContractsTable();
+    }
+
+    function filterAmcContracts() {
+      const search = (document.getElementById('amcc-search')?.value || '').toLowerCase();
+      amccFiltered = amccData.filter(c => 
+        !search || c.quoteNo.toLowerCase().includes(search) || c.serialNo.toLowerCase().includes(search)
+      );
+      const sc = document.getElementById('amcc-count'); if (sc) sc.textContent = amccFiltered.length;
+      amccPage = 1; renderAmcContractsTable();
+    }
+
+    function renderAmcContractsTable() {
+      const tbody = document.getElementById('amcc-tbody'); if (!tbody) return;
+      const start = (amccPage - 1) * AMCC_PER;
+      const slice = amccFiltered.slice(start, start + AMCC_PER);
+      if (!slice.length) { tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state">No AMC contracts found.</div></td></tr>`; return; }
+      tbody.innerHTML = slice.map(c => `
+        <tr style="cursor:pointer;" onclick="viewAmcContract('${c.id}')">
+          <td><span class="id-cell">${c.quoteNo}</span></td>
+          <td>${c.serialNo}</td>
+          <td><span class="badge badge-gray no-dot">${c.companyType}</span></td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(c.amcDate) || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(c.startDate) || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(c.endDate) || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(c.poDate) || '-'}</td>
+          <td onclick="event.stopPropagation()">
+            <button class="btn btn-ghost btn-icon-sm" onclick="viewAmcContract('${c.id}')"><i class="ti ti-eye"></i></button>
+          </td>
+        </tr>
+      `).join('');
+      renderPagination('amcc-pagination', amccFiltered.length, amccPage, AMCC_PER, `function(p){amccPage=p;renderAmcContractsTable()}`);
+    }
+
+    function openAmcContractModal() {
+      document.getElementById('amcc-validate-msg').style.display = 'none';
+      document.getElementById('amcc-quote-no').value = '';
+      document.getElementById('amcc-serial-no').value = '';
+      document.getElementById('amcc-company-type').value = 'Numeric';
+      document.getElementById('amcc-amc-date').value = '';
+      document.getElementById('amcc-start-date').value = '';
+      document.getElementById('amcc-end-date').value = '';
+      document.getElementById('amcc-po-date').value = '';
+      openModal('modal-amc-contract');
+    }
+
+    function saveAmcContract() {
+      const quoteNo = document.getElementById('amcc-quote-no').value;
+      const serialNo = document.getElementById('amcc-serial-no').value;
+      if (!quoteNo || !serialNo) {
+        document.getElementById('amcc-validate-msg').style.display = 'block';
+        return;
+      }
+      
+      const newC = {
+        id: `AMC/C/2026/${100 + amccData.length + 1}`,
+        quoteNo,
+        serialNo,
+        companyType: document.getElementById('amcc-company-type').value,
+        amcDate: document.getElementById('amcc-amc-date').value,
+        startDate: document.getElementById('amcc-start-date').value,
+        endDate: document.getElementById('amcc-end-date').value,
+        poDate: document.getElementById('amcc-po-date').value
+      };
+      
+      amccData.unshift(newC);
+      amccFiltered = [...amccData];
+      closeModal('modal-amc-contract');
+      showToast('success', 'AMC Contract', 'Contract saved successfully.');
+      renderAmcContractsTable();
+      const sc = document.getElementById('amcc-count'); if (sc) sc.textContent = amccData.length;
+    }
+
+    function viewAmcContract(id) {
+      const c = amccData.find(x => x.id === id); if (!c) return;
+      const info = document.getElementById('vamcc-info');
+      if (info) info.innerHTML = `
+        <div class="detail-row"><div class="detail-label">Contract #</div><div class="detail-val">${c.id}</div></div>
+        <div class="detail-row"><div class="detail-label">Quotation #</div><div class="detail-val">${c.quoteNo}</div></div>
+        <div class="detail-row"><div class="detail-label">Serial #</div><div class="detail-val">${c.serialNo}</div></div>
+        <div class="detail-row"><div class="detail-label">Company</div><div class="detail-val">${c.companyType}</div></div>
+        <div class="detail-row"><div class="detail-label">AMC Date</div><div class="detail-val">${fmtDate(c.amcDate) || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Start Date</div><div class="detail-val">${fmtDate(c.startDate) || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">End Date</div><div class="detail-val">${fmtDate(c.endDate) || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Company PO Date</div><div class="detail-val">${fmtDate(c.poDate) || '-'}</div></div>
+      `;
+      openModal('modal-amc-contract-view');
+    }
+
     /* ── AMC QUOTES ── */
     let amcqData = [];
     let amcqFiltered = [];
