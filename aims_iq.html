@@ -14529,11 +14529,12 @@
                     <tr>
                       <th>Quote #</th>
                       <th>Customer</th>
-                      <th>Scope</th>
-                      <th>Coverage</th>
-                      <th>Frequency</th>
+                      <th>AMC Period</th>
+                      <th>From Date</th>
+                      <th>To Date</th>
+                      <th>Branch</th>
+                      <th>Quotation Date</th>
                       <th>Annual Value</th>
-                      <th>Validity</th>
                       <th>Approval Level</th>
                       <th>Actions</th>
                     </tr>
@@ -29590,11 +29591,12 @@
         <tr style="cursor:pointer;" onclick="viewAmcQuote('${q.id}')">
           <td><span class="id-cell">${q.id}</span></td>
           <td><div class="entity-cell"><div class="entity-av gold">${q.customer.charAt(0)}</div><div class="entity-name truncate" style="max-width:120px;">${q.customer}</div></div></td>
-          <td class="text-secondary" style="font-size:12px;max-width:150px;">${q.scope}</td>
-          <td><span class="badge badge-blue no-dot">${q.coverage}</span></td>
-          <td class="text-secondary" style="font-size:12px;">${q.frequency}</td>
+          <td class="text-secondary" style="font-size:12px;">${q.period || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(q.fromDate) || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(q.toDate) || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${q.branch || '-'}</td>
+          <td class="text-secondary" style="font-size:12px;">${fmtDate(q.date || q.fromDate) || '-'}</td>
           <td class="amount-cell" style="font-weight:700;">₹${fmt(q.value)}</td>
-          <td class="text-muted" style="font-size:12px;">${fmtDate(q.validity)}</td>
           <td><div style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></td>
           <td onclick="event.stopPropagation()">
             <button class="btn btn-ghost btn-icon-sm" onclick="viewAmcQuote('${q.id}')"><i class="ti ti-eye"></i></button>
