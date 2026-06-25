@@ -7614,10 +7614,7 @@
               <i class="ti ti-settings-automation nav-icon"></i>
               <span class="nav-text">Installation Mgmt</span>
             </div>
-            <div class="nav-item" data-page="svc-amc" onclick="navigate('svc-amc',this)">
-              <i class="ti ti-shield-lock nav-icon"></i>
-              <span class="nav-text">AMC &amp; Warranty</span>
-            </div>
+
             <div class="nav-item" data-page="svc-amc-quotes" onclick="navigate('svc-amc-quotes',this)">
               <i class="ti ti-file-text nav-icon"></i>
               <span class="nav-text">AMC Quotes</span>
@@ -7801,6 +7798,8 @@
                 class="ti ti-chart-arrows-vertical nav-icon"></i><span class="nav-text">Productivity</span></div>
             <div class="nav-item" data-page="hrm-reports" onclick="navigate('hrm-reports',this)"><i
                 class="ti ti-file-analytics nav-icon"></i><span class="nav-text">HRMS Reports</span></div>
+            <div class="nav-item" data-page="svc-amc" onclick="navigate('svc-amc',this)"><i
+                class="ti ti-shield-lock nav-icon"></i><span class="nav-text">AMC &amp; Warranty</span></div>
           </div>
         </div>
 
@@ -8495,7 +8494,7 @@
                   <div class="ls-icon"><i class="ti ti-tools"></i></div>
                   <div class="ls-title">Service</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">7 modules</div>
+                  <div class="ls-count">6 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('svc-requests',null)">
@@ -8513,11 +8512,7 @@
                     <div class="ls-card-title">Installation Mgmt</div>
                     <div class="ls-card-desc">Manage installations</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('svc-amc',null)">
-                    <div class="ls-card-icon"><i class="ti ti-shield-lock"></i></div>
-                    <div class="ls-card-title">AMC & Warranty</div>
-                    <div class="ls-card-desc">Contract management</div>
-                  </div>
+
                   <div class="ls-card" onclick="navigate('svc-amc-quotes',null)">
                     <div class="ls-card-icon"><i class="ti ti-file-text"></i></div>
                     <div class="ls-card-title">AMC Quotes</div>
@@ -8711,7 +8706,7 @@
                   <div class="ls-icon"><i class="ti ti-chart-pie"></i></div>
                   <div class="ls-title">Reports</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">6 modules</div>
+                  <div class="ls-count">7 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('rep-leads',null)">
@@ -8745,6 +8740,11 @@
                     <div class="ls-card-icon"><i class="ti ti-file-analytics"></i></div>
                     <div class="ls-card-title">HRMS Reports</div>
                     <div class="ls-card-desc">HR analytics</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-amc',null)">
+                    <div class="ls-card-icon"><i class="ti ti-shield-lock"></i></div>
+                    <div class="ls-card-title">AMC & Warranty</div>
+                    <div class="ls-card-desc">Contract management</div>
                   </div>
                 </div>
               </div>
@@ -19677,7 +19677,7 @@
       // Installation Mgmt
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
       // AMC & Warranty
-      'svc-amc': { title: 'AMC & Warranty', crumbs: ['Service', 'AMC'], module: 'service' },
+      'svc-amc': { title: 'AMC & Warranty', crumbs: ['Reports', 'AMC & Warranty'], module: 'reports' },
       'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
       // Service Management (Extended)
       'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
