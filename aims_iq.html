@@ -18431,6 +18431,13 @@
                     </div>
                     <div id="fc-custom-fields-wrap" style="display:flex; flex-direction:column; gap:8px;"></div>
                   </div>
+                  <div class="form-group form-col-2" style="margin-top: 16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                      <label class="form-label" style="margin-bottom:0;">Contact Persons</label>
+                      <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerContactRow()" style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Contact</button>
+                    </div>
+                    <div id="fc-contacts-wrap" style="display:flex; flex-direction:column; gap:12px;"></div>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -21930,6 +21937,22 @@
         <input type="text" class="form-control" placeholder="Field Name (e.g. Website)" style="flex:1;">
         <input type="text" class="form-control" placeholder="Value" style="flex:1;">
         <button type="button" class="btn btn-ghost btn-icon" onclick="this.parentElement.remove()" style="color:var(--danger);" title="Remove Field"><i class="ti ti-trash"></i></button>
+      `;
+      wrap.appendChild(div);
+    }
+
+    function addCustomerContactRow() {
+      const wrap = document.getElementById('fc-contacts-wrap');
+      if (!wrap) return;
+      const div = document.createElement('div');
+      div.style.cssText = "display:grid; grid-template-columns: 1.5fr 1fr 1.5fr 1fr 1fr auto; gap:8px; align-items:center; background: var(--bg-hover); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color);";
+      div.innerHTML = `
+        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Name</label><input type="text" class="form-control" placeholder="Full Name"></div>
+        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Phone No</label><input type="text" class="form-control" placeholder="Phone"></div>
+        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Email</label><input type="email" class="form-control" placeholder="Email"></div>
+        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Designation</label><input type="text" class="form-control" placeholder="Designation"></div>
+        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Ref. Commission</label><input type="text" class="form-control" placeholder="% or Amount"></div>
+        <button type="button" class="btn btn-ghost btn-icon" onclick="this.parentElement.remove()" style="color:var(--danger); margin-top:20px;" title="Remove Contact"><i class="ti ti-trash"></i></button>
       `;
       wrap.appendChild(div);
     }
