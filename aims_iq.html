@@ -15908,12 +15908,18 @@
                       id="mclead-name" placeholder="John Smith"></div>
                   <div class="form-group"><label class="form-label">Company</label><input class="form-control"
                       id="mclead-company" placeholder="Acme Corp"></div>
+                  <div class="form-group"><label class="form-label">Customer Type</label>
+                    <select class="form-control" id="mclead-type">
+                      <option>B2B</option>
+                      <option>B2C</option>
+                    </select>
+                  </div>
                   <div class="form-group"><label class="form-label">Email</label><input class="form-control"
                       type="email" id="mclead-email" placeholder="john@acme.com"></div>
                   <div class="form-group"><label class="form-label">Phone</label><input class="form-control"
                       id="mclead-phone" placeholder="+91 98765 43210"></div>
                   <div class="form-group"><label class="form-label">Source</label>
-                    <select class="form-control" id="mclead-source">
+                    <select class="form-control" id="mclead-source" onchange="toggleLeadReferral()">
                       <option>Website</option>
                       <option>Referral</option>
                       <option>Cold Call</option>
@@ -15922,6 +15928,8 @@
                       <option>Email Campaign</option>
                     </select>
                   </div>
+                  <div class="form-group" id="mclead-referral-wrap" style="display:none;"><label class="form-label">Referred By</label><input class="form-control"
+                      id="mclead-referral-name" placeholder="Customer name"></div>
                   <div class="form-group"><label class="form-label">Lead Value (₹)</label><input class="form-control"
                       type="number" id="mclead-value" placeholder="100000"></div>
                   <div class="form-group"><label class="form-label">Assigned To</label>
@@ -25119,6 +25127,14 @@
         </td>
       </tr>`).join('');
       renderPagination('crm-lead-pagination', cLeadFiltered.length, cLeadPage, CLEAD_PER, `function(p){cLeadPage=p;renderLeadsTable()}`);
+    }
+
+    function toggleLeadReferral() {
+      const source = document.getElementById('mclead-source')?.value;
+      const wrap = document.getElementById('mclead-referral-wrap');
+      if (wrap) {
+        wrap.style.display = (source === 'Referral') ? 'block' : 'none';
+      }
     }
 
     function saveLead() {
