@@ -7609,10 +7609,6 @@
               <i class="ti ti-message-dots nav-icon"></i>
               <span class="nav-text">Service Requests</span>
             </div>
-            <div class="nav-item" data-page="svc-assignjobs" onclick="navigate('svc-assignjobs',this)">
-              <i class="ti ti-user-check nav-icon"></i>
-              <span class="nav-text">Assign Jobs</span>
-            </div>
 
             <div class="nav-item" data-page="svc-installation" onclick="navigate('svc-installation',this)">
               <i class="ti ti-settings-automation nav-icon"></i>
@@ -11690,7 +11686,7 @@
           </div>
 
           <div class="modal-wrap" id="modal-svc-request">
-            <div class="modal modal-sm">
+            <div class="modal modal-md">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-tool"></i> New Service Request</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-request')"><i class="ti ti-x"></i></button>
@@ -11698,9 +11694,19 @@
               <div class="modal-body">
                 <div class="form-grid-2">
                   <div class="form-group"><label class="form-label">Customer *</label>
-                    <select class="form-control" id="mreq-cust">
+                    <select class="form-control" id="mreq-cust" onchange="loadCustomerHistory()">
                       <option value="">Select…</option>
                     </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Serial No.</label>
+                    <input class="form-control" list="serial-list" id="mreq-serial" placeholder="Search serial no...">
+                    <datalist id="serial-list">
+                      <option value="SN-1001"></option>
+                      <option value="SN-1002"></option>
+                      <option value="SN-1003"></option>
+                      <option value="SN-1004"></option>
+                      <option value="SN-1005"></option>
+                    </datalist>
                   </div>
                   <div class="form-group"><label class="form-label">Type</label>
                     <select class="form-control" id="mreq-type">
@@ -11714,9 +11720,63 @@
                       class="form-control" id="mreq-product" placeholder="Equipment name"></div>
                   <div class="form-group"><label class="form-label">Scheduled Date</label><input class="form-control"
                       type="date" id="mreq-date"></div>
+                  <div class="form-group"><label class="form-label">Contact Person</label><input class="form-control"
+                      id="mreq-contact" placeholder="Contact person name"></div>
+                  <div class="form-group"><label class="form-label">Tally Invoice No.</label><input class="form-control"
+                      id="mreq-invoice" placeholder="Invoice number"></div>
+                  <div class="form-group"><label class="form-label">Source of Call</label>
+                    <select class="form-control" id="mreq-source">
+                      <option>Phone</option>
+                      <option>Email</option>
+                      <option>Website</option>
+                      <option>Walk-in</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Type of Call</label>
+                    <select class="form-control" id="mreq-call-type">
+                      <option>Enquiry</option>
+                      <option>Complaint</option>
+                      <option>Service Request</option>
+                      <option>Feedback</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Customer Visit Time</label><input class="form-control"
+                      type="time" id="mreq-visit-time"></div>
+                  <div class="form-group"><label class="form-label">Branch</label><input class="form-control"
+                      id="mreq-branch" placeholder="Branch name"></div>
+                  <div class="form-group"><label class="form-label">Status</label>
+                    <select class="form-control" id="mreq-status">
+                      <option>Pending</option>
+                      <option>In Progress</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group"><label class="form-label">Address</label><input class="form-control"
                     id="mreq-addr" placeholder="Service location"></div>
+                <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
+                    id="mreq-desc" rows="2" placeholder="Description of service request…"></textarea></div>
+                
+                <div class="form-group" style="margin-top:16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
+                    <button class="btn btn-outline" style="padding:4px 8px; font-size:12px;" onclick="event.preventDefault(); addMReqCustomField()"><i class="ti ti-plus"></i> Add Field</button>
+                  </div>
+                  <div id="mreq-cf-container"></div>
+                </div>
+
+                <div id="mreq-history-wrap" style="display:none; margin-top:20px; padding-top:16px; border-top:1px dashed var(--border);">
+                  <div style="font-weight:600; margin-bottom:12px; color:var(--text-main);">Customer History</div>
+                  <div style="max-height:160px; overflow-y:auto; font-size:13px;">
+                    <div class="table-wrap" style="margin-bottom:0; box-shadow:none; border:1px solid var(--border);">
+                      <table class="data-tbl" style="margin-bottom:0;">
+                        <thead><tr><th>Type</th><th>Ref#</th><th>Date</th><th class="text-right">Amount</th><th>Status</th></tr></thead>
+                        <tbody id="mreq-history-tbody"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-svc-request')">Cancel</button>
@@ -26348,9 +26408,70 @@
       renderPagination('svc-req-pagination', sReqFiltered.length, sReqPage, SREQ_PER, `function(p){sReqPage=p;renderServiceRequestsTable()}`);
     }
 
+    function loadCustomerHistory() {
+      const custVal = document.getElementById('mreq-cust')?.value;
+      const wrap = document.getElementById('mreq-history-wrap');
+      const tbody = document.getElementById('mreq-history-tbody');
+      if (!custVal || !wrap || !tbody) {
+        if(wrap) wrap.style.display = 'none';
+        return;
+      }
+      
+      const orders = DB.salesOrders ? DB.salesOrders.filter(o => o.customerId === custVal || o.customer === custVal).map(o => ({
+        type: 'Order', id: o.id, date: o.date, amount: o.total, status: o.status
+      })) : [];
+      const invoices = DB.invoices ? DB.invoices.filter(i => i.customerId === custVal || i.customer === custVal).map(i => ({
+        type: 'Invoice', id: i.id, date: i.date, amount: i.total, status: i.status
+      })) : [];
+      
+      const history = [...orders, ...invoices].sort((a,b) => new Date(b.date) - new Date(a.date));
+      
+      if (history.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No history found</td></tr>';
+      } else {
+        tbody.innerHTML = history.map(h => {
+          let statColor = 'gray';
+          if(['Sent','Confirmed','Shipped','Paid','Completed'].includes(h.status)) statColor = 'green';
+          else if(['Overdue','Cancelled'].includes(h.status)) statColor = 'red';
+          else if(['Processing','In Progress'].includes(h.status)) statColor = 'blue';
+          return `
+          <tr>
+            <td><span class="badge badge-${h.type === 'Order' ? 'blue' : 'purple'}">${h.type}</span></td>
+            <td><a href="#" class="text-primary" style="font-weight:500; text-decoration:none;" onclick="event.preventDefault();">${h.id}</a></td>
+            <td>${fmtDate(h.date)}</td>
+            <td class="text-right" style="font-variant-numeric: tabular-nums;">₹${fmt(h.amount)}</td>
+            <td><span class="badge badge-${statColor}">${h.status}</span></td>
+          </tr>
+        `}).join('');
+      }
+      wrap.style.display = 'block';
+    }
+
+    function addMReqCustomField(key = '', val = '') {
+      const container = document.getElementById('mreq-cf-container');
+      if (!container) return;
+      const div = document.createElement('div');
+      div.style.display = 'flex';
+      div.style.gap = '8px';
+      div.style.marginBottom = '8px';
+      div.className = 'mreq-cf-row';
+      div.innerHTML = `
+        <input class="form-control mreq-cf-key" placeholder="Key (e.g. Warranty)" value="${key}" style="flex:1;">
+        <input class="form-control mreq-cf-val" placeholder="Value" value="${val}" style="flex:2;">
+        <button class="btn btn-icon btn-outline text-red" onclick="event.preventDefault(); this.parentElement.remove()" style="flex-shrink:0;" title="Remove field"><i class="ti ti-trash"></i></button>
+      `;
+      container.appendChild(div);
+    }
+
     function saveServiceRequest() {
       const cust = document.getElementById('mreq-cust')?.value;
       if (!cust) { showToast('error', 'Validation', 'Select customer.'); return; }
+      
+      const cfContainer = document.getElementById('mreq-cf-container');
+      if (cfContainer) cfContainer.innerHTML = '';
+      const historyWrap = document.getElementById('mreq-history-wrap');
+      if (historyWrap) historyWrap.style.display = 'none';
+
       closeModal('modal-svc-request');
       showToast('success', 'Request Created', 'Service request logged.');
     }
