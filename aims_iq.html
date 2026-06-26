@@ -7645,7 +7645,7 @@
             </div>
             <div class="nav-item" data-page="sal-delivery" onclick="navigate('sal-delivery',this)">
               <i class="ti ti-truck nav-icon"></i>
-              <span class="nav-text">Delivery Notes</span>
+              <span class="nav-text">Delivery Challan</span>
             </div>
 
             <div class="nav-item" data-page="sal-returns" onclick="navigate('sal-returns',this)">
@@ -8560,7 +8560,7 @@
                   </div>
                   <div class="ls-card" onclick="navigate('sal-delivery',null)">
                     <div class="ls-card-icon"><i class="ti ti-truck"></i></div>
-                    <div class="ls-card-title">Delivery Notes</div>
+                    <div class="ls-card-title">Delivery Challan</div>
                     <div class="ls-card-desc">Dispatch records</div>
                   </div>
                   <div class="ls-card" onclick="navigate('sal-returns',null)">
@@ -10545,11 +10545,11 @@
             </div>
           </div><!-- /#page-sal-invoice -->
 
-          <!-- ── DELIVERY NOTES ─────────────────────────── -->
+          <!-- ── DELIVERY CHALLAN ─────────────────────────── -->
           <div class="page" id="page-sal-delivery">
             <div class="page-header">
               <div>
-                <div class="page-title">Delivery Notes</div>
+                <div class="page-title">Delivery Challan</div>
                 <div class="page-sub">Dispatch tracking, transporter details and delivery status</div>
               </div>
               <div class="page-actions">
@@ -10560,7 +10560,7 @@
             <div class="kpi-grid kpi-grid-4 mb-4" id="dn-kpi"></div>
             <div class="card">
               <div class="card-header">
-                <div class="card-title"><i class="ti ti-truck-delivery"></i> Delivery Notes <span
+                <div class="card-title"><i class="ti ti-truck-delivery"></i> Delivery Challan <span
                     class="badge badge-blue no-dot ml-2" id="dn-count">0</span></div>
                 <div class="card-tools" style="display:flex;gap:8px;">
                   <div class="filter-search"><i class="ti ti-search"></i><input id="dn-search" type="text"
@@ -21242,7 +21242,7 @@
       'sal-orders': { title: 'Sales Orders', crumbs: ['Sales', 'Orders'], module: 'sales' },
       'sal-invoice': { title: 'Sales Invoice', crumbs: ['Sales', 'Invoice'], module: 'sales' },
       'sal-customer-ledger': { title: 'Customer Ledger', crumbs: ['Finance', 'Customer Ledger'], module: 'finance' },
-      'sal-delivery': { title: 'Delivery Notes', crumbs: ['Sales', 'Delivery Notes'], module: 'sales' },
+      'sal-delivery': { title: 'Delivery Challan', crumbs: ['Sales', 'Delivery Challan'], module: 'sales' },
       // Finance
       'fin-payments': { title: 'Payments', crumbs: ['Finance', 'Payments'], module: 'finance' },
       'pur-supplier-ledger': { title: 'Supplier Ledger', crumbs: ['Finance', 'Supplier Ledger'], module: 'finance' },
@@ -22406,7 +22406,7 @@
     });
 
     /* ─────────────────────────────────────────────────────
-       DELIVERY NOTES — 40
+       DELIVERY CHALLAN — 40
        ───────────────────────────────────────────────────── */
     DB.deliveryNotes = Array.from({ length: 40 }, (_, i) => {
       const idx = i + 1;
@@ -26459,7 +26459,7 @@
       renderPagination('sinv-pagination', sinvFiltered.length, sinvPage, SINV_PER, `function(p){sinvPage=p;renderSInvTable()}`);
     }
 
-    /* ─── DELIVERY NOTES ─── */
+    /* ─── DELIVERY CHALLAN ─── */
     let dnPage = 1; let DN_PER = 10;
     let dnFiltered = [];
 
