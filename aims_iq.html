@@ -18793,7 +18793,7 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-amcq')">Cancel</button>
+                <button class="btn btn-outline" onclick="cancelAmcQuoteModal()">Cancel</button>
                 <button class="btn btn-primary" onclick="saveAmcQuote()"><i class="ti ti-device-floppy"></i> Save
                   Quote</button>
               </div>
@@ -18808,39 +18808,90 @@
                     id="vamcq-title">AMC Quote</span></div>
                 <button class="modal-close" onclick="closeModal('modal-amcq-view')"><i class="ti ti-x"></i></button>
               </div>
-              <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;"
-                  id="vamcq-kpi"></div>
-
-                <div class="card" style="margin-bottom:16px;">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div>
+              <div class="modal-body" style="overflow-y:auto;flex:1;padding:0;">
+                <div class="tabs" style="padding:0 20px;margin-bottom:0;border-bottom:1px solid var(--border);">
+                  <div class="tab-item active" id="amcq-tab-details" onclick="amcqSwitchTab('details')">Details</div>
+                  <div class="tab-item" id="amcq-tab-history" onclick="amcqSwitchTab('history')">Version History <span id="vamcq-ver-count" class="badge badge-gray" style="margin-left:6px;font-size:10px;">1</span></div>
+                </div>
+                
+                <div id="amcq-pane-details" style="padding:20px;">
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;" id="vamcq-kpi"></div>
+                  <div class="card" style="margin-bottom:16px;">
+                    <div class="card-header">
+                      <div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div>
+                    </div>
+                    <div class="card-body" style="padding:16px;">
+                      <div class="detail-grid" id="vamcq-info"></div>
+                    </div>
                   </div>
-                  <div class="card-body" style="padding:16px;">
-                    <div class="detail-grid" id="vamcq-info"></div>
+                  <div class="card">
+                    <div class="card-header">
+                      <div class="card-title"><i class="ti ti-list"></i> Product Details</div>
+                    </div>
+                    <div class="card-body" style="padding:0; overflow-x:auto;">
+                      <table class="data-tbl" style="margin-bottom:0; min-width:800px;">
+                        <thead>
+                          <tr>
+                            <th>S No</th>
+                            <th>Product Name</th>
+                            <th>Serial Numbers</th>
+                            <th>Amount</th>
+                            <th>Qty</th>
+                            <th>Basic</th>
+                            <th>GST (18%)</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody id="vamcq-products"></tbody>
+                        <tfoot id="vamcq-totals"></tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <div class="card-title"><i class="ti ti-list"></i> Product Details</div>
+                
+                <div id="amcq-pane-history" style="padding:20px;display:none;">
+                  <div class="quo-hist-wrap">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+                      <div>
+                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                          <i class="ti ti-git-branch" style="color:#1479C9;"></i> Version Timeline
+                        </div>
+                        <div class="quo-ver-timeline" id="vamcq-ver-timeline"></div>
+                      </div>
+                      <div>
+                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                          <i class="ti ti-activity" style="color:#1479C9;"></i> Activity Log
+                        </div>
+                        <div class="quo-act-log" id="vamcq-act-log"></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="card-body" style="padding:0; overflow-x:auto;">
-                    <table class="data-tbl" style="margin-bottom:0; min-width:800px;">
-                      <thead>
-                        <tr>
-                          <th>S No</th>
-                          <th>Product Name</th>
-                          <th>Serial Numbers</th>
-                          <th>Amount</th>
-                          <th>Qty</th>
-                          <th>Basic</th>
-                          <th>GST</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
-                      <tbody id="vamcq-products"></tbody>
-                    </table>
+                  
+                  <div id="vamcq-ver-detail" style="display:none;margin-top:20px;">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-title" id="vamcq-ver-detail-title"><i class="ti ti-file-text"></i> Version Detail</div>
+                        <button class="btn btn-ghost btn-icon-sm" onclick="document.getElementById('vamcq-ver-detail').style.display='none'"><i class="ti ti-x"></i></button>
+                      </div>
+                      <div class="card-body" style="padding:0; overflow-x:auto;">
+                        <table class="data-tbl" style="margin-bottom:0; min-width:800px;">
+                          <thead>
+                            <tr>
+                              <th>S No</th>
+                              <th>Product Name</th>
+                              <th>Serial Numbers</th>
+                              <th>Amount</th>
+                              <th>Qty</th>
+                              <th>Basic</th>
+                              <th>GST (18%)</th>
+                              <th>Total</th>
+                            </tr>
+                          </thead>
+                          <tbody id="vamcq-ver-detail-body"></tbody>
+                          <tfoot id="vamcq-ver-detail-foot"></tfoot>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -31568,7 +31619,7 @@
             mockValue += total;
           }
 
-          return {
+          const mockObj = {
             id: `AMC/Q/2026/${45 - i}`,
             customer: spick(customers).name,
             customerSite: 'Site ' + spick(['A', 'B', 'C', 'HQ', 'Annex']),
@@ -31587,8 +31638,51 @@
             notes: '',
             products: mockProducts
           };
+          mockObj.version = 1;
+          mockObj.versions = [{ version: 1, date: mockObj.fromDate, value: mockObj.value, products: JSON.parse(JSON.stringify(mockProducts)) }];
+          mockObj.activity = [{ ts: new Date(new Date(mockObj.fromDate).getTime() - 86400000 * 2).toISOString(), actor: 'System', action: 'Created', detail: 'AMC Quote v1 generated' }];
+          return mockObj;
         });
         _amcqSeq = 46;
+
+        /* ── inject multi-version demo data into first 5 AMC quotes ── */
+        (function () {
+          amcqData.slice(0, 5).forEach((q, qi) => {
+            /* v2 */
+            const v2date = new Date(new Date(q.fromDate).getTime() + 86400000 * 2).toISOString().slice(0, 10);
+            const v2products = JSON.parse(JSON.stringify(q.products)).map(it => {
+              it.qty += 2;
+              it.basic = it.qty * it.amt;
+              it.gst = it.basic * 0.18;
+              it.total = it.basic + it.gst;
+              return it;
+            });
+            const v2value = v2products.reduce((s, it) => s + it.total, 0);
+            q.versions.push({ version: 2, date: v2date, value: v2value, products: v2products });
+            q.activity.push({ ts: new Date(v2date).toISOString(), actor: 'Sales Executive', action: 'Revised to v2', detail: 'Increased product quantities as per customer request' });
+            q.version = 2;
+            q.products = v2products;
+            q.value = v2value;
+            
+            /* v3 for first 2 quotes */
+            if (qi < 2) {
+              const v3date = new Date(new Date(v2date).getTime() + 86400000 * 3).toISOString().slice(0, 10);
+              const v3products = JSON.parse(JSON.stringify(v2products)).map(it => {
+                it.qty += 1;
+                it.basic = it.qty * it.amt;
+                it.gst = it.basic * 0.18;
+                it.total = it.basic + it.gst;
+                return it;
+              });
+              const v3value = v3products.reduce((s, it) => s + it.total, 0);
+              q.versions.push({ version: 3, date: v3date, value: v3value, products: v3products });
+              q.activity.push({ ts: new Date(v3date).toISOString(), actor: 'Manager', action: 'Revised to v3', detail: 'Final adjustments made before MD approval' });
+              q.version = 3;
+              q.products = v3products;
+              q.value = v3value;
+            }
+          });
+        })();
       }
       const pending = amcqData.filter(q => q.approval === 'Sales').length;
       const manager = amcqData.filter(q => q.approval === 'Manager').length;
@@ -31633,7 +31727,10 @@
             : `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-green no-dot">Manager ✓</span> <span class="badge badge-green no-dot">MD ✓</span>`;
         return `
         <tr style="cursor:pointer;" onclick="viewAmcQuote('${q.id}')">
-          <td><span class="id-cell">${q.id}</span></td>
+          <td>
+            <span class="id-cell">${q.id}</span>
+            ${q.version > 1 ? `<div style="margin-top:4px;"><span class="quo-ver-badge ${q.version >= 3 ? 'v3up' : 'multi'}">v${q.version}</span></div>` : ''}
+          </td>
           <td><div class="entity-cell"><div class="entity-av gold">${q.customer.charAt(0)}</div><div class="entity-name truncate" style="max-width:120px;">${q.customer}</div></div></td>
           <td class="text-secondary" style="font-size:12px;">${q.period || '-'}</td>
           <td class="text-secondary" style="font-size:12px;">${fmtDate(q.fromDate) || '-'}</td>
@@ -31643,8 +31740,11 @@
           <td class="amount-cell" style="font-weight:700;">₹${fmt(q.value)}</td>
           <td><div style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></td>
           <td onclick="event.stopPropagation()">
-            <button class="btn btn-ghost btn-icon-sm" onclick="viewAmcQuote('${q.id}')"><i class="ti ti-eye"></i></button>
-            <button class="btn btn-ghost btn-icon-sm" onclick="showToast('default','Print','Printing AMC quote…')"><i class="ti ti-printer"></i></button>
+            <div style="display:flex;gap:4px;">
+              <button class="btn btn-ghost btn-icon-sm" title="View" onclick="viewAmcQuote('${q.id}')"><i class="ti ti-eye"></i></button>
+              <button class="btn btn-ghost btn-icon-sm" title="Revise" onclick="reviseAmcQuote('${q.id}')"><i class="ti ti-git-branch" style="color:#1479C9;"></i></button>
+              <button class="btn btn-ghost btn-icon-sm" title="Print" onclick="showToast('default','Print','Printing AMC quote…')"><i class="ti ti-printer"></i></button>
+            </div>
           </td>
         </tr>`;
       }).join('');
@@ -31692,6 +31792,58 @@
       amcqCalcTotals();
     }
 
+    let _amcqReviseId = null;
+
+    function reviseAmcQuote(id) {
+      const q = amcqData.find(x => x.id === id); if (!q) return;
+      _amcqReviseId = id;
+      openAmcQuoteModal();
+      document.getElementById('amcq-modal-title').innerHTML = `<i class="ti ti-git-branch" style="color:#1479C9;"></i> Revise ${q.id} &nbsp;<span class="quo-ver-badge" style="font-size:12px;">v${q.version || 1} → v${(q.version || 1) + 1}</span>`;
+      document.getElementById('amcq-modal-code').innerHTML = `${q.id} <span style="color:#B45309;font-weight:600;">(Revising v${q.version || 1})</span>`;
+      
+      const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = q.value;
+      const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = q.customer;
+      const fromDateEl = document.getElementById('amcq-from-date'); if (fromDateEl) fromDateEl.value = q.fromDate;
+      const toDateEl = document.getElementById('amcq-to-date'); if (toDateEl) toDateEl.value = q.toDate;
+      const clientSiteEl = document.getElementById('amcq-client-site'); if (clientSiteEl) clientSiteEl.value = q.customerSite;
+      const periodEl = document.getElementById('amcq-period'); if (periodEl) periodEl.value = q.period;
+      const branchEl = document.getElementById('amcq-branch'); if (branchEl) branchEl.value = q.branch;
+      const qTypeEl = document.getElementById('amcq-quote-type'); if (qTypeEl) qTypeEl.value = q.quoteType;
+      const pTypeEl = document.getElementById('amcq-payment-type'); if (pTypeEl) pTypeEl.value = q.paymentType;
+      const valdtEl = document.getElementById('amcq-modal-validity'); if (valdtEl) valdtEl.value = q.validity;
+      
+      const tbody = document.getElementById('amcq-products-tbody');
+      tbody.innerHTML = '';
+      if (q.products && q.products.length) {
+        q.products.forEach(p => {
+          amcqProductRowCount++;
+          const pid = amcqProductRowCount;
+          const tr = document.createElement('tr');
+          tr.id = `amcq-pr-row-${pid}`;
+          tr.innerHTML = `
+            <td><input class="form-control amcq-pr-sno" style="width:70px;" value="${p.sno}"></td>
+            <td>
+              <select class="form-control amcq-pr-sel" style="width:120px;" onchange="amcqProductSelected(${pid})">
+                <option value="">-Select-</option>
+                ${(DB.products || []).slice(0, 100).map(dp => `<option value="${dp.id}" data-price="${dp.price}" ${dp.name === p.pname ? 'selected' : ''}>${dp.name}</option>`).join('')}
+              </select>
+            </td>
+            <td><input type="text" class="form-control" style="width:150px;" value="${p.serials}"></td>
+            <td><input class="form-control amcq-pr-amount" type="number" oninput="amcqCalcTotals()" style="width:100px;" value="${p.amt}"></td>
+            <td><input class="form-control amcq-pr-qty" type="number" oninput="amcqCalcTotals()" style="width:100px;" value="${p.qty}"></td>
+            <td><input class="form-control amcq-pr-basic" readonly style="width:100px; background:#f9fafb;" value="${p.basic}"></td>
+            <td><input class="form-control amcq-pr-gst" readonly style="width:100px; background:#f9fafb;" value="${p.gst}"></td>
+            <td><input class="form-control amcq-pr-total" readonly style="width:100px; background:#f9fafb;" value="${p.total}"></td>
+            <td style="width:40px;"><button class="btn btn-ghost btn-icon-sm" style="color:var(--red);" onclick="document.getElementById('amcq-pr-row-${pid}').remove(); amcqCalcTotals();"><i class="ti ti-trash"></i></button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        renderAmcqProductRow();
+      }
+      amcqCalcTotals();
+    }
+
     function amcqCalcTotals() {
       const rows = document.querySelectorAll('#amcq-products-tbody tr');
       let grandBasic = 0;
@@ -31721,21 +31873,28 @@
     }
 
     function openAmcQuoteModal() {
-      const code = `AMC/Q/2026/${_amcqSeq}`;
-      document.getElementById('amcq-modal-title').textContent = 'Generate AMC Quote';
-      document.getElementById('amcq-modal-code').textContent = code;
+      if (!_amcqReviseId) {
+        const code = `AMC/Q/2026/${_amcqSeq}`;
+        document.getElementById('amcq-modal-title').innerHTML = '<i class="ti ti-file-plus" style="color:#C9A84C;"></i> Generate AMC Quote';
+        document.getElementById('amcq-modal-code').textContent = code;
 
-      const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = '';
-      const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = '';
-      const fromDateEl = document.getElementById('amcq-from-date'); if (fromDateEl) fromDateEl.value = '';
-      const clientSiteEl = document.getElementById('amcq-client-site'); if (clientSiteEl) clientSiteEl.value = '';
-      const msgEl = document.getElementById('amcq-validate-msg'); if (msgEl) msgEl.style.display = 'none';
+        const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = '';
+        const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = '';
+        const fromDateEl = document.getElementById('amcq-from-date'); if (fromDateEl) fromDateEl.value = '';
+        const clientSiteEl = document.getElementById('amcq-client-site'); if (clientSiteEl) clientSiteEl.value = '';
+        const msgEl = document.getElementById('amcq-validate-msg'); if (msgEl) msgEl.style.display = 'none';
 
-      document.getElementById('amcq-products-tbody').innerHTML = '';
-      amcqProductRowCount = 0;
-      renderAmcqProductRow();
+        document.getElementById('amcq-products-tbody').innerHTML = '';
+        amcqProductRowCount = 0;
+        renderAmcqProductRow();
+      }
 
       openModal('modal-amcq');
+    }
+    
+    function cancelAmcQuoteModal() {
+      _amcqReviseId = null;
+      closeModal('modal-amcq');
     }
 
     function saveAmcQuote() {
@@ -31773,7 +31932,8 @@
         const sel = row.querySelector('.amcq-pr-sel');
         const pname = sel && sel.selectedIndex > 0 ? sel.options[sel.selectedIndex].text : '';
         const sno = row.querySelector('.amcq-pr-sno')?.value || '';
-        const serials = row.querySelector('textarea')?.value || '';
+        const serialInput = row.querySelector('input[type="text"]');
+        const serials = serialInput ? serialInput.value : '';
         const amt = parseFloat(row.querySelector('.amcq-pr-amount')?.value) || 0;
         const qty = parseFloat(row.querySelector('.amcq-pr-qty')?.value) || 0;
         const basic = parseFloat(row.querySelector('.amcq-pr-basic')?.value) || 0;
@@ -31784,30 +31944,62 @@
         }
       });
 
-      const newQ = {
-        id: `AMC/Q/2026/${_amcqSeq++}`,
-        customer,
-        customerSite: clientSite,
-        fromDate,
-        toDate,
-        period,
-        branch,
-        quoteType,
-        paymentType,
-        scope: 'Comprehensive AMC',
-        coverage: 'Comprehensive',
-        frequency: 'Quarterly',
-        value,
-        validity,
-        approval: 'Sales',
-        status: 'Draft',
-        date: new Date().toISOString().split('T')[0],
-        products
-      };
-      amcqData.unshift(newQ);
+      if (_amcqReviseId) {
+        const q = amcqData.find(x => x.id === _amcqReviseId);
+        if (q) {
+          if (!q.versions) q.versions = [];
+          if (!q.activity) q.activity = [{ ts: q.date || q.fromDate, actor: 'System', action: 'Created', detail: 'Initial quote generated' }];
+          if (!q.versions.find(v => v.version === (q.version || 1))) {
+            q.versions.push({ version: q.version || 1, date: q.fromDate, value: q.value, products: JSON.parse(JSON.stringify(q.products)) });
+          }
+          const newVer = (q.version || 1) + 1;
+          q.versions.push({ version: newVer, date: fromDate, value: value, products: JSON.parse(JSON.stringify(products)) });
+          q.activity.push({ ts: new Date().toISOString(), actor: 'Current User', action: `Revised to v${newVer}`, detail: 'Quote updated' });
+          q.version = newVer;
+          q.customer = customer;
+          q.customerSite = clientSite;
+          q.fromDate = fromDate;
+          q.toDate = toDate;
+          q.period = period;
+          q.branch = branch;
+          q.quoteType = quoteType;
+          q.paymentType = paymentType;
+          q.value = value;
+          q.validity = validity;
+          q.products = products;
+          showToast('success', `Revised to v${newVer}`, `${q.id} updated — v${newVer} saved, all history preserved.`);
+        }
+        _amcqReviseId = null;
+      } else {
+        const newQ = {
+          id: `AMC/Q/2026/${_amcqSeq++}`,
+          customer,
+          customerSite: clientSite,
+          fromDate,
+          toDate,
+          period,
+          branch,
+          quoteType,
+          paymentType,
+          scope: 'Comprehensive AMC',
+          coverage: 'Comprehensive',
+          frequency: 'Quarterly',
+          value,
+          validity,
+          approval: 'Sales',
+          status: 'Draft',
+          date: new Date().toISOString().split('T')[0],
+          products,
+          version: 1,
+          versions: [{ version: 1, date: fromDate, value, products: JSON.parse(JSON.stringify(products)) }],
+          activity: [{ ts: new Date().toISOString(), actor: 'Current User', action: 'Created', detail: 'AMC Quote generated' }]
+        };
+        amcqData.unshift(newQ);
+        showToast('success', 'AMC Quote', `Quote ${newQ.id} generated successfully.`);
+      }
+
       amcqFiltered = [...amcqData];
       closeModal('modal-amcq');
-      showToast('success', 'AMC Quote', `Quote ${newQ.id} generated successfully.`);
       renderAmcQuoteTable();
       const sc = document.getElementById('amcq-count'); if (sc) sc.textContent = amcqData.length;
     }
@@ -31815,6 +32007,8 @@
     function viewAmcQuote(id) {
       const q = amcqData.find(x => x.id === id); if (!q) return;
       document.getElementById('vamcq-title').textContent = q.id;
+      const ver = q.version || 1;
+      const verCls = ver >= 3 ? 'v3up' : ver >= 2 ? 'multi' : '';
       const approvalBadges = q.approval === 'Sales'
         ? `<span class="badge badge-green no-dot">Sales ✓</span> <span class="badge badge-gray no-dot">Manager</span> <span class="badge badge-gray no-dot">MD</span>`
         : q.approval === 'Manager'
@@ -31824,14 +32018,18 @@
       if (kpi) kpi.innerHTML = `
         <div class="kpi-card gold"><div class="kpi-label">Annual Value</div><div class="kpi-val">₹${fmt(q.value)}</div></div>
         <div class="kpi-card blue"><div class="kpi-label">Quote Type</div><div class="kpi-val" style="font-size:13px;">${q.quoteType || '-'}</div></div>
-        <div class="kpi-card gray"><div class="kpi-label">Payment Type</div><div class="kpi-val" style="font-size:13px;">${q.paymentType || '-'}</div></div>
+        <div class="kpi-card ${verCls === 'multi' || verCls === 'v3up' ? 'amber' : 'gray'}"><div class="kpi-label">Version</div><div class="kpi-val">v${ver}</div></div>
         <div class="kpi-card ${AMCQ_APPROVAL_CLS[q.approval] || 'gray'}"><div class="kpi-label">Approval Level</div><div class="kpi-val" style="font-size:13px;">${q.approval}</div></div>`;
+
+      const vc = document.getElementById('vamcq-ver-count');
+      if (vc) vc.textContent = (q.versions?.length || 1);
       const info = document.getElementById('vamcq-info');
       if (info) info.innerHTML = `
         <div class="detail-row"><div class="detail-label">Quote #</div><div class="detail-val">${q.id}</div></div>
         <div class="detail-row"><div class="detail-label">Customer</div><div class="detail-val">${q.customer}</div></div>
         <div class="detail-row"><div class="detail-label">Customer Site</div><div class="detail-val">${q.customerSite || '-'}</div></div>
         <div class="detail-row"><div class="detail-label">Branch</div><div class="detail-val">${q.branch || '-'}</div></div>
+        <div class="detail-row"><div class="detail-label">Current Version</div><div class="detail-val"><span class="quo-ver-badge ${verCls}">v${ver}</span></div></div>
         <div class="detail-row"><div class="detail-label">From Date</div><div class="detail-val">${fmtDate(q.fromDate) || '-'}</div></div>
         <div class="detail-row"><div class="detail-label">To Date</div><div class="detail-val">${fmtDate(q.toDate) || '-'}</div></div>
         <div class="detail-row"><div class="detail-label">AMC Period</div><div class="detail-val">${q.period || '-'}</div></div>
@@ -31839,6 +32037,7 @@
         <div class="detail-row"><div class="detail-label">Approval Status</div><div class="detail-val" style="display:flex;gap:4px;flex-wrap:wrap;">${approvalBadges}</div></div>`;
 
       const pTbody = document.getElementById('vamcq-products');
+      const pTfoot = document.getElementById('vamcq-totals');
       if (pTbody) {
         if (q.products && q.products.length > 0) {
           pTbody.innerHTML = q.products.map(p => `
@@ -31853,11 +32052,134 @@
               <td style="font-weight:600;">₹${fmt(p.total)}</td>
             </tr>
           `).join('');
+          if (pTfoot) {
+            const subtotal = q.products.reduce((s, p) => s + (p.basic || 0), 0);
+            const tax = q.products.reduce((s, p) => s + (p.gst || 0), 0);
+            const total = q.products.reduce((s, p) => s + (p.total || 0), 0);
+            pTfoot.innerHTML = `
+              <tr style="background:#F7F9FB;"><td colspan="6"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(subtotal)}</td></tr>
+              <tr style="background:#F7F9FB;"><td colspan="6"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(tax)}</td></tr>
+              <tr style="background:#0F1C2E;color:#fff;"><td colspan="6"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(total)}</td></tr>`;
+          }
         } else {
           pTbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No products added</div></td></tr>`;
+          if (pTfoot) pTfoot.innerHTML = '';
         }
       }
+      _renderAmcqHistory(q);
+      amcqSwitchTab('details');
       openModal('modal-amcq-view');
+    }
+    
+    function amcqSwitchTab(tab) {
+      ['details', 'history'].forEach(t => {
+        const tEl = document.getElementById('amcq-tab-' + t);
+        if (tEl) tEl.classList.toggle('active', t === tab);
+        const pEl = document.getElementById('amcq-pane-' + t);
+        if (pEl) pEl.style.display = t === tab ? 'block' : 'none';
+      });
+    }
+
+    function _renderAmcqHistory(q) {
+      const versions = q.versions || [{ version: 1, date: q.fromDate, value: q.value, products: q.products }];
+      const timeline = document.getElementById('vamcq-ver-timeline');
+      if (timeline) {
+        timeline.innerHTML = [...versions].reverse().map((v, ri) => {
+          const isCurrent = v.version === (q.version || 1);
+          const prev = versions[versions.indexOf(v) - 1];
+          let delta = '';
+          if (prev) {
+            const diff = v.value - prev.value;
+            const pct = prev.value ? ((diff / prev.value) * 100).toFixed(1) : 0;
+            if (diff > 0) delta = `<span class="quo-delta-pill quo-delta-up"><i class="ti ti-trending-up" style="font-size:10px;"></i> +₹${fmt(Math.abs(diff))} (+${pct}%)</span>`;
+            else if (diff < 0) delta = `<span class="quo-delta-pill quo-delta-dn"><i class="ti ti-trending-down" style="font-size:10px;"></i> -₹${fmt(Math.abs(diff))} (${pct}%)</span>`;
+            else delta = `<span class="quo-delta-pill quo-delta-neu">No price change</span>`;
+          }
+          const dotCls = isCurrent ? 'current' : ri === versions.length - 1 ? '' : 'mid';
+          return `
+          <div class="quo-ver-item">
+            <div class="quo-ver-dot ${dotCls}"></div>
+            <div class="quo-ver-card ${isCurrent ? 'current-ver' : ''}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span class="quo-ver-badge ${v.version >= 3 ? 'v3up' : v.version >= 2 ? 'multi' : ''}" style="margin:0;">v${v.version}</span>
+                  ${isCurrent ? '<span style="font-size:10px;font-weight:700;color:#16A34A;">CURRENT</span>' : ''}
+                </div>
+                <div style="text-align:right;font-size:11px;font-weight:700;color:#0F172A;">₹${fmt(v.value)}</div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                <div style="font-size:10px;color:#64748B;">${fmtDate(v.date)}</div>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  ${delta}
+                  ${!isCurrent ? `<button class="btn btn-ghost" style="padding:3px 10px;font-size:11px;" onclick="amcqViewVersion('${q.id}',${v.version})"><i class="ti ti-eye" style="font-size:11px;"></i> View</button>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+      
+      const actLog = document.getElementById('vamcq-act-log');
+      if (actLog) {
+        const acts = q.activity || [{ ts: q.date || q.fromDate, actor: 'System', action: 'Created', detail: 'Initial quote v1 created' }];
+        const iconMap = { 'Created': ['create', 'ti-plus'], 'Sent': ['send', 'ti-send'], 'Revised': ['revise', 'ti-pencil'] };
+        actLog.innerHTML = [...acts].reverse().map(a => {
+          const key = Object.keys(iconMap).find(k => a.action.startsWith(k)) || '';
+          const [cls, ico] = iconMap[key] || ['sys', 'ti-circle'];
+          return `
+          <div class="quo-act-item">
+            <div class="quo-act-icon ${cls}"><i class="ti ${ico}"></i></div>
+            <div style="flex:1;">
+              <div style="font-size:12px;font-weight:700;color:#0F172A;">${a.action}</div>
+              <div style="font-size:11px;color:#64748B;margin-top:2px;">${a.detail}</div>
+              <div style="font-size:10px;color:#94A3B8;margin-top:2px;">${fmtDate(a.ts)} · ${a.actor}</div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      const vd = document.getElementById('vamcq-ver-detail'); if (vd) vd.style.display = 'none';
+    }
+
+    function amcqViewVersion(qId, verNum) {
+      const q = amcqData.find(x => x.id === qId); if (!q) return;
+      const v = (q.versions || []).find(vv => vv.version === verNum); if (!v) return;
+      const detailDiv = document.getElementById('vamcq-ver-detail');
+      const titleEl = document.getElementById('vamcq-ver-detail-title');
+      if (titleEl) titleEl.innerHTML = `<i class="ti ti-file-text"></i> ${qId} — v${verNum} <span style="font-size:11px;color:#94A3B8;font-weight:400;">(historical snapshot · ${fmtDate(v.date)})</span>`;
+      
+      const pTbody = document.getElementById('vamcq-ver-detail-body');
+      const pTfoot = document.getElementById('vamcq-ver-detail-foot');
+      if (pTbody) {
+        if (v.products && v.products.length > 0) {
+          pTbody.innerHTML = v.products.map(p => `
+            <tr>
+              <td>${p.sno}</td>
+              <td>${p.pname}</td>
+              <td><span style="font-size:12px;color:var(--text-secondary);">${p.serials}</span></td>
+              <td>₹${fmt(p.amt)}</td>
+              <td>${p.qty}</td>
+              <td>₹${fmt(p.basic)}</td>
+              <td>₹${fmt(p.gst)}</td>
+              <td style="font-weight:600;">₹${fmt(p.total)}</td>
+            </tr>
+          `).join('');
+          if (pTfoot) {
+            const subtotal = v.products.reduce((s, p) => s + (p.basic || 0), 0);
+            const tax = v.products.reduce((s, p) => s + (p.gst || 0), 0);
+            const total = v.products.reduce((s, p) => s + (p.total || 0), 0);
+            pTfoot.innerHTML = `
+              <tr style="background:#F7F9FB;"><td colspan="6"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(subtotal)}</td></tr>
+              <tr style="background:#F7F9FB;"><td colspan="6"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(tax)}</td></tr>
+              <tr style="background:#0F1C2E;color:#fff;"><td colspan="6"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(total)}</td></tr>`;
+          }
+        } else {
+          pTbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No products added</div></td></tr>`;
+          if (pTfoot) pTfoot.innerHTML = '';
+        }
+      }
+
+      if (detailDiv) { detailDiv.style.display = 'block'; detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
     }
 
     /* ── SERVICE VISITS ── */
