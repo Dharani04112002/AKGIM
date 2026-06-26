@@ -7681,6 +7681,10 @@
               <span class="nav-text">Installation Mgmt</span>
             </div>
 
+            <div class="nav-item" data-page="svc-amc-req" onclick="navigate('svc-amc-req',this)">
+              <i class="ti ti-clipboard-data nav-icon"></i>
+              <span class="nav-text">AMC Requirement</span>
+            </div>
             <div class="nav-item" data-page="svc-amc-quotes" onclick="navigate('svc-amc-quotes',this)">
               <i class="ti ti-file-text nav-icon"></i>
               <span class="nav-text">AMC Quotes</span>
@@ -8564,7 +8568,7 @@
                   <div class="ls-icon"><i class="ti ti-tools"></i></div>
                   <div class="ls-title">Service</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">6 modules</div>
+                  <div class="ls-count">9 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('svc-requests',null)">
@@ -8572,21 +8576,35 @@
                     <div class="ls-card-title">Service Requests</div>
                     <div class="ls-card-desc">Client support tickets</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('svc-assignjobs',null)">
-                    <div class="ls-card-icon"><i class="ti ti-user-check"></i></div>
-                    <div class="ls-card-title">Assign Jobs</div>
-                    <div class="ls-card-desc">Technician job allocation</div>
+                  <div class="ls-card" onclick="navigate('svc-checklist',null)">
+                    <div class="ls-card-icon"><i class="ti ti-checklist"></i></div>
+                    <div class="ls-card-title">Service Checklist</div>
+                    <div class="ls-card-desc">Standard service steps</div>
                   </div>
                   <div class="ls-card" onclick="navigate('svc-installation',null)">
                     <div class="ls-card-icon"><i class="ti ti-settings-automation"></i></div>
                     <div class="ls-card-title">Installation Mgmt</div>
                     <div class="ls-card-desc">Manage installations</div>
                   </div>
-
+                  <div class="ls-card" onclick="navigate('svc-amc-req',null)">
+                    <div class="ls-card-icon"><i class="ti ti-clipboard-data"></i></div>
+                    <div class="ls-card-title">AMC Requirement</div>
+                    <div class="ls-card-desc">Customer requirements</div>
+                  </div>
                   <div class="ls-card" onclick="navigate('svc-amc-quotes',null)">
                     <div class="ls-card-icon"><i class="ti ti-file-text"></i></div>
                     <div class="ls-card-title">AMC Quotes</div>
                     <div class="ls-card-desc">Service quotations</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-amc-contract',null)">
+                    <div class="ls-card-icon"><i class="ti ti-file-certificate"></i></div>
+                    <div class="ls-card-title">AMC Contract</div>
+                    <div class="ls-card-desc">Manage AMC contracts</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-pm',null)">
+                    <div class="ls-card-icon"><i class="ti ti-calendar-stats"></i></div>
+                    <div class="ls-card-title">PM Management</div>
+                    <div class="ls-card-desc">Preventive maintenance</div>
                   </div>
                   <div class="ls-card" onclick="navigate('svc-visits',null)">
                     <div class="ls-card-icon"><i class="ti ti-map-pin"></i></div>
@@ -14498,6 +14516,52 @@
             </div>
           </div>
 
+          <!-- ── SERVICE: AMC REQUIREMENT ──────────────────────── -->
+          <div class="page" id="page-svc-amc-req">
+            <div class="page-header">
+              <div>
+                <div class="page-title">AMC Requirement</div>
+                <div class="page-sub">Track customer requirements and potential leads</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-primary" onclick="openAmcReqModal()"><i class="ti ti-plus"></i> Add Requirement</button>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="amcr-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-clipboard-list"></i> AMC Requirements <span class="badge badge-blue no-dot ml-2" id="amcr-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="amcr-search" type="text" placeholder="Search ID, customer…" oninput="filterAmcReqs()"></div>
+                </div>
+              </div>
+              <div class="table-wrap" style="overflow-x:auto;">
+                <table class="data-tbl" style="white-space:nowrap;">
+                  <thead>
+                    <tr>
+                      <th>Requirement ID</th>
+                      <th>Lead Source</th>
+                      <th>Referred By</th>
+                      <th>Customer Name</th>
+                      <th>Primary Contact</th>
+                      <th>Products Required</th>
+                      <th>Product Type</th>
+                      <th>Stage</th>
+                      <th>Expected Value</th>
+                      <th>Branch</th>
+                      <th>Assigned To</th>
+                      <th>Visit Time</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="amcr-tbody"></tbody>
+                </table>
+              </div>
+              <div id="amcr-pagination"></div>
+            </div>
+          </div>
+
           <!-- ── SERVICE: AMC QUOTES ──────────────────────────── -->
           <div class="page" id="page-svc-amc-quotes">
             <div class="page-header">
@@ -18493,6 +18557,93 @@
             </div>
           </div>
 
+          <!-- AMC REQUIREMENT ADD MODAL -->
+          <div class="modal-wrap" id="modal-amc-req-new" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-plus"></i> Add AMC Requirement</div>
+                <button class="modal-close" onclick="closeModal('modal-amc-req-new')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="max-height:75vh; overflow-y:auto;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Requirement ID</label>
+                    <input class="form-control" id="amcr-id">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Lead Source</label>
+                    <select class="form-control" id="amcr-source">
+                      <option>Referral</option>
+                      <option>Direct</option>
+                      <option>Cold Call</option>
+                      <option>Website</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Referred By</label>
+                    <input class="form-control" id="amcr-referred">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Customer Name <span style="color:#ef4444;">*</span></label>
+                    <input class="form-control" id="amcr-client">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Primary Contact Person</label>
+                    <input class="form-control" id="amcr-contact">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Product Type <span style="color:#ef4444;">*</span></label>
+                    <select class="form-control" id="amcr-product-type">
+                      <option>SERVO STABILIZERS</option>
+                      <option>UPS, BATTERY & SWH</option>
+                      <option>SOLAR</option>
+                    </select>
+                  </div>
+                  <div style="grid-column: 1 / -1;">
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Products Required</label>
+                    <select class="form-control" id="amcr-products"></select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Expected Value <span style="color:#ef4444;">*</span></label>
+                    <input class="form-control" type="number" id="amcr-value">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Stage (%)</label>
+                    <input class="form-control" type="number" id="amcr-stage" value="70">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Branch</label>
+                    <select class="form-control" id="amcr-branch">
+                      <option>Salem</option>
+                      <option>Hosur</option>
+                      <option>Coimbatore</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Assigned To</label>
+                    <input class="form-control" id="amcr-salesperson">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Visit Time</label>
+                    <input class="form-control" type="datetime-local" id="amcr-visittime">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Status</label>
+                    <select class="form-control" id="amcr-status">
+                      <option>Pending</option>
+                      <option>Converted</option>
+                      <option>Lost</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-amc-req-new')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAmcReq()"><i class="ti ti-check"></i> Save Requirement</button>
+              </div>
+            </div>
+          </div>
+
           <!-- AMC Contract Add Modal -->
           <div class="modal-wrap" id="modal-amc-contract">
             <div class="modal">
@@ -20628,9 +20779,10 @@
       'sal-buyback': { title: 'Buy Back', crumbs: ['Inventory', 'Buy Back'], module: 'inventory' },
       // Installation Mgmt
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
+      'svc-amc-req': { title: 'AMC Requirement', crumbs: ['Service', 'AMC Requirement'], module: 'service' },
+      'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
       // AMC & Warranty
       'svc-amc': { title: 'AMC & Warranty', crumbs: ['Reports', 'AMC & Warranty'], module: 'reports' },
-      'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
       'svc-amc-contract': { title: 'AMC Contract', crumbs: ['Service', 'AMC Contract'], module: 'service' },
       // Service Management (Extended)
       'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
@@ -23285,6 +23437,7 @@
       once('svc-pm', initSvcPM);
       once('svc-installation', initSvcInstallation);
       once('svc-amc', initSvcAMC);
+      once('svc-amc-req', initAmcReqPage);
       once('svc-amc-quotes', initAmcQuotesPage);
       once('svc-amc-contract', initAmcContractsPage);
       once('svc-visits', initSvcVisits);
@@ -30342,6 +30495,151 @@
         <div class="detail-row"><div class="detail-label">Company PO Date</div><div class="detail-val">${fmtDate(c.poDate) || '-'}</div></div>
       `;
       openModal('modal-amc-contract-view');
+    }
+
+    /* ── AMC REQUIREMENT ── */
+    let amcrData = [];
+    let amcrFiltered = [];
+    
+    function initAmcReqPage() {
+      if (!amcrData.length) {
+        const pTypes = ['SERVO STABILIZERS', 'UPS, BATTERY & SWH', 'SOLAR'];
+        amcrData = Array.from({ length: 8 }, (_, i) => {
+          return {
+            id: `REQ-${si(1000,9999)}`,
+            source: spick(['Referral', 'Direct', 'Website']),
+            referredBy: `Ref-${si(100,999)}`,
+            customerName: spick(DB.customers).name,
+            contactPerson: `Contact-${si(1,50)}`,
+            productsRequired: spick(DB.products).name,
+            productType: spick(pTypes),
+            stage: spick([50, 70, 90, 100]),
+            expectedValue: si(50000, 500000),
+            branch: spick(['Salem', 'Hosur', 'Coimbatore']),
+            assignedTo: spick(DB.users).name,
+            visitTime: `${new Date().toLocaleDateString()} 10:00 AM`,
+            status: spick(['Pending', 'In Progress'])
+          };
+        });
+      }
+      amcrFiltered = [...amcrData];
+      const sc = document.getElementById('amcr-count'); if (sc) sc.textContent = amcrData.length;
+      
+      const prodSel = document.getElementById('amcr-products');
+      if (prodSel && prodSel.options.length === 0 && DB.products) {
+        DB.products.forEach(p => prodSel.add(new Option(p.name, p.name)));
+      }
+      
+      const totalReq = amcrData.length;
+      const pendingReq = amcrData.filter(r => r.status === 'Pending').length;
+      const totalValue = amcrData.reduce((sum, r) => sum + r.expectedValue, 0);
+      const highProbability = amcrData.filter(r => r.stage >= 70).length;
+
+      const kpi = document.getElementById('amcr-kpi');
+      if (kpi) {
+        kpi.innerHTML = `
+          <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Total Requirements</div><div class="kpi-val">${totalReq}</div></div><div class="kpi-icon blue"><i class="ti ti-clipboard-data"></i></div></div><div class="kpi-sub neutral">All recorded requirements</div></div>
+          <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending Action</div><div class="kpi-val">${pendingReq}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub neutral">Requires follow-up</div></div>
+          <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Expected Pipeline</div><div class="kpi-val">₹${fmt(totalValue)}</div></div><div class="kpi-icon green"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub neutral">Total expected value</div></div>
+          <div class="kpi-card purple"><div class="kpi-head"><div><div class="kpi-label">High Probability</div><div class="kpi-val">${highProbability}</div></div><div class="kpi-icon purple"><i class="ti ti-target"></i></div></div><div class="kpi-sub neutral">Stage 70% or above</div></div>
+        `;
+      }
+      
+      renderAmcReqsTable();
+    }
+    
+    function filterAmcReqs() {
+      const search = (document.getElementById('amcr-search')?.value || '').toLowerCase();
+      amcrFiltered = amcrData.filter(r => !search || r.id.toLowerCase().includes(search) || r.customerName.toLowerCase().includes(search));
+      renderAmcReqsTable();
+    }
+
+    function renderAmcReqsTable() {
+      const tbody = document.getElementById('amcr-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = amcrFiltered.map(r => `
+        <tr>
+          <td>${r.id}</td>
+          <td>${r.source}</td>
+          <td>${r.referredBy}</td>
+          <td>${r.customerName}</td>
+          <td>${r.contactPerson}</td>
+          <td>${r.productsRequired}</td>
+          <td>${r.productType}</td>
+          <td>${r.stage}%</td>
+          <td>₹${fmt(r.expectedValue)}</td>
+          <td>${r.branch}</td>
+          <td>${r.assignedTo}</td>
+          <td>${r.visitTime}</td>
+          <td><span class="badge badge-navy">${r.status}</span></td>
+          <td>
+            <div style="display:flex;gap:4px;">
+              <button class="btn btn-xs btn-outline" title="View"><i class="ti ti-eye"></i></button>
+              <button class="btn btn-xs btn-outline" style="color:var(--blue);border-color:var(--blue);" onclick="createQuoteFromReq('${r.id}')">Add Quote</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openAmcReqModal() {
+      document.getElementById('amcr-id').value = '';
+      document.getElementById('amcr-client').value = '';
+      document.getElementById('amcr-value').value = '';
+      document.getElementById('amcr-visittime').value = '';
+      openModal('modal-amc-req-new');
+    }
+
+    function saveAmcReq() {
+      const customer = document.getElementById('amcr-client').value;
+      if (!customer) { showToast('error', 'Error', 'Customer name is required'); return; }
+      const newReq = {
+        id: document.getElementById('amcr-id').value || `REQ-${si(1000,9999)}`,
+        source: document.getElementById('amcr-source').value,
+        referredBy: document.getElementById('amcr-referred').value,
+        customerName: customer,
+        contactPerson: document.getElementById('amcr-contact').value,
+        productsRequired: document.getElementById('amcr-products').value,
+        productType: document.getElementById('amcr-product-type').value,
+        stage: document.getElementById('amcr-stage').value,
+        expectedValue: Number(document.getElementById('amcr-value').value) || 0,
+        branch: document.getElementById('amcr-branch').value,
+        assignedTo: document.getElementById('amcr-salesperson').value,
+        visitTime: document.getElementById('amcr-visittime').value ? new Date(document.getElementById('amcr-visittime').value).toLocaleString() : new Date().toLocaleString(),
+        status: document.getElementById('amcr-status').value
+      };
+      amcrData.unshift(newReq);
+      closeModal('modal-amc-req-new');
+      showToast('success', 'AMC Requirement', 'Requirement added successfully.');
+      initAmcReqPage();
+    }
+
+    function createQuoteFromReq(reqId) {
+      const req = amcrData.find(r => r.id === reqId);
+      if (!req) return;
+      
+      // Navigate to Quotes Page
+      navigate('svc-amc-quotes', null);
+      
+      // Open Quote Modal
+      setTimeout(() => {
+        openAmcQuoteModal();
+        
+        // Try to populate fields in quote modal
+        const custSel = document.getElementById('amcq-modal-customer');
+        if (custSel) {
+            let found = false;
+            for(let i=0; i<custSel.options.length; i++){
+                if(custSel.options[i].value === req.customerName) { found = true; break; }
+            }
+            if(!found) custSel.add(new Option(req.customerName, req.customerName));
+            custSel.value = req.customerName;
+        }
+        
+        const valInp = document.getElementById('amcq-modal-value');
+        if(valInp) valInp.value = req.expectedValue;
+        
+      }, 150);
     }
 
     /* ── AMC QUOTES ── */
