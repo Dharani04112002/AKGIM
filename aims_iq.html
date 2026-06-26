@@ -9833,7 +9833,7 @@
                       enter manually. Quantities are locked once the financial year begins.</div>
                   </div>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Financial Year</label>
                     <select class="form-control">
                       <option>2024-25</option>
@@ -9880,7 +9880,7 @@
                     class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Product *</label>
                     <select class="form-control" id="madj-product">
                       <option value="">— Select Product —</option>
@@ -9910,8 +9910,8 @@
                       <option>Purchase</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Remarks</label><textarea class="form-control"
-                      id="madj-remarks" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
+                      id="madj-remarks" ></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -9929,7 +9929,7 @@
                 <button class="modal-close" onclick="closeModal('modal-inv-transfer')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Product *</label>
                     <select class="form-control" id="mtrf-product">
                       <option value="">— Select Product —</option>
@@ -9943,8 +9943,8 @@
                   </div>
                   <div class="form-group"><label class="form-label">Quantity</label><input class="form-control"
                       type="number" id="mtrf-qty" placeholder="0" min="1"></div>
-                  <div class="form-group"><label class="form-label">Remarks</label><textarea class="form-control"
-                      id="mtrf-remarks" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
+                      id="mtrf-remarks" ></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -9962,7 +9962,7 @@
                 <button class="modal-close" onclick="closeModal('modal-inv-batch')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Product *</label>
                     <select class="form-control" id="mbat-product">
                       <option value="">— Select Product —</option>
@@ -9996,7 +9996,7 @@
                 <button class="modal-close" onclick="closeModal('modal-inv-serial')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Product *</label>
                     <select class="form-control" id="mser-product">
                       <option value="">— Select Product —</option>
@@ -11855,7 +11855,7 @@
                 <button class="modal-close" onclick="closeModal('modal-svc-ticket')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mtick-customer">
                       <option value="">Select…</option>
@@ -11887,8 +11887,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
-                    id="mtick-desc" rows="3" placeholder="Detailed description…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
+                    id="mtick-desc"  placeholder="Detailed description…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-svc-ticket')">Cancel</button>
@@ -11905,7 +11905,7 @@
                 <button class="modal-close" onclick="closeModal('modal-svc-request')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mreq-cust" onchange="loadCustomerHistory()">
                       <option value="">Select…</option>
@@ -11971,10 +11971,12 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Address</label><input class="form-control"
-                    id="mreq-addr" placeholder="Service location"></div>
-                <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
-                    id="mreq-desc" rows="2" placeholder="Description of service request…"></textarea></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                  <div class="form-group"><label class="form-label">Address</label><input class="form-control"
+                      id="mreq-addr" placeholder="Service location"></div>
+                  <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
+                      id="mreq-desc"  placeholder="Description of service request…"></div>
+                </div>
 
                 <div class="form-group" style="margin-top:16px;">
                   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -12150,7 +12152,7 @@
                     class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Name *</label><input class="form-control"
                       id="mtech-name" placeholder="Full name"></div>
                   <div class="form-group"><label class="form-label">Specialisation</label>
@@ -12338,7 +12340,7 @@
                 </select>
               </div>
             </div>
-            <div id="ai-recs-list" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;"></div>
+            <div id="ai-recs-list" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;"></div>
           </div><!-- /#page-ai-recommendations -->
 
           <!-- AI ASSISTANT -->
@@ -13184,7 +13186,7 @@
               <button class="btn btn-primary" onclick="showToast('success','Saved','Settings saved successfully.')"><i
                   class="ti ti-device-floppy"></i> Save Settings</button>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
               <!-- Company Profile -->
               <div class="card">
                 <div class="card-header">
@@ -13203,12 +13205,12 @@
                       value="+91 80 4567 8900"></div>
                   <div class="form-group"><label class="form-label">Website</label><input class="form-control"
                       value="www.acmeindustries.com"></div>
-                  <div class="form-group"><label class="form-label">Address</label><textarea class="form-control"
+                  <div class="form-group" ><label class="form-label">Address</label><textarea class="form-control"
                       rows="2">123, Industrial Area, Phase 2, Bengaluru - 560058</textarea></div>
                 </div>
               </div>
               <!-- System Preferences -->
-              <div style="display:flex;flex-direction:column;gap:16px;">
+              <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                 <div class="card">
                   <div class="card-header">
                     <div class="card-title"><i class="ti ti-settings"></i> System Preferences</div>
@@ -14542,7 +14544,7 @@
                 <button class="modal-close" onclick="closeModal('modal-inst-new')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Customer <span
                         style="color:#ef4444;">*</span></label>
@@ -15024,7 +15026,7 @@
                       <option>Escalated</option>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" >
                     <label class="form-label">Spare Arrangement Count</label>
                     <input class="form-control" type="number" id="vl-spares" value="0" min="0">
                   </div>
@@ -15042,13 +15044,13 @@
                   </div>
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Engineer Suggestion</label>
-                    <textarea class="form-control" id="vl-eng-suggestion" rows="2"
-                      placeholder="Engineer's observations and recommendations…"></textarea>
+                    <input type="text"  class="form-control" id="vl-eng-suggestion" 
+                      placeholder="Engineer's observations and recommendations…">
                   </div>
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Visit Summary</label>
-                    <textarea class="form-control" id="vl-summary" rows="3"
-                      placeholder="Detailed summary of work done during this visit…"></textarea>
+                    <input type="text"  class="form-control" id="vl-summary" 
+                      placeholder="Detailed summary of work done during this visit…">
                   </div>
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Stand By Details</label>
@@ -16590,7 +16592,7 @@
 
                 <div style="display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start;">
 
-                  <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                     <!-- Visit schedule card -->
                     <div class="card" style="padding:0;overflow:hidden;">
                       <div class="card-header" style="padding:14px 16px;border-bottom:1px solid #eef1f5;">
@@ -17012,7 +17014,7 @@
                       </select>
                     </div>
                     <div class="fg"><label>Quick notes</label>
-                      <textarea class="vf-notes" placeholder="Enter 2–3 bullet points…"></textarea>
+                      <input type="text"  class="vf-notes" placeholder="Enter 2–3 bullet points…">
                     </div>
                     <div class="gps-bar">
                       <div class="gps-dot"></div>
@@ -17599,7 +17601,7 @@
                 <button class="modal-close" onclick="closeModal('modal-admin-user')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control"
                       id="madmin-name" placeholder="John Smith"></div>
                   <div class="form-group"><label class="form-label">Email *</label><input class="form-control"
@@ -17645,8 +17647,8 @@
               <div class="modal-body">
                 <div class="form-group"><label class="form-label">Role Name *</label><input class="form-control"
                     id="mrole-name" placeholder="e.g. Branch Manager"></div>
-                <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
-                    id="mrole-desc" rows="2" placeholder="Role description…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
+                    id="mrole-desc"  placeholder="Role description…"></div>
                 <div class="form-group"><label class="form-label">Based on</label>
                   <select class="form-control" id="mrole-base">
                     <option>Admin</option>
@@ -17673,7 +17675,7 @@
                 <button class="modal-close" onclick="closeModal('modal-crm-lead')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Full Name *</label><input class="form-control"
                       id="mclead-name" placeholder="John Smith"></div>
                   <div class="form-group"><label class="form-label">Company</label><input class="form-control"
@@ -17718,8 +17720,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control"
-                    id="mclead-notes" rows="2" placeholder="Initial contact notes…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
+                    id="mclead-notes"  placeholder="Initial contact notes…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-lead')">Cancel</button>
@@ -17814,7 +17816,7 @@
                 <button class="modal-close" onclick="closeModal('modal-crm-activity')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Type</label>
                     <select class="form-control" id="mcact-type">
                       <option>Call</option>
@@ -17837,8 +17839,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control"
-                    id="mcact-notes" rows="2" placeholder="Notes…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
+                    id="mcact-notes"  placeholder="Notes…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-activity')">Cancel</button>
@@ -17855,7 +17857,7 @@
                 <button class="modal-close" onclick="closeModal('modal-crm-calllog')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Contact *</label><input class="form-control"
                       id="mccall-contact" placeholder="Contact name"></div>
                   <div class="form-group"><label class="form-label">Company</label><input class="form-control"
@@ -17879,8 +17881,8 @@
                   <div class="form-group"><label class="form-label">Date &amp; Time</label><input class="form-control"
                       type="datetime-local" id="mccall-dt"></div>
                 </div>
-                <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control"
-                    id="mccall-notes" rows="2" placeholder="Call summary…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
+                    id="mccall-notes"  placeholder="Call summary…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-calllog')">Cancel</button>
@@ -17897,7 +17899,7 @@
                 <button class="modal-close" onclick="closeModal('modal-crm-followup')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Contact *</label><input class="form-control"
                       id="mcfu-contact" placeholder="Contact name"></div>
                   <div class="form-group"><label class="form-label">Company</label><input class="form-control"
@@ -17942,7 +17944,7 @@
                 <button class="modal-close" onclick="closeModal('modal-crm-meeting')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group" style="grid-column:1/-1;"><label class="form-label">Meeting Title
                       *</label><input class="form-control" id="mcmeet-title" placeholder="Product Demo — Acme Corp">
                   </div>
@@ -17962,8 +17964,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Agenda</label><textarea class="form-control"
-                    id="mcmeet-agenda" rows="2" placeholder="Meeting agenda…"></textarea></div>
+                <div class="form-group" ><label class="form-label">Agenda</label><input type="text"  class="form-control"
+                    id="mcmeet-agenda"  placeholder="Meeting agenda…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-meeting')">Cancel</button>
@@ -17982,7 +17984,7 @@
                 <button class="modal-close" onclick="closeModal('modal-fin-payment')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Supplier / Party *</label>
                     <select class="form-control" id="mfpay-party">
                       <option value="">— Select —</option>
@@ -18013,8 +18015,8 @@
                   </div>
                   <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
                       id="mfpay-ref" placeholder="UTR / Cheque #"></div>
-                  <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control"
-                      id="mfpay-notes" rows="2" placeholder="Against PO / purpose…"></textarea>
+                  <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
+                      id="mfpay-notes"  placeholder="Against PO / purpose…">
                   </div>
                 </div>
               </div>
@@ -18033,7 +18035,7 @@
                 <button class="modal-close" onclick="closeModal('modal-fin-receipt')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mfrec-party">
                       <option value="">— Select —</option>
@@ -18105,7 +18107,7 @@
                 <button class="modal-close" onclick="closeModal('modal-fin-expense')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Category *</label>
                     <select class="form-control" id="mfexp-cat">
                       <option>Rent</option>
@@ -18139,8 +18141,8 @@
                       <option value="">— Select —</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Notes</label><textarea class="form-control"
-                      id="mfexp-notes" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
+                      id="mfexp-notes" ></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -18855,7 +18857,7 @@
                 <button class="modal-close" onclick="closeModal('modal-amc-req-new')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="max-height:75vh; overflow-y:auto;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Requirement ID</label>
                     <input class="form-control" id="amcr-id">
@@ -19026,7 +19028,7 @@
                 <button class="modal-close" onclick="closeModal('modal-hrm-shift')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group">
                     <label class="form-label">Shift Name *</label>
                     <input class="form-control" id="mshift-name" placeholder="e.g. Morning Shift">
@@ -19081,7 +19083,7 @@
                 </div>
                 <!-- Personal Tab -->
                 <div class="tab-panel active" id="emp-tab-personal">
-                  <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                     <div class="form-group"><label class="form-label">First Name *</label><input class="form-control"
                         id="memp-fname" placeholder="First name"></div>
                     <div class="form-group"><label class="form-label">Last Name *</label><input class="form-control"
@@ -19147,7 +19149,7 @@
                 </div>
                 <!-- Salary Tab -->
                 <div class="tab-panel" id="emp-tab-salary">
-                  <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                     <div class="form-group"><label class="form-label">Basic Salary *</label><input class="form-control"
                         id="memp-basic" type="number" placeholder="0"></div>
                     <div class="form-group"><label class="form-label">Pay Mode</label>
@@ -19179,7 +19181,7 @@
                 </div>
                 <!-- Bank Tab -->
                 <div class="tab-panel" id="emp-tab-bank">
-                  <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                     <div class="form-group"><label class="form-label">Bank Account No</label><input class="form-control"
                         id="memp-acno" placeholder="Account number"></div>
                     <div class="form-group"><label class="form-label">Bank IFSC</label><input class="form-control"
@@ -19225,7 +19227,7 @@
                     class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Employee *</label>
                     <select class="form-control" id="ml-emp">
                       <option value="">— Select —</option>
@@ -19244,8 +19246,8 @@
                       id="ml-from" type="date"></div>
                   <div class="form-group"><label class="form-label">To Date *</label><input class="form-control"
                       id="ml-to" type="date"></div>
-                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Reason *</label><textarea
-                      class="form-control" id="ml-reason" rows="3" placeholder="Reason for leave"></textarea></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Reason *</label><input type="text" 
+                      class="form-control" id="ml-reason"  placeholder="Reason for leave"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -19263,7 +19265,7 @@
                 <button class="modal-close" onclick="closeModal('modal-hrm-allowance')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Employee *</label>
                     <select class="form-control" id="mad-emp">
                       <option value="">— Select —</option>
@@ -19301,7 +19303,7 @@
                 <button class="modal-close" onclick="closeModal('modal-hrm-promotion')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Employee *</label>
                     <select class="form-control" id="mpr-emp">
                       <option value="">— Select —</option>
@@ -19317,8 +19319,8 @@
                       id="mpr-old-sal" type="number" placeholder="0"></div>
                   <div class="form-group"><label class="form-label">New Salary</label><input class="form-control"
                       id="mpr-new-sal" type="number" placeholder="0"></div>
-                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Remarks</label><textarea
-                      class="form-control" id="mpr-remarks" rows="2" placeholder="Remarks"></textarea></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Remarks</label><input type="text" 
+                      class="form-control" id="mpr-remarks"  placeholder="Remarks"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -19337,7 +19339,7 @@
                 <button class="modal-close" onclick="closeModal('modal-hrm-loan')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Employee *</label>
                     <select class="form-control" id="mln-emp">
                       <option value="">— Select —</option>
@@ -19539,7 +19541,7 @@
                 </div>
 
                 <!-- Product Base Tab Panel -->
-                <div id="inc-rule-panel-product" style="display:flex;flex-direction:column;gap:16px;">
+                <div id="inc-rule-panel-product" style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <!-- Point Conversion — tiered slabs -->
                   <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
@@ -19822,7 +19824,7 @@
                 <button class="modal-close" onclick="closeModal('modal-sal-order')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Customer *</label>
                     <select class="form-control" id="mso-customer">
                       <option value="">— Select Customer —</option>
@@ -19983,7 +19985,7 @@
                 <button class="modal-close" onclick="closeModal('modal-sal-delivery')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Sales Order *</label>
                     <select class="form-control" id="mdn-so">
                       <option value="">— Select SO —</option>
@@ -20299,9 +20301,9 @@
                       <option value="">— Select Product —</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Buyback Details *</label>
-                    <textarea class="form-control" id="mbb-details" rows="3"
-                      placeholder="Enter buyback details..."></textarea>
+                  <div class="form-group" ><label class="form-label">Buyback Details *</label>
+                    <input type="text"  class="form-control" id="mbb-details" 
+                      placeholder="Enter buyback details...">
                   </div>
                   <div class="form-group"><label class="form-label">Price *</label>
                     <input class="form-control" type="number" id="mbb-price" value="0" oninput="mbbCalcTotals()">
@@ -20379,9 +20381,9 @@
                   <div class="form-group"><label class="form-label">Service Reason</label>
                     <input class="form-control" type="text" id="mpm-single-line" placeholder="Enter reason...">
                   </div>
-                  <div class="form-group"><label class="form-label">Maintenance Notes</label>
-                    <textarea class="form-control" id="mpm-multi-line" rows="3"
-                      placeholder="Enter detailed maintenance notes..."></textarea>
+                  <div class="form-group" ><label class="form-label">Maintenance Notes</label>
+                    <input type="text"  class="form-control" id="mpm-multi-line" 
+                      placeholder="Enter detailed maintenance notes...">
                   </div>
                   <div class="form-group"><label class="form-label">Serial Numbers</label>
                     <select class="form-control" id="mpm-serial-select">
@@ -20511,7 +20513,7 @@
                 <button class="modal-close" onclick="closeModal('modal-pur-grn')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">PO Reference *</label>
                     <select class="form-control" id="mgrn-po">
                       <option value="">— Select PO —</option>
@@ -20537,8 +20539,8 @@
                       <option>Accepted</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Remarks</label><textarea class="form-control"
-                      id="mgrn-remarks" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
+                      id="mgrn-remarks" ></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -20556,7 +20558,7 @@
                 <button class="modal-close" onclick="closeModal('modal-pur-invoice')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Supplier *</label>
                     <select class="form-control" id="mpinv-supplier">
                       <option value="">— Select Supplier —</option>
@@ -20748,7 +20750,7 @@
                       <option>28</option>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" >
                     <label class="form-label">Status</label>
                     <select class="form-control" id="fp-status">
                       <option>Active</option>
@@ -20757,7 +20759,7 @@
                   </div>
                   <div class="form-group span-2">
                     <label class="form-label">Description</label>
-                    <textarea class="form-control" id="fp-desc" rows="3" placeholder="Product description…"></textarea>
+                    <input type="text"  class="form-control" id="fp-desc"  placeholder="Product description…">
                   </div>
 
                   <div class="form-group span-2" style="margin-top: 10px;">
@@ -20870,7 +20872,7 @@
                 <button class="modal-close" onclick="closeModal('modal-warehouse')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Warehouse Name *</label><input class="form-control"
                       id="fw-name" placeholder="e.g. Main Warehouse"></div>
                   <div class="form-group"><label class="form-label">City</label><input class="form-control" id="fw-city"
@@ -20881,8 +20883,8 @@
                       type="number" id="fw-capacity" placeholder="5000"></div>
                   <div class="form-group"><label class="form-label">Manager</label><input class="form-control"
                       id="fw-manager" placeholder="Manager name"></div>
-                  <div class="form-group"><label class="form-label">Address</label><textarea class="form-control"
-                      id="fw-address" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Address</label><input type="text"  class="form-control"
+                      id="fw-address" ></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -20902,7 +20904,7 @@
                 <button class="modal-close" onclick="closeModal('modal-customer')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group">
                     <label class="form-label">Customer Type</label>
                     <div style="display:flex; gap:20px; align-items:center; height: 38px;">
@@ -20997,8 +20999,8 @@
                       <option>Supplier</option>
                     </select>
                   </div>
-                  <div class="form-group"><label class="form-label">Address</label><textarea class="form-control"
-                      id="fc-address" rows="2"></textarea></div>
+                  <div class="form-group" ><label class="form-label">Address</label><input type="text"  class="form-control"
+                      id="fc-address" ></div>
                   <div class="form-group form-col-2" style="margin-top: 8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                       <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
@@ -21223,7 +21225,7 @@
                 <button class="modal-close" onclick="closeModal('modal-supplier')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
                   <div class="form-group"><label class="form-label">Supplier Name *</label><input class="form-control"
                       id="fs-name" placeholder="Supplier / Company name"></div>
                   <div class="form-group"><label class="form-label">Contact Person</label><input class="form-control"
@@ -24668,7 +24670,7 @@
         <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Phone No</label><input type="text" class="form-control" placeholder="Phone"></div>
         <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Email</label><input type="email" class="form-control" placeholder="Email"></div>
         <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Designation</label><input type="text" class="form-control" placeholder="Designation"></div>
-        <div class="form-group" style="margin:0;"><label class="form-label" style="font-size:11px;">Ref. Commission</label><input type="text" class="form-control" placeholder="% or Amount"></div>
+        <div class="form-group"  style="margin:0;"><label class="form-label" style="font-size:11px;">Ref. Commission</label><input type="text" class="form-control" placeholder="% or Amount"></div>
         <button type="button" class="btn btn-ghost btn-icon" onclick="this.parentElement.remove()" style="color:var(--danger); margin-top:20px;" title="Remove Contact"><i class="ti ti-trash"></i></button>
       `;
       wrap.appendChild(div);
@@ -31584,7 +31586,7 @@
             ${(DB.products || []).slice(0, 100).map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}
           </select>
         </td>
-        <td><textarea class="form-control" rows="1" style="width:150px;"></textarea></td>
+        <td><input type="text"  class="form-control"  style="width:150px;"></td>
         <td><input class="form-control amcq-pr-amount" type="number" oninput="amcqCalcTotals()" placeholder="#######" style="width:100px;"></td>
         <td><input class="form-control amcq-pr-qty" type="number" value="1" oninput="amcqCalcTotals()" placeholder="#######" style="width:100px;"></td>
         <td><input class="form-control amcq-pr-basic" placeholder="#######.##" readonly style="width:100px; background:#f9fafb;"></td>
@@ -34653,8 +34655,8 @@
           <!-- Notes -->
           <div class="lsp-frow">
             <label class="lsp-label">Notes</label>
-            <textarea class="search-input" id="lf-act-notes" rows="3" placeholder="Additional details…"
-              style="width:100%;resize:vertical;"></textarea>
+            <input type="text"  class="search-input" id="lf-act-notes"  placeholder="Additional details…"
+              style="width:100%;resize:vertical;">
           </div>
 
           <button class="btn btn-primary btn-sm" style="width:100%;margin-top:6px;" onclick="lspSaveActivity()"><i
@@ -36132,9 +36134,9 @@
         </div>
         <div class="d-field d-col-3">
           <label class="d-label">Talking Points / Notes</label>
-          <textarea class="d-input" id="aims-va-notes" rows="4"
+          <input type="text"  class="d-input" id="aims-va-notes" 
             placeholder="Key agenda, products to discuss, context for the SE…"
-            style="resize:vertical;font-family:inherit;line-height:1.5;min-height:80px;"></textarea>
+            style="resize:vertical;font-family:inherit;line-height:1.5;min-height:80px;">
         </div>
       </div>
     </div>
