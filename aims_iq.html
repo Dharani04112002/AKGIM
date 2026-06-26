@@ -7629,6 +7629,10 @@
               <i class="ti ti-receipt-refund nav-icon"></i>
               <span class="nav-text">Credit Note</span>
             </div>
+            <div class="nav-item" data-page="sal-outstanding" onclick="navigate('sal-outstanding',this)">
+              <i class="ti ti-cash nav-icon"></i>
+              <span class="nav-text">Sales Outstanding</span>
+            </div>
           </div>
         </div>
 
@@ -8509,7 +8513,7 @@
                   <div class="ls-icon"><i class="ti ti-currency-rupee"></i></div>
                   <div class="ls-title">Sales</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">6 modules</div>
+                  <div class="ls-count">7 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('sal-quotations',null)">
@@ -8541,6 +8545,11 @@
                     <div class="ls-card-icon"><i class="ti ti-receipt-refund"></i></div>
                     <div class="ls-card-title">Credit Note</div>
                     <div class="ls-card-desc">Refunds and credits</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('sal-outstanding',null)">
+                    <div class="ls-card-icon"><i class="ti ti-cash"></i></div>
+                    <div class="ls-card-title">Sales Outstanding</div>
+                    <div class="ls-card-desc">Pending balances</div>
                   </div>
                 </div>
               </div>
@@ -14238,6 +14247,40 @@
                 </table>
               </div>
               <div id="ret-pagination"></div>
+            </div>
+          </div>
+
+          <!-- ── SALES: OUTSTANDING ────────────────────── -->
+          <div class="page" id="page-sal-outstanding">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Sales Outstanding</div>
+                <div class="page-sub">Track customer pending balances and record receipts</div>
+              </div>
+            </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="sout-kpi"></div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title"><i class="ti ti-cash"></i> Customer Balances <span class="badge badge-blue no-dot ml-2" id="sout-count">0</span></div>
+                <div class="card-tools" style="display:flex;gap:8px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="sout-search" type="text" placeholder="Search customer…" oninput="filterSalOutstanding()"></div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Total Invoiced</th>
+                      <th>Amount Received</th>
+                      <th>Outstanding Balance</th>
+                      <th style="width:120px;text-align:center;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sout-tbody"></tbody>
+                </table>
+              </div>
+              <div id="sout-pagination"></div>
             </div>
           </div>
 
@@ -20775,6 +20818,7 @@
       'sal-margin-approval': { title: 'Margin Approvals', crumbs: ['Approvals', 'Margin Approval'], module: 'approvals' },
       // Returns & Buy Back
       'sal-returns': { title: 'Sales Returns', crumbs: ['Sales', 'Returns'], module: 'sales' },
+      'sal-outstanding': { title: 'Sales Outstanding', crumbs: ['Sales', 'Sales Outstanding'], module: 'sales' },
       'sal-credit-note': { title: 'Credit Notes', crumbs: ['Sales', 'Credit Note'], module: 'sales' },
       'sal-buyback': { title: 'Buy Back', crumbs: ['Inventory', 'Buy Back'], module: 'inventory' },
       // Installation Mgmt
@@ -23431,6 +23475,7 @@
 
       once('sal-margin-approval', initSalMarginApproval);
       once('sal-returns', initSalReturns);
+      once('sal-outstanding', initSalOutstandingPage);
       once('sal-credit-note', initCreditNotePage);
       once('sal-buyback', initSalBuyback);
       once('svc-checklist', initSvcChecklist);
@@ -29854,6 +29899,113 @@
       document.getElementById('vcn-btn-issue').style.display = c.status === 'Draft' ? '' : 'none';
       document.getElementById('vcn-btn-apply').style.display = c.status === 'Issued' ? '' : 'none';
       openModal('modal-cn-view');
+    }
+
+    /* ── SALES OUTSTANDING ── */
+    let salOutData = [];
+    let salOutFiltered = [];
+    let soutPage = 1;
+    const SOUT_PER = 15;
+
+    function initSalOutstandingPage() {
+      const custMap = {};
+      
+      (DB.invoices || []).forEach(inv => {
+        if (inv.balance > 0) {
+          if (!custMap[inv.customer]) {
+            const custObj = DB.customers?.find(c => c.name === inv.customer);
+            custMap[inv.customer] = {
+              customerId: custObj ? custObj.id : inv.customer,
+              customerName: inv.customer,
+              totalInvoiced: 0,
+              amountReceived: 0,
+              outstandingBalance: 0,
+              invoiceCount: 0
+            };
+          }
+          custMap[inv.customer].totalInvoiced += inv.total;
+          custMap[inv.customer].amountReceived += (inv.total - inv.balance);
+          custMap[inv.customer].outstandingBalance += inv.balance;
+          custMap[inv.customer].invoiceCount++;
+        }
+      });
+      
+      salOutData = Object.values(custMap).sort((a, b) => b.outstandingBalance - a.outstandingBalance);
+      salOutFiltered = [...salOutData];
+      
+      const totalOut = salOutData.reduce((s, c) => s + c.outstandingBalance, 0);
+      const totalRec = salOutData.reduce((s, c) => s + c.amountReceived, 0);
+      const customersDue = salOutData.length;
+      
+      const kpi = document.getElementById('sout-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Total Outstanding</div><div class="kpi-val">₹${fmt(totalOut)}</div></div><div class="kpi-icon red"><i class="ti ti-cash"></i></div></div><div class="kpi-sub warn">Across ${customersDue} customers</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Received from Due</div><div class="kpi-val">₹${fmt(totalRec)}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div><div class="kpi-sub up">Partial payments</div></div>
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Customers with Dues</div><div class="kpi-val">${customersDue}</div></div><div class="kpi-icon blue"><i class="ti ti-users"></i></div></div><div class="kpi-sub neutral">Requires follow-up</div></div>
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Overdue Invoices</div><div class="kpi-val">${salOutData.reduce((s,c)=>s+c.invoiceCount,0)}</div></div><div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub warn">Pending settlement</div></div>`;
+      
+      const countEl = document.getElementById('sout-count');
+      if (countEl) countEl.textContent = salOutData.length;
+      
+      soutPage = 1;
+      renderSalOutstandingTable();
+    }
+
+    function filterSalOutstanding() {
+      const search = (document.getElementById('sout-search')?.value || '').toLowerCase();
+      salOutFiltered = salOutData.filter(c => !search || c.customerName.toLowerCase().includes(search));
+      const countEl = document.getElementById('sout-count');
+      if (countEl) countEl.textContent = salOutFiltered.length;
+      soutPage = 1;
+      renderSalOutstandingTable();
+    }
+
+    function renderSalOutstandingTable() {
+      const tbody = document.getElementById('sout-tbody'); if (!tbody) return;
+      const start = (soutPage - 1) * SOUT_PER;
+      const slice = salOutFiltered.slice(start, start + SOUT_PER);
+      
+      if (!slice.length) {
+        tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state">No outstanding balances found.</div></td></tr>`;
+        return;
+      }
+      
+      tbody.innerHTML = slice.map(c => `
+        <tr>
+          <td>
+            <div class="entity-cell">
+              <div class="entity-av blue">${c.customerName.charAt(0)}</div>
+              <div>
+                <div class="entity-name truncate" style="max-width:200px;">${c.customerName}</div>
+                <div class="text-muted" style="font-size:11px;">${c.invoiceCount} unpaid invoice(s)</div>
+              </div>
+            </div>
+          </td>
+          <td class="amount-cell">₹${fmt(c.totalInvoiced)}</td>
+          <td class="amount-cell" style="color:var(--green);">₹${fmt(c.amountReceived)}</td>
+          <td class="amount-cell" style="font-weight:700;color:var(--red);">₹${fmt(c.outstandingBalance)}</td>
+          <td style="text-align:center;">
+            <button class="btn btn-primary btn-sm" onclick="recordReceiptFromSales('${c.customerId}', ${c.outstandingBalance})">
+              <i class="ti ti-arrow-down-circle"></i> Receipt
+            </button>
+          </td>
+        </tr>
+      `).join('');
+      
+      renderPagination('sout-pagination', salOutFiltered.length, soutPage, SOUT_PER, `function(p){soutPage=p;renderSalOutstandingTable()}`);
+    }
+
+    function recordReceiptFromSales(customerId, outstandingAmount) {
+      navigate('fin-receipts', null);
+      setTimeout(() => {
+        openModal('modal-fin-receipt');
+        const partySel = document.getElementById('mfrec-party');
+        if (partySel) {
+          partySel.value = customerId;
+        }
+        const amtInput = document.getElementById('mfrec-amount');
+        if (amtInput) amtInput.value = outstandingAmount;
+      }, 300);
     }
 
     function initSalBuyback() {
