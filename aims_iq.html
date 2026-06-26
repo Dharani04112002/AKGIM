@@ -14561,6 +14561,7 @@
                 <button class="btn btn-primary" onclick="openAmcContractModal()"><i class="ti ti-file-plus"></i> Add AMC Contract</button>
               </div>
             </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="amcc-kpi"></div>
             <div class="card">
               <div class="card-header">
                 <div class="card-title"><i class="ti ti-file-certificate"></i> AMC Contracts <span
@@ -30231,6 +30232,20 @@
       }
       amccFiltered = [...amccData];
       const sc = document.getElementById('amcc-count'); if (sc) sc.textContent = amccData.length;
+
+      const numericCount = amccData.filter(c => c.companyType === 'Numeric').length;
+      const akgimCount = amccData.filter(c => c.companyType === 'AKGIM').length;
+      const recentContracts = amccData.filter(c => {
+        const d = new Date(c.amcDate);
+        return (Date.now() - d.getTime()) < 30 * 86400000;
+      }).length;
+      
+      const kpi = document.getElementById('amcc-kpi');
+      if (kpi) kpi.innerHTML = `
+        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Total Contracts</div><div class="kpi-val">${amccData.length}</div></div><div class="kpi-icon blue"><i class="ti ti-file-certificate"></i></div></div><div class="kpi-sub neutral">All active contracts</div></div>
+        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Numeric Contracts</div><div class="kpi-val">${numericCount}</div></div><div class="kpi-icon green"><i class="ti ti-building-factory-2"></i></div></div><div class="kpi-sub neutral">Company: Numeric</div></div>
+        <div class="kpi-card purple"><div class="kpi-head"><div><div class="kpi-label">AKGIM Contracts</div><div class="kpi-val">${akgimCount}</div></div><div class="kpi-icon purple"><i class="ti ti-building"></i></div></div><div class="kpi-sub neutral">Company: AKGIM</div></div>
+        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Recent Contracts</div><div class="kpi-val">${recentContracts}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub neutral">Last 30 days</div></div>`;
       
       const qSel = document.getElementById('amcc-quote-no');
       if (qSel && qSel.options.length === 1 && amcqData.length) {
