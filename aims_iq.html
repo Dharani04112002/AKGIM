@@ -18246,6 +18246,7 @@
                         <th>Qty</th>
                         <th>Rate (₹)</th>
                         <th>Disc%</th>
+                        <th>GST%</th>
                         <th>Amount (₹)</th>
                         <th></th>
                       </tr>
@@ -18261,6 +18262,8 @@
                         <td><input type="number" class="form-control" style="width:100px;" value="0"
                             oninput="mquoCalcTotals()"></td>
                         <td><input type="number" class="form-control" style="width:60px;" value="0" min="0" max="100"
+                            oninput="mquoCalcTotals()"></td>
+                        <td><input type="number" class="form-control" style="width:60px;" value="18" min="0" max="100"
                             oninput="mquoCalcTotals()"></td>
                         <td class="amount-cell mquo-amt">₹0</td>
                         <td></td>
@@ -19856,29 +19859,45 @@
                   </div>
                 </div>
                 <div class="card mt-4">
-                  <div class="card-header">
+                  <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
                     <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
+                    <button class="btn btn-primary btn-sm" onclick="msoAddRow()"><i class="ti ti-plus"></i> Add Item</button>
                   </div>
                   <div class="table-wrap">
                     <table class="data-tbl">
                       <thead>
                         <tr>
-                          <th>#</th>
                           <th>Product</th>
-                          <th>SKU</th>
                           <th>Qty</th>
-                          <th>Discount%</th>
                           <th>Rate (₹)</th>
+                          <th>Discount%</th>
+                          <th>GST%</th>
                           <th>Amount (₹)</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody id="mso-items">
                         <tr>
-                          <td colspan="7" class="text-center text-muted" style="padding:20px;">Link a Quotation to load
-                            items</td>
+                          <td colspan="7" class="text-center text-muted" style="padding:20px;">Add an item or link a quotation</td>
                         </tr>
                       </tbody>
-                      <tfoot id="mso-totals"></tfoot>
+                      <tfoot id="mso-totals">
+                        <tr>
+                          <td colspan="5" class="text-right" style="font-weight:600;padding:12px;">Subtotal</td>
+                          <td class="amount-cell" id="mso-subtotal" style="font-weight:700;">₹0</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td colspan="5" class="text-right" style="font-weight:600;padding:12px;">GST</td>
+                          <td class="amount-cell" id="mso-tax">₹0</td>
+                          <td></td>
+                        </tr>
+                        <tr style="background:#0F1C2E;color:#fff;">
+                          <td colspan="5" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
+                          <td class="amount-cell" id="mso-total" style="font-weight:800;font-size:14px;color:#fff;">₹0</td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
                     </table>
                   </div>
                 </div>
@@ -20142,6 +20161,7 @@
                         <th>Product</th>
                         <th>Qty</th>
                         <th>Rate (₹)</th>
+                        <th>GST%</th>
                         <th>Amount (₹)</th>
                         <th>Reason</th>
                         <th></th>
@@ -20157,6 +20177,8 @@
                             oninput="mretCalcTotals()"></td>
                         <td><input type="number" class="form-control" style="width:90px;" value="0"
                             oninput="mretCalcTotals()"></td>
+                        <td><input type="number" class="form-control" style="width:60px;" value="18"
+                            oninput="mretCalcTotals()"></td>
                         <td class="amount-cell mret-amt">₹0</td>
                         <td><input type="text" class="form-control" placeholder="Item reason…"></td>
                         <td></td>
@@ -20164,17 +20186,17 @@
                     </tbody>
                     <tfoot id="mret-totals">
                       <tr>
-                        <td colspan="4" class="text-right" style="font-weight:600;padding:12px;">Subtotal</td>
+                        <td colspan="5" class="text-right" style="font-weight:600;padding:12px;">Subtotal</td>
                         <td class="amount-cell" id="mret-subtotal" style="font-weight:700;">₹0</td>
                         <td colspan="2"></td>
                       </tr>
                       <tr>
-                        <td colspan="4" class="text-right" style="font-weight:600;padding:12px;">GST (18%)</td>
+                        <td colspan="5" class="text-right" style="font-weight:600;padding:12px;">GST</td>
                         <td class="amount-cell" id="mret-tax">₹0</td>
                         <td colspan="2"></td>
                       </tr>
                       <tr style="background:#0F1C2E;color:#fff;">
-                        <td colspan="4" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
+                        <td colspan="5" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
                         <td class="amount-cell" id="mret-total" style="font-weight:800;font-size:14px;color:#fff;">₹0
                         </td>
                         <td colspan="2"></td>
@@ -20236,6 +20258,7 @@
                         <th>Product</th>
                         <th>Qty</th>
                         <th>Rate (₹)</th>
+                        <th>GST%</th>
                         <th>Amount (₹)</th>
                         <th></th>
                       </tr>
@@ -20249,23 +20272,25 @@
                             oninput="mcnCalcTotals()"></td>
                         <td><input type="number" class="form-control" style="width:100px;" value="0"
                             oninput="mcnCalcTotals()"></td>
+                        <td><input type="number" class="form-control" style="width:60px;" value="18"
+                            oninput="mcnCalcTotals()"></td>
                         <td class="amount-cell mcn-amt">₹0</td>
                         <td></td>
                       </tr>
                     </tbody>
                     <tfoot id="mcn-totals">
                       <tr>
-                        <td colspan="3" class="text-right" style="font-weight:600;padding:12px;">Subtotal</td>
+                        <td colspan="4" class="text-right" style="font-weight:600;padding:12px;">Subtotal</td>
                         <td class="amount-cell" id="mcn-subtotal" style="font-weight:700;">₹0</td>
                         <td></td>
                       </tr>
                       <tr>
-                        <td colspan="3" class="text-right" style="font-weight:600;padding:12px;">GST (18%)</td>
+                        <td colspan="4" class="text-right" style="font-weight:600;padding:12px;">GST</td>
                         <td class="amount-cell" id="mcn-tax">₹0</td>
                         <td></td>
                       </tr>
                       <tr style="background:#0F1C2E;color:#fff;">
-                        <td colspan="3" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
+                        <td colspan="4" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
                         <td class="amount-cell" id="mcn-total" style="font-weight:800;font-size:14px;color:#fff;">₹0
                         </td>
                         <td></td>
@@ -20467,6 +20492,7 @@
                         <th>SKU</th>
                         <th>Qty</th>
                         <th>Rate (₹)</th>
+                        <th>GST%</th>
                         <th>Amount (₹)</th>
                         <th></th>
                       </tr>
@@ -20481,6 +20507,8 @@
                             oninput="mpoCalcRow(this)"></td>
                         <td><input type="number" class="form-control" style="width:100px;" value="0"
                             oninput="mpoCalcRow(this)"></td>
+                        <td><input type="number" class="form-control" style="width:60px;" value="18"
+                            oninput="mpoCalcTotals()"></td>
                         <td class="amount-cell mpo-amt">₹0</td>
                         <td></td>
                       </tr>
@@ -20490,7 +20518,7 @@
                 <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
                   <button class="btn btn-ghost" onclick="mpoAddRow()"><i class="ti ti-plus"></i> Add Item</button>
                   <div style="text-align:right;font-size:13px;color:var(--tx-2);">
-                    Subtotal: <b id="mpo-subtotal">₹0</b> &nbsp;|&nbsp; GST (18%): <b id="mpo-tax">₹0</b> &nbsp;|&nbsp;
+                    Subtotal: <b id="mpo-subtotal">₹0</b> &nbsp;|&nbsp; GST: <b id="mpo-tax">₹0</b> &nbsp;|&nbsp;
                     <span style="font-size:15px;font-weight:800;color:var(--navy);">Total: <span
                         id="mpo-total">₹0</span></span>
                   </div>
@@ -25487,11 +25515,12 @@
       const tr = document.createElement('tr'); tr.id = `mpo-item-${mpoRowCount}`;
       tr.innerHTML = `
       <td><select class="form-control" onchange="mpoCalcRow(this)" style="min-width:200px;"><option value="">— Select —</option>
-        ${DB.products.map(p => `<option value="${p.id}" data-cost="${p.cost}" data-sku="${p.sku}">${p.name}</option>`).join('')}
+        ${DB.products.map(p => `<option value="${p.id}" data-cost="${p.cost}" data-sku="${p.sku}" data-gst="${p.gst || 18}">${p.name}</option>`).join('')}
       </select></td>
       <td class="text-muted mpo-sku">—</td>
       <td><input type="number" class="form-control" style="width:80px;" value="1" min="1" oninput="mpoCalcTotals()"></td>
       <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="mpoCalcTotals()"></td>
+      <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="mpoCalcTotals()"></td>
       <td class="amount-cell mpo-amt">₹0</td>
       <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mpoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
       tbody.appendChild(tr);
@@ -25501,23 +25530,28 @@
       if (el.tagName === 'SELECT') {
         const opt = el.selectedOptions[0];
         const sku = row.querySelector('.mpo-sku'); if (sku) sku.textContent = opt?.dataset?.sku || '—';
-        const rateInput = row.querySelectorAll('input')[1]; if (rateInput && opt?.dataset?.cost) rateInput.value = opt.dataset.cost;
+        const inputs = row.querySelectorAll('input');
+        if (inputs[1] && opt?.dataset?.cost) inputs[1].value = opt.dataset.cost;
+        if (inputs[2] && opt?.dataset?.gst) inputs[2].value = opt.dataset.gst;
       }
       mpoCalcTotals();
     }
     function mpoCalcTotals() {
-      let subtotal = 0;
+      let subtotal = 0, totalTax = 0;
       document.querySelectorAll('#mpo-items-body tr').forEach(row => {
         const inputs = row.querySelectorAll('input[type="number"]');
         const qty = parseFloat(inputs[0]?.value) || 0;
         const rate = parseFloat(inputs[1]?.value) || 0;
+        const gst = parseFloat(inputs[2]?.value) || 0;
         const amt = qty * rate;
+        const taxAmt = amt * gst / 100;
         const amtCell = row.querySelector('.mpo-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(amt);
         subtotal += amt;
+        totalTax += taxAmt;
       });
-      const tax = Math.round(subtotal * 0.18);
+      const tax = Math.round(totalTax);
       const sub = document.getElementById('mpo-subtotal'); if (sub) sub.textContent = '₹' + fmt(subtotal);
-      const tx = document.getElementById('mpo-tax'); if (tx) tx.textContent = '₹' + fmt(tax);
+      const tx = document.getElementById('mpo-tax'); if (tx) tx.innerHTML = '₹' + fmt(tax);
       const tot = document.getElementById('mpo-total'); if (tot) tot.textContent = '₹' + fmt(subtotal + tax);
     }
     function savePO(status) {
@@ -26051,24 +26085,21 @@
 
       const itemsBody = document.getElementById('mso-items');
       if (itemsBody) {
-        itemsBody.innerHTML = q.items.map((it, i) => `
+        itemsBody.innerHTML = q.items.map(it => {
+          const productOptHtml = DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-gst="${p.gst || 18}" ${p.name === it.product ? 'selected' : ''}>${p.name}</option>`).join('');
+          return `
           <tr>
-            <td class="text-muted">${i + 1}</td>
-            <td class="entity-name">${it.product}</td>
-            <td><span class="id-cell" style="font-size:10px;">${it.sku}</span></td>
-            <td style="font-weight:600;">${it.qty}</td>
-            <td class="text-secondary">${it.discount}%</td>
-            <td class="amount-cell">₹${fmt(it.rate)}</td>
-            <td class="amount-cell" style="font-weight:700;">₹${fmt(it.amount)}</td>
-          </tr>`).join('');
+            <td><select class="form-control" onchange="msoCalc(this)" style="min-width:180px;"><option value="">— Select —</option>${productOptHtml}</select></td>
+            <td><input type="number" class="form-control" style="width:70px;" value="${it.qty}" min="1" oninput="msoCalcTotals()"></td>
+            <td><input type="number" class="form-control" style="width:100px;" value="${it.rate}" oninput="msoCalcTotals()"></td>
+            <td><input type="number" class="form-control" style="width:60px;" value="${it.discount || 0}" oninput="msoCalcTotals()"></td>
+            <td><input type="number" class="form-control" style="width:60px;" value="${it.gst || 18}" oninput="msoCalcTotals()"></td>
+            <td class="amount-cell mso-amt">₹${fmt(it.amount)}</td>
+            <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();msoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
+          </tr>`;
+        }).join('');
       }
-      const totalsBody = document.getElementById('mso-totals');
-      if (totalsBody) {
-        totalsBody.innerHTML = `
-          <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">Subtotal</td><td class="amount-cell" style="font-weight:700;">₹${fmt(q.subtotal)}</td></tr>
-          <tr style="background:#F7F9FB;"><td colspan="5"></td><td style="font-weight:600;padding:8px 12px;">GST (18%)</td><td class="amount-cell">₹${fmt(q.tax)}</td></tr>
-          <tr style="background:#0F1C2E;color:#fff;"><td colspan="5"></td><td style="font-weight:700;padding:10px 12px;font-size:13px;">TOTAL</td><td style="font-weight:800;padding:10px 12px;font-size:14px;text-align:right;">₹${fmt(q.total)}</td></tr>`;
-      }
+      setTimeout(msoCalcTotals, 50);
 
       navigate('sal-orders', null);
       openModal('modal-sal-order');
@@ -26138,8 +26169,8 @@
             <td><select class="form-control" onchange="msinvCalc(this)" style="min-width:180px;"><option value="">— Select —</option>${productOptHtml}</select></td>
             <td><input type="number" class="form-control" style="width:70px;" value="${it.qty}" min="1" oninput="msinvCalcTotals()"></td>
             <td><input type="number" class="form-control" style="width:100px;" value="${it.rate}" oninput="msinvCalcTotals()"></td>
-            <td><input type="number" class="form-control" style="width:60px;" value="0" oninput="msinvCalcTotals()"></td>
-            <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="msinvCalcTotals()"></td>
+            <td><input type="number" class="form-control" style="width:60px;" value="${it.discount || 0}" oninput="msinvCalcTotals()"></td>
+            <td><input type="number" class="form-control" style="width:60px;" value="${it.gst || 18}" oninput="msinvCalcTotals()"></td>
             <td class="amount-cell msinv-amt">₹${fmt(it.amount)}</td>
             <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();msinvCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
           </tr>`;
@@ -26291,11 +26322,12 @@
       const products = typeFilter ? DB.products.filter(p => p.type === typeFilter) : DB.products;
       tr.innerHTML = `
       <td><select class="form-control mquo-product-sel" onchange="mquoCalc(this)" style="min-width:200px;"><option value="">— Select —</option>
-        ${products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}">${p.name}</option>`).join('')}
+        ${products.map(p => `<option value="${p.id}" data-price="${p.price}" data-sku="${p.sku}" data-gst="${p.gst || 18}">${p.name}</option>`).join('')}
       </select></td>
       <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mquoCalcTotals()"></td>
       <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="mquoCalcTotals()"></td>
       <td><input type="number" class="form-control" style="width:60px;" value="0" oninput="mquoCalcTotals()"></td>
+      <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="mquoCalcTotals()"></td>
       <td class="amount-cell mquo-amt">₹0</td>
       <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mquoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
       tbody.appendChild(tr);
@@ -26303,22 +26335,26 @@
     function mquoCalc(el) {
       const opt = el.selectedOptions[0];
       const row = el.closest('tr');
-      const rateInput = row.querySelectorAll('input[type="number"]')[1];
-      if (rateInput && opt?.dataset?.price) rateInput.value = opt.dataset.price;
+      const inputs = row.querySelectorAll('input[type="number"]');
+      if (inputs[1] && opt?.dataset?.price) inputs[1].value = opt.dataset.price;
+      if (inputs[3] && opt?.dataset?.gst) inputs[3].value = opt.dataset.gst;
       mquoCalcTotals();
     }
     function mquoCalcTotals() {
-      let sub = 0;
+      let sub = 0, totalTax = 0;
       document.querySelectorAll('#mquo-items-body tr').forEach(row => {
         const inputs = row.querySelectorAll('input[type="number"]');
         const qty = parseFloat(inputs[0]?.value) || 0;
         const rate = parseFloat(inputs[1]?.value) || 0;
         const disc = parseFloat(inputs[2]?.value) || 0;
-        const amt = qty * rate * (1 - disc / 100);
-        const amtCell = row.querySelector('.mquo-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(amt);
-        sub += amt;
+        const gst = parseFloat(inputs[3]?.value) || 0;
+        const base = qty * rate * (1 - disc / 100);
+        const taxAmt = base * gst / 100;
+        const amtCell = row.querySelector('.mquo-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(base);
+        sub += base;
+        totalTax += taxAmt;
       });
-      const tax = Math.round(sub * 0.18);
+      const tax = Math.round(totalTax);
       const ss = document.getElementById('mquo-subtotal'); if (ss) ss.textContent = '₹' + fmt(sub);
       const tx = document.getElementById('mquo-tax'); if (tx) tx.textContent = '₹' + fmt(tax);
       const tt = document.getElementById('mquo-total'); if (tt) tt.textContent = '₹' + fmt(sub + tax);
@@ -26341,11 +26377,12 @@
         <tr>
           <td><select class="form-control" onchange="mquoCalc(this)" style="min-width:200px;">
             <option value="${it.product}" selected>${it.product}</option>
-            ${DB.products.map(p => `<option value="${p.name}" data-price="${p.price}"${p.name === it.product ? ' selected' : ''}>${p.name}</option>`).join('')}
+            ${DB.products.map(p => `<option value="${p.name}" data-price="${p.price}" data-gst="${p.gst || 18}"${p.name === it.product ? ' selected' : ''}>${p.name}</option>`).join('')}
           </select></td>
           <td><input type="number" class="form-control" style="width:70px;" value="${it.qty}" min="1" oninput="mquoCalcTotals()"></td>
           <td><input type="number" class="form-control" style="width:100px;" value="${it.rate}" oninput="mquoCalcTotals()"></td>
           <td><input type="number" class="form-control" style="width:60px;" value="${it.discount || 0}" min="0" max="100" oninput="mquoCalcTotals()"></td>
+          <td><input type="number" class="form-control" style="width:60px;" value="${it.gst || 18}" min="0" max="100" oninput="mquoCalcTotals()"></td>
           <td class="amount-cell mquo-amt">₹${fmt(it.amount)}</td>
           <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mquoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>
         </tr>`).join('');
@@ -26471,6 +26508,51 @@
       if (!cust) { showToast('error', 'Validation', 'Select a customer.'); return; }
       closeModal('modal-sal-order');
       showToast('success', 'Order Created', 'Sales order created successfully.');
+    }
+
+    function msoAddRow() {
+      const tbody = document.getElementById('mso-items'); if (!tbody) return;
+      if (tbody.querySelector('td[colspan]')) tbody.innerHTML = '';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+      <td><select class="form-control" onchange="msoCalc(this)" style="min-width:180px;"><option value="">— Select —</option>
+        ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-gst="${p.gst || 18}">${p.name}</option>`).join('')}
+      </select></td>
+      <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="msoCalcTotals()"></td>
+      <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="msoCalcTotals()"></td>
+      <td><input type="number" class="form-control" style="width:60px;" value="0" oninput="msoCalcTotals()"></td>
+      <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="msoCalcTotals()"></td>
+      <td class="amount-cell mso-amt">₹0</td>
+      <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();msoCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
+      tbody.appendChild(tr);
+    }
+
+    function msoCalc(el) {
+      const opt = el.selectedOptions[0];
+      const row = el.closest('tr');
+      const inputs = row.querySelectorAll('input[type="number"]');
+      if (inputs[1] && opt?.dataset?.price) inputs[1].value = opt.dataset.price;
+      if (inputs[3] && opt?.dataset?.gst) inputs[3].value = opt.dataset.gst;
+      msoCalcTotals();
+    }
+
+    function msoCalcTotals() {
+      let sub = 0, tax = 0;
+      document.querySelectorAll('#mso-items tr').forEach(row => {
+        const inputs = row.querySelectorAll('input[type="number"]');
+        if (inputs.length < 4) return;
+        const qty = parseFloat(inputs[0]?.value) || 0;
+        const rate = parseFloat(inputs[1]?.value) || 0;
+        const disc = parseFloat(inputs[2]?.value) || 0;
+        const gstRate = parseFloat(inputs[3]?.value) || 0;
+        const base = qty * rate * (1 - disc / 100);
+        const t = Math.round(base * gstRate / 100);
+        const amtCell = row.querySelector('.mso-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(base);
+        sub += base; tax += t;
+      });
+      const ss = document.getElementById('mso-subtotal'); if (ss) ss.textContent = '₹' + fmt(sub);
+      const tx = document.getElementById('mso-tax'); if (tx) tx.textContent = '₹' + fmt(tax);
+      const tt = document.getElementById('mso-total'); if (tt) tt.textContent = '₹' + fmt(sub + tax);
     }
 
     /* ─── SALES ORDERS ─── */
@@ -30156,10 +30238,11 @@
       tr.innerHTML = `
         <td><input type="checkbox" class="mret-cb" checked onchange="mretCalcTotals()"></td>
         <td><select class="form-control" style="min-width:180px;" onchange="mretCalcTotals()"><option value="">— Select —</option>
-          ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-gst="${p.gst}">${p.name}</option>`).join('')}
+          ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-gst="${p.gst || 18}">${p.name}</option>`).join('')}
         </select></td>
         <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mretCalcTotals()"></td>
         <td><input type="number" class="form-control" style="width:90px;" value="0" oninput="mretCalcTotals()"></td>
+        <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="mretCalcTotals()"></td>
         <td class="amount-cell mret-amt">₹0</td>
         <td><input type="text" class="form-control" placeholder="Item reason…"></td>
         <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mretCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
@@ -30176,15 +30259,15 @@
         if (select && select.selectedOptions[0]?.dataset?.price && (!inputs[1].value || inputs[1].value === '0')) {
           inputs[1].value = select.selectedOptions[0].dataset.price;
         }
+        if (select && select.selectedOptions[0]?.dataset?.gst && (!inputs[2].value || inputs[2].value === '18')) {
+          inputs[2].value = select.selectedOptions[0].dataset.gst;
+        }
 
         const qty = parseFloat(inputs[0]?.value) || 0;
         const rate = parseFloat(inputs[1]?.value) || 0;
+        const gstRate = parseFloat(inputs[2]?.value) || 0;
         const base = qty * rate;
 
-        let gstRate = 18;
-        if (select && select.selectedOptions[0]?.dataset?.gst) {
-          gstRate = parseFloat(select.selectedOptions[0].dataset.gst);
-        }
         const t = Math.round(base * gstRate / 100);
 
         const amtCell = row.querySelector('.mret-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(base);
@@ -30429,10 +30512,11 @@
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><select class="form-control" style="min-width:200px;"><option value="">— Select —</option>
-          ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}
+          ${DB.products.map(p => `<option value="${p.id}" data-price="${p.price}" data-gst="${p.gst || 18}">${p.name}</option>`).join('')}
         </select></td>
         <td><input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mcnCalcTotals()"></td>
         <td><input type="number" class="form-control" style="width:100px;" value="0" oninput="mcnCalcTotals()"></td>
+        <td><input type="number" class="form-control" style="width:60px;" value="18" oninput="mcnCalcTotals()"></td>
         <td class="amount-cell mcn-amt">₹0</td>
         <td><button class="btn btn-ghost btn-icon-sm" onclick="this.closest('tr').remove();mcnCalcTotals()"><i class="ti ti-trash" style="color:var(--red);"></i></button></td>`;
       tbody.appendChild(tr);
@@ -30444,12 +30528,9 @@
         const select = row.querySelector('select');
         const qty = parseFloat(row.cells[1]?.querySelector('input')?.value) || 0;
         const rate = parseFloat(row.cells[2]?.querySelector('input')?.value) || 0;
+        const gstRate = parseFloat(row.cells[3]?.querySelector('input')?.value) || 0;
         const base = qty * rate;
 
-        let gstRate = 18;
-        if (select && select.selectedOptions[0]?.dataset?.gst) {
-          gstRate = parseFloat(select.selectedOptions[0].dataset.gst);
-        }
         const t = Math.round(base * gstRate / 100);
 
         const amtCell = row.querySelector('.mcn-amt'); if (amtCell) amtCell.textContent = '₹' + fmt(base);
@@ -30473,9 +30554,8 @@
         const product = select.selectedOptions[0].text;
         const qty = parseFloat(tr.cells[1]?.querySelector('input')?.value) || 0;
         const rate = parseFloat(tr.cells[2]?.querySelector('input')?.value) || 0;
+        const gstRate = parseFloat(tr.cells[3]?.querySelector('input')?.value) || 0;
         const amount = qty * rate;
-        let gstRate = 18;
-        if (select.selectedOptions[0]?.dataset?.gst) gstRate = parseFloat(select.selectedOptions[0].dataset.gst);
         const gst = Math.round(amount * gstRate / 100);
         items.push({ product, qty, rate, amount, gst });
         subtotal += amount;
