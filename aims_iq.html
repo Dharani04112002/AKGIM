@@ -7838,6 +7838,10 @@
               <i class="ti ti-credit-card nav-icon"></i>
               <span class="nav-text">Loans</span>
             </div>
+            <div class="nav-item" data-page="hrm-goals" onclick="navigate('hrm-goals',this)">
+              <i class="ti ti-flag nav-icon"></i>
+              <span class="nav-text">Topline</span>
+            </div>
             <div class="nav-item" data-page="hrm-incentives" onclick="navigate('hrm-incentives',this)">
               <i class="ti ti-star nav-icon"></i>
               <span class="nav-text">Performance &amp; Incentives</span>
@@ -8782,6 +8786,11 @@
                     <div class="ls-card-icon"><i class="ti ti-credit-card"></i></div>
                     <div class="ls-card-title">Loans</div>
                     <div class="ls-card-desc">Employee loans</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('hrm-goals',null)">
+                    <div class="ls-card-icon"><i class="ti ti-flag"></i></div>
+                    <div class="ls-card-title">Topline</div>
+                    <div class="ls-card-desc">Target tracking</div>
                   </div>
                   <div class="ls-card" onclick="navigate('hrm-incentives',null)">
                     <div class="ls-card-icon"><i class="ti ti-star"></i></div>
@@ -10761,7 +10770,9 @@
               </div>
               <div class="page-actions">
                 <button class="btn btn-outline"><i class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="showToast('success', 'Sync Started', 'Synchronizing expenses with Tally...')"><i class="ti ti-refresh"></i> Sync with Tally</button>
+                <button class="btn btn-primary"
+                  onclick="showToast('success', 'Sync Started', 'Synchronizing expenses with Tally...')"><i
+                    class="ti ti-refresh"></i> Sync with Tally</button>
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="fexp-kpi"></div>
@@ -14317,9 +14328,11 @@
             <div class="kpi-grid kpi-grid-4 mb-4" id="sout-kpi"></div>
             <div class="card">
               <div class="card-header">
-                <div class="card-title"><i class="ti ti-cash"></i> Customer Balances <span class="badge badge-blue no-dot ml-2" id="sout-count">0</span></div>
+                <div class="card-title"><i class="ti ti-cash"></i> Customer Balances <span
+                    class="badge badge-blue no-dot ml-2" id="sout-count">0</span></div>
                 <div class="card-tools" style="display:flex;gap:8px;">
-                  <div class="filter-search"><i class="ti ti-search"></i><input id="sout-search" type="text" placeholder="Search customer…" oninput="filterSalOutstanding()"></div>
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="sout-search" type="text"
+                      placeholder="Search customer…" oninput="filterSalOutstanding()"></div>
                 </div>
               </div>
               <div class="table-wrap">
@@ -14625,15 +14638,18 @@
                 <div class="page-sub">Track customer requirements and potential leads</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary" onclick="openAmcReqModal()"><i class="ti ti-plus"></i> Add Requirement</button>
+                <button class="btn btn-primary" onclick="openAmcReqModal()"><i class="ti ti-plus"></i> Add
+                  Requirement</button>
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="amcr-kpi"></div>
             <div class="card">
               <div class="card-header">
-                <div class="card-title"><i class="ti ti-clipboard-list"></i> AMC Requirements <span class="badge badge-blue no-dot ml-2" id="amcr-count">0</span></div>
+                <div class="card-title"><i class="ti ti-clipboard-list"></i> AMC Requirements <span
+                    class="badge badge-blue no-dot ml-2" id="amcr-count">0</span></div>
                 <div class="card-tools" style="display:flex;gap:8px;">
-                  <div class="filter-search"><i class="ti ti-search"></i><input id="amcr-search" type="text" placeholder="Search ID, customer…" oninput="filterAmcReqs()"></div>
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="amcr-search" type="text"
+                      placeholder="Search ID, customer…" oninput="filterAmcReqs()"></div>
                 </div>
               </div>
               <div class="table-wrap" style="overflow-x:auto;">
@@ -16016,6 +16032,111 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- ── HRMS: TOPLINE ────────────────────────── -->
+          <div class="page" id="page-hrm-goals">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Topline</div>
+                <div class="page-sub">Track daily, weekly & monthly employee targets and commitments</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-primary" onclick="openModal('modal-set-goal')">
+                  <i class="ti ti-flag"></i> Set Target
+                </button>
+                <button class="btn btn-outline" onclick="openModal('modal-post-commitment')">
+                  <i class="ti ti-checkbox"></i> Post Commitment
+                </button>
+              </div>
+            </div>
+
+            <div id="goal-view-active">
+              <div class="stat-row" style="margin-bottom:16px;">
+                <div class="stat-mini">
+                  <div class="stat-mini-ico" style="background:#EBF5FF;color:#3B82F6;"><i class="ti ti-target"></i>
+                  </div>
+                  <div>
+                    <div class="stat-mini-val" id="goal-stat-total">142</div>
+                    <div class="stat-mini-lbl">Active Targets</div>
+                  </div>
+                </div>
+                <div class="stat-mini">
+                  <div class="stat-mini-ico" style="background:#FFF7ED;color:#F59E0B;"><i class="ti ti-clock"></i></div>
+                  <div>
+                    <div class="stat-mini-val" id="goal-stat-pending">28</div>
+                    <div class="stat-mini-lbl">Pending Commitment</div>
+                  </div>
+                </div>
+                <div class="stat-mini">
+                  <div class="stat-mini-ico" style="background:#F0FDF4;color:#10B981;"><i class="ti ti-trending-up"></i>
+                  </div>
+                  <div>
+                    <div class="stat-mini-val" id="goal-stat-achieved">84%</div>
+                    <div class="stat-mini-lbl">Avg Achievement</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-target"></i> Ongoing Performance Targets</div>
+                  <div style="margin-left:auto; display:flex; gap:8px;">
+                    <div class="search-box">
+                      <i class="ti ti-search search-box-icon"></i>
+                      <input class="search-box-input" placeholder="Search target..." style="height:32px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Employee</th>
+                        <th>Target Name</th>
+                        <th>Freq</th>
+                        <th style="text-align:right;">Goal</th>
+                        <th style="text-align:right;">Commit</th>
+                        <th style="text-align:right;">Actual</th>
+                        <th style="text-align:center;">Progress</th>
+                        <th style="text-align:center;">Status</th>
+                        <th style="text-align:right;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="goal-table-body">
+                      <tr>
+                        <td style="padding:12px; font-size:13px;">
+                          <div style="display:flex; align-items:center; gap:8px;">
+                            <div
+                              style="width:24px; height:24px; border-radius:50%; background:#E6F1FB; color:#378ADD; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600;">
+                              JD</div>
+                            <div>John Doe</div>
+                          </div>
+                        </td>
+                        <td>New Client Acquisition</td>
+                        <td><span class="badge badge-outline">Monthly</span></td>
+                        <td style="text-align:right; font-weight:600;">5</td>
+                        <td style="text-align:right; color:#F59E0B;">6</td>
+                        <td style="text-align:right; color:#10B981;">4</td>
+                        <td style="text-align:center;">
+                          <div
+                            style="width:80px; height:6px; background:#f1f5f9; border-radius:3px; margin:0 auto; position:relative;">
+                            <div
+                              style="position:absolute; left:0; top:0; height:100%; border-radius:3px; width:80%; background:#10B981;">
+                            </div>
+                          </div>
+                        </td>
+                        <td style="text-align:center;"><span class="badge badge-warning">On Track</span></td>
+                        <td style="text-align:right;"><button class="btn btn-ghost btn-xs"
+                            onclick="viewGoalDetails('John Doe')"><i class="ti ti-dots"></i></button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
           <!-- ── CRM: CUSTOMER 360 ───────────────────────────── -->
@@ -18753,7 +18874,8 @@
                     <input class="form-control" id="amcr-referred">
                   </div>
                   <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Customer Name <span style="color:#ef4444;">*</span></label>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Customer Name <span
+                        style="color:#ef4444;">*</span></label>
                     <input class="form-control" id="amcr-client">
                   </div>
                   <div>
@@ -18761,7 +18883,8 @@
                     <input class="form-control" id="amcr-contact">
                   </div>
                   <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Product Type <span style="color:#ef4444;">*</span></label>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Product Type <span
+                        style="color:#ef4444;">*</span></label>
                     <select class="form-control" id="amcr-product-type">
                       <option>SERVO STABILIZERS</option>
                       <option>UPS, BATTERY & SWH</option>
@@ -18773,7 +18896,8 @@
                     <select class="form-control" id="amcr-products"></select>
                   </div>
                   <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Expected Value <span style="color:#ef4444;">*</span></label>
+                    <label class="form-label" style="display:block;margin-bottom:6px;">Expected Value <span
+                        style="color:#ef4444;">*</span></label>
                     <input class="form-control" type="number" id="amcr-value">
                   </div>
                   <div>
@@ -18808,7 +18932,8 @@
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-amc-req-new')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveAmcReq()"><i class="ti ti-check"></i> Save Requirement</button>
+                <button class="btn btn-primary" onclick="saveAmcReq()"><i class="ti ti-check"></i> Save
+                  Requirement</button>
               </div>
             </div>
           </div>
@@ -19332,7 +19457,8 @@
                         <span style="font-size:11px;color:var(--tx-3);">0 absences → full attendance bonus</span>
                       </div>
                       <div class="form-group">
-                        <label class="form-label"><i class="ti ti-refresh" style="color:#9B59B6;"></i> Service Conv %</label>
+                        <label class="form-label"><i class="ti ti-refresh" style="color:#9B59B6;"></i> Service Conv
+                          %</label>
                         <input class="form-control" id="minc-svc-conv" type="number" placeholder="0–100" min="0"
                           max="100" oninput="incCalcTotal()">
                         <span style="font-size:11px;color:var(--tx-3);">Rate of conversion per month</span>
@@ -19533,9 +19659,11 @@
                       <table style="width:100%;border-collapse:collapse;font-size:13px;">
                         <thead>
                           <tr style="border-bottom:1px solid var(--border);">
-                            <th style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
                               Target % Threshold</th>
-                            <th style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
                               Bonus Amount (₹)</th>
                             <th style="width:36px;"></th>
                           </tr>
@@ -19557,7 +19685,8 @@
                         <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define dynamic bonuses based on
                           service-to-sale/AMC conversion rates</div>
                       </div>
-                      <button class="btn btn-outline btn-sm" onclick="ruleAddServiceConvRow()"><i class="ti ti-plus"></i>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddServiceConvRow()"><i
+                          class="ti ti-plus"></i>
                         Add Rule</button>
                     </div>
                     <div class="table-wrap">
@@ -21348,6 +21477,7 @@
       'hrm-promotion': { title: 'Promotion & Increment', crumbs: ['HRMS', 'Promotion'], module: 'hrms' },
       'hrm-loans': { title: 'Employee Loans', crumbs: ['HRMS', 'Loans'], module: 'hrms' },
       'hrm-incentives': { title: 'Performance & Incentives', crumbs: ['HRMS', 'Incentives'], module: 'hrms' },
+      'hrm-goals': { title: 'Topline', crumbs: ['HRMS', 'Topline'], module: 'hrms' },
       'hrm-reports': { title: 'HRMS Reports', crumbs: ['Reports', 'HRMS Reports'], module: 'reports' },
       // CRM (Extended)
 
@@ -30425,33 +30555,33 @@
           outstandingBalance: inv.balance
         };
       }).sort((a, b) => new Date(b.date) - new Date(a.date));
-      
+
       salOutFiltered = [...salOutData];
-      
+
       const totalOut = salOutData.reduce((s, inv) => s + inv.outstandingBalance, 0);
       const totalRec = salOutData.reduce((s, inv) => s + inv.amountReceived, 0);
       const uniqueCustomers = new Set(salOutData.map(i => i.customerId)).size;
       const overdueInvoices = salOutData.length;
-      
+
       const kpi = document.getElementById('sout-kpi');
       if (kpi) kpi.innerHTML = `
         <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Total Outstanding</div><div class="kpi-val">₹${fmt(totalOut)}</div></div><div class="kpi-icon red"><i class="ti ti-cash"></i></div></div><div class="kpi-sub warn">Across ${overdueInvoices} invoices</div></div>
         <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Received from Due</div><div class="kpi-val">₹${fmt(totalRec)}</div></div><div class="kpi-icon green"><i class="ti ti-check"></i></div></div><div class="kpi-sub up">Partial payments</div></div>
         <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Customers with Dues</div><div class="kpi-val">${uniqueCustomers}</div></div><div class="kpi-icon blue"><i class="ti ti-users"></i></div></div><div class="kpi-sub neutral">Requires follow-up</div></div>
         <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Overdue Invoices</div><div class="kpi-val">${overdueInvoices}</div></div><div class="kpi-icon amber"><i class="ti ti-alert-circle"></i></div></div><div class="kpi-sub warn">Pending settlement</div></div>`;
-      
+
       const countEl = document.getElementById('sout-count');
       if (countEl) countEl.textContent = salOutData.length;
-      
+
       soutPage = 1;
       renderSalOutstandingTable();
     }
 
     function filterSalOutstanding() {
       const search = (document.getElementById('sout-search')?.value || '').toLowerCase();
-      salOutFiltered = salOutData.filter(i => 
-        !search || 
-        i.customerName.toLowerCase().includes(search) || 
+      salOutFiltered = salOutData.filter(i =>
+        !search ||
+        i.customerName.toLowerCase().includes(search) ||
         i.invoiceId.toLowerCase().includes(search)
       );
       const countEl = document.getElementById('sout-count');
@@ -30464,12 +30594,12 @@
       const tbody = document.getElementById('sout-tbody'); if (!tbody) return;
       const start = (soutPage - 1) * SOUT_PER;
       const slice = salOutFiltered.slice(start, start + SOUT_PER);
-      
+
       if (!slice.length) {
         tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state">No outstanding balances found.</div></td></tr>`;
         return;
       }
-      
+
       tbody.innerHTML = slice.map(i => `
         <tr style="cursor:pointer;" onclick="viewSInvDetail('${i.invoiceId}')">
           <td><span class="id-cell">${i.invoiceId}</span></td>
@@ -30490,7 +30620,7 @@
           </td>
         </tr>
       `).join('');
-      
+
       renderPagination('sout-pagination', salOutFiltered.length, soutPage, SOUT_PER, `function(p){soutPage=p;renderSalOutstandingTable()}`);
     }
 
@@ -30500,11 +30630,11 @@
         openModal('modal-fin-receipt');
         const partySel = document.getElementById('mfrec-party');
         if (partySel) partySel.value = customerId;
-        
+
         setTimeout(() => {
           const invSel = document.getElementById('mfrec-inv');
           if (invSel) invSel.value = invoiceId;
-          
+
           const amtInput = document.getElementById('mfrec-amount');
           if (amtInput) amtInput.value = outstandingAmount;
         }, 100);
@@ -31047,7 +31177,7 @@
         const d = new Date(c.amcDate);
         return (Date.now() - d.getTime()) < 30 * 86400000;
       }).length;
-      
+
       const kpi = document.getElementById('amcc-kpi');
       if (kpi) kpi.innerHTML = `
         <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Total Contracts</div><div class="kpi-val">${amccData.length}</div></div><div class="kpi-icon blue"><i class="ti ti-file-certificate"></i></div></div><div class="kpi-sub neutral">All active contracts</div></div>
@@ -31157,17 +31287,17 @@
     let amcrFiltered = [];
     let amcrPage = 1;
     const AMCR_PER = 15;
-    
+
     function initAmcReqPage() {
       if (!amcrData.length) {
         const pTypes = ['SERVO STABILIZERS', 'UPS, BATTERY & SWH', 'SOLAR'];
         amcrData = Array.from({ length: 8 }, (_, i) => {
           return {
-            id: `REQ-${si(1000,9999)}`,
+            id: `REQ-${si(1000, 9999)}`,
             source: spick(['Referral', 'Direct', 'Website']),
-            referredBy: `Ref-${si(100,999)}`,
+            referredBy: `Ref-${si(100, 999)}`,
             customerName: spick(DB.customers).name,
-            contactPerson: `Contact-${si(1,50)}`,
+            contactPerson: `Contact-${si(1, 50)}`,
             productsRequired: spick(DB.products).name,
             productType: spick(pTypes),
             stage: spick([50, 70, 90, 100]),
@@ -31181,12 +31311,12 @@
       }
       amcrFiltered = [...amcrData];
       const sc = document.getElementById('amcr-count'); if (sc) sc.textContent = amcrData.length;
-      
+
       const prodSel = document.getElementById('amcr-products');
       if (prodSel && prodSel.options.length === 0 && DB.products) {
         DB.products.forEach(p => prodSel.add(new Option(p.name, p.name)));
       }
-      
+
       const totalReq = amcrData.length;
       const pendingReq = amcrData.filter(r => r.status === 'Pending').length;
       const totalValue = amcrData.reduce((sum, r) => sum + r.expectedValue, 0);
@@ -31201,11 +31331,11 @@
           <div class="kpi-card purple"><div class="kpi-head"><div><div class="kpi-label">High Probability</div><div class="kpi-val">${highProbability}</div></div><div class="kpi-icon purple"><i class="ti ti-target"></i></div></div><div class="kpi-sub neutral">Stage 70% or above</div></div>
         `;
       }
-      
+
       amcrPage = 1;
       renderAmcReqsTable();
     }
-    
+
     function filterAmcReqs() {
       const search = (document.getElementById('amcr-search')?.value || '').toLowerCase();
       amcrFiltered = amcrData.filter(r => !search || r.id.toLowerCase().includes(search) || r.customerName.toLowerCase().includes(search));
@@ -31216,15 +31346,15 @@
     function renderAmcReqsTable() {
       const tbody = document.getElementById('amcr-tbody');
       if (!tbody) return;
-      
+
       const start = (amcrPage - 1) * AMCR_PER;
       const slice = amcrFiltered.slice(start, start + AMCR_PER);
-      
+
       if (!slice.length) {
         tbody.innerHTML = `<tr><td colspan="14"><div class="empty-state">No AMC requirements found.</div></td></tr>`;
         return;
       }
-      
+
       tbody.innerHTML = slice.map(r => `
         <tr>
           <td>${r.id}</td>
@@ -31248,7 +31378,7 @@
           </td>
         </tr>
       `).join('');
-      
+
       renderPagination('amcr-pagination', amcrFiltered.length, amcrPage, AMCR_PER, `function(p){amcrPage=p;renderAmcReqsTable()}`);
     }
 
@@ -31264,7 +31394,7 @@
       const customer = document.getElementById('amcr-client').value;
       if (!customer) { showToast('error', 'Error', 'Customer name is required'); return; }
       const newReq = {
-        id: document.getElementById('amcr-id').value || `REQ-${si(1000,9999)}`,
+        id: document.getElementById('amcr-id').value || `REQ-${si(1000, 9999)}`,
         source: document.getElementById('amcr-source').value,
         referredBy: document.getElementById('amcr-referred').value,
         customerName: customer,
@@ -31287,28 +31417,28 @@
     function createQuoteFromReq(reqId) {
       const req = amcrData.find(r => r.id === reqId);
       if (!req) return;
-      
+
       // Navigate to Quotes Page
       navigate('svc-amc-quotes', null);
-      
+
       // Open Quote Modal
       setTimeout(() => {
         openAmcQuoteModal();
-        
+
         // Try to populate fields in quote modal
         const custSel = document.getElementById('amcq-modal-customer');
         if (custSel) {
-            let found = false;
-            for(let i=0; i<custSel.options.length; i++){
-                if(custSel.options[i].value === req.customerName) { found = true; break; }
-            }
-            if(!found) custSel.add(new Option(req.customerName, req.customerName));
-            custSel.value = req.customerName;
+          let found = false;
+          for (let i = 0; i < custSel.options.length; i++) {
+            if (custSel.options[i].value === req.customerName) { found = true; break; }
+          }
+          if (!found) custSel.add(new Option(req.customerName, req.customerName));
+          custSel.value = req.customerName;
         }
-        
+
         const valInp = document.getElementById('amcq-modal-value');
-        if(valInp) valInp.value = req.expectedValue;
-        
+        if (valInp) valInp.value = req.expectedValue;
+
       }, 150);
     }
 
@@ -37557,6 +37687,46 @@
       setTimeout(function () { if (banner) banner.classList.remove('show'); showToast('success', 'Workspace Switched', 'Now working in: ' + ws.name); }, 1400);
     }
 
+    function switchGoalTab(tab) {
+      ['active', 'history'].forEach(t => {
+        const btn = document.getElementById('goal-tab-' + t);
+        const view = document.getElementById('goal-view-' + t);
+        if (btn) btn.className = 'inc-tab' + (t === tab ? ' inc-tab-active' : '');
+        if (view) view.style.display = (t === tab ? '' : 'none');
+      });
+    }
+
+    function viewGoalDetails(empName) {
+      document.getElementById('goal-det-emp').textContent = empName;
+      const history = [
+        { date: '2026-06-20', commit: 12, actual: 11, status: 'Achieved' },
+        { date: '2026-06-21', commit: 10, actual: 10, status: 'Achieved' },
+        { date: '2026-06-22', commit: 15, actual: 9, status: 'Behind' },
+        { date: '2026-06-23', commit: 12, actual: 12, status: 'Achieved' }
+      ];
+      const body = document.getElementById('goal-det-history-body');
+      if (body) {
+        body.innerHTML = history.map(h => `
+          <tr style="border-bottom:1px solid var(--border-light,#eee);">
+            <td style="padding:12px; font-size:12px; color:var(--tx-3);">${h.date}</td>
+            <td style="padding:12px; font-weight:600; text-align:right;">${h.commit}</td>
+            <td style="padding:12px; text-align:right; color:${h.actual >= h.commit ? '#10B981' : '#EF4444'}; font-weight:700;">${h.actual}</td>
+            <td style="padding:12px; text-align:center;"><span class="badge badge-${h.status === 'Achieved' ? 'success' : 'danger'}">${h.status}</span></td>
+          </tr>
+        `).join('');
+      }
+      openGoalPanel();
+    }
+
+    function openGoalPanel() {
+      document.getElementById('goal-panel-overlay')?.classList.add('open');
+      document.getElementById('goal-details-panel')?.classList.add('open');
+    }
+    function closeGoalPanel() {
+      document.getElementById('goal-panel-overlay')?.classList.remove('open');
+      document.getElementById('goal-details-panel')?.classList.remove('open');
+    }
+
     function wspUpdateUI() {
       const ws = activeWorkspace;
       const sbAv = document.getElementById('wsp-sb-av'); if (sbAv) { sbAv.textContent = ws.initials; sbAv.style.background = ws.color; }
@@ -37725,6 +37895,176 @@
         <button class="btn btn-primary" onclick="wspCreate()"><i class="ti ti-building-plus"></i> Create
           Workspace</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal: Set Goal/Target -->
+  <div class="modal-wrap" id="modal-set-goal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title"><i class="ti ti-flag"></i> Set Goal / Target</div>
+        <button class="modal-close" onclick="closeModal('modal-set-goal')"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <div class="form-group"><label class="form-label">Employee</label>
+          <select class="form-control" id="goal-set-emp">
+            <option>John Doe</option>
+            <option>Anish Sharma</option>
+            <option>Rahul V</option>
+          </select>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-group"><label class="form-label">Frequency</label>
+            <select class="form-control" id="goal-set-freq">
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Target Date/Month</label>
+            <input class="form-control" type="date">
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Target Name / KPI</label>
+          <input class="form-control" placeholder="e.g. Sales Calls, Service Tickets, etc.">
+        </div>
+        <div class="form-group"><label class="form-label">Target Value (Numeric)</label>
+          <input class="form-control" type="number" placeholder="100">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('modal-set-goal')">Cancel</button>
+        <button class="btn btn-primary" onclick="showToast('success','Target Saved','New target set for employee')">Save
+          Target</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Post Commitment -->
+  <div class="modal-wrap" id="modal-post-commitment">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title"><i class="ti ti-checkbox"></i> Post Commitment</div>
+        <button class="modal-close" onclick="closeModal('modal-post-commitment')"><i class="ti ti-x"></i></button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+        <div style="padding:12px; background:var(--bg-2); border-radius:8px; border-left:4px solid #3B82F6;">
+          <div style="font-size:12px; color:var(--tx-3); margin-bottom:4px;">Active Target:</div>
+          <div style="font-weight:600; font-size:14px;">Service Call Completion (Daily)</div>
+          <div style="font-size:12px; color:var(--tx-3); margin-top:4px;">Goal: 10</div>
+        </div>
+        <div class="form-group"><label class="form-label">Your Commitment Today</label>
+          <input class="form-control" type="number" placeholder="Enter your promised value">
+        </div>
+        <div class="form-group"><label class="form-label">Remarks</label>
+          <textarea class="form-control" rows="3" placeholder="Any notes about your commitment..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('modal-post-commitment')">Cancel</button>
+        <button class="btn btn-primary"
+          onclick="showToast('success','Commitment Posted','Your commitment has been recorded')">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Goal Details Side Panel (Right Drawer) -->
+  <div class="c360-overlay" id="goal-panel-overlay" onclick="closeGoalPanel()"></div>
+  <div class="c360-drawer" id="goal-details-panel"
+    style="width: 70%; padding: 0; display: flex; flex-direction: column;">
+    <div
+      style="padding: 24px; border-bottom: 1px solid var(--border-light,#eee); display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div
+          style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.1); color: #6366F1; display: flex; align-items: center; justify-content: center;">
+          <i class="ti ti-chart-dots" style="font-size: 18px;"></i>
+        </div>
+        <div style="font-size: 16px; font-weight: 700; color: #0F172A;">Performance Details</div>
+      </div>
+      <button onclick="closeGoalPanel()"
+        style="background: none; border: none; color: #64748B; font-size: 20px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s;"
+        onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='none'">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+
+    <div style="flex: 1; overflow-y: auto;">
+      <!-- Emp Header -->
+      <div
+        style="padding: 24px; background: #f8fafc; border-bottom: 1px solid var(--border-light,#eee); display: flex; align-items: center; gap: 20px;">
+        <div
+          style="width: 64px; height: 64px; border-radius: 16px; background: #E6F1FB; color: #378ADD; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; box-shadow: 0 4px 12px rgba(55, 138, 221, 0.15);">
+          JD</div>
+        <div style="flex: 1;">
+          <div style="font-size: 18px; font-weight: 800; color: #0F172A; margin-bottom: 4px;" id="goal-det-emp">John Doe
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--tx-3);">
+            <i class="ti ti-briefcase" style="font-size: 14px;"></i> Sales Team &bull; Service Division
+          </div>
+        </div>
+        <div
+          style="text-align: right; background: #fff; padding: 10px 16px; border-radius: 12px; border: 1px solid #E2E8F0; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <div
+            style="font-size: 11px; color: var(--tx-3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px;">
+            Monthly Avg</div>
+          <div style="font-size: 20px; font-weight: 800; color: #10B981;">92%</div>
+        </div>
+      </div>
+
+      <div style="padding: 24px;">
+        <div
+          style="font-weight: 700; font-size: 14px; color: #1E293B; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          <i class="ti ti-history" style="color: #6366F1; font-size: 18px;"></i> Commitment vs Achievement History
+        </div>
+
+        <div
+          style="background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
+                <th
+                  style="padding: 14px; text-align: left; font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;">
+                  Date</th>
+                <th
+                  style="padding: 14px; text-align: right; font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;">
+                  Commitment</th>
+                <th
+                  style="padding: 14px; text-align: right; font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;">
+                  Actual Met</th>
+                <th
+                  style="padding: 14px; text-align: center; font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;">
+                  Status</th>
+              </tr>
+            </thead>
+            <tbody id="goal-det-history-body"></tbody>
+          </table>
+        </div>
+
+        <div
+          style="margin-top: 24px; padding: 16px; background: #FFF7ED; border: 1px solid #FFEDD5; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px;">
+          <div
+            style="width: 32px; height: 32px; border-radius: 8px; background: #FFEDD5; color: #D97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <i class="ti ti-bulb" style="font-size: 18px;"></i>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #9A3412; margin-bottom: 4px;">Performance Insight
+            </div>
+            <div style="font-size: 12px; color: #9A3412; line-height: 1.5;">
+              John tends to over-commit by 15% on Mondays but consistently hits targets by end of the week. Focus on
+              maintaining consistency in mid-week reporting.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="padding: 20px 24px; border-top: 1px solid var(--border-light,#eee); background: #fff; display: flex; gap: 12px; justify-content: flex-end;">
+      <button class="btn btn-outline" style="min-width: 100px;" onclick="closeGoalPanel()">Close</button>
+      <button class="btn btn-primary" style="flex: 1;"
+        onclick="showToast('success','Nudge Sent','A reminder has been sent to the employee.')">
+        <i class="ti ti-bell"></i> Send Nudge
+      </button>
     </div>
   </div>
 
