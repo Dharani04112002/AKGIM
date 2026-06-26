@@ -1680,6 +1680,33 @@
       border-left: 3px solid var(--sky);
     }
 
+    /* Incentive tabs */
+    .inc-tab {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--tx-2);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s, border-color .15s;
+    }
+
+    .inc-tab:hover {
+      color: var(--navy);
+    }
+
+    .inc-tab.inc-tab-active {
+      color: var(--navy);
+      border-bottom-color: var(--navy);
+      font-weight: 600;
+    }
+
     /* Colored bg variants */
     .kpi-card.bg-green {
       background: var(--green-bg);
@@ -14671,7 +14698,8 @@
                 <div class="page-sub">Manage Annual Maintenance Contracts</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary" onclick="openAmcContractModal()"><i class="ti ti-file-plus"></i> Add AMC Contract</button>
+                <button class="btn btn-primary" onclick="openAmcContractModal()"><i class="ti ti-file-plus"></i> Add AMC
+                  Contract</button>
               </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="amcc-kpi"></div>
@@ -15770,38 +15798,105 @@
             <div class="page-header">
               <div>
                 <div class="page-title">Performance &amp; Incentives</div>
-                <div class="page-sub">Rate employees and manage performance-based incentive payouts</div>
+                <div class="page-sub">Multi-type point-based incentive engine — service, sales, installation, travel,
+                  OT, attendance &amp; target bonuses</div>
               </div>
-              <div class="page-actions"><button class="btn btn-primary" onclick="openModal('modal-hrm-incentive')"><i
-                    class="ti ti-plus"></i> Add Incentive</button></div>
+              <div class="page-actions" style="display:flex;gap:8px;">
+                <button class="btn btn-outline" onclick="openModal('modal-incentive-rules')"><i
+                    class="ti ti-settings"></i> Rules</button>
+                <button class="btn btn-primary" onclick="openModal('modal-hrm-incentive')"><i class="ti ti-plus"></i>
+                  Add Incentive</button>
+              </div>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="hrm-incentive-kpi"></div>
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="ti ti-star"></i> Incentive Records</div>
-                <div class="card-tools" style="display:flex;gap:8px;">
-                  <input type="month" class="form-control" id="hrm-incentive-month" style="width:150px;"
-                    onchange="filterHRMIncentives()">
+
+            <!-- Tabs -->
+            <div style="display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:16px;">
+              <button class="inc-tab inc-tab-active" id="inc-tab-summary" onclick="switchIncTab('summary')">
+                <i class="ti ti-list"></i> Monthly Summary
+              </button>
+              <button class="inc-tab" id="inc-tab-breakdown" onclick="switchIncTab('breakdown')">
+                <i class="ti ti-chart-bar"></i> Type Breakdown
+              </button>
+              <button class="inc-tab" id="inc-tab-payout" onclick="switchIncTab('payout')">
+                <i class="ti ti-coin"></i> Payout History
+              </button>
+            </div>
+
+            <!-- Filter bar -->
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+              <input type="month" class="form-control" id="hrm-incentive-month" style="width:150px;"
+                onchange="filterHRMIncentives()">
+              <select class="form-control" id="hrm-inc-dept-filter" style="width:160px;"
+                onchange="filterHRMIncentives()">
+                <option value="">All Departments</option>
+              </select>
+              <select class="form-control" id="hrm-inc-status-filter" style="width:140px;"
+                onchange="filterHRMIncentives()">
+                <option value="">All Status</option>
+                <option>Pending</option>
+                <option>Approved</option>
+                <option>Paid</option>
+              </select>
+              <span style="margin-left:auto;font-size:13px;color:var(--tx-3);" id="hrm-inc-count-label"></span>
+            </div>
+
+            <!-- TAB: Summary -->
+            <div id="inc-panel-summary">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-star"></i> Incentive Summary</div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>Employee</th>
+                        <th>Dept</th>
+                        <th style="text-align:center;">Pts</th>
+                        <th style="text-align:right;">Pts ₹</th>
+                        <th style="text-align:right;">Bonuses ₹</th>
+                        <th style="text-align:right;">Total ₹</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="hrm-incentive-tbody"></tbody>
+                  </table>
+                </div>
+                <div id="hrm-incentive-pagination"></div>
+              </div>
+            </div>
+
+            <!-- TAB: Type Breakdown -->
+            <div id="inc-panel-breakdown" style="display:none;">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;"
+                id="inc-breakdown-cards"></div>
+            </div>
+
+            <!-- TAB: Payout History -->
+            <div id="inc-panel-payout" style="display:none;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"><i class="ti ti-coin"></i> Approved &amp; Paid Records</div>
+                </div>
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th>Employee</th>
+                        <th>Dept</th>
+                        <th style="text-align:right;">Total ₹</th>
+                        <th>Status</th>
+                        <th>Paid On</th>
+                      </tr>
+                    </thead>
+                    <tbody id="hrm-payout-tbody"></tbody>
+                  </table>
                 </div>
               </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>Month</th>
-                      <th>Employee</th>
-                      <th>Department</th>
-                      <th>Rating</th>
-                      <th>Incentive (₹)</th>
-                      <th>Remarks</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="hrm-incentive-tbody"></tbody>
-                </table>
-              </div>
-              <div id="hrm-incentive-pagination"></div>
             </div>
           </div>
 
@@ -18697,7 +18792,8 @@
           <div class="modal-wrap" id="modal-amc-contract">
             <div class="modal">
               <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-file-plus"></i> <span id="amcc-modal-title">Add AMC Contract</span></div>
+                <div class="modal-title"><i class="ti ti-file-plus"></i> <span id="amcc-modal-title">Add AMC
+                    Contract</span></div>
                 <button class="modal-close" onclick="closeModal('modal-amc-contract')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="overflow-y:auto;flex:1;padding:20px;">
@@ -18739,24 +18835,27 @@
                   </div>
                 </div>
                 <div id="amcc-validate-msg" style="margin-top:24px; display:none;">
-                  <div style="border:1px solid var(--red); color:var(--red); background:#FFF5F5; padding:12px; border-radius:4px; font-weight:600; font-size:12px; text-align:center;">
+                  <div
+                    style="border:1px solid var(--red); color:var(--red); background:#FFF5F5; padding:12px; border-radius:4px; font-weight:600; font-size:12px; text-align:center;">
                     Please fill out all mandatory (*) fields.
                   </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-amc-contract')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveAmcContract()"><i class="ti ti-device-floppy"></i> Save</button>
+                <button class="btn btn-primary" onclick="saveAmcContract()"><i class="ti ti-device-floppy"></i>
+                  Save</button>
               </div>
             </div>
           </div>
-          
+
           <!-- AMC Contract View Modal -->
           <div class="modal-wrap" id="modal-amc-contract-view">
             <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-file-certificate"></i> AMC Contract Details</div>
-                <button class="modal-close" onclick="closeModal('modal-amc-contract-view')"><i class="ti ti-x"></i></button>
+                <button class="modal-close" onclick="closeModal('modal-amc-contract-view')"><i
+                    class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="padding:20px;">
                 <div class="detail-grid" id="vamcc-info"></div>
@@ -19120,42 +19219,415 @@
             </div>
           </div>
 
-          <!-- HRM: Incentive -->
+          <!-- HRM: Add Incentive Modal -->
           <div class="modal-wrap" id="modal-hrm-incentive">
-            <div class="modal">
+            <div class="modal modal-lg">
               <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-star"></i> Add Incentive</div>
+                <div class="modal-title"><i class="ti ti-star"></i> Add Incentive Entry</div>
                 <button class="modal-close" onclick="closeModal('modal-hrm-incentive')"><i class="ti ti-x"></i></button>
               </div>
-              <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:16px;">
-                  <div class="form-group"><label class="form-label">Employee *</label>
-                    <select class="form-control" id="minc-emp">
-                      <option value="">— Select —</option>
-                    </select>
+              <div class="modal-body" style="overflow-y:auto;max-height:72vh;">
+                <div style="display:flex;flex-direction:column;gap:14px;">
+
+                  <!-- Basic Info -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div
+                      style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
+                      Basic Info</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                      <div class="form-group"><label class="form-label">Employee *</label>
+                        <select class="form-control" id="minc-emp" onchange="incCalcTotal()">
+                          <option value="">— Select —</option>
+                        </select>
+                      </div>
+                      <div class="form-group"><label class="form-label">Period *</label>
+                        <input class="form-control" id="minc-period" type="month" onchange="incCalcTotal()">
+                      </div>
+                      <div class="form-group"><label class="form-label">Performance Rating</label>
+                        <select class="form-control" id="minc-rating">
+                          <option>Excellent</option>
+                          <option>Good</option>
+                          <option>Average</option>
+                          <option>Below Average</option>
+                        </select>
+                      </div>
+                      <div class="form-group"><label class="form-label">Target Achievement %</label>
+                        <input class="form-control" id="minc-target" type="number" placeholder="0–150" min="0" max="150"
+                          oninput="incCalcTotal()">
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-group"><label class="form-label">Period</label><input class="form-control"
-                      id="minc-period" type="month"></div>
-                  <div class="form-group"><label class="form-label">Performance Rating</label>
-                    <select class="form-control" id="minc-rating">
-                      <option>Excellent</option>
-                      <option>Good</option>
-                      <option>Average</option>
-                      <option>Below Average</option>
-                    </select>
+
+                  <!-- Product × Activity Matrix (dynamic) -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Product Activity Counts</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Each product × each activity type
+                          — pts come from Rules configuration</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="addIncProductRow()"><i class="ti ti-plus"></i> Add
+                        Product</button>
+                    </div>
+                    <!-- column headers injected by JS -->
+                    <div id="minc-product-header"
+                      style="display:flex;gap:6px;align-items:center;margin-bottom:6px;padding:0 2px;"></div>
+                    <div id="minc-product-rows" style="display:flex;flex-direction:column;gap:6px;"></div>
+                    <div id="minc-no-products" style="font-size:12px;color:var(--tx-3);padding:8px 0;">Click "Add
+                      Product" to enter activity counts per product.</div>
                   </div>
-                  <div class="form-group"><label class="form-label">Target Achievement %</label><input
-                      class="form-control" id="minc-target" type="number" placeholder="0-100"></div>
-                  <div class="form-group"><label class="form-label">Incentive Amount</label><input class="form-control"
-                      id="minc-amount" type="number" placeholder="0"></div>
-                  <div class="form-group"><label class="form-label">Remarks</label><input class="form-control"
-                      id="minc-remarks" placeholder="Optional"></div>
+
+                  <!-- Bonus Conditions -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div
+                      style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">
+                      Bonus Conditions</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                      <div class="form-group">
+                        <label class="form-label"><i class="ti ti-map-pin" style="color:#E74C3C;"></i> Travel KM (month
+                          total)</label>
+                        <input class="form-control" id="minc-km" type="number" placeholder="0" min="0"
+                          oninput="incCalcTotal()">
+                        <span style="font-size:11px;color:var(--tx-3);">Above threshold → flat travel bonus</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label"><i class="ti ti-clock" style="color:#E67E22;"></i> Overtime
+                          Hours</label>
+                        <input class="form-control" id="minc-ot" type="number" placeholder="0" min="0" step="0.5"
+                          oninput="incCalcTotal()">
+                        <span style="font-size:11px;color:var(--tx-3);">Hrs beyond shift → ₹/hr bonus</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label"><i class="ti ti-calendar-check" style="color:#27AE60;"></i> Absent
+                          Days (month)</label>
+                        <input class="form-control" id="minc-absent" type="number" placeholder="0" min="0"
+                          oninput="incCalcTotal()">
+                        <span style="font-size:11px;color:var(--tx-3);">0 absences → full attendance bonus</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label"><i class="ti ti-refresh" style="color:#9B59B6;"></i> Service Conv %</label>
+                        <input class="form-control" id="minc-svc-conv" type="number" placeholder="0–100" min="0"
+                          max="100" oninput="incCalcTotal()">
+                        <span style="font-size:11px;color:var(--tx-3);">Rate of conversion per month</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input class="form-control" id="minc-remarks" placeholder="Optional notes">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Live Preview -->
+                  <div
+                    style="background:linear-gradient(135deg,#1a2744,#243464);border-radius:8px;padding:16px;color:#fff;">
+                    <div
+                      style="font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px;opacity:.7;margin-bottom:10px;">
+                      Auto-Calculated Breakdown</div>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
+                      <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center;">
+                        <div style="font-size:18px;font-weight:700;" id="minc-prev-pts">0</div>
+                        <div style="font-size:11px;opacity:.7;">Total Points</div>
+                      </div>
+                      <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center;">
+                        <div style="font-size:18px;font-weight:700;" id="minc-prev-pts-amt">₹0</div>
+                        <div style="font-size:11px;opacity:.7;">Points Value</div>
+                      </div>
+                      <div style="background:rgba(255,255,255,.1);border-radius:6px;padding:10px;text-align:center;">
+                        <div style="font-size:18px;font-weight:700;" id="minc-prev-bonus">₹0</div>
+                        <div style="font-size:11px;opacity:.7;">Bonuses</div>
+                      </div>
+                      <div
+                        style="background:rgba(74,144,217,.4);border-radius:6px;padding:10px;text-align:center;border:1px solid rgba(74,144,217,.6);">
+                        <div style="font-size:20px;font-weight:800;" id="minc-prev-total">₹0</div>
+                        <div style="font-size:11px;opacity:.8;">Grand Total</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:12px;opacity:.85;" id="minc-prev-tags">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-hrm-incentive')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveIncentive()"><i class="ti ti-device-floppy"></i>
                   Save</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incentive Rules Modal -->
+          <div class="modal-wrap" id="modal-incentive-rules">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-settings"></i> Incentive Rules &amp; Configuration</div>
+                <button class="modal-close" onclick="closeModal('modal-incentive-rules')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="overflow-y:auto;max-height:75vh;padding-top:0;">
+                <!-- Tab Navigation -->
+                <div
+                  style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;position:sticky;top:0;background:#fff;z-index:10;margin-left:-20px;margin-right:-20px;padding:0 20px;">
+                  <button class="inc-tab inc-tab-active" id="inc-rule-tab-product"
+                    onclick="switchIncRuleTab('product')">
+                    <i class="ti ti-package"></i> Product Base
+                  </button>
+                  <button class="inc-tab" id="inc-rule-tab-travel" onclick="switchIncRuleTab('travel')">
+                    <i class="ti ti-map-pin"></i> Travel Base
+                  </button>
+                  <button class="inc-tab" id="inc-rule-tab-target" onclick="switchIncRuleTab('target')">
+                    <i class="ti ti-target"></i> Target Base
+                  </button>
+                  <button class="inc-tab" id="inc-rule-tab-service-conv" onclick="switchIncRuleTab('service-conv')">
+                    <i class="ti ti-refresh"></i> Service Conversion
+                  </button>
+                  <button class="inc-tab" id="inc-rule-tab-bonus" onclick="switchIncRuleTab('bonus')">
+                    <i class="ti ti-gift"></i> Bonus Rules
+                  </button>
+                </div>
+
+                <!-- Product Base Tab Panel -->
+                <div id="inc-rule-panel-product" style="display:flex;flex-direction:column;gap:16px;">
+                  <!-- Point Conversion — tiered slabs -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Point Conversion (₹ per Point)</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define tiered ₹ value per
+                          incentive point based on total points earned</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="pvAddSlab()"><i class="ti ti-plus"></i> Add
+                        Slab</button>
+                    </div>
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                      <thead>
+                        <tr style="border-bottom:1px solid var(--border);">
+                          <th style="padding:4px 6px;font-weight:600;color:var(--tx-3);font-size:11px;">From (pts)</th>
+                          <th style="padding:4px 6px;font-weight:600;color:var(--tx-3);font-size:11px;">To (pts)</th>
+                          <th style="padding:4px 6px;font-weight:600;color:var(--tx-3);font-size:11px;">₹ per Point</th>
+                          <th style="width:36px;"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="pv-slab-body"></tbody>
+                    </table>
+                    <div style="margin-top:8px;font-size:11px;color:var(--tx-3);">Leave "To" blank for the last slab
+                      (unlimited). Example: 1–10 pts → ₹15/pt, 11–50 pts → ₹79/pt, 51+ → ₹150/pt</div>
+                  </div>
+
+                  <!-- Activity Types — fully dynamic -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Activity Types</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define all activity types —
+                          Service, Sales, Installation, Maintenance, or any custom type</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddActivityType()"><i class="ti ti-plus"></i>
+                        Add Type</button>
+                    </div>
+                    <div id="rule-activity-types" style="display:flex;flex-direction:column;gap:6px;"></div>
+                  </div>
+
+                  <!-- Product × Activity Matrix -->
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Product Point Rates</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Each product gets its own point
+                          rate per activity type</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddProductRow()"><i class="ti ti-plus"></i>
+                        Add Product</button>
+                    </div>
+                    <!-- Matrix table rendered by JS -->
+                    <div id="rule-product-matrix" style="overflow-x:auto;"></div>
+                  </div>
+                </div>
+
+                <!-- Travel Base Tab Panel -->
+                <div id="inc-rule-panel-travel" style="display:none;flex-direction:column;gap:16px;">
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Travel Allowance Rules</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define dynamic travel rules based
+                          on KM, days, and months</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddTravelRow()"><i class="ti ti-plus"></i> Add
+                        Rule</button>
+                    </div>
+                    <div class="table-wrap">
+                      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                          <tr style="border-bottom:1px solid var(--border);">
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Travel KM</th>
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Amount (₹)</th>
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Type</th>
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Value</th>
+                            <th style="width:36px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="rule-travel-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Target Base Tab Panel -->
+                <div id="inc-rule-panel-target" style="display:none;flex-direction:column;gap:16px;">
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Target Achievement Rules</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define dynamic bonuses based on
+                          target achievement percentage</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddTargetRow()"><i class="ti ti-plus"></i> Add
+                        Rule</button>
+                    </div>
+                    <div class="table-wrap">
+                      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                          <tr style="border-bottom:1px solid var(--border);">
+                            <th style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Target % Threshold</th>
+                            <th style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Bonus Amount (₹)</th>
+                            <th style="width:36px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="rule-target-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Service Conversion Tab Panel -->
+                <div id="inc-rule-panel-service-conv" style="display:none;flex-direction:column;gap:16px;">
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                      <div>
+                        <div
+                          style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;">
+                          Service Call Conversion Rules</div>
+                        <div style="font-size:11px;color:var(--tx-3);margin-top:2px;">Define dynamic bonuses based on
+                          service-to-sale/AMC conversion rates</div>
+                      </div>
+                      <button class="btn btn-outline btn-sm" onclick="ruleAddServiceConvRow()"><i class="ti ti-plus"></i>
+                        Add Rule</button>
+                    </div>
+                    <div class="table-wrap">
+                      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                          <tr style="border-bottom:1px solid var(--border);">
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Conversion % Threshold</th>
+                            <th
+                              style="padding:4px 6px;text-align:left;font-weight:600;color:var(--tx-3);font-size:11px;">
+                              Bonus Amount (₹)</th>
+                            <th style="width:36px;"></th>
+                          </tr>
+                        </thead>
+                        <tbody id="rule-service-conv-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bonus Rules Tab Panel -->
+                <div id="inc-rule-panel-bonus" style="display:none;flex-direction:column;gap:16px;">
+                  <div style="background:var(--bg-2,#f8f9fa);border-radius:8px;padding:14px;">
+                    <div
+                      style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;">
+                      Bonus Rules</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                      <div class="form-group"><label class="form-label">Overtime Rate (₹/hr)</label>
+                        <input class="form-control" id="rule-ot-rate" type="number" placeholder="50">
+                      </div>
+                      <div class="form-group"><label class="form-label">Full Attendance Bonus (₹)</label>
+                        <input class="form-control" id="rule-att-bonus" type="number" placeholder="500">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-incentive-rules')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveIncentiveRules()"><i class="ti ti-device-floppy"></i> Save
+                  Rules</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incentive Breakdown View Modal -->
+          <div class="modal-wrap" id="modal-incentive-view">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-chart-bar"></i> Incentive Breakdown</div>
+                <button class="modal-close" onclick="closeModal('modal-incentive-view')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" id="modal-incentive-view-body" style="overflow-y:auto;max-height:70vh;"></div>
+              <div class="modal-footer" id="modal-incentive-view-footer"></div>
+            </div>
+          </div>
+
+          <!-- Incentive Tier Editor Modal -->
+          <div class="modal-wrap" id="modal-incentive-tier-editor">
+            <div class="modal">
+              <div class="modal-header">
+                <div>
+                  <div class="modal-title"><i class="ti ti-layers-subtract"></i> Quantity Tier Rules</div>
+                  <div id="tier-ed-subtitle" style="font-size:12px;color:var(--tx-3);margin-top:2px;"></div>
+                </div>
+                <button class="modal-close" onclick="closeModal('modal-incentive-tier-editor')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <!-- Info -->
+                <div
+                  style="background:var(--navy-bg,#EEF0FF);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--navy,#1a2744);display:flex;gap:8px;align-items:flex-start;">
+                  <i class="ti ti-info-circle" style="margin-top:1px;flex-shrink:0;"></i>
+                  <span><b>Progressive slab:</b> points calculate per slab — 8 units with tiers [1–5: 1.5pt, 6–10: 2pt]
+                    = (5 × 1.5) + (3 × 2.0) = <b>13.5 pts</b></span>
+                </div>
+                <!-- Header -->
+                <div
+                  style="display:grid;grid-template-columns:1fr 1fr 1fr 32px;gap:8px;align-items:center;margin-bottom:6px;padding:0 2px;">
+                  <div style="font-size:11px;font-weight:600;color:var(--tx-3);">FROM qty</div>
+                  <div style="font-size:11px;font-weight:600;color:var(--tx-3);">TO qty</div>
+                  <div style="font-size:11px;font-weight:600;color:var(--tx-3);">Pts / Unit</div>
+                  <div></div>
+                </div>
+                <div id="tier-ed-rows" style="display:flex;flex-direction:column;gap:6px;"></div>
+                <button class="btn btn-outline btn-sm" onclick="addTierRow()" style="margin-top:10px;"><i
+                    class="ti ti-plus"></i> Add Tier</button>
+                <div id="tier-ed-preview" style="margin-top:14px;"></div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-incentive-tier-editor')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTierEditor()"><i class="ti ti-device-floppy"></i> Save
+                  Tiers</button>
               </div>
             </div>
           </div>
@@ -30556,7 +31028,7 @@
         <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Numeric Contracts</div><div class="kpi-val">${numericCount}</div></div><div class="kpi-icon green"><i class="ti ti-building-factory-2"></i></div></div><div class="kpi-sub neutral">Company: Numeric</div></div>
         <div class="kpi-card purple"><div class="kpi-head"><div><div class="kpi-label">AKGIM Contracts</div><div class="kpi-val">${akgimCount}</div></div><div class="kpi-icon purple"><i class="ti ti-building"></i></div></div><div class="kpi-sub neutral">Company: AKGIM</div></div>
         <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Recent Contracts</div><div class="kpi-val">${recentContracts}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub neutral">Last 30 days</div></div>`;
-      
+
       const qSel = document.getElementById('amcc-quote-no');
       if (qSel && qSel.options.length === 1 && amcqData.length) {
         amcqData.forEach(q => qSel.add(new Option(q.id, q.id)));
@@ -30570,7 +31042,7 @@
 
     function filterAmcContracts() {
       const search = (document.getElementById('amcc-search')?.value || '').toLowerCase();
-      amccFiltered = amccData.filter(c => 
+      amccFiltered = amccData.filter(c =>
         !search || c.quoteNo.toLowerCase().includes(search) || c.serialNo.toLowerCase().includes(search)
       );
       const sc = document.getElementById('amcc-count'); if (sc) sc.textContent = amccFiltered.length;
@@ -30618,7 +31090,7 @@
         document.getElementById('amcc-validate-msg').style.display = 'block';
         return;
       }
-      
+
       const newC = {
         id: `AMC/C/2026/${100 + amccData.length + 1}`,
         quoteNo,
@@ -30629,7 +31101,7 @@
         endDate: document.getElementById('amcc-end-date').value,
         poDate: document.getElementById('amcc-po-date').value
       };
-      
+
       amccData.unshift(newC);
       amccFiltered = [...amccData];
       closeModal('modal-amc-contract');
@@ -32075,46 +32547,7 @@
       initHRMLoans();
     }
 
-    let incentives = [];
-
-    function initHRMIncentives() {
-      if (incentives.length === 0) {
-        const ratings = ['Excellent', 'Good', 'Good', 'Average'];
-        incentives = DB.employees.slice(0, 18).map((e, i) => ({
-          emp: e.name, period: 'June 2026', rating: spick(ratings),
-          amount: si(2000, 25000), target: si(70, 120),
-          remarks: spick(['Target Exceeded', 'Good Performance', 'Meets Expectation', '']),
-          status: spick(['Paid', 'Paid', 'Approved', 'Pending'])
-        }));
-      }
-      const empSel = document.getElementById('minc-emp');
-      if (empSel && empSel.options.length <= 1) DB.employees.forEach(e => empSel.add(new Option(e.name, e.id)));
-      const tbody = document.getElementById('hrm-incentive-tbody'); if (!tbody) return;
-      const rc = r => r === 'Excellent' ? 'green' : r === 'Good' ? 'blue' : r === 'Average' ? 'amber' : 'red';
-      const sc = s => s === 'Paid' ? 'green' : s === 'Approved' ? 'blue' : s === 'Pending' ? 'amber' : 'red';
-      tbody.innerHTML = incentives.map(i => `<tr>
-        <td>${i.emp}</td><td>${i.period}</td>
-        <td><span class="badge badge-${rc(i.rating)}">${i.rating}</span></td>
-        <td>&#8377;${fmt(i.amount)}</td><td>${i.target}%</td><td>${i.remarks || '&#8212;'}</td>
-        <td><span class="badge badge-${sc(i.status)}">${i.status}</span></td>
-      </tr>`).join('');
-    }
-
-    function saveIncentive() {
-      const emp = document.getElementById('minc-emp')?.value;
-      const amount = parseFloat(document.getElementById('minc-amount')?.value) || 0;
-      if (!emp) { showToast('error', 'Validation', 'Select an employee'); return; }
-      const empName = DB.employees.find(e => e.id === emp)?.name || emp;
-      incentives.unshift({
-        emp: empName, period: document.getElementById('minc-period')?.value || 'June 2026',
-        rating: document.getElementById('minc-rating')?.value || 'Good', amount,
-        target: parseInt(document.getElementById('minc-target')?.value) || 0,
-        remarks: document.getElementById('minc-remarks')?.value || '', status: 'Pending'
-      });
-      showToast('success', 'Incentive Saved', 'Incentive entry added');
-      closeModal('modal-hrm-incentive');
-      initHRMIncentives();
-    }
+    /* old incentive stubs removed — see enhanced version below */
 
     function initHRMReports() {
       const kpi = document.getElementById('hrm-report-kpis');
@@ -32277,17 +32710,132 @@
           };
         });
       }
+      // Must be seeded before hrmIncentives seed which references it
+      if (!DB.incentiveRules) {
+        // Tiered rates: each value is an array of {from, to, pts} slabs (progressive calculation)
+        // Single-element array = flat rate. Backward-compat: plain number also accepted.
+        const T = (slabs) => slabs; // alias for readability
+        DB.incentiveRules = {
+          pointValueTiers: [
+            { from: 1, to: 10, rate: 15 },
+            { from: 11, to: 50, rate: 79 },
+            { from: 51, to: null, rate: 150 },
+          ],
+          activityTypes: [
+            { id: 'service', label: 'Service' },
+            { id: 'sales', label: 'Sales' },
+            { id: 'installation', label: 'Installation' },
+            { id: 'maintenance', label: 'Maintenance' },
+          ],
+          productRates: [
+            {
+              product: 'Online UPS', rates: {
+                service: T([{ from: 1, to: 5, pts: 1.5 }, { from: 6, to: 10, pts: 2.0 }, { from: 11, to: null, pts: 2.5 }]),
+                sales: T([{ from: 1, to: 5, pts: 2.0 }, { from: 6, to: null, pts: 3.0 }]),
+                installation: T([{ from: 1, to: 3, pts: 2.5 }, { from: 4, to: null, pts: 3.5 }]),
+                maintenance: T([{ from: 1, to: null, pts: 1.0 }]),
+              }
+            },
+            {
+              product: 'SMF Batteries', rates: {
+                service: T([{ from: 1, to: 10, pts: 1.0 }, { from: 11, to: null, pts: 1.5 }]),
+                sales: T([{ from: 1, to: 5, pts: 1.0 }, { from: 6, to: null, pts: 1.5 }]),
+                installation: T([{ from: 1, to: null, pts: 1.5 }]),
+                maintenance: T([{ from: 1, to: null, pts: 0.5 }]),
+              }
+            },
+            {
+              product: 'Solar Panel', rates: {
+                service: T([{ from: 1, to: 3, pts: 2.0 }, { from: 4, to: null, pts: 3.0 }]),
+                sales: T([{ from: 1, to: 3, pts: 2.5 }, { from: 4, to: null, pts: 4.0 }]),
+                installation: T([{ from: 1, to: 2, pts: 3.0 }, { from: 3, to: null, pts: 4.5 }]),
+                maintenance: T([{ from: 1, to: null, pts: 1.5 }]),
+              }
+            },
+            {
+              product: 'Servo Stabilizer', rates: {
+                service: T([{ from: 1, to: null, pts: 1.0 }]),
+                sales: T([{ from: 1, to: 5, pts: 1.5 }, { from: 6, to: null, pts: 2.0 }]),
+                installation: T([{ from: 1, to: null, pts: 2.0 }]),
+                maintenance: T([{ from: 1, to: null, pts: 0.8 }]),
+              }
+            },
+            {
+              product: 'Inverter', rates: {
+                service: T([{ from: 1, to: null, pts: 1.0 }]),
+                sales: T([{ from: 1, to: 5, pts: 1.5 }, { from: 6, to: null, pts: 2.0 }]),
+                installation: T([{ from: 1, to: null, pts: 2.0 }]),
+                maintenance: T([{ from: 1, to: null, pts: 0.8 }]),
+              }
+            },
+          ],
+          kmThreshold: 300, travelBonus: 500,
+          otRate: 50, fullAttBonus: 500,
+          tgtThreshold: 100, tgtBonus: 1000,
+        };
+      }
+
       if (!DB.hrmIncentives) {
         const ratings = ['Excellent', 'Good', 'Average', 'Good', 'Excellent'];
-        const iStatuses = ['Approved', 'Pending', 'Approved'];
-        DB.hrmIncentives = DB.employees.slice(0, 22).map((e, i) => ({
-          month: ['2026-05', '2026-04', '2026-03'][i % 3],
-          empId: e.id, empName: e.name, dept: e.department,
-          rating: ratings[i % ratings.length],
-          amount: [5000, 3500, 2000, 8000, 1500][i % 5],
-          remarks: ['Target achieved', 'Exceeded quota', 'On track', 'Below target', 'Star performer'][i % 5],
-          status: iStatuses[i % iStatuses.length]
-        }));
+        const statuses = ['Approved', 'Pending', 'Approved', 'Paid', 'Pending'];
+        const products = ['Online UPS', 'SMF Batteries', 'Solar Panel', 'Servo Stabilizer', 'Inverter'];
+        // Sample counts per activity type for seed data
+        const sampleCounts = [
+          { service: 3, sales: 2, installation: 1, maintenance: 0 },
+          { service: 5, sales: 1, installation: 2, maintenance: 1 },
+          { service: 2, sales: 0, installation: 1, maintenance: 2 },
+          { service: 8, sales: 3, installation: 0, maintenance: 1 },
+          { service: 1, sales: 1, installation: 2, maintenance: 0 },
+        ];
+        DB.hrmIncentives = DB.employees.slice(0, 22).map((e, i) => {
+          const km = [180, 320, 450, 260, 310][i % 5];
+          const otHrs = [4, 0, 8, 2, 6][i % 5];
+          const absent = [0, 1, 0, 2, 0][i % 5];
+          const tgtPct = [105, 80, 100, 90, 115][i % 5];
+          const prodName = products[i % products.length];
+          const counts = sampleCounts[i % sampleCounts.length];
+          // productEntries now uses counts object keyed by activity type id
+          const productEntries = [{ product: prodName, counts: { ...counts } }];
+          // Use calcIncentiveBreakdown if available, else rough calc for seed
+          const R = DB.incentiveRules;
+          const rule = (R.productRates || []).find(r => r.product === prodName);
+          let totalPoints = 0;
+          Object.entries(counts).forEach(([atId, cnt]) => {
+            totalPoints += cnt * ((rule && rule.rates && rule.rates[atId]) || 0);
+          });
+          totalPoints = +totalPoints.toFixed(2);
+          const pvTs = R.pointValueTiers || [{ from: 1, to: null, rate: 150 }];
+          // Inline progressive calc for seed (calcPointsAmount not yet defined at IIFE time)
+          let pvAmt = 0, pvRem = totalPoints;
+          for (const t of [...pvTs].sort((a, b) => (a.from || 1) - (b.from || 1))) {
+            if (pvRem <= 0) break;
+            const tTo = (t.to == null || +t.to >= 9999) ? Infinity : +t.to;
+            const sz = tTo === Infinity ? Infinity : (tTo - (+t.from || 1) + 1);
+            const used = sz === Infinity ? pvRem : Math.min(pvRem, sz);
+            pvAmt += used * (+t.rate || 0); pvRem -= used;
+          }
+          const pointsAmount = Math.round(pvAmt);
+          const travelBonus = km > (R.kmThreshold || 300) ? (R.travelBonus || 500) : 0;
+          const otBonus = Math.round(otHrs * (R.otRate || 50));
+          const attBonus = absent === 0 ? (R.fullAttBonus || 500) : 0;
+          const tgtBonus = tgtPct >= (R.tgtThreshold || 100) ? (R.tgtBonus || 1000) : 0;
+          const totalBonuses = travelBonus + otBonus + attBonus + tgtBonus;
+          const totalAmount = pointsAmount + totalBonuses;
+          return {
+            month: ['2026-05', '2026-04', '2026-03'][i % 3],
+            empId: e.id, empName: e.name, dept: e.department,
+            rating: ratings[i % ratings.length],
+            productEntries,
+            travelKm: km, overtimeHrs: otHrs, absentDays: absent, targetPct: tgtPct,
+            totalPoints, pointsAmount,
+            travelBonus, overtimeBonus: otBonus, fullAttBonus: attBonus, targetBonus: tgtBonus,
+            totalBonuses, totalAmount, amount: totalAmount,
+            lineItems: [], // will be recalculated on viewIncBreakdown
+            remarks: ['Target achieved', 'Exceeded quota', 'On track', 'Below target', 'Star performer'][i % 5],
+            status: statuses[i % statuses.length],
+            paidOn: statuses[i % statuses.length] === 'Paid' ? '01/06/2026' : undefined,
+          };
+        });
       }
     })();
 
@@ -32647,53 +33195,975 @@
       filterHRMLoans();
     }
 
-    /* ─── HRMS: INCENTIVES ─── */
-    let _hrmIncPage = 1, _hrmIncRows = [], _hrmIncPer = 10;
+    /* ─── HRMS: INCENTIVES (Dynamic Activity-Type Engine) ─── */
+    // DB.incentiveRules is seeded in the IIFE above; this block is a safety fallback only
+    if (!DB.incentiveRules) {
+      DB.incentiveRules = {
+        pointValueTiers: [{ from: 1, to: null, rate: 150 }],
+        activityTypes: [
+          { id: 'service', label: 'Service' }, { id: 'sales', label: 'Sales' },
+          { id: 'installation', label: 'Installation' }, { id: 'maintenance', label: 'Maintenance' },
+        ],
+        productRates: [
+          { product: 'Online UPS', rates: { service: [{ from: 1, to: 5, pts: 1.5 }, { from: 6, to: null, pts: 2.0 }], sales: [{ from: 1, to: null, pts: 2.0 }], installation: [{ from: 1, to: null, pts: 2.5 }], maintenance: [{ from: 1, to: null, pts: 1.0 }] } },
+          { product: 'SMF Batteries', rates: { service: [{ from: 1, to: null, pts: 1.0 }], sales: [{ from: 1, to: null, pts: 1.0 }], installation: [{ from: 1, to: null, pts: 1.5 }], maintenance: [{ from: 1, to: null, pts: 0.5 }] } },
+          { product: 'Solar Panel', rates: { service: [{ from: 1, to: null, pts: 2.0 }], sales: [{ from: 1, to: null, pts: 2.5 }], installation: [{ from: 1, to: null, pts: 3.0 }], maintenance: [{ from: 1, to: null, pts: 1.5 }] } },
+          { product: 'Servo Stabilizer', rates: { service: [{ from: 1, to: null, pts: 1.0 }], sales: [{ from: 1, to: null, pts: 1.5 }], installation: [{ from: 1, to: null, pts: 2.0 }], maintenance: [{ from: 1, to: null, pts: 0.8 }] } },
+          { product: 'Inverter', rates: { service: [{ from: 1, to: null, pts: 1.0 }], sales: [{ from: 1, to: null, pts: 1.5 }], installation: [{ from: 1, to: null, pts: 2.0 }], maintenance: [{ from: 1, to: null, pts: 0.8 }] } },
+        ],
+        kmThreshold: 300, travelBonus: 500,
+        otRate: 50, fullAttBonus: 500,
+        tgtThreshold: 100, tgtBonus: 1000,
+      };
+    }
+    if (!DB.incentiveRules.activityTypes) {
+      DB.incentiveRules.activityTypes = [
+        { id: 'service', label: 'Service' }, { id: 'sales', label: 'Sales' },
+        { id: 'installation', label: 'Installation' }, { id: 'maintenance', label: 'Maintenance' },
+      ];
+    }
+    if (!DB.hrmIncentives) DB.hrmIncentives = [];
+
+    // ── Tier calculation: progressive slab (like income tax) ──
+    function calcPtsForTiers(tiers, count) {
+      if (!count || count <= 0) return 0;
+      // Backward compat: plain number = single flat tier
+      if (typeof tiers === 'number') return +(count * tiers).toFixed(2);
+      if (!Array.isArray(tiers) || !tiers.length) return 0;
+      // Sort ascending by from
+      const sorted = [...tiers].sort((a, b) => (a.from || 1) - (b.from || 1));
+      let pts = 0, remaining = count;
+      for (const tier of sorted) {
+        if (remaining <= 0) break;
+        const tierTo = (tier.to == null || tier.to === '' || tier.to >= 9999) ? Infinity : +tier.to;
+        const tierFrom = +tier.from || 1;
+        const slabSize = tierTo === Infinity ? Infinity : (tierTo - tierFrom + 1);
+        const used = slabSize === Infinity ? remaining : Math.min(remaining, slabSize);
+        pts += used * (+tier.pts || 0);
+        remaining -= used;
+      }
+      return +pts.toFixed(2);
+    }
+
+    // Returns human-readable slab summary for a count, showing which slabs fired
+    function tierCalcDetail(tiers, count) {
+      if (!count || count <= 0) return [];
+      if (typeof tiers === 'number') return [{ label: `${count} × ${tiers}pt`, pts: count * tiers }];
+      if (!Array.isArray(tiers) || !tiers.length) return [];
+      const sorted = [...tiers].sort((a, b) => (a.from || 1) - (b.from || 1));
+      const detail = [];
+      let remaining = count;
+      for (const tier of sorted) {
+        if (remaining <= 0) break;
+        const tierTo = (tier.to == null || tier.to === '' || tier.to >= 9999) ? Infinity : +tier.to;
+        const tierFrom = +tier.from || 1;
+        const slabSize = tierTo === Infinity ? Infinity : (tierTo - tierFrom + 1);
+        const used = slabSize === Infinity ? remaining : Math.min(remaining, slabSize);
+        const slabPts = +(used * (+tier.pts || 0)).toFixed(2);
+        const toLabel = tierTo === Infinity ? '∞' : tierTo;
+        detail.push({ label: `${used} unit${used > 1 ? 's' : ''} [slab ${tierFrom}–${toLabel}] × ${tier.pts}pt`, pts: slabPts });
+        remaining -= used;
+      }
+      return detail;
+    }
+
+    function tierSummary(tiers) {
+      if (typeof tiers === 'number') return tiers + ' pt';
+      if (!Array.isArray(tiers) || !tiers.length) return '— pt';
+      if (tiers.length === 1) return (tiers[0].pts || 0) + ' pt';
+      return tiers.length + ' tiers ↗';
+    }
+
+    // ── Point-value slab: converts total points → ₹ using tiered rates ──
+    function calcPointsAmount(totalPts, tiers) {
+      if (!tiers || !tiers.length) return Math.round(totalPts * 150);
+      if (typeof tiers === 'number') return Math.round(totalPts * tiers); // legacy flat
+      const sorted = [...tiers].sort((a, b) => (a.from || 1) - (b.from || 1));
+      let amount = 0, remaining = totalPts;
+      for (const tier of sorted) {
+        if (remaining <= 0) break;
+        const tierTo = (tier.to == null || tier.to === '' || +tier.to >= 9999) ? Infinity : +tier.to;
+        const tierFrom = +tier.from || 1;
+        const slabSize = tierTo === Infinity ? Infinity : (tierTo - tierFrom + 1);
+        const used = slabSize === Infinity ? remaining : Math.min(remaining, slabSize);
+        amount += used * (+tier.rate || 0);
+        remaining -= used;
+      }
+      return Math.round(amount);
+    }
+
+    // Returns human-readable slab detail for point-value conversion
+    function pointValueDetail(totalPts, tiers) {
+      if (!tiers || !tiers.length || typeof tiers === 'number') return [];
+      const sorted = [...tiers].sort((a, b) => (a.from || 1) - (b.from || 1));
+      const detail = [];
+      let remaining = totalPts;
+      for (const tier of sorted) {
+        if (remaining <= 0) break;
+        const tierTo = (tier.to == null || tier.to === '' || +tier.to >= 9999) ? Infinity : +tier.to;
+        const tierFrom = +tier.from || 1;
+        const slabSize = tierTo === Infinity ? Infinity : (tierTo - tierFrom + 1);
+        const used = slabSize === Infinity ? remaining : Math.min(remaining, slabSize);
+        const toLabel = tierTo === Infinity ? '∞' : tierTo;
+        detail.push({ label: `${used} pt [slab ${tierFrom}–${toLabel}] × ₹${tier.rate}`, amount: Math.round(used * (+tier.rate || 0)) });
+        remaining -= used;
+      }
+      return detail;
+    }
+
+    function pvTierSummary(tiers) {
+      if (!tiers || !tiers.length) return '₹150/pt';
+      if (typeof tiers === 'number') return `₹${tiers}/pt`;
+      if (tiers.length === 1) return `₹${tiers[0].rate}/pt`;
+      return tiers.length + ' slabs ↗';
+    }
+
+    // ── Pure calculation engine — iterates activityTypes × productEntries dynamically ──
+    function calcIncentiveBreakdown(data) {
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      let totalPoints = 0;
+      const lineItems = []; // { product, activityId, activityLabel, count, tiers, pts, detail }
+
+      (data.productEntries || []).forEach(pe => {
+        if (!pe.product) return;
+        const rule = (R.productRates || []).find(r => r.product === pe.product);
+        AT.forEach(at => {
+          const count = (pe.counts && pe.counts[at.id]) ? +pe.counts[at.id] : 0;
+          if (count <= 0) return;
+          const tiers = rule?.rates?.[at.id] ?? [];
+          const pts = calcPtsForTiers(tiers, count);
+          const detail = tierCalcDetail(tiers, count);
+          totalPoints += pts;
+          lineItems.push({ product: pe.product, activityId: at.id, activityLabel: at.label, count, tiers, pts, detail });
+        });
+      });
+
+      totalPoints = +totalPoints.toFixed(2);
+      const pvTiers = R.pointValueTiers || [{ from: 1, to: null, rate: R.pointValue || 150 }];
+      const pointsAmount = calcPointsAmount(totalPoints, pvTiers);
+      const pvDetail = pointValueDetail(totalPoints, pvTiers);
+
+      const km = data.travelKm || 0;
+      let travelBonus = 0;
+      if (R.travelRules?.length) {
+        const eligible = R.travelRules.filter(tr => km >= tr.km).sort((a, b) => b.km - a.km);
+        if (eligible.length) travelBonus = eligible[0].amt;
+      } else {
+        travelBonus = km >= (R.kmThreshold || 300) ? (R.travelBonus || 500) : 0;
+      }
+      res.travelBonus = travelBonus;
+      const targetPct = data.targetPct || 0;
+      let targetBonus = 0;
+      if (R.targetRules?.length) {
+        const eligible = R.targetRules.filter(tr => targetPct >= tr.threshold).sort((a, b) => b.threshold - a.threshold);
+        if (eligible.length) targetBonus = eligible[0].bonus;
+      } else {
+        targetBonus = targetPct >= (R.tgtThreshold || 100) ? (R.tgtBonus || 1000) : 0;
+      }
+      res.targetBonus = targetBonus;
+      const overtimeBonus = Math.round((data.overtimeHrs || 0) * (R.otRate || 50));
+      const hasActivity = (data.productEntries || []).some(pe => pe.counts && Object.values(pe.counts).some(v => +v > 0));
+      const fullAttBonus = (data.absentDays || 0) === 0 && hasActivity ? (R.fullAttBonus || 500) : 0;
+
+      const svcConv = data.svcConvPct || 0;
+      let svcConvBonus = 0;
+      if (R.svcConvRules?.length) {
+        const eligible = R.svcConvRules.filter(tr => svcConv >= tr.threshold).sort((a, b) => b.threshold - a.threshold);
+        if (eligible.length) svcConvBonus = eligible[0].bonus;
+      }
+      res.svcConvBonus = svcConvBonus;
+
+      const totalBonuses = travelBonus + overtimeBonus + fullAttBonus + targetBonus + svcConvBonus;
+      const totalAmount = pointsAmount + totalBonuses;
+
+      res.totalPoints = totalPoints;
+      res.pointsAmount = pointsAmount;
+      res.overtimeBonus = overtimeBonus;
+      res.fullAttBonus = fullAttBonus;
+      res.totalBonuses = totalBonuses;
+      res.totalAmount = totalAmount;
+      res.detailHtml = pvDetail;
+      res.lineItems = lineItems;
+      return res;
+    }
+
+    let _hrmIncPage = 1, _hrmIncRows = [], _hrmIncPer = 10, _incActiveTab = 'summary';
+
+    function switchIncTab(tab) {
+      _incActiveTab = tab;
+      ['summary', 'breakdown', 'payout'].forEach(t => {
+        const btn = document.getElementById('inc-tab-' + t);
+        const panel = document.getElementById('inc-panel-' + t);
+        if (btn) btn.className = 'inc-tab' + (t === tab ? ' inc-tab-active' : '');
+        if (panel) panel.style.display = t === tab ? '' : 'none';
+      });
+      if (tab === 'breakdown') _renderIncBreakdown();
+      if (tab === 'payout') _renderPayoutTable();
+    }
+
     function initHRMIncentives() {
-      const totalPayout = DB.hrmIncentives.filter(i => i.status === 'Approved').reduce((s, i) => s + i.amount, 0);
+      if (!DB.hrmIncentives) DB.hrmIncentives = [];
+      const inc = DB.hrmIncentives;
+      const approved = inc.filter(i => i.status === 'Approved' || i.status === 'Paid');
+      const totalPayout = approved.reduce((s, i) => s + (i.totalAmount || i.amount || 0), 0);
       const kpi = document.getElementById('hrm-incentive-kpi');
       if (kpi) kpi.innerHTML = `
-        <div class="kpi-card blue"><div class="kpi-val">${DB.hrmIncentives.length}</div><div class="kpi-lbl">Total Records</div></div>
+        <div class="kpi-card blue"><div class="kpi-val">${inc.length}</div><div class="kpi-lbl">Total Records</div></div>
         <div class="kpi-card green"><div class="kpi-val">₹${fmt(totalPayout)}</div><div class="kpi-lbl">Approved Payout</div></div>
-        <div class="kpi-card amber"><div class="kpi-val">${DB.hrmIncentives.filter(i => i.status === 'Pending').length}</div><div class="kpi-lbl">Pending Approval</div></div>
-        <div class="kpi-card gold"><div class="kpi-val">${DB.hrmIncentives.filter(i => i.rating === 'Excellent').length}</div><div class="kpi-lbl">Excellent Ratings</div></div>`;
-      const mn = document.getElementById('hrm-incentive-month');
-      if (mn && !mn.value) mn.value = '2026-05';
+        <div class="kpi-card amber"><div class="kpi-val">${inc.filter(i => i.status === 'Pending').length}</div><div class="kpi-lbl">Pending Approval</div></div>
+        <div class="kpi-card gold"><div class="kpi-val">${inc.filter(i => (i.totalPoints || 0) >= 10).length}</div><div class="kpi-lbl">High Performers (10+ pts)</div></div>`;
+      const deptSel = document.getElementById('hrm-inc-dept-filter');
+      if (deptSel && deptSel.options.length === 1)
+        [...new Set(DB.employees.map(e => e.department))].sort().forEach(d => deptSel.add(new Option(d, d)));
       filterHRMIncentives();
     }
+
     function filterHRMIncentives() {
+      if (!DB.hrmIncentives) DB.hrmIncentives = [];
       const month = document.getElementById('hrm-incentive-month')?.value || '';
-      _hrmIncRows = DB.hrmIncentives.filter(i => !month || i.month === month);
-      _hrmIncPage = 1; _renderHRMIncTable();
+      const dept = document.getElementById('hrm-inc-dept-filter')?.value || '';
+      const status = document.getElementById('hrm-inc-status-filter')?.value || '';
+      _hrmIncRows = DB.hrmIncentives.filter(i =>
+        (!month || i.month === month) &&
+        (!dept || i.dept === dept) &&
+        (!status || i.status === status)
+      );
+      _hrmIncPage = 1;
+      const lbl = document.getElementById('hrm-inc-count-label');
+      if (lbl) lbl.textContent = _hrmIncRows.length + ' records';
+      _renderHRMIncTable();
+      if (_incActiveTab === 'breakdown') _renderIncBreakdown();
     }
+
     function _renderHRMIncTable() {
       const tbody = document.getElementById('hrm-incentive-tbody'); if (!tbody) return;
       const slice = _hrmIncRows.slice((_hrmIncPage - 1) * _hrmIncPer, _hrmIncPage * _hrmIncPer);
-      const ratingColor = { Excellent: 'badge-green', Good: 'badge-blue', Average: 'badge-amber' };
-      tbody.innerHTML = slice.map((i, idx) => `<tr>
-        <td>${i.month}</td><td>${i.empName}</td><td>${i.dept}</td>
-        <td><span class="badge ${ratingColor[i.rating] || 'badge-outline'} no-dot">${i.rating}</span></td>
-        <td><b>₹${fmt(i.amount)}</b></td><td>${i.remarks}</td>
-        <td><span class="badge ${i.status === 'Approved' ? 'badge-green' : 'badge-amber'} no-dot">${i.status}</span></td>
-        <td>${i.status === 'Pending' ? `<button class="btn btn-primary btn-sm" onclick="approveIncentive(${(_hrmIncPage - 1) * _hrmIncPer + idx})">Approve</button>` : ''}</td>
-      </tr>`).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--tx-3);">No records</td></tr>';
+      const statusCls = { Approved: 'badge-green', Pending: 'badge-amber', Paid: 'badge-blue' };
+      tbody.innerHTML = slice.map((i, idx) => {
+        const gi = (_hrmIncPage - 1) * _hrmIncPer + idx;
+        return `<tr>
+          <td>${i.month}</td><td><b>${i.empName}</b></td><td>${i.dept}</td>
+          <td style="text-align:center;font-weight:700;color:var(--navy);">${(i.totalPoints || 0).toFixed(1)}</td>
+          <td style="text-align:right;">₹${fmt(i.pointsAmount || 0)}</td>
+          <td style="text-align:right;color:var(--green);">+₹${fmt(i.totalBonuses || 0)}</td>
+          <td style="text-align:right;"><b>₹${fmt(i.totalAmount || i.amount || 0)}</b></td>
+          <td><span class="badge ${statusCls[i.status] || 'badge-outline'} no-dot">${i.status}</span></td>
+          <td style="display:flex;gap:4px;">
+            <button class="btn btn-outline btn-sm" onclick="viewIncBreakdown(${gi})" title="Breakdown"><i class="ti ti-chart-bar"></i></button>
+            ${i.status === 'Pending' ? `<button class="btn btn-primary btn-sm"  onclick="approveIncentive(${gi})">Approve</button>` : ''}
+            ${i.status === 'Approved' ? `<button class="btn btn-outline btn-sm"  onclick="markIncPaid(${gi})"><i class="ti ti-coin"></i> Paid</button>` : ''}
+          </td>
+        </tr>`;
+      }).join('') || '<tr><td colspan="9" style="text-align:center;color:var(--tx-3);">No records found</td></tr>';
       renderPagination('hrm-incentive-pagination', _hrmIncRows.length, _hrmIncPage, _hrmIncPer, p => { _hrmIncPage = p; _renderHRMIncTable(); });
     }
+
+    function _renderIncBreakdown() {
+      const cards = document.getElementById('inc-breakdown-cards'); if (!cards) return;
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      const month = document.getElementById('hrm-incentive-month')?.value || '';
+      const rows = DB.hrmIncentives.filter(i => !month || i.month === month);
+
+      // Sum counts per activity type across all records
+      const actTotals = {};
+      AT.forEach(at => actTotals[at.id] = 0);
+      rows.forEach(r => (r.productEntries || []).forEach(pe =>
+        AT.forEach(at => { actTotals[at.id] += (pe.counts && +pe.counts[at.id]) || 0; })
+      ));
+
+      const totOT = rows.reduce((s, i) => s + (i.overtimeHrs || 0), 0);
+      const totKm = rows.reduce((s, i) => s + (i.travelKm || 0), 0);
+      const fullAtt = rows.filter(i => (i.absentDays || 0) === 0).length;
+      const tgtReach = rows.filter(i => (i.targetPct || 0) >= (R.tgtThreshold || 100)).length;
+      const totAmt = rows.reduce((s, i) => s + (i.totalAmount || i.amount || 0), 0);
+
+      const colors = ['blue', 'green', 'purple', 'amber', 'navy', 'red', 'sky', 'gold'];
+      const tile = (icon, color, label, val, sub) =>
+        `<div class="card" style="padding:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <div style="width:38px;height:38px;border-radius:8px;background:var(--${color}-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;">
+              <i class="ti ${icon}" style="font-size:18px;color:var(--${color},#4A90D9);"></i>
+            </div>
+            <div style="font-size:22px;font-weight:700;">${val}</div>
+          </div>
+          <div style="font-weight:600;font-size:13px;">${label}</div>
+          <div style="font-size:12px;color:var(--tx-3);margin-top:2px;">${sub}</div>
+        </div>`;
+
+      const icons = ['ti-tool', 'ti-shopping-cart', 'ti-package', 'ti-wrench', 'ti-star', 'ti-bolt'];
+      let html = AT.map((at, j) =>
+        tile(icons[j] || 'ti-point', colors[j % colors.length], at.label + ' (Activity)', actTotals[at.id], `Total ${at.label.toLowerCase()} counts this period`)
+      ).join('');
+      html +=
+        tile('ti-clock', 'amber', 'Overtime Hours', totOT.toFixed(1) + ' hrs', `₹${R.otRate || 50}/hr bonus`) +
+        tile('ti-map-pin', 'red', 'Total KM', fmt(totKm) + ' km', `>${R.kmThreshold || 300}km → ₹${fmt(R.travelBonus || 500)} bonus`) +
+        tile('ti-calendar-check', 'green', 'Full Attendance', fullAtt + ' employees', `₹${fmt(R.fullAttBonus || 500)} bonus each`) +
+        tile('ti-target', 'navy', 'Target Reached', tgtReach + ' employees', `≥${R.tgtThreshold || 100}% → ₹${fmt(R.tgtBonus || 1000)} bonus`) +
+        tile('ti-currency-rupee', 'gold', 'Total Payout', '₹' + fmt(totAmt), `${rows.length} records this period`);
+      cards.innerHTML = html;
+    }
+
+    function _renderPayoutTable() {
+      const tbody = document.getElementById('hrm-payout-tbody'); if (!tbody) return;
+      const month = document.getElementById('hrm-incentive-month')?.value || '';
+      const paid = DB.hrmIncentives.filter(i => (i.status === 'Approved' || i.status === 'Paid') && (!month || i.month === month));
+      const cls = { Approved: 'badge-green', Paid: 'badge-blue' };
+      tbody.innerHTML = paid.map(i => `<tr>
+        <td>${i.month}</td><td><b>${i.empName}</b></td><td>${i.dept}</td>
+        <td style="text-align:right;"><b>₹${fmt(i.totalAmount || i.amount || 0)}</b></td>
+        <td><span class="badge ${cls[i.status] || 'badge-green'} no-dot">${i.status}</span></td>
+        <td style="color:var(--tx-3);font-size:12px;">${i.paidOn || (i.status === 'Paid' ? 'Processed' : '—')}</td>
+      </tr>`).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--tx-3);">No approved records</td></tr>';
+    }
+
     function approveIncentive(idx) {
-      if (DB.hrmIncentives[idx]) { DB.hrmIncentives[idx].status = 'Approved'; showToast('success', 'Approved', 'Incentive approved.'); filterHRMIncentives(); }
+      const r = DB.hrmIncentives[idx];
+      if (r) { r.status = 'Approved'; showToast('success', 'Approved', r.empName + "'s incentive approved."); filterHRMIncentives(); }
     }
-    function saveHRMIncentive() {
-      const empId = document.getElementById('hrm-inc-emp')?.value;
-      const rating = document.getElementById('hrm-inc-rating')?.value;
-      const amount = parseFloat(document.getElementById('hrm-inc-amount')?.value) || 0;
-      const remarks = document.getElementById('hrm-inc-remarks')?.value.trim();
-      if (!empId || !rating || !amount) { showToast('error', 'Validation', 'Fill all fields.'); return; }
+    function markIncPaid(idx) {
+      const r = DB.hrmIncentives[idx];
+      if (r) { r.status = 'Paid'; r.paidOn = new Date().toLocaleDateString('en-IN'); showToast('success', 'Paid', '₹' + fmt(r.totalAmount || r.amount || 0) + ' marked as paid.'); filterHRMIncentives(); }
+    }
+
+    function viewIncBreakdown(idx) {
+      const i = DB.hrmIncentives[idx]; if (!i) return;
+      const R = DB.incentiveRules;
+      const bd = calcIncentiveBreakdown(i);
+
+      const bonusRow = (lbl, cond, amt) => `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 0;font-size:13px;">${lbl}</td>
+          <td style="text-align:center;"><span class="badge ${cond ? 'badge-green' : 'badge-outline'} no-dot">${cond ? 'Yes' : 'No'}</span></td>
+          <td style="text-align:right;font-weight:600;color:${cond ? 'var(--green)' : 'var(--tx-3)'};">+₹${fmt(amt)}</td>
+        </tr>`;
+
+      // Group line items by product
+      const byProduct = {};
+      bd.lineItems.forEach(li => {
+        if (!byProduct[li.product]) byProduct[li.product] = [];
+        byProduct[li.product].push(li);
+      });
+
+      const body = document.getElementById('modal-incentive-view-body');
+      const footer = document.getElementById('modal-incentive-view-footer');
+      body.innerHTML = `
+        <div style="margin-bottom:14px;">
+          <div style="font-size:16px;font-weight:700;">${i.empName} <span style="font-size:13px;color:var(--tx-3);">${i.dept}</span></div>
+          <div style="font-size:13px;color:var(--tx-3);">Period: ${i.month} · Rating: ${i.rating || '—'}</div>
+        </div>
+        ${Object.keys(byProduct).length > 0 ? `
+        <div style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;margin-bottom:8px;">Activity Points by Product (Slab Calculation)</div>
+        <table style="width:100%;margin-bottom:16px;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid var(--border);">
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);text-align:left;">Product</th>
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);">Activity</th>
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);text-align:center;">Count</th>
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);">Slab Breakdown</th>
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);text-align:right;">Points</th>
+            <th style="padding:6px 4px;font-size:12px;color:var(--tx-3);text-align:right;">₹</th>
+          </tr></thead>
+          <tbody>
+            ${Object.entries(byProduct).map(([prod, lines]) => lines.map((li, k) => `
+              <tr style="border-bottom:1px solid var(--border);">
+                ${k === 0 ? `<td style="padding:8px 4px;font-weight:600;font-size:13px;vertical-align:top;" rowspan="${lines.length}">${prod}</td>` : ''}
+                <td style="padding:6px 4px;font-size:13px;">${li.activityLabel}</td>
+                <td style="padding:6px 4px;text-align:center;font-weight:600;">${li.count}</td>
+                <td style="padding:6px 4px;font-size:11px;color:var(--tx-3);">
+                  ${(li.detail || []).map(d => `<div>${d.label} = <b style="color:var(--navy);">${d.pts}pt</b></div>`).join('')}
+                </td>
+                <td style="padding:6px 4px;text-align:right;font-weight:700;color:var(--navy);">${li.pts.toFixed(2)}</td>
+                <td style="padding:6px 4px;text-align:right;color:var(--tx-3);font-size:12px;">${bd.totalPoints > 0 ? '₹' + fmt(Math.round(li.pts / bd.totalPoints * bd.pointsAmount)) : '—'}</td>
+              </tr>`).join('')).join('')}
+            <tr style="border-top:2px solid var(--border);background:var(--bg-2);">
+              <td colspan="3" style="padding:8px 4px;font-weight:700;">Points Subtotal</td>
+              <td style="padding:6px 4px;font-size:11px;color:var(--tx-3);">
+                ${(bd.pvDetail || []).map(d => `<div>${d.label} = <b style="color:var(--navy);">₹${fmt(d.amount)}</b></div>`).join('') || `<div>× ₹${(R.pointValueTiers || [{ rate: 150 }])[0]?.rate || 150}/pt</div>`}
+              </td>
+              <td style="text-align:right;font-weight:800;color:var(--navy);font-size:15px;">${bd.totalPoints}</td>
+              <td style="text-align:right;font-weight:800;font-size:15px;">₹${fmt(bd.pointsAmount)}</td>
+            </tr>
+          </tbody>
+        </table>` : '<div style="color:var(--tx-3);font-size:13px;margin-bottom:16px;">No product activity entries.</div>'}
+        <div style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;margin-bottom:8px;">Bonus Conditions</div>
+        <table style="width:100%;margin-bottom:16px;">
+          <tbody>
+            ${bonusRow(`Travel > ${R.kmThreshold || 300} km (${i.travelKm || 0} km)`, (i.travelKm || 0) > (R.kmThreshold || 300), bd.travelBonus)}
+            ${bonusRow(`Overtime (${i.overtimeHrs || 0} hrs × ₹${R.otRate || 50}/hr)`, (i.overtimeHrs || 0) > 0, bd.overtimeBonus)}
+            ${bonusRow(`Full Attendance (${i.absentDays || 0} absent days)`, (i.absentDays || 0) === 0 && bd.fullAttBonus > 0, bd.fullAttBonus)}
+            ${bonusRow(`Target Reached (${i.targetPct || 0}% ≥ ${R.tgtThreshold || 100}%)`, (i.targetPct || 0) >= (R.tgtThreshold || 100), bd.targetBonus)}
+          </tbody>
+        </table>
+        <div style="background:linear-gradient(135deg,#1a2744,#243464);border-radius:8px;padding:16px;color:#fff;display:flex;justify-content:space-between;align-items:center;">
+          <div><div style="font-size:12px;opacity:.7;">Points Value</div><div style="font-size:18px;font-weight:700;">₹${fmt(bd.pointsAmount)}</div></div>
+          <div style="opacity:.4;font-size:20px;">+</div>
+          <div><div style="font-size:12px;opacity:.7;">Bonuses</div><div style="font-size:18px;font-weight:700;color:#4EC9B0;">₹${fmt(bd.totalBonuses)}</div></div>
+          <div style="opacity:.4;font-size:20px;">=</div>
+          <div style="background:rgba(74,144,217,.3);border-radius:8px;padding:12px 20px;border:1px solid rgba(74,144,217,.5);">
+            <div style="font-size:12px;opacity:.8;">Grand Total</div>
+            <div style="font-size:24px;font-weight:800;">₹${fmt(bd.totalAmount)}</div>
+          </div>
+        </div>`;
+      footer.innerHTML = `
+        <button class="btn btn-outline" onclick="closeModal('modal-incentive-view')">Close</button>
+        ${i.status === 'Pending' ? `<button class="btn btn-primary" onclick="approveIncentive(${idx});closeModal('modal-incentive-view')">Approve</button>` : ''}`;
+      openModal('modal-incentive-view');
+    }
+
+    // ── Add Incentive Modal helpers ──
+
+    function _incRenderProductHeader() {
+      const AT = DB.incentiveRules.activityTypes || [];
+      const hdr = document.getElementById('minc-product-header'); if (!hdr) return;
+      if (!AT.length) { hdr.innerHTML = ''; return; }
+      hdr.innerHTML =
+        `<div style="flex:2;min-width:130px;font-size:11px;font-weight:600;color:var(--tx-3);padding:0 4px;">Product</div>` +
+        AT.map(at => `<div style="flex:1;min-width:70px;text-align:center;font-size:11px;font-weight:600;color:var(--tx-3);">${at.label}</div>`).join('') +
+        `<div style="width:32px;"></div>`;
+    }
+
+    function addIncProductRow() {
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      const con = document.getElementById('minc-product-rows'); if (!con) return;
+      const noP = document.getElementById('minc-no-products');
+      if (noP) noP.style.display = 'none';
+      _incRenderProductHeader();
+
+      const div = document.createElement('div');
+      div.className = 'minc-prod-row';
+      div.style.cssText = 'display:flex;gap:6px;align-items:center;';
+      const prodOpts = (R.productRates || []).map(r => `<option value="${r.product}">${r.product}</option>`).join('');
+      div.innerHTML =
+        `<select class="form-control mpr-product" style="flex:2;min-width:130px;" onchange="incCalcTotal()">
+           <option value="">— Product —</option>${prodOpts}
+         </select>` +
+        AT.map(at =>
+          `<input class="form-control mpr-act" data-act="${at.id}" type="number" placeholder="0" min="0"
+           title="${at.label}" style="flex:1;min-width:70px;text-align:center;" oninput="incCalcTotal()">`
+        ).join('') +
+        `<button class="btn btn-outline btn-sm" style="width:32px;padding:0;flex-shrink:0;"
+           onclick="this.closest('.minc-prod-row').remove();_incMaybeHideHeader();incCalcTotal();" title="Remove">
+           <i class="ti ti-trash"></i></button>`;
+      con.appendChild(div);
+    }
+
+    function _incMaybeHideHeader() {
+      const hdr = document.getElementById('minc-product-header');
+      const noP = document.getElementById('minc-no-products');
+      const empty = !document.querySelector('#minc-product-rows .minc-prod-row');
+      if (hdr) hdr.innerHTML = empty ? '' : hdr.innerHTML;
+      if (noP) noP.style.display = empty ? '' : 'none';
+      if (empty) _incRenderProductHeader(); // clears it
+    }
+
+    function _mincProductRows() {
+      const result = [];
+      document.querySelectorAll('#minc-product-rows .minc-prod-row').forEach(row => {
+        const prod = row.querySelector('.mpr-product')?.value;
+        if (!prod) return;
+        const counts = {};
+        row.querySelectorAll('.mpr-act').forEach(inp => {
+          const v = parseFloat(inp.dataset.act ? inp.value : 0) || 0;
+          if (inp.dataset.act) counts[inp.dataset.act] = v;
+        });
+        result.push({ product: prod, counts });
+      });
+      return result;
+    }
+
+    function incCalcTotal() {
+      const data = {
+        productEntries: _mincProductRows(),
+        travelKm: parseFloat(document.getElementById('minc-km')?.value) || 0,
+        overtimeHrs: parseFloat(document.getElementById('minc-ot')?.value) || 0,
+        absentDays: parseInt(document.getElementById('minc-absent')?.value) || 0,
+        targetPct: parseFloat(document.getElementById('minc-target')?.value) || 0,
+        svcConvPct: parseFloat(document.getElementById('minc-svc-conv')?.value) || 0,
+      };
+      const bd = calcIncentiveBreakdown(data);
+      const R = DB.incentiveRules;
+      const el = id => document.getElementById(id);
+      if (el('minc-prev-pts')) el('minc-prev-pts').textContent = bd.totalPoints.toFixed(1);
+      if (el('minc-prev-pts-amt')) el('minc-prev-pts-amt').textContent = '₹' + fmt(bd.pointsAmount);
+      if (el('minc-prev-bonus')) el('minc-prev-bonus').textContent = '₹' + fmt(bd.totalBonuses);
+      if (el('minc-prev-total')) el('minc-prev-total').textContent = '₹' + fmt(bd.totalAmount);
+      const tags = [];
+      bd.lineItems.forEach(li => {
+        if (li.count > 0) tags.push(`<span style="background:rgba(74,144,217,.18);padding:2px 8px;border-radius:12px;">${li.product} · ${li.activityLabel}: ${li.count} → ${li.pts.toFixed(1)}pt</span>`);
+      });
+      if (bd.travelBonus > 0) tags.push(`<span style="background:rgba(231,76,60,.18);padding:2px 8px;border-radius:12px;">Travel Bonus +₹${fmt(bd.travelBonus)}</span>`);
+      if (bd.overtimeBonus > 0) tags.push(`<span style="background:rgba(230,126,34,.18);padding:2px 8px;border-radius:12px;">OT ${data.overtimeHrs}h +₹${fmt(bd.overtimeBonus)}</span>`);
+      if (bd.fullAttBonus > 0) tags.push(`<span style="background:rgba(39,174,96,.18);padding:2px 8px;border-radius:12px;">Full Attendance +₹${fmt(bd.fullAttBonus)}</span>`);
+      if (bd.targetBonus > 0) tags.push(`<span style="background:rgba(74,144,217,.18);padding:2px 8px;border-radius:12px;">Target Bonus +₹${fmt(bd.targetBonus)}</span>`);
+      if (bd.svcConvBonus > 0) tags.push(`<span style="background:rgba(155,89,182,.18);padding:2px 8px;border-radius:12px;">Svc Conv Bonus +₹${fmt(bd.svcConvBonus)}</span>`);
+      if (el('minc-prev-tags')) el('minc-prev-tags').innerHTML = tags.join('') || '<span style="opacity:.5;">Add product rows above to see calculation</span>';
+    }
+
+    function saveIncentive() {
+      const empId = document.getElementById('minc-emp')?.value;
+      const period = document.getElementById('minc-period')?.value;
+      if (!empId || !period) { showToast('error', 'Validation', 'Select employee and period.'); return; }
       const emp = DB.employees.find(e => e.id === empId);
-      const mn = document.getElementById('hrm-incentive-month')?.value || '2026-06';
-      DB.hrmIncentives.push({ month: mn, empId, empName: emp?.name || empId, dept: emp?.department || '', rating, amount, remarks, status: 'Pending' });
-      closeModal('modal-hrm-incentive'); showToast('success', 'Incentive Added', 'Record saved for approval.');
-      filterHRMIncentives();
+      const data = {
+        month: period, empId, empName: emp?.name || empId, dept: emp?.department || '',
+        rating: document.getElementById('minc-rating')?.value || 'Good',
+        targetPct: parseFloat(document.getElementById('minc-target')?.value) || 0,
+        svcConvPct: parseFloat(document.getElementById('minc-svc-conv')?.value) || 0,
+        travelKm: parseFloat(document.getElementById('minc-km')?.value) || 0,
+        overtimeHrs: parseFloat(document.getElementById('minc-ot')?.value) || 0,
+        absentDays: parseInt(document.getElementById('minc-absent')?.value) || 0,
+        remarks: document.getElementById('minc-remarks')?.value.trim() || '',
+        productEntries: _mincProductRows(),
+        status: 'Pending',
+      };
+      const bd = calcIncentiveBreakdown(data);
+      Object.assign(data, bd);
+      data.amount = bd.totalAmount;
+      DB.hrmIncentives.push(data);
+      closeModal('modal-hrm-incentive');
+      showToast('success', 'Incentive Saved', `₹${fmt(bd.totalAmount)} entry added for ${emp?.name || empId}.`);
+      initHRMIncentives();
     }
+
+    function openModal_hrm_incentive_setup() {
+      const sel = document.getElementById('minc-emp');
+      if (sel && sel.options.length === 1) DB.employees.forEach(e => sel.add(new Option(e.name, e.id)));
+      const mn = document.getElementById('minc-period');
+      if (mn && !mn.value) mn.value = new Date().toISOString().slice(0, 7);
+      const con = document.getElementById('minc-product-rows');
+      if (con) con.innerHTML = '';
+      const hdr = document.getElementById('minc-product-header');
+      if (hdr) hdr.innerHTML = '';
+      const noP = document.getElementById('minc-no-products');
+      if (noP) noP.style.display = '';
+      ['minc-km', 'minc-ot', 'minc-absent', 'minc-target', 'minc-svc-conv', 'minc-remarks'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      incCalcTotal();
+    }
+
+    // ── Rules Modal helpers ──
+
+    // ── Tier Editor state ──
+    let _tierEdState = { pi: -1, atId: '' };   // which product × activity is being edited
+
+    function _ruleRenderMatrix() {
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      const PR = R.productRates || [];
+      const wrap = document.getElementById('rule-product-matrix'); if (!wrap) return;
+      if (!AT.length) { wrap.innerHTML = '<div style="color:var(--tx-3);font-size:13px;">Add activity types above first.</div>'; return; }
+
+      wrap.innerHTML = `
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--border);">
+              <th style="text-align:left;padding:6px 8px;font-size:12px;color:var(--tx-3);min-width:140px;">Product</th>
+              ${AT.map(at => `
+                <th style="text-align:center;padding:6px 8px;font-size:12px;color:var(--tx-3);min-width:100px;">
+                  ${at.label}
+                  <div style="font-size:10px;font-weight:400;color:var(--tx-3);">click cell to edit tiers</div>
+                </th>`).join('')}
+              <th style="width:36px;"></th>
+            </tr>
+          </thead>
+          <tbody id="rule-matrix-tbody">
+            ${PR.map((pr, pi) => `
+              <tr data-pi="${pi}" style="border-bottom:1px solid var(--border);">
+                <td style="padding:6px 8px;">
+                  <input class="form-control rpr-name" value="${pr.product}" placeholder="Product name" style="font-size:12px;">
+                </td>
+                ${AT.map(at => {
+        const tiers = pr.rates?.[at.id];
+        const summ = tierSummary(tiers);
+        const isMulti = Array.isArray(tiers) && tiers.length > 1;
+        return `<td style="padding:4px 6px;text-align:center;">
+                    <button class="btn btn-outline btn-sm" data-pi="${pi}" data-at="${at.id}"
+                      onclick="openTierEditor(${pi},'${at.id}')"
+                      style="width:100%;font-size:12px;font-weight:600;${isMulti ? 'color:var(--navy);border-color:var(--navy);' : ''}">
+                      ${summ}
+                    </button>
+                  </td>`;
+      }).join('')}
+                <td style="padding:6px 4px;text-align:center;">
+                  <button class="btn btn-outline btn-sm" style="width:28px;padding:0;"
+                    onclick="this.closest('tr').remove();_ruleRemoveProduct(${pi})">
+                    <i class="ti ti-trash"></i>
+                  </button>
+                </td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    function _ruleRemoveProduct(pi) {
+      if (DB.incentiveRules.productRates[pi]) DB.incentiveRules.productRates.splice(pi, 1);
+    }
+
+    function ruleAddProductRow() {
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      if (!AT.length) { showToast('info', '', 'Add activity types first.'); return; }
+      // Add a new product with empty single-tier for each activity
+      const newRates = {};
+      AT.forEach(at => { newRates[at.id] = [{ from: 1, to: null, pts: 0 }]; });
+      const newPR = { product: '', rates: newRates };
+      R.productRates.push(newPR);
+      const pi = R.productRates.length - 1;
+      const tb = document.getElementById('rule-matrix-tbody');
+      if (!tb) { _ruleRenderMatrix(); return; }
+      const tr = document.createElement('tr');
+      tr.dataset.pi = pi;
+      tr.style.borderBottom = '1px solid var(--border)';
+      tr.innerHTML =
+        `<td style="padding:6px 8px;"><input class="form-control rpr-name" placeholder="Product name" style="font-size:12px;" oninput="R_updateProductName(${pi},this.value)"></td>` +
+        AT.map(at =>
+          `<td style="padding:4px 6px;text-align:center;">
+             <button class="btn btn-outline btn-sm" data-pi="${pi}" data-at="${at.id}"
+               onclick="openTierEditor(${pi},'${at.id}')"
+               style="width:100%;font-size:12px;">0 pt</button>
+           </td>`
+        ).join('') +
+        `<td style="padding:6px 4px;text-align:center;">
+           <button class="btn btn-outline btn-sm" style="width:28px;padding:0;"
+             onclick="this.closest('tr').remove();_ruleRemoveProduct(${pi})">
+             <i class="ti ti-trash"></i></button>
+         </td>`;
+      tb.appendChild(tr);
+    }
+
+    function R_updateProductName(pi, val) {
+      if (DB.incentiveRules.productRates[pi]) DB.incentiveRules.productRates[pi].product = val;
+    }
+
+    // ── Tier Editor ──
+    function openTierEditor(pi, atId) {
+      const R = DB.incentiveRules;
+      const pr = R.productRates[pi]; if (!pr) return;
+      const at = R.activityTypes.find(a => a.id === atId);
+      _tierEdState = { pi, atId };
+
+      const sub = document.getElementById('tier-ed-subtitle');
+      if (sub) sub.textContent = pr.product + '  ·  ' + (at?.label || atId);
+
+      let tiers = pr.rates?.[atId];
+      if (typeof tiers === 'number') tiers = [{ from: 1, to: null, pts: tiers }];
+      if (!Array.isArray(tiers) || !tiers.length) tiers = [{ from: 1, to: null, pts: 0 }];
+
+      const rows = document.getElementById('tier-ed-rows'); if (!rows) return;
+      rows.innerHTML = tiers.map((t, i) => _tierRowHtml(t, i)).join('');
+      _tierEdPreview();
+      openModal('modal-incentive-tier-editor');
+    }
+
+    function _tierRowHtml(t, i) {
+      const toVal = (t.to == null || t.to >= 9999) ? '' : t.to;
+      return `<div class="tier-ed-row" style="display:grid;grid-template-columns:1fr 1fr 1fr 32px;gap:8px;align-items:center;">
+        <input class="form-control tier-from" type="number" min="1" value="${t.from || 1}" placeholder="From"
+          style="font-size:12px;text-align:center;" oninput="_tierEdPreview()">
+        <input class="form-control tier-to" type="number" min="1" value="${toVal}" placeholder="∞ (open)"
+          style="font-size:12px;text-align:center;" oninput="_tierEdPreview()">
+        <input class="form-control tier-pts" type="number" min="0" step="0.5" value="${t.pts || 0}" placeholder="0"
+          style="font-size:12px;text-align:center;" oninput="_tierEdPreview()">
+        <button class="btn btn-outline btn-sm" style="width:32px;padding:0;"
+          onclick="this.closest('.tier-ed-row').remove();_tierEdPreview()">
+          <i class="ti ti-trash"></i>
+        </button>
+      </div>`;
+    }
+
+    function addTierRow() {
+      const rows = document.getElementById('tier-ed-rows'); if (!rows) return;
+      // Auto-set from = last row's to + 1
+      const lastTo = [...rows.querySelectorAll('.tier-to')].at(-1);
+      const nextFrom = lastTo?.value ? +lastTo.value + 1 : 1;
+      const div = document.createElement('div');
+      div.innerHTML = _tierRowHtml({ from: nextFrom, to: null, pts: 0 }, rows.children.length);
+      rows.appendChild(div.firstElementChild);
+      _tierEdPreview();
+    }
+
+    function _tierEdPreview() {
+      const rows = document.getElementById('tier-ed-rows');
+      const prev = document.getElementById('tier-ed-preview');
+      if (!rows || !prev) return;
+      const tiers = _readTierRows();
+      if (!tiers.length) { prev.innerHTML = ''; return; }
+      // Show simulation for a few qty values
+      const testQtys = [1, 3, 5, 8, 10, 15, 20].filter(q => q <= (tiers.at(-1)?.to || 999) + 10 || tiers.at(-1)?.to == null);
+      const rows2 = testQtys.map(q => {
+        const pts = calcPtsForTiers(tiers, q);
+        return `<tr><td style="padding:3px 8px;font-size:12px;">${q} unit${q > 1 ? 's' : ''}</td><td style="padding:3px 8px;font-size:12px;font-weight:600;color:var(--navy);">${pts} pts</td><td style="padding:3px 8px;font-size:12px;color:var(--tx-3);">${tierCalcDetail(tiers, q).map(d => d.label).join(' + ')}</td></tr>`;
+      });
+      prev.innerHTML = `
+        <div style="font-size:11px;font-weight:600;color:var(--tx-3);text-transform:uppercase;margin-bottom:6px;">Live Preview</div>
+        <table style="width:100%;border-collapse:collapse;background:var(--bg-2,#f8f9fa);border-radius:6px;overflow:hidden;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:4px 8px;font-size:11px;color:var(--tx-3);text-align:left;">Qty</th>
+            <th style="padding:4px 8px;font-size:11px;color:var(--tx-3);">Points</th>
+            <th style="padding:4px 8px;font-size:11px;color:var(--tx-3);">Slab breakdown</th>
+          </tr></thead>
+          <tbody>${rows2.join('')}</tbody>
+        </table>`;
+    }
+
+    function _readTierRows() {
+      const rows = document.querySelectorAll('#tier-ed-rows .tier-ed-row');
+      const tiers = [];
+      rows.forEach(row => {
+        const from = +row.querySelector('.tier-from')?.value || 1;
+        const toEl = row.querySelector('.tier-to');
+        const to = toEl?.value !== '' && toEl?.value != null ? +toEl.value : null;
+        const pts = +row.querySelector('.tier-pts')?.value || 0;
+        tiers.push({ from, to, pts });
+      });
+      return tiers.sort((a, b) => a.from - b.from);
+    }
+
+    function saveTierEditor() {
+      const { pi, atId } = _tierEdState;
+      const R = DB.incentiveRules;
+      const pr = R.productRates[pi]; if (!pr) return;
+      if (!pr.rates) pr.rates = {};
+      pr.rates[atId] = _readTierRows();
+      // Update the button in the matrix
+      const btn = document.querySelector(`#rule-matrix-tbody button[data-pi="${pi}"][data-at="${atId}"]`);
+      if (btn) {
+        const summ = tierSummary(pr.rates[atId]);
+        const isMulti = pr.rates[atId].length > 1;
+        btn.textContent = summ;
+        btn.style.color = isMulti ? 'var(--navy)' : '';
+        btn.style.borderColor = isMulti ? 'var(--navy)' : '';
+      }
+      closeModal('modal-incentive-tier-editor');
+      showToast('success', 'Tiers Saved', pr.product + ' · ' + atId + ' — ' + pr.rates[atId].length + ' tier(s) configured.');
+    }
+
+    function ruleAddActivityType() {
+      const con = document.getElementById('rule-activity-types'); if (!con) return;
+      const div = document.createElement('div');
+      div.style.cssText = 'display:flex;gap:8px;align-items:center;';
+      div.innerHTML =
+        `<input class="form-control rat-label" placeholder="Activity type name (e.g. Maintenance)" style="flex:1;">
+         <button class="btn btn-outline btn-sm" onclick="this.closest('div').remove();_ruleRenderMatrix();" title="Remove"><i class="ti ti-trash"></i></button>`;
+      con.appendChild(div);
+    }
+
+    function _pvSlabRow(from, to, rate) {
+      const toVal = (to == null || to === '' || +to >= 9999) ? '' : to;
+      return `<tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:4px;"><input type="number" class="form-control pv-from" value="${from || 1}" min="1" style="width:80px;"></td>
+        <td style="padding:4px;"><input type="number" class="form-control pv-to" value="${toVal}" placeholder="∞" style="width:80px;"></td>
+        <td style="padding:4px;"><input type="number" class="form-control pv-rate" value="${rate || 0}" min="0" step="0.01" style="width:100px;"></td>
+        <td style="padding:4px;"><button class="btn btn-outline btn-sm" onclick="this.closest('tr').remove()" title="Remove"><i class="ti ti-trash"></i></button></td>
+      </tr>`;
+    }
+
+    function pvAddSlab() {
+      const body = document.getElementById('pv-slab-body');
+      if (!body) return;
+      const rows = body.querySelectorAll('tr');
+      let nextFrom = 1;
+      if (rows.length) {
+        const lastTo = rows[rows.length - 1].querySelector('.pv-to')?.value;
+        nextFrom = lastTo ? +lastTo + 1 : 1;
+      }
+      body.insertAdjacentHTML('beforeend', _pvSlabRow(nextFrom, '', 0));
+    }
+
+    function openIncentiveRulesModal() {
+      switchIncRuleTab('product');
+      const R = DB.incentiveRules;
+      const AT = R.activityTypes || [];
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+
+      // Load pointValueTiers into slab table
+      const pvBody = document.getElementById('pv-slab-body');
+      if (pvBody) {
+        const pvTiers = R.pointValueTiers || (R.pointValue ? [{ from: 1, to: null, rate: R.pointValue }] : [{ from: 1, to: null, rate: 150 }]);
+        pvBody.innerHTML = pvTiers.map(t => _pvSlabRow(t.from, t.to, t.rate)).join('');
+      }
+
+      setVal('rule-km-thresh', R.kmThreshold || 300);
+      setVal('rule-km-bonus', R.travelBonus || 500);
+      setVal('rule-ot-rate', R.otRate || 50);
+      setVal('rule-att-bonus', R.fullAttBonus || 500);
+
+      const trBody = document.getElementById('rule-travel-body');
+      if (trBody) {
+        trBody.innerHTML = '';
+        const rules = R.travelRules || [];
+        if (!rules.length && R.kmThreshold) rules.push({ km: R.kmThreshold, amt: R.travelBonus || 500, type: 'Day', count: 0 });
+        rules.forEach(r => ruleAddTravelRow(r));
+      }
+
+      const tgtBody = document.getElementById('rule-target-body');
+      if (tgtBody) {
+        tgtBody.innerHTML = '';
+        const rules = R.targetRules || [];
+        if (!rules.length && R.tgtThreshold) rules.push({ threshold: R.tgtThreshold, bonus: R.tgtBonus || 1000 });
+        rules.forEach(r => ruleAddTargetRow(r));
+      }
+
+      const scBody = document.getElementById('rule-service-conv-body');
+      if (scBody) {
+        scBody.innerHTML = '';
+        (R.svcConvRules || []).forEach(r => ruleAddServiceConvRow(r));
+      }
+
+      const atCon = document.getElementById('rule-activity-types');
+      if (atCon) atCon.innerHTML = AT.map(at =>
+        `<div style="display:flex;gap:8px;align-items:center;">
+           <input class="form-control rat-label" value="${at.label}" placeholder="Activity name" style="flex:1;">
+           <input type="hidden" class="rat-id" value="${at.id}">
+           <button class="btn btn-outline btn-sm" onclick="this.closest('div').remove();_ruleRenderMatrix();" title="Remove"><i class="ti ti-trash"></i></button>
+         </div>`
+      ).join('');
+
+      _ruleRenderMatrix();
+    }
+
+    function switchIncRuleTab(tab) {
+      ['product', 'bonus', 'travel', 'target', 'service-conv'].forEach(t => {
+        const btn = document.getElementById('inc-rule-tab-' + t);
+        const panel = document.getElementById('inc-rule-panel-' + t);
+        if (btn) btn.className = 'inc-tab' + (t === tab ? ' inc-tab-active' : '');
+        if (panel) panel.style.display = t === tab ? 'flex' : 'none';
+      });
+    }
+
+    function ruleAddServiceConvRow(data = {}) {
+      const body = document.getElementById('rule-service-conv-body');
+      if (!body) return;
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid var(--border-light,#eee)';
+      tr.innerHTML = `
+        <td style="padding:6px;"><input class="form-control tr-thresh" type="number" value="${data.threshold || ''}" placeholder="20"></td>
+        <td style="padding:6px;"><input class="form-control tr-bonus" type="number" value="${data.bonus || ''}" placeholder="500"></td>
+        <td style="padding:6px;text-align:right;"><button class="btn btn-ghost btn-xs text-danger" onclick="this.closest('tr').remove()"><i class="ti ti-trash"></i></button></td>
+      `;
+      body.appendChild(tr);
+    }
+
+    function ruleAddTargetRow(data = {}) {
+      const body = document.getElementById('rule-target-body');
+      if (!body) return;
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid var(--border-light,#eee)';
+      tr.innerHTML = `
+        <td style="padding:6px;"><input class="form-control tr-thresh" type="number" value="${data.threshold || ''}" placeholder="100"></td>
+        <td style="padding:6px;"><input class="form-control tr-bonus" type="number" value="${data.bonus || ''}" placeholder="1000"></td>
+        <td style="padding:6px;text-align:right;"><button class="btn btn-ghost btn-xs text-danger" onclick="this.closest('tr').remove()"><i class="ti ti-trash"></i></button></td>
+      `;
+      body.appendChild(tr);
+    }
+
+    function ruleAddTravelRow(data = {}) {
+      const body = document.getElementById('rule-travel-body');
+      if (!body) return;
+      const tr = document.createElement('tr');
+      tr.style.borderBottom = '1px solid var(--border-light,#eee)';
+      const type = data.type || (data.month > 0 ? 'Month' : 'Day');
+      const count = data.count ?? (data.month > 0 ? data.month : data.day ?? 0);
+      tr.innerHTML = `
+        <td style="padding:6px;"><input class="form-control tr-km" type="number" value="${data.km || ''}" placeholder="300"></td>
+        <td style="padding:6px;"><input class="form-control tr-amt" type="number" value="${data.amt || ''}" placeholder="500"></td>
+        <td style="padding:6px;">
+          <select class="form-control tr-type">
+            <option value="Day" ${type === 'Day' ? 'selected' : ''}>Day</option>
+            <option value="Month" ${type === 'Month' ? 'selected' : ''}>Month</option>
+          </select>
+        </td>
+        <td style="padding:6px;"><input class="form-control tr-count" type="number" value="${count}" placeholder="0"></td>
+        <td style="padding:6px;text-align:right;"><button class="btn btn-ghost btn-xs text-danger" onclick="this.closest('tr').remove()"><i class="ti ti-trash"></i></button></td>
+      `;
+      body.appendChild(tr);
+    }
+
+    function saveIncentiveRules() {
+      const getVal = (id, def) => parseFloat(document.getElementById(id)?.value) || def;
+
+      // Read pointValueTiers from slab table
+      const pvRows = document.querySelectorAll('#pv-slab-body tr');
+      DB.incentiveRules.pointValueTiers = [];
+      pvRows.forEach(row => {
+        const from = parseFloat(row.querySelector('.pv-from')?.value) || 1;
+        const toRaw = row.querySelector('.pv-to')?.value;
+        const to = (toRaw === '' || toRaw == null) ? null : parseFloat(toRaw);
+        const rate = parseFloat(row.querySelector('.pv-rate')?.value) || 0;
+        DB.incentiveRules.pointValueTiers.push({ from, to, rate });
+      });
+      if (!DB.incentiveRules.pointValueTiers.length) DB.incentiveRules.pointValueTiers = [{ from: 1, to: null, rate: 150 }];
+      delete DB.incentiveRules.pointValue; // remove legacy flat field
+
+      DB.incentiveRules.kmThreshold = getVal('rule-km-thresh', 300);
+      DB.incentiveRules.travelBonus = getVal('rule-km-bonus', 500);
+      DB.incentiveRules.otRate = getVal('rule-ot-rate', 50);
+      DB.incentiveRules.fullAttBonus = getVal('rule-att-bonus', 500);
+
+      const trRows = document.querySelectorAll('#rule-travel-body tr');
+      DB.incentiveRules.travelRules = [];
+      trRows.forEach(row => {
+        const km = parseFloat(row.querySelector('.tr-km')?.value) || 0;
+        const amt = parseFloat(row.querySelector('.tr-amt')?.value) || 0;
+        const type = row.querySelector('.tr-type')?.value || 'Day';
+        const count = parseFloat(row.querySelector('.tr-count')?.value) || 0;
+        if (km || amt) DB.incentiveRules.travelRules.push({ km, amt, type, count });
+      });
+
+      const tgtRows = document.querySelectorAll('#rule-target-body tr');
+      DB.incentiveRules.targetRules = [];
+      tgtRows.forEach(row => {
+        const threshold = parseFloat(row.querySelector('.tr-thresh')?.value) || 0;
+        const bonus = parseFloat(row.querySelector('.tr-bonus')?.value) || 0;
+        if (threshold || bonus) DB.incentiveRules.targetRules.push({ threshold, bonus });
+      });
+
+      const scRows = document.querySelectorAll('#rule-service-conv-body tr');
+      DB.incentiveRules.svcConvRules = [];
+      scRows.forEach(row => {
+        const threshold = parseFloat(row.querySelector('.tr-thresh')?.value) || 0;
+        const bonus = parseFloat(row.querySelector('.tr-bonus')?.value) || 0;
+        if (threshold || bonus) DB.incentiveRules.svcConvRules.push({ threshold, bonus });
+      });
+
+      // Read activity types — generate id from label if new
+      const atRows = document.querySelectorAll('#rule-activity-types > div');
+      DB.incentiveRules.activityTypes = [];
+      atRows.forEach(row => {
+        const label = row.querySelector('.rat-label')?.value.trim();
+        const idInp = row.querySelector('.rat-id');
+        if (!label) return;
+        const id = idInp?.value || label.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+        DB.incentiveRules.activityTypes.push({ id, label });
+      });
+
+      // Read product × activity matrix
+      const AT = DB.incentiveRules.activityTypes;
+      DB.incentiveRules.productRates = [];
+      document.querySelectorAll('#rule-matrix-tbody tr').forEach(tr => {
+        const name = tr.querySelector('.rpr-name')?.value.trim();
+        if (!name) return;
+        const rates = {};
+        tr.querySelectorAll('.rpr-rate').forEach(inp => {
+          if (inp.dataset.at) rates[inp.dataset.at] = parseFloat(inp.value) || 0;
+        });
+        // Also carry forward any activity ids not in current matrix (no deletion)
+        DB.incentiveRules.productRates.push({ product: name, rates });
+      });
+
+      closeModal('modal-incentive-rules');
+      showToast('success', 'Rules Saved', `${AT.length} activity types · ${DB.incentiveRules.productRates.length} products configured.`);
+    }
+
+    // Intercept openModal clicks for incentive modals
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('[onclick]');
+      if (!btn) return;
+      const oc = btn.getAttribute('onclick') || '';
+      if (oc.includes("'modal-hrm-incentive'")) { setTimeout(openModal_hrm_incentive_setup, 50); }
+      if (oc.includes("'modal-incentive-rules'")) { setTimeout(openIncentiveRulesModal, 50); }
+    }, true);
 
     /* ─── HRMS: REPORTS ─── */
     function initHRMReports() {
@@ -34294,19 +35764,6 @@
       DB.hrmLoans.push({ id: 'LN-' + String(DB.hrmLoans.length + 1).padStart(3, '0'), empId, empName: emp?.name || empId, type, principal, outstanding: principal, emi, start, status: 'Pending' });
       closeModal('modal-hrm-loan'); showToast('success', 'Loan Applied', 'Loan request submitted.');
       filterHRMLoans();
-    }
-
-    function saveIncentive() {
-      const empId = document.getElementById('minc-emp')?.value;
-      const rating = document.getElementById('minc-rating')?.value;
-      const amount = parseFloat(document.getElementById('minc-amount')?.value) || 0;
-      const remarks = document.getElementById('minc-remarks')?.value.trim();
-      const month = document.getElementById('minc-period')?.value || new Date().toISOString().slice(0, 7);
-      if (!empId || !rating || !amount) { showToast('error', 'Validation', 'Fill all fields.'); return; }
-      const emp = DB.employees.find(e => e.id === empId);
-      DB.hrmIncentives.push({ month, empId, empName: emp?.name || empId, dept: emp?.department || '', rating, amount, remarks, status: 'Pending' });
-      closeModal('modal-hrm-incentive'); showToast('success', 'Incentive Added', 'Record saved for approval.');
-      filterHRMIncentives();
     }
 
     /* Populate employee dropdowns whenever HRMS modals are opened */
