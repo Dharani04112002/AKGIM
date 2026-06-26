@@ -7712,6 +7712,27 @@
               <span class="nav-text">Installation Mgmt</span>
             </div>
 
+
+            <div class="nav-item" data-page="svc-visits" onclick="navigate('svc-visits',this)">
+              <i class="ti ti-map-pin nav-icon"></i>
+              <span class="nav-text">Service Visits</span>
+            </div>
+            <div class="nav-item" data-page="svc-feedback" onclick="navigate('svc-feedback',this)">
+              <i class="ti ti-thumb-up nav-icon"></i>
+              <span class="nav-text">Service Feedback</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ── AMC & WARRANTY ── -->
+        <div class="nav-group">
+          <div class="nav-parent" onclick="toggleGroup(this)">
+            <i class="ti ti-shield-check nav-icon"></i>
+            <span class="nav-text">AMC & Warranty</span>
+            <i class="ti ti-chevron-right nav-arrow"></i>
+          </div>
+          <div class="sb-sub-group">
             <div class="nav-item" data-page="svc-amc-req" onclick="navigate('svc-amc-req',this)">
               <i class="ti ti-clipboard-data nav-icon"></i>
               <span class="nav-text">AMC Requirement</span>
@@ -7728,15 +7749,6 @@
               <i class="ti ti-calendar-stats nav-icon"></i>
               <span class="nav-text">PM Management</span>
             </div>
-            <div class="nav-item" data-page="svc-visits" onclick="navigate('svc-visits',this)">
-              <i class="ti ti-map-pin nav-icon"></i>
-              <span class="nav-text">Service Visits</span>
-            </div>
-            <div class="nav-item" data-page="svc-feedback" onclick="navigate('svc-feedback',this)">
-              <i class="ti ti-thumb-up nav-icon"></i>
-              <span class="nav-text">Service Feedback</span>
-            </div>
-
           </div>
         </div>
 
@@ -8604,7 +8616,7 @@
                   <div class="ls-icon"><i class="ti ti-tools"></i></div>
                   <div class="ls-title">Service</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">9 modules</div>
+                  <div class="ls-count">5 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('svc-requests',null)">
@@ -8622,6 +8634,29 @@
                     <div class="ls-card-title">Installation Mgmt</div>
                     <div class="ls-card-desc">Manage installations</div>
                   </div>
+
+                  <div class="ls-card" onclick="navigate('svc-visits',null)">
+                    <div class="ls-card-icon"><i class="ti ti-map-pin"></i></div>
+                    <div class="ls-card-title">Service Visits</div>
+                    <div class="ls-card-desc">On-site service visits</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-feedback',null)">
+                    <div class="ls-card-icon"><i class="ti ti-thumb-up"></i></div>
+                    <div class="ls-card-title">Service Feedback</div>
+                    <div class="ls-card-desc">Customer feedback</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section: AMC & Warranty -->
+              <div class="launcher-section theme-indigo">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-shield-check"></i></div>
+                  <div class="ls-title">AMC & Warranty</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">4 modules</div>
+                </div>
+                <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('svc-amc-req',null)">
                     <div class="ls-card-icon"><i class="ti ti-clipboard-data"></i></div>
                     <div class="ls-card-title">AMC Requirement</div>
@@ -8641,16 +8676,6 @@
                     <div class="ls-card-icon"><i class="ti ti-calendar-stats"></i></div>
                     <div class="ls-card-title">PM Management</div>
                     <div class="ls-card-desc">Preventive maintenance</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('svc-visits',null)">
-                    <div class="ls-card-icon"><i class="ti ti-map-pin"></i></div>
-                    <div class="ls-card-title">Service Visits</div>
-                    <div class="ls-card-desc">On-site service visits</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('svc-feedback',null)">
-                    <div class="ls-card-icon"><i class="ti ti-thumb-up"></i></div>
-                    <div class="ls-card-title">Service Feedback</div>
-                    <div class="ls-card-desc">Customer feedback</div>
                   </div>
                 </div>
               </div>
@@ -21082,6 +21107,7 @@
                   <div class="form-group"><label class="form-label">GSTIN</label><input class="form-control"
                       id="fs-gstin">
                   </div>
+
                   <div class="form-group"><label class="form-label">PAN</label><input class="form-control" id="fs-pan">
                   </div>
                   <div class="form-group"><label class="form-label">City</label><input class="form-control"
@@ -21267,7 +21293,7 @@
       'svc-assignjobs': { title: 'Assign Jobs', crumbs: ['Service', 'Assign Jobs'], module: 'service' },
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
-      'svc-pm': { title: 'PM Management', crumbs: ['Service', 'PM Management'], module: 'service' },
+      'svc-pm': { title: 'PM Management', crumbs: ['AMC & Warranty', 'PM Management'], module: 'amc-warranty' },
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
@@ -21301,11 +21327,11 @@
       'sal-buyback': { title: 'Buy Back', crumbs: ['Inventory', 'Buy Back'], module: 'inventory' },
       // Installation Mgmt
       'svc-installation': { title: 'Installation Mgmt', crumbs: ['Service', 'Installation'], module: 'service' },
-      'svc-amc-req': { title: 'AMC Requirement', crumbs: ['Service', 'AMC Requirement'], module: 'service' },
-      'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['Service', 'AMC Quotes'], module: 'service' },
+      'svc-amc-req': { title: 'AMC Requirement', crumbs: ['AMC & Warranty', 'AMC Requirement'], module: 'amc-warranty' },
+      'svc-amc-quotes': { title: 'AMC Quotes', crumbs: ['AMC & Warranty', 'AMC Quotes'], module: 'amc-warranty' },
       // AMC & Warranty
       'svc-amc': { title: 'AMC & Warranty', crumbs: ['Reports', 'AMC & Warranty'], module: 'reports' },
-      'svc-amc-contract': { title: 'AMC Contract', crumbs: ['Service', 'AMC Contract'], module: 'service' },
+      'svc-amc-contract': { title: 'AMC Contract', crumbs: ['AMC & Warranty', 'AMC Contract'], module: 'amc-warranty' },
       // Service Management (Extended)
       'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
       'svc-feedback': { title: 'Service Feedback', crumbs: ['Service', 'Feedback'], module: 'service' },
