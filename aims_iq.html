@@ -15226,6 +15226,7 @@
                   New Buy Back</button>
               </div>
             </div>
+            <div class="kpi-grid kpi-grid-4 mb-4" id="sal-buyback-kpi"></div>
             <div class="card">
               <div class="card-header">
                 <div class="card-title"><i class="ti ti-arrows-left-right"></i> Buy Back List</div>
@@ -21098,8 +21099,8 @@
           </div>
 
           <!-- ── SALES: BUY BACK MODAL ──────────────────────── -->
-          <div class="modal-wrap" id="modal-sal-buyback">
-            <div class="modal" style="max-width: 800px;">
+          <div class="modal-wrap" id="modal-sal-buyback" style="width: 800px;">
+            <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-refresh"></i> New Buy Back</div>
                 <button class="modal-close" onclick="closeModal('modal-sal-buyback')"><i class="ti ti-x"></i></button>
@@ -21138,7 +21139,7 @@
                   <div class="form-group"><label class="form-label">GST Amount</label>
                     <input class="form-control" type="number" id="mbb-gst-amount" value="0" readonly>
                   </div>
-                  <div class="form-group"><label class="form-label">Final Amount</label>
+                  <div class="form-group" style="grid-column: span 2;"><label class="form-label">Final Amount</label>
                     <input class="form-control" type="number" id="mbb-final-amount" value="0" readonly>
                   </div>
                 </div>
@@ -32743,6 +32744,15 @@
     function initSalBuyback() {
       const tbody = document.getElementById('sal-buyback-tbody'); if (!tbody) return;
       tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state">No buy back transactions found.</div></td></tr>`;
+
+      const kpi = document.getElementById('sal-buyback-kpi');
+      if (kpi) {
+        kpi.innerHTML = `
+          <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Total Buy Backs</div><div class="kpi-val">0</div></div><div class="kpi-icon blue"><i class="ti ti-refresh"></i></div></div><div class="kpi-sub neutral">All time</div></div>
+          <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending Review</div><div class="kpi-val">0</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Awaiting action</div></div>
+          <div class="kpi-card red"><div class="kpi-head"><div><div class="kpi-label">Needs Repair</div><div class="kpi-val">0</div></div><div class="kpi-icon red"><i class="ti ti-tool"></i></div></div><div class="kpi-sub down">Damaged units</div></div>
+          <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Total Value</div><div class="kpi-val">₹ 0</div></div><div class="kpi-icon green"><i class="ti ti-currency-rupee"></i></div></div><div class="kpi-sub neutral">Refunds issued</div></div>`;
+      }
 
       // Populate product select
       const prodSel = document.getElementById('mbb-product');
