@@ -12247,7 +12247,7 @@
                       onclick="event.preventDefault(); addMReqCustomField()"><i class="ti ti-plus"></i> Add
                       Field</button>
                   </div>
-                  <div id="mreq-cf-container"></div>
+                  <div id="mreq-cf-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;"></div>
                 </div>
 
                 <div id="mreq-history-wrap"
@@ -21659,7 +21659,7 @@
                       <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerFieldRow()"
                         style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Field</button>
                     </div>
-                    <div id="fc-custom-fields-wrap" style="display:flex; flex-direction:column; gap:8px;"></div>
+                    <div id="fc-custom-fields-wrap" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"></div>
                   </div>
                   <div class="form-group form-col-2" style="margin-top: 16px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -25364,7 +25364,7 @@
     function addCustomerFieldRow() {
       const wrap = document.getElementById('fc-custom-fields-wrap');
       const div = document.createElement('div');
-      div.style.cssText = "display: grid; grid-template-columns: 1fr 1fr 36px; gap: 8px; align-items: center; max-width: 50%; margin-bottom: 8px;";
+      div.style.cssText = "display: grid; grid-template-columns: 1fr 1fr 36px; gap: 8px; align-items: center;";
       div.innerHTML = `
         <input type="text" class="form-control" placeholder="Field Name (e.g. Website)">
         <input type="text" class="form-control" placeholder="Value">
@@ -30561,7 +30561,7 @@
       const container = document.getElementById('mreq-cf-container');
       if (!container) return;
       const div = document.createElement('div');
-      div.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr 36px; gap: 8px; margin-bottom: 8px; max-width: 50%;';
+      div.style.cssText = 'display: grid; grid-template-columns: 1fr 1fr 36px; gap: 8px;';
       div.className = 'mreq-cf-row';
       div.innerHTML = `
         <input class="form-control mreq-cf-key" placeholder="Key (e.g. Warranty)" value="${key}">
