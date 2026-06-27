@@ -35202,7 +35202,7 @@
       if (cnt) cnt.textContent = _hrmEmpRows.length;
       const start = (_hrmEmpPage - 1) * _hrmEmpPer, slice = _hrmEmpRows.slice(start, start + _hrmEmpPer);
       const typMap = { 'Engineering': 'Permanent', 'Sales': 'Permanent', 'HR': 'Permanent', 'Finance': 'Contract', 'Operations': 'Permanent', 'Marketing': 'Contract', 'Logistics': 'Daily' };
-      tbody.innerHTML = slice.map(e => `<tr onclick="openHRMEmpView('${e.id}')" style="cursor:pointer;">
+      tbody.innerHTML = slice.map(e => `<tr onclick="editHRMEmployee('${e.id}')" style="cursor:pointer;">
         <td><b>${e.id}</b></td>
         <td><div style="display:flex;align-items:center;gap:8px;"><div style="width:30px;height:30px;border-radius:50%;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:var(--navy);">${e.name.charAt(0)}</div>${e.name}</div></td>
         <td>${e.department}</td><td>${e.designation}</td>
@@ -35211,8 +35211,7 @@
         <td>₹${fmt(e.salary)}</td>
         <td><span class="badge badge-blue no-dot">Bank Transfer</span></td>
         <td><span class="badge ${e.status === 'Active' ? 'badge-green' : 'badge-amber'} no-dot">${e.status}</span></td>
-        <td><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openHRMEmpView('${e.id}')"><i class="ti ti-eye"></i></button>
-            <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();showToast('info','Edit','Edit form coming soon.')"><i class="ti ti-edit"></i></button></td>
+        <td><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editHRMEmployee('${e.id}')"><i class="ti ti-edit"></i></button></td>
       </tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:var(--tx-3);">No employees found</td></tr>';
       renderPagination('hrm-emp-pagination', _hrmEmpRows.length, _hrmEmpPage, _hrmEmpPer, p => { _hrmEmpPage = p; renderHRMEmpTable(); });
     }
