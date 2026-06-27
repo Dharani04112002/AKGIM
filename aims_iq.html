@@ -7772,6 +7772,10 @@
               <i class="ti ti-replace nav-icon"></i>
               <span class="nav-text">Standby Asset Mgmt</span>
             </div>
+            <div class="nav-item" data-page="svc-repair-tracker" onclick="navigate('svc-repair-tracker',this)">
+              <i class="ti ti-tool nav-icon"></i>
+              <span class="nav-text">Repair & PCB Tracker</span>
+            </div>
 
           </div>
         </div>
@@ -11853,7 +11857,7 @@
 
             <!-- Tabbed View -->
             <div class="card">
-              <div class="card-header" style="flex-wrap:wrap; gap:16px;">
+              <div class="card-header" style="flex-wrap:wrap; gap:16px; align-items: center;">
                 <div class="card-tabs">
                   <div class="card-tab active" id="stb-tab-issued" onclick="switchStandbyTab('issued')">
                     <i class="ti ti-replace"></i> Issuance Tracker
@@ -11930,6 +11934,111 @@
               </div>
             </div>
           </div><!-- /#page-svc-standby -->
+
+          <!-- REPAIR & PCB TRACKER -->
+          <div class="page" id="page-svc-repair-tracker">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Repair & PCB Tracker</div>
+                <div class="page-sub">Monitor internal and outsource (vendor) component repairs</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-outline" onclick="exportRepairData()"><i class="ti ti-download"></i>
+                  Export</button>
+                <button class="btn btn-primary" onclick="openNewRepairModal()"><i class="ti ti-plus"></i> Log New
+                  Repair</button>
+              </div>
+            </div>
+
+            <!-- KPI Row -->
+            <div class="kpi-grid kpi-grid-4 mb-4">
+              <div class="kpi-card blue">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Total Items</div>
+                    <div class="kpi-val" id="rep-kpi-total">0</div>
+                  </div>
+                  <div class="kpi-icon blue"><i class="ti ti-report"></i></div>
+                </div>
+                <div class="kpi-sub neutral">Overall volume</div>
+              </div>
+              <div class="kpi-card amber">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">In-House Repair</div>
+                    <div class="kpi-val" id="rep-kpi-inhouse">0</div>
+                  </div>
+                  <div class="kpi-icon amber"><i class="ti ti-tool"></i></div>
+                </div>
+                <div class="kpi-sub warn">Currently processing</div>
+              </div>
+              <div class="kpi-card purple">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">At Outsource</div>
+                    <div class="kpi-val" id="rep-kpi-outsource">0</div>
+                  </div>
+                  <div class="kpi-icon purple"><i class="ti ti-truck-delivery"></i></div>
+                </div>
+                <div class="kpi-sub neutral">With vendor partners</div>
+              </div>
+              <div class="kpi-card green">
+                <div class="kpi-head">
+                  <div>
+                    <div class="kpi-label">Ready / Fixed</div>
+                    <div class="kpi-val" id="rep-kpi-ready">0</div>
+                  </div>
+                  <div class="kpi-icon green"><i class="ti ti-circle-check"></i></div>
+                </div>
+                <div class="kpi-sub up">Awaiting dispatch</div>
+              </div>
+            </div>
+
+            <!-- Filters & Table -->
+            <div class="card">
+              <div class="card-header" style="align-items: center;">
+                <div class="card-tabs">
+                  <div class="card-tab active" id="rep-tab-all" onclick="switchRepairTab('all')"><i
+                      class="ti ti-layout-list"></i> All Reports</div>
+                  <div class="card-tab" id="rep-tab-outsource" onclick="switchRepairTab('outsource')"><i
+                      class="ti ti-truck-delivery"></i> Outsource PCB
+                  </div>
+                </div>
+                <div class="ml-auto" style="display:flex; gap:12px;">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="rep-search"
+                      placeholder="Search SCN/Client..." oninput="renderRepairTracker()"></div>
+                  <select class="select-sm" id="rep-filter-status" onchange="renderRepairTracker()">
+                    <option value="">All Status</option>
+                    <option value="In-House">In-House</option>
+                    <option value="Outsource">At Outsource</option>
+                    <option value="Fixed">Fixed / Ready</option>
+                    <option value="Returned">Returned to Site</option>
+                  </select>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="data-tbl">
+                  <thead>
+                    <tr>
+                      <th>SCN</th>
+                      <th>Component</th>
+                      <th>Customer</th>
+                      <th>Status</th>
+                      <th>Assigned To / Vendor</th>
+                      <th>Date In</th>
+                      <th>Ready Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rep-tracker-tbody"></tbody>
+                </table>
+              </div>
+              <div class="pagination-bar" style="padding:12px 16px; border-top:1px solid var(--border);">
+                <div class="text-muted" style="font-size:12px;">Showing <span id="rep-visible-count">0</span> records
+                </div>
+              </div>
+            </div>
+          </div><!-- /#page-svc-repair-tracker -->
 
 
           <!-- TECHNICIANS -->
@@ -15344,6 +15453,86 @@
             </div>
           </div>
 
+          <!-- REPAIR ENTRY DRAWER -->
+          <div class="c360-overlay" id="rep-add-overlay" onclick="closeRepairAddPanel()"></div>
+          <div class="c360-drawer" id="panel-svc-repair-add"
+            style="width: 70%; padding: 0; display: flex; flex-direction: column;">
+            <div
+              style="padding: 24px; border-bottom: 1px solid var(--border-light,#eee); display: flex; align-items: center; justify-content: space-between; background: #fff;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div
+                  style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.1); color: #6366F1; display: flex; align-items: center; justify-content: center;">
+                  <i class="ti ti-plus" style="font-size: 18px;"></i>
+                </div>
+                <div style="font-size: 16px; font-weight: 700; color: #0F172A;">Log New Repair Component</div>
+              </div>
+              <button onclick="closeRepairAddPanel()"
+                style="background: none; border: none; color: #64748B; font-size: 20px; cursor: pointer; padding: 4px; border-radius: 6px;">
+                <i class="ti ti-x"></i>
+              </button>
+            </div>
+
+            <div style="flex: 1; overflow-y: auto; padding: 24px; background: #f8fafc;">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">Repair Details</div>
+                </div>
+                <div class="card-body">
+                  <div class="form-group mb-4">
+                    <label class="form-label">Service Request / SCN</label>
+                    <select class="form-control" id="mrep-scn">
+                      <option value="">-- Manual Entry or Select SR --</option>
+                      <option>SR-4401</option>
+                      <option>SR-4405</option>
+                      <option>SR-4412</option>
+                    </select>
+                  </div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                    <div class="form-group mb-4">
+                      <label class="form-label">Component Name</label>
+                      <input type="text" class="form-control" id="mrep-component"
+                        placeholder="e.g. Logic PCB, Display Unit">
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="form-label">Customer Name</label>
+                      <input type="text" class="form-control" id="mrep-customer" placeholder="Client name">
+                    </div>
+                  </div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;" class="mb-4">
+                    <div class="form-group">
+                      <label class="form-label">Initial Status</label>
+                      <select class="form-control" id="mrep-status">
+                        <option value="In-House">In-House</option>
+                        <option value="Outsource">Outsource</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Date Received</label>
+                      <input type="date" class="form-control" id="mrep-date">
+                    </div>
+                  </div>
+                  <div class="form-group mb-4" id="mrep-vendor-group" style="display:none;">
+                    <label class="form-label">Repair Vendor</label>
+                    <input type="text" class="form-control" id="mrep-vendor" placeholder="Name of outsource partner">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Initial Observations / Fault</label>
+                    <textarea class="form-control" id="mrep-notes" rows="6"
+                      placeholder="Describe the issue..."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="padding: 20px 24px; border-top: 1px solid var(--border-light,#eee); background: #fff; display: flex; gap: 12px; justify-content: flex-end;">
+              <button class="btn btn-outline" style="min-width: 100px;" onclick="closeRepairAddPanel()">Cancel</button>
+              <button class="btn btn-primary" style="flex: 1;" onclick="saveRepairEntry()">
+                <i class="ti ti-check"></i> Register Component
+              </button>
+            </div>
+          </div>
+
           <!-- ── SERVICE: FEEDBACK ────────────────────────────── -->
           <div class="page" id="page-svc-feedback">
             <div class="page-header">
@@ -18518,8 +18707,11 @@
                           </select></td>
                         <td>
                           <div style="position:relative;">
-                            <input type="number" class="form-control" style="width:70px;" value="1" min="1" oninput="mquoCalcTotals()">
-                            <div class="mquo-stk" style="font-size:10px;color:var(--text-secondary);margin-top:2px;position:absolute;left:0;white-space:nowrap;"></div>
+                            <input type="number" class="form-control" style="width:70px;" value="1" min="1"
+                              oninput="mquoCalcTotals()">
+                            <div class="mquo-stk"
+                              style="font-size:10px;color:var(--text-secondary);margin-top:2px;position:absolute;left:0;white-space:nowrap;">
+                            </div>
                           </div>
                         </td>
                         <td><input type="number" class="form-control" style="width:100px;" value="0"
@@ -19074,11 +19266,14 @@
               <div class="modal-body" style="overflow-y:auto;flex:1;padding:0;">
                 <div class="tabs" style="padding:0 20px;margin-bottom:0;border-bottom:1px solid var(--border);">
                   <div class="tab-item active" id="amcq-tab-details" onclick="amcqSwitchTab('details')">Details</div>
-                  <div class="tab-item" id="amcq-tab-history" onclick="amcqSwitchTab('history')">Version History <span id="vamcq-ver-count" class="badge badge-gray" style="margin-left:6px;font-size:10px;">1</span></div>
+                  <div class="tab-item" id="amcq-tab-history" onclick="amcqSwitchTab('history')">Version History <span
+                      id="vamcq-ver-count" class="badge badge-gray" style="margin-left:6px;font-size:10px;">1</span>
+                  </div>
                 </div>
-                
+
                 <div id="amcq-pane-details" style="padding:20px;">
-                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;" id="vamcq-kpi"></div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;"
+                    id="vamcq-kpi"></div>
                   <div class="card" style="margin-bottom:16px;">
                     <div class="card-header">
                       <div class="card-title"><i class="ti ti-info-circle"></i> Quote Details</div>
@@ -19111,30 +19306,35 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div id="amcq-pane-history" style="padding:20px;display:none;">
                   <div class="quo-hist-wrap">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
                       <div>
-                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                        <div
+                          style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
                           <i class="ti ti-git-branch" style="color:#1479C9;"></i> Version Timeline
                         </div>
                         <div class="quo-ver-timeline" id="vamcq-ver-timeline"></div>
                       </div>
                       <div>
-                        <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                        <div
+                          style="font-size:12px;font-weight:700;color:#374151;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
                           <i class="ti ti-activity" style="color:#1479C9;"></i> Activity Log
                         </div>
                         <div class="quo-act-log" id="vamcq-act-log"></div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div id="vamcq-ver-detail" style="display:none;margin-top:20px;">
                     <div class="card">
                       <div class="card-header">
-                        <div class="card-title" id="vamcq-ver-detail-title"><i class="ti ti-file-text"></i> Version Detail</div>
-                        <button class="btn btn-ghost btn-icon-sm" onclick="document.getElementById('vamcq-ver-detail').style.display='none'"><i class="ti ti-x"></i></button>
+                        <div class="card-title" id="vamcq-ver-detail-title"><i class="ti ti-file-text"></i> Version
+                          Detail</div>
+                        <button class="btn btn-ghost btn-icon-sm"
+                          onclick="document.getElementById('vamcq-ver-detail').style.display='none'"><i
+                            class="ti ti-x"></i></button>
                       </div>
                       <div class="card-body" style="padding:0; overflow-x:auto;">
                         <table class="data-tbl" style="margin-bottom:0; min-width:800px;">
@@ -21874,6 +22074,7 @@
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
       'svc-pm': { title: 'PM Management', crumbs: ['AMC & Warranty', 'PM Management'], module: 'amc-warranty' },
       'svc-standby': { title: 'Standby Management', crumbs: ['Service', 'Standby Management'], module: 'service' },
+      'svc-repair-tracker': { title: 'Repair & PCB Tracker', crumbs: ['Service', 'Repair & PCB Tracker'], module: 'service' },
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
@@ -23490,7 +23691,14 @@
       { id: 'STB-005', name: 'High Precision Volt Meter', sn: 'STB-8832', category: 'Safety', condition: 'Excellent', status: 'Available', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] }
     ];
 
-    DB.serviceTickets = [];
+    DB.repairTracker = [
+      { id: 'REP-001', scn: 'SR-0012', component: 'Inverter Logic PCB', customer: 'Bharat Forge', status: 'In-House', vendor: '-', dateIn: '2024-06-20', ready: false, comments: 'Component burnout suspected' },
+      { id: 'REP-002', scn: 'SR-0015', component: 'Charger Controller Card', customer: 'TVS Motors', status: 'Outsource', vendor: 'PCB Tech Solutions', dateIn: '2024-06-18', dateSent: '2024-06-22', ready: false, comments: 'Sent for surface mount repair' },
+      { id: 'REP-003', scn: 'SR-0018', component: 'Display Unit Module', customer: 'Titan Industries', status: 'Fixed', vendor: '-', dateIn: '2024-06-22', ready: true, comments: 'Backlight replaced' },
+      { id: 'REP-004', scn: 'SR-0022', component: 'Servo Motor Controller', customer: 'Apollo Tyres', status: 'In-House', vendor: '-', dateIn: '2024-06-24', ready: false, comments: 'Calibration pending' },
+      { id: 'REP-005', scn: 'SR-0025', component: 'Thyristor Bank', customer: 'MRF Tyres', status: 'Outsource', vendor: 'Micro Electronics', dateIn: '2024-06-21', dateSent: '2024-06-23', ready: false, comments: 'Complex component replacement' }
+    ];
+
     DB.serviceRequests = Array.from({ length: 20 }, (_, i) => ({
       id: `SR-${String(i + 1).padStart(4, '0')}`,
       customer: spick(DB.customers).name,
@@ -23639,6 +23847,39 @@
     DB.payrollHistory = ['May 2026', 'April 2026', 'March 2026', 'February 2026'].map(m => ({
       month: m, emps: si(80, 95), gross: si(25, 35) * 100000, ded: si(2, 4) * 100000, status: 'Paid'
     }));
+
+    DB.repairTracker = [
+      {
+        id: 'REP-012', scn: 'SR-0012', component: 'Inverter Logic PCB', customer: 'Bharat Forge',
+        status: 'In-House', vendor: '-', dateIn: '2026-06-25', ready: false, comments: 'Secondary side MOSFET short',
+        history: [
+          { date: '2026-06-25T10:00:00Z', action: 'In-House', actor: 'Service Team', details: 'Component received at office' }
+        ]
+      },
+      {
+        id: 'REP-015', scn: 'SR-0015', component: 'Charger Controller Card', customer: 'TVS Motors',
+        status: 'Outsource', vendor: 'PCB Tech Solutions', dateIn: '2026-06-24', ready: false, comments: 'Burn marks near MCU',
+        history: [
+          { date: '2026-06-24T09:30:00Z', action: 'In-House', actor: 'Service Team', details: 'Initial inspection' },
+          { date: '2026-06-24T14:00:00Z', action: 'Outsource', actor: 'PCB Tech Solutions', details: 'Sent to vendor for MCU replacement' }
+        ]
+      },
+      {
+        id: 'REP-018', scn: 'SR-0018', component: 'Display Unit Module', customer: 'Titan Industries',
+        status: 'Fixed', vendor: '-', dateIn: '2026-06-23', ready: true, comments: 'Ribbon cable replacement',
+        history: [
+          { date: '2026-06-23T11:00:00Z', action: 'In-House', actor: 'Service Team', details: 'Received' },
+          { date: '2026-06-23T16:45:00Z', action: 'Fixed', actor: 'PCB Tech!', details: 'Repaired and tested OK' }
+        ]
+      },
+      {
+        id: 'REP-022', scn: 'SR-0022', component: 'Servo Motor Controller', customer: 'Apollo Tyres',
+        status: 'In-House', vendor: '-', dateIn: '2026-06-26', ready: false, comments: 'Drive failure alarm',
+        history: [
+          { date: '2026-06-26T15:20:00Z', action: 'In-House', actor: 'Service Team', details: 'Opened for diagnostics' }
+        ]
+      }
+    ];
 
     /* Update nav badges with real counts */
     function updateNavBadges() {
@@ -24564,6 +24805,7 @@
       once('svc-technicians', initSvcTechnicians);
       once('svc-reports', initSvcReports);
       once('svc-standby', initSvcStandby);
+      once('svc-repair-tracker', initSvcRepairTracker);
       once('ai-dashboard', initAIDashboard);
       once('ai-insights', initAIInsights);
       once('ai-recommendations', initAIRecommendations);
@@ -29618,6 +29860,11 @@
         }
       }
     }
+    /* =========================================================================
+       MODULE: SERVICE - STANDBY ASSET MANAGEMENT
+       Estimated Lines: ~150
+       Dependencies: DB.standbyPool, DB.serviceRequests, addStandbyHistory
+       ========================================================================= */
 
     function renderStandbyTable() {
       const tbody = document.getElementById('svc-standby-tbody');
@@ -29762,6 +30009,317 @@
       document.getElementById('mstb-sn').value = '';
       document.getElementById('mstb-notes').value = '';
     }
+
+    /* =========================================================================
+       MODULE: SERVICE - REPAIR & PCB TRACKER
+       Estimated Lines: ~200
+       Dependencies: DB.repairTracker
+       ========================================================================= */
+
+    let repairTrackerTab = 'all';
+
+    function initSvcRepairTracker() {
+      renderRepairTracker();
+    }
+
+    function switchRepairTab(tab) {
+      repairTrackerTab = tab;
+      const tAll = document.getElementById('rep-tab-all');
+      const tOut = document.getElementById('rep-tab-outsource');
+      if (tAll) tAll.classList.toggle('active', tab === 'all');
+      if (tOut) tOut.classList.toggle('active', tab === 'outsource');
+
+      // Update status filter if switching to outsource tab
+      const statusFilter = document.getElementById('rep-filter-status');
+      if (tab === 'outsource' && statusFilter) {
+        statusFilter.value = 'Outsource';
+      } else if (tab === 'all' && statusFilter) {
+        statusFilter.value = '';
+      }
+
+      renderRepairTracker();
+    }
+
+    function renderRepairTracker() {
+      const tbody = document.getElementById('rep-tracker-tbody');
+      if (!tbody) return;
+
+      const search = (document.getElementById('rep-search')?.value || '').toLowerCase();
+      const statusFilter = document.getElementById('rep-filter-status')?.value;
+
+      let data = DB.repairTracker || [];
+
+      // Search and Status filtering
+      data = data.filter(d => {
+        const matchesSearch = !search ||
+          d.scn.toLowerCase().includes(search) ||
+          d.customer.toLowerCase().includes(search) ||
+          d.component.toLowerCase().includes(search);
+
+        const matchesStatus = !statusFilter || d.status === statusFilter;
+        return matchesSearch && matchesStatus;
+      });
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted" style="padding:40px;">No repair records found matching filters.</td></tr>`;
+      } else {
+        tbody.innerHTML = data.map(d => {
+          let statusTag = 'tag-gray';
+          if (d.status === 'In-House') statusTag = 'tag-amber';
+          if (d.status === 'Outsource') statusTag = 'tag-purple';
+          if (d.status === 'Fixed') statusTag = 'tag-green';
+          if (d.status === 'Returned') statusTag = 'tag-blue';
+
+          return `
+            <tr>
+              <td class="font-600">${d.scn}</td>
+              <td>${d.component}</td>
+              <td>${d.customer}</td>
+              <td><span class="tag ${statusTag}">${d.status}</span></td>
+              <td>${d.vendor || '-'}</td>
+              <td>${d.dateIn}</td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button class="tag ${d.ready ? 'tag-green' : 'tag-gray'}" style="cursor:pointer; border:none;" onclick="toggleRepairReady('${d.id}', true)">Ready</button>
+                  <button class="tag ${!d.ready ? 'tag-red' : 'tag-gray'}" style="cursor:pointer; border:none;" onclick="toggleRepairReady('${d.id}', false)">Not Ready</button>
+                </div>
+              </td>
+              <td>
+                <div class="tbl-actions">
+                  <button class="btn-icon" title="View Details" onclick="showRepairDetails('${d.id}')"><i class="ti ti-eye"></i></button>
+                  <button class="btn-icon" title="Change Status" onclick="showRepairWorkflow('${d.id}')"><i class="ti ti-arrows-exchange"></i></button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      // Update Counts
+      const vc = document.getElementById('rep-visible-count');
+      if (vc) vc.textContent = data.length;
+
+      const total = (DB.repairTracker || []).length;
+      const inhouse = (DB.repairTracker || []).filter(x => x.status === 'In-House').length;
+      const outsource = (DB.repairTracker || []).filter(x => x.status === 'Outsource').length;
+      const ready = (DB.repairTracker || []).filter(x => x.ready).length;
+
+      const kt = document.getElementById('rep-kpi-total');
+      const ki = document.getElementById('rep-kpi-inhouse');
+      const ko = document.getElementById('rep-kpi-outsource');
+      const kr = document.getElementById('rep-kpi-ready');
+
+      if (kt) kt.textContent = total;
+      if (ki) ki.textContent = inhouse;
+      if (ko) ko.textContent = outsource;
+      if (kr) kr.textContent = ready;
+    }
+
+    function toggleRepairReady(id, isReady) {
+      const item = DB.repairTracker.find(x => x.id === id);
+      if (item) {
+        item.ready = isReady;
+        if (isReady && item.status !== 'Returned') {
+          item.status = 'Fixed';
+        } else if (!isReady && (item.status === 'Fixed' || item.status === 'Returned')) {
+          item.status = item.vendor !== '-' ? 'Outsource' : 'In-House';
+        }
+
+        if (!item.history) item.history = [];
+        item.history.push({
+          date: new Date().toISOString(),
+          action: isReady ? 'Marked Ready' : 'Marked Not Ready',
+          actor: 'Service Team',
+          details: isReady ? 'Component testing completed successfully.' : 'Marked for further troubleshooting.'
+        });
+
+        renderRepairTracker();
+        showToast(isReady ? 'Component marked as READY' : 'Component marked as NOT READY', isReady ? 'success' : 'info');
+      }
+    }
+
+    function openNewRepairModal() {
+      // Set default date
+      const dateInp = document.getElementById('mrep-date');
+      if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
+
+      // Reset fields
+      const f_scn = document.getElementById('mrep-scn');
+      const f_comp = document.getElementById('mrep-component');
+      const f_cust = document.getElementById('mrep-customer');
+      const f_stat = document.getElementById('mrep-status');
+      const f_vend = document.getElementById('mrep-vendor');
+      const f_note = document.getElementById('mrep-notes');
+      const f_vg = document.getElementById('mrep-vendor-group');
+
+      if (f_scn) f_scn.value = '';
+      if (f_comp) f_comp.value = '';
+      if (f_cust) f_cust.value = '';
+      if (f_stat) f_stat.value = 'In-House';
+      if (f_vend) f_vend.value = '';
+      if (f_note) f_note.value = '';
+      if (f_vg) f_vg.style.display = 'none';
+
+      // Setup status listener
+      if (f_stat) {
+        f_stat.onchange = () => {
+          if (f_vg) f_vg.style.display = f_stat.value === 'Outsource' ? 'block' : 'none';
+        };
+      }
+
+      openRepairAddPanel();
+    }
+
+    function openRepairAddPanel() {
+      document.getElementById('panel-svc-repair-add')?.classList.add('open');
+      document.getElementById('rep-add-overlay')?.classList.add('open');
+    }
+
+    function closeRepairAddPanel() {
+      document.getElementById('panel-svc-repair-add')?.classList.remove('open');
+      document.getElementById('rep-add-overlay')?.classList.remove('open');
+    }
+
+    function saveRepairEntry() {
+      const scn = document.getElementById('mrep-scn')?.value || '';
+      const component = document.getElementById('mrep-component')?.value || '';
+      const customer = document.getElementById('mrep-customer')?.value || '';
+      const status = document.getElementById('mrep-status')?.value || 'In-House';
+      const vendor = document.getElementById('mrep-vendor')?.value || '';
+      const dateIn = document.getElementById('mrep-date')?.value || '';
+      const notes = document.getElementById('mrep-notes')?.value || '';
+
+      if (!component || !customer || !dateIn) {
+        showToast('error', 'Validation', 'Component, Customer and Date are required.');
+        return;
+      }
+
+      const newRepair = {
+        id: 'REP-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0'),
+        scn: scn || 'N/A',
+        component,
+        customer,
+        status,
+        vendor: status === 'Outsource' ? vendor : '-',
+        dateIn,
+        ready: false,
+        comments: notes,
+        history: [{
+          date: new Date().toISOString(),
+          action: status,
+          actor: 'Service Team',
+          details: 'Initial registration into tracker.'
+        }]
+      };
+
+      if (!DB.repairTracker) DB.repairTracker = [];
+      DB.repairTracker.unshift(newRepair);
+
+      closeRepairAddPanel();
+      renderRepairTracker();
+      showToast('success', 'Repair Logged', `Component logged successfully.`);
+    }
+
+    function exportRepairData() {
+      showToast('success', 'Export', 'Repair tracker data exported to Excel.');
+    }
+
+    function showRepairDetails(id) {
+      const d = (DB.repairTracker || []).find(x => x.id === id);
+      if (!d) return;
+
+      // Populate Detail Panel
+      const title = document.getElementById('rep-detail-id');
+      if (title) title.textContent = d.id;
+
+      const info = document.getElementById('rep-detail-info');
+      if (info) {
+        info.innerHTML = `
+          <div class="kpi-grid kpi-grid-4 mb-4">
+            <div class="kpi-card">
+              <div class="kpi-label">SCN / SR</div>
+              <div class="kpi-val" style="font-size:18px;">${d.scn}</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Current Status</div>
+              <div class="kpi-val" style="font-size:18px;">${d.status}</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Vendor</div>
+              <div class="kpi-val" style="font-size:18px;">${d.vendor}</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Received On</div>
+              <div class="kpi-val" style="font-size:18px;">${d.dateIn}</div>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header"><div class="card-title">Component Information</div></div>
+            <div class="card-body">
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div><label class="text-muted" style="font-size:11px; text-transform:uppercase;">Component Name</label><div class="font-600">${d.component}</div></div>
+                <div><label class="text-muted" style="font-size:11px; text-transform:uppercase;">Customer Name</label><div class="font-600">${d.customer}</div></div>
+                <div style="grid-column: span 2;"><label class="text-muted" style="font-size:11px; text-transform:uppercase;">Internal Notes / Fault Details</label><div>${d.comments || 'No additional notes provided.'}</div></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const historyBody = document.getElementById('rep-history-tbody');
+      if (historyBody) {
+        const hist = d.history || [];
+        if (hist.length === 0) {
+          historyBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No history found.</td></tr>';
+        } else {
+          historyBody.innerHTML = [...hist].reverse().map(h => `
+            <tr>
+              <td>${new Date(h.date).toLocaleString()}</td>
+              <td><span class="tag tag-${h.action === 'Fixed' ? 'green' : h.action === 'Outsource' ? 'purple' : 'blue'}">${h.action}</span></td>
+              <td class="font-600">${h.actor}</td>
+              <td class="text-muted">${h.details}</td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      openRepairPanel();
+    }
+
+    function openRepairPanel() {
+      document.getElementById('rep-details-panel')?.classList.add('open');
+      document.getElementById('rep-panel-overlay')?.classList.add('open');
+    }
+
+    function closeRepairPanel() {
+      document.getElementById('rep-details-panel')?.classList.remove('open');
+      document.getElementById('rep-panel-overlay')?.classList.remove('open');
+    }
+
+    function showRepairWorkflow(id) {
+      const d = (DB.repairTracker || []).find(x => x.id === id);
+      if (!d) return;
+
+      const newStatus = d.status === 'In-House' ? 'Outsource' : d.status === 'Outsource' ? 'Fixed' : d.status === 'Fixed' ? 'Returned' : 'In-House';
+
+      if (confirm(`Advance status from ${d.status} to ${newStatus}?`)) {
+        d.status = newStatus;
+        if (newStatus === 'Fixed') d.ready = true;
+
+        if (!d.history) d.history = [];
+        d.history.push({
+          date: new Date().toISOString(),
+          action: newStatus,
+          actor: 'System Workflow',
+          details: `Status advanced to ${newStatus} via workflow action.`
+        });
+
+        renderRepairTracker();
+        showToast('success', 'Status Updated', `Item ${id} is now ${newStatus}`);
+      }
+    }
+
+
 
     function toggleStandbyReturn(reqId, isReturning) {
       const req = DB.serviceRequests.find(r => r.id === reqId);
@@ -32453,7 +33011,7 @@
             q.version = 2;
             q.products = v2products;
             q.value = v2value;
-            
+
             /* v3 for first 2 quotes */
             if (qi < 2) {
               const v3date = new Date(new Date(v2date).getTime() + 86400000 * 3).toISOString().slice(0, 10);
@@ -32590,7 +33148,7 @@
       openAmcQuoteModal();
       document.getElementById('amcq-modal-title').innerHTML = `<i class="ti ti-git-branch" style="color:#1479C9;"></i> Revise ${q.id} &nbsp;<span class="quo-ver-badge" style="font-size:12px;">v${q.version || 1} → v${(q.version || 1) + 1}</span>`;
       document.getElementById('amcq-modal-code').innerHTML = `${q.id} <span style="color:#B45309;font-weight:600;">(Revising v${q.version || 1})</span>`;
-      
+
       const valEl = document.getElementById('amcq-modal-value'); if (valEl) valEl.value = q.value;
       const custEl = document.getElementById('amcq-modal-customer'); if (custEl) custEl.value = q.customer;
       const fromDateEl = document.getElementById('amcq-from-date'); if (fromDateEl) fromDateEl.value = q.fromDate;
@@ -32601,7 +33159,7 @@
       const qTypeEl = document.getElementById('amcq-quote-type'); if (qTypeEl) qTypeEl.value = q.quoteType;
       const pTypeEl = document.getElementById('amcq-payment-type'); if (pTypeEl) pTypeEl.value = q.paymentType;
       const valdtEl = document.getElementById('amcq-modal-validity'); if (valdtEl) valdtEl.value = q.validity;
-      
+
       const tbody = document.getElementById('amcq-products-tbody');
       tbody.innerHTML = '';
       if (q.products && q.products.length) {
@@ -32681,7 +33239,7 @@
 
       openModal('modal-amcq');
     }
-    
+
     function cancelAmcQuoteModal() {
       _amcqReviseId = null;
       closeModal('modal-amcq');
@@ -32860,7 +33418,7 @@
       amcqSwitchTab('details');
       openModal('modal-amcq-view');
     }
-    
+
     function amcqSwitchTab(tab) {
       ['details', 'history'].forEach(t => {
         const tEl = document.getElementById('amcq-tab-' + t);
@@ -32908,7 +33466,7 @@
           </div>`;
         }).join('');
       }
-      
+
       const actLog = document.getElementById('vamcq-act-log');
       if (actLog) {
         const acts = q.activity || [{ ts: q.date || q.fromDate, actor: 'System', action: 'Created', detail: 'Initial quote v1 created' }];
@@ -32937,7 +33495,7 @@
       const detailDiv = document.getElementById('vamcq-ver-detail');
       const titleEl = document.getElementById('vamcq-ver-detail-title');
       if (titleEl) titleEl.innerHTML = `<i class="ti ti-file-text"></i> ${qId} — v${verNum} <span style="font-size:11px;color:#94A3B8;font-weight:400;">(historical snapshot · ${fmtDate(v.date)})</span>`;
-      
+
       const pTbody = document.getElementById('vamcq-ver-detail-body');
       const pTfoot = document.getElementById('vamcq-ver-detail-foot');
       if (pTbody) {
@@ -33267,6 +33825,10 @@
         if (assetId) {
           const asset = (DB.standbyPool || []).find(a => a.id === assetId);
           if (asset) {
+            if (asset.status === 'In Use') {
+              showToast('error', 'Standby Error', 'Selected asset is no longer available.');
+              return;
+            }
             asset.status = 'In Use';
             newVisit.standby = {
               id: asset.id,
@@ -39380,6 +39942,65 @@
       <button class="btn btn-primary" style="flex: 1;"
         onclick="showToast('success','Nudge Sent','A reminder has been sent to the employee.')">
         <i class="ti ti-bell"></i> Send Nudge
+      </button>
+    </div>
+  </div>
+
+  <!-- Repair Details Side Panel (Right Drawer) -->
+  <div class="c360-overlay" id="rep-panel-overlay" onclick="closeRepairPanel()"></div>
+  <div class="c360-drawer" id="rep-details-panel"
+    style="width: 70%; padding: 0; display: flex; flex-direction: column;">
+    <div
+      style="padding: 24px; border-bottom: 1px solid var(--border-light,#eee); display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div
+          style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.1); color: #6366F1; display: flex; align-items: center; justify-content: center;">
+          <i class="ti ti-tool" style="font-size: 18px;"></i>
+        </div>
+        <div style="font-size: 16px; font-weight: 700; color: #0F172A;">Repair & PCB Details — <span
+            id="rep-detail-id">REP-000</span></div>
+      </div>
+      <button onclick="closeRepairPanel()"
+        style="background: none; border: none; color: #64748B; font-size: 20px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s;"
+        onmouseover="this.style.background='#F1F5F9'" onmouseout="this.style.background='none'">
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+
+    <div style="flex: 1; overflow-y: auto; padding: 24px; background: #f8fafc;">
+      <div id="rep-detail-info">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="card">
+        <div class="card-header" style="justify-content: space-between;">
+          <div class="card-title"><i class="ti ti-history"></i> Repair Lifecycle History</div>
+          <div class="tag tag-blue">Audit Trail</div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-tbl">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Status / Action</th>
+                <th>Managed By</th>
+                <th>Detailed Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="rep-history-tbody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="padding: 20px 24px; border-top: 1px solid var(--border-light,#eee); background: #fff; display: flex; gap: 12px; justify-content: flex-end;">
+      <button class="btn btn-outline" style="min-width: 100px;" onclick="closeRepairPanel()">Close</button>
+      <button class="btn btn-primary" style="flex: 1;"
+        onclick="showToast('info','Export','Generating report for this repair entry...')">
+        <i class="ti ti-file-download"></i> Generate Service Report
       </button>
     </div>
   </div>
