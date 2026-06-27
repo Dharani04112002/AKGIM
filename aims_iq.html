@@ -15526,10 +15526,8 @@
                 <div class="page-sub">Daily attendance register — mark in/out times and status</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-outline" onclick="renderAttTable()"><i class="ti ti-refresh"></i>
-                  Refresh</button>
-                <button class="btn btn-primary" onclick="saveAttendance()"><i class="ti ti-device-floppy"></i> Save
-                  Changes</button>
+                <button class="btn btn-primary" onclick="openAddAttendanceModal()"><i class="ti ti-plus"></i> Add Attendance</button>
+                <button class="btn btn-outline" onclick="renderAttTable()"><i class="ti ti-refresh"></i> Refresh</button>
               </div>
             </div>
             <div class="card">
@@ -15574,14 +15572,14 @@
                   <thead>
                     <tr>
                       <th style="width:36px;text-align:center;">#</th>
+                      <th>Date</th>
                       <th>Employee</th>
-                      <th>Department</th>
-                      <th style="text-align:center;">Shift</th>
-                      <th style="text-align:center;">In Time</th>
-                      <th style="text-align:center;">Out Time</th>
-                      <th style="text-align:center;width:60px;">Hrs</th>
-                      <th style="text-align:center;width:110px;">Status</th>
-                      <th>Remarks</th>
+                      <th>Type</th>
+                      <th>Report</th>
+                      <th>Visits</th>
+                      <th>Distance</th>
+                      <th>Voucher</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="hrm-att-tbody"></tbody>
@@ -19533,6 +19531,110 @@
                 <button class="btn btn-outline" onclick="closeModal('modal-hrm-emp')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveHRMEmployee()"><i class="ti ti-device-floppy"></i> Save
                   Employee</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- HRM: Add Daily Attendance -->
+          <div class="modal-wrap" id="modal-hrm-add-attendance" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-calendar-plus"></i> Add Daily Attendance</div>
+                <button class="modal-close" onclick="closeModal('modal-hrm-add-attendance')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="max-height:75vh;overflow-y:auto;">
+                <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:20px;">
+                  <div class="form-group" style="grid-column:1/-1;">
+                    <label style="display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer;">
+                      <input type="checkbox" id="da-for-others" onchange="toggleDailyAttUser()"> For Others
+                    </label>
+                  </div>
+                  <div class="form-group" style="grid-column:span 2;">
+                    <label class="form-label">User Name <span class="req">*</span></label>
+                    <select class="form-control" id="da-user" disabled></select>
+                  </div>
+                  <div class="form-group" style="grid-column:span 2;">
+                    <label class="form-label">Attendance Date <span class="req">*</span></label>
+                    <input type="date" class="form-control" id="da-date">
+                  </div>
+                  <div class="form-group" style="grid-column:span 2;">
+                    <label class="form-label">Check-In/Out <span class="req">*</span></label>
+                    <select class="form-control" id="da-type">
+                      <option value="Check-In">Check-In</option>
+                      <option value="Check-Out">Check-Out</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Check-In Image</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Check-Out Image</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Check-In Speedometer</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Check-Out Speedometer</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Today Report</label>
+                    <textarea class="form-control" id="da-report" rows="3" placeholder="Enter today's report..."></textarea>
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">All Visits</label>
+                    <textarea class="form-control" id="da-visits" rows="3" placeholder="Enter all visits details..."></textarea>
+                  </div>
+                  
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Approx Distance (km)</label>
+                    <input type="text" class="form-control" id="da-distance" placeholder="e.g. 15.5">
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Voucher Image</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Voucher Pdf</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" placeholder="Select File" readonly style="border-right:none;border-radius:6px 0 0 6px;border-color:var(--navy);color:var(--navy);">
+                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-color:var(--navy);color:var(--navy);"><i class="ti ti-upload"></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group" style="grid-column:span 3;">
+                    <label class="form-label">Voucher Amount</label>
+                    <div style="display:flex;">
+                      <input type="text" class="form-control" id="da-voucher-amt" placeholder="##,##,###.##" style="border-right:none;border-radius:6px 0 0 6px;">
+                      <span class="btn btn-outline" style="border-radius:0 6px 6px 0;pointer-events:none;color:var(--text-muted);">₹</span>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveDailyAttendance()">Update</button>
+                <button class="btn btn-outline" onclick="closeModal('modal-hrm-add-attendance')">Cancel</button>
               </div>
             </div>
           </div>
@@ -23527,6 +23629,10 @@
       out: si(0, 1) ? '18:' + String(si(0, 45)).padStart(2, '0') : '—',
       status: spick(['Present', 'Present', 'Present', 'Late', 'On Leave', 'Absent'])
     }));
+    DB.dailyAttendances = [
+      { employee: DB.employees[0]?.name || 'Admin User', date: new Date().toISOString().split('T')[0], type: 'Check-In', report: 'Arrived at client site, started diagnosis.', visits: 'Site A', distance: '12', voucherAmt: '150' },
+      { employee: DB.employees[1]?.name || 'Mohana Priya', date: new Date().toISOString().split('T')[0], type: 'Check-Out', report: 'Completed all scheduled maintenance tasks.', visits: 'Site B, Site C', distance: '45.5', voucherAmt: '400' }
+    ];
     DB.otRequests = DB.employees.slice(0, 10).map(e => ({
       name: e.name, date: new Date().toISOString(), hours: (1 + srnd() * 3).toFixed(1), rate: 250, amount: si(500, 1500)
     }));
@@ -33299,60 +33405,119 @@
 
     function renderAttTable() {
       const dept = document.getElementById('att-dept-filter')?.value || '';
-      const shift = document.getElementById('att-shift-filter')?.value || '';
-      const emps = DB.employees.filter(e => (!dept || e.department === dept) && (!shift || (e._shift || 'General Shift') === shift));
-      const countEl = document.getElementById('att-emp-count');
-      if (countEl) countEl.textContent = emps.length;
-      // status pill counts
-      const counts = Object.fromEntries(ATT_STATUSES.map(s => [s.code, 0]));
-      emps.forEach(e => { const r = _attRows[e.id]; if (r) counts[r.status] = (counts[r.status] || 0) + 1; });
-      const pillsEl = document.getElementById('att-status-pills');
-      if (pillsEl) {
-        pillsEl.innerHTML = ATT_STATUSES.map(s => `<div style="display:flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:${s.bg};color:${s.color};border:1px solid ${s.border};">
-          <span style="width:6px;height:6px;border-radius:50%;background:${s.color};display:inline-block;"></span>
-          ${s.code}: <b>${counts[s.code] || 0}</b>
-        </div>`).join('');
-      }
-      // paginate
-      const start = (_attPage - 1) * _attPer;
-      const slice = emps.slice(start, start + _attPer);
       const tbody = document.getElementById('hrm-att-tbody');
       if (!tbody) return;
-      tbody.innerHTML = slice.map((e, i) => {
-        const r = _attRows[e.id] || { inTime: '', outTime: '', shift: e._shift || 'General Shift', status: 'PR', remarks: '' };
-        const s = ATT_S[r.status] || ATT_S['PR'];
-        const hrs = calcAttHrs(r.inTime, r.outTime);
-        const initials = e.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-        return `<tr>
-          <td style="text-align:center;font-size:11px;color:var(--tx-3);font-family:monospace;">${String(start + i + 1).padStart(2, '0')}</td>
-          <td>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div style="width:30px;height:30px;border-radius:50%;background:var(--navy-bg,#EEF0FF);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--navy);flex-shrink:0;">${initials}</div>
-              <div><div style="font-size:12px;font-weight:600;color:var(--tx-1);">${e.name}</div><div style="font-size:10px;color:var(--tx-3);font-family:monospace;">${e.id}</div></div>
-            </div>
-          </td>
-          <td style="font-size:11px;color:var(--tx-2);">${e.department}<br><span style="font-size:10px;color:var(--tx-3);">${e.designation}</span></td>
-          <td style="text-align:center;">
-            <input type="time" value="${r.inTime}" onchange="_attRows['${e.id}'].inTime=this.value;updateAttHrs('${e.id}',this)" style="width:90px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:11px;font-family:monospace;background:var(--card-bg);color:var(--tx-1);padding:0 4px;">
-          </td>
-          <td style="text-align:center;">
-            <input type="time" value="${r.outTime}" onchange="_attRows['${e.id}'].outTime=this.value;updateAttHrs('${e.id}',this)" style="width:90px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:11px;font-family:monospace;background:var(--card-bg);color:var(--tx-1);padding:0 4px;">
-          </td>
-          <td style="text-align:center;font-size:11px;font-family:monospace;font-weight:700;" id="att-hrs-${e.id}">${hrs ? `<span style="color:var(--green);">${hrs}</span>` : '<span style="color:var(--tx-3);">—</span>'}</td>
-          <td style="text-align:center;">
-            <input value="${r.shift.split(' ')[0]}" onchange="_attRows['${e.id}'].shift=this.value" style="width:52px;height:28px;border:1px solid var(--card-border);border-radius:6px;text-align:center;font-size:10px;font-family:monospace;text-transform:uppercase;background:var(--card-bg);color:var(--tx-1);">
-          </td>
-          <td style="text-align:center;">
-            <select onchange="_attRows['${e.id}'].status=this.value;this.style.background=ATT_S[this.value]?.bg||'';this.style.color=ATT_S[this.value]?.color||'';" style="height:28px;border-radius:20px;border:1px solid ${s.border};background:${s.bg};color:${s.color};font-size:10px;font-weight:700;padding:0 20px 0 10px;cursor:pointer;width:90px;">
-              ${ATT_STATUSES.map(st => `<option value="${st.code}" ${r.status === st.code ? 'selected' : ''}>${st.code}</option>`).join('')}
-            </select>
-          </td>
-          <td>
-            <input value="${r.remarks || ''}" placeholder="Add note…" onchange="_attRows['${e.id}'].remarks=this.value" style="width:100%;min-width:100px;height:28px;border:1px solid var(--card-border);border-radius:6px;font-size:11px;padding:0 8px;background:var(--card-bg);color:var(--tx-1);">
-          </td>
-        </tr>`;
-      }).join('') || '<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--tx-3);">No employees found</td></tr>';
-      renderPagination('att-pagination', emps.length, _attPage, _attPer, p => { _attPage = p; renderAttTable(); });
+      
+      let list = DB.dailyAttendances || [];
+      if (dept) list = list.filter(a => a.employee.includes(dept));
+
+      const countEl = document.getElementById('att-emp-count');
+      if (countEl) countEl.textContent = list.length;
+      
+      const pillsEl = document.getElementById('att-status-pills');
+      if (pillsEl) pillsEl.innerHTML = ''; // Clear old pills
+
+      const start = (_attPage - 1) * _attPer;
+      const slice = list.slice(start, start + _attPer);
+      
+      tbody.innerHTML = slice.map((a, i) => `<tr>
+        <td style="text-align:center;font-size:11px;color:var(--tx-3);font-family:monospace;">${String(start + i + 1).padStart(2, '0')}</td>
+        <td style="font-size:12px;font-weight:600;">${a.date}</td>
+        <td>
+          <div style="font-weight:600;color:var(--tx-1);">${a.employee}</div>
+        </td>
+        <td style="font-size:11px;">
+          <span style="padding:2px 8px;border-radius:12px;background:${a.type==='Check-In'?'var(--green-bg)':'var(--red-bg)'};color:${a.type==='Check-In'?'var(--green)':'var(--red)'};font-weight:700;">${a.type}</span>
+        </td>
+        <td style="font-size:11px;color:var(--tx-2);max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${a.report}">${a.report || '—'}</td>
+        <td style="font-size:11px;color:var(--tx-2);max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${a.visits}">${a.visits || '—'}</td>
+        <td style="font-size:12px;font-family:monospace;">${a.distance ? a.distance + ' km' : '—'}</td>
+        <td style="font-size:12px;font-family:monospace;font-weight:700;">${a.voucherAmt ? '₹' + a.voucherAmt : '—'}</td>
+        <td><button class="btn btn-ghost btn-icon-sm" title="View" onclick="openEditAttendanceModal(${start + i})"><i class="ti ti-eye"></i></button></td>
+      </tr>`).join('') || '<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--tx-3);">No attendance logs found for this date.</td></tr>';
+      
+      renderPagination('att-pagination', list.length, _attPage, _attPer, p => { _attPage = p; renderAttTable(); });
+    }
+
+    let _editDailyAttIndex = -1;
+
+    function toggleDailyAttUser() {
+      const chk = document.getElementById('da-for-others').checked;
+      document.getElementById('da-user').disabled = !chk;
+    }
+    
+    function initAttUserDropdown() {
+      const uSel = document.getElementById('da-user');
+      if (uSel.options.length === 0) {
+        DB.employees.forEach(e => uSel.add(new Option(e.name, e.name)));
+      }
+      return uSel;
+    }
+
+    function openAddAttendanceModal() {
+      _editDailyAttIndex = -1;
+      document.querySelector('#modal-hrm-add-attendance .modal-title').innerHTML = '<i class="ti ti-calendar-plus"></i> Add Daily Attendance';
+      document.getElementById('da-for-others').checked = false;
+      const uSel = initAttUserDropdown();
+      
+      const currentUser = document.querySelector('.ud-name')?.textContent || 'Mohana Priya';
+      let found = Array.from(uSel.options).find(o => o.value === currentUser);
+      if (found) uSel.value = currentUser;
+      else if (uSel.options.length > 0) uSel.value = uSel.options[0].value;
+      
+      uSel.disabled = true;
+      document.getElementById('da-date').value = new Date().toISOString().split('T')[0];
+      document.getElementById('da-type').value = 'Check-Out';
+      document.getElementById('da-report').value = '';
+      document.getElementById('da-visits').value = '';
+      document.getElementById('da-distance').value = '';
+      document.getElementById('da-voucher-amt').value = '';
+      
+      openModal('modal-hrm-add-attendance');
+    }
+    
+    function openEditAttendanceModal(idx) {
+      _editDailyAttIndex = idx;
+      const record = DB.dailyAttendances[idx];
+      if (!record) return;
+      document.querySelector('#modal-hrm-add-attendance .modal-title').innerHTML = '<i class="ti ti-pencil"></i> Edit Daily Attendance';
+      
+      document.getElementById('da-for-others').checked = true;
+      const uSel = initAttUserDropdown();
+      uSel.value = record.employee;
+      uSel.disabled = false;
+      
+      document.getElementById('da-date').value = record.date;
+      document.getElementById('da-type').value = record.type;
+      document.getElementById('da-report').value = record.report || '';
+      document.getElementById('da-visits').value = record.visits || '';
+      document.getElementById('da-distance').value = record.distance || '';
+      document.getElementById('da-voucher-amt').value = record.voucherAmt || '';
+      
+      openModal('modal-hrm-add-attendance');
+    }
+
+    function saveDailyAttendance() {
+      if (!DB.dailyAttendances) DB.dailyAttendances = [];
+      const data = {
+        employee: document.getElementById('da-user').value,
+        date: document.getElementById('da-date').value,
+        type: document.getElementById('da-type').value,
+        report: document.getElementById('da-report').value,
+        visits: document.getElementById('da-visits').value,
+        distance: document.getElementById('da-distance').value,
+        voucherAmt: document.getElementById('da-voucher-amt').value
+      };
+      if (_editDailyAttIndex >= 0) {
+        DB.dailyAttendances[_editDailyAttIndex] = data;
+        showToast('success', 'Attendance Updated', 'Daily attendance log updated successfully.');
+      } else {
+        DB.dailyAttendances.unshift(data);
+        showToast('success', 'Attendance Saved', 'Daily attendance log added successfully.');
+        _attPage = 1;
+      }
+      closeModal('modal-hrm-add-attendance');
+      renderAttTable();
     }
 
     function calcAttHrs(inT, outT) {
