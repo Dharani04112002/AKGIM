@@ -733,6 +733,7 @@
       /* Modern Gradient Style */
       background: var(--blue-grad);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 2px 4px rgba(56, 189, 248, 0.3));
     }
@@ -747,6 +748,7 @@
     .sidebar.collapsed .nav-parent.active-parent .nav-icon {
       background: var(--red-grad) !important;
       -webkit-background-clip: text !important;
+      background-clip: text !important;
       -webkit-text-fill-color: transparent !important;
       filter: drop-shadow(0 0 12px rgba(239, 51, 64, 0.9)) !important;
       transform: scale(1.15) !important;
@@ -840,6 +842,7 @@
 
       background: var(--blue-grad);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 1px 3px rgba(56, 189, 248, 0.3));
     }
@@ -868,6 +871,7 @@
     .sb-sub-group .nav-item.active .nav-icon {
       background: var(--blue-grad);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
       opacity: 1;
@@ -2082,6 +2086,7 @@
       font-size: 16px;
       background: var(--blue-grad);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 1px 3px rgba(56, 189, 248, 0.3));
       transition: all var(--dur-fast);
@@ -4441,6 +4446,7 @@
     .nav-standalone.active .nav-icon {
       background: none !important;
       -webkit-background-clip: unset !important;
+      background-clip: unset !important;
       -webkit-text-fill-color: #FFFFFF !important;
       filter: none !important;
       color: #FFFFFF !important;
@@ -7523,6 +7529,48 @@
       color: #64748B;
       margin-top: 2px;
     }
+
+    /* Card Tab Switcher */
+    .card-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #F1F5F9;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .card-tab {
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--tx-2);
+      cursor: pointer;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .card-tab i {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+
+    .card-tab:hover {
+      color: var(--tx-1);
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .card-tab.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
 
@@ -7719,6 +7767,10 @@
             <div class="nav-item" data-page="svc-feedback" onclick="navigate('svc-feedback',this)">
               <i class="ti ti-thumb-up nav-icon"></i>
               <span class="nav-text">Service Feedback</span>
+            </div>
+            <div class="nav-item" data-page="svc-standby" onclick="navigate('svc-standby',this)">
+              <i class="ti ti-replace nav-icon"></i>
+              <span class="nav-text">Standby Asset Mgmt</span>
             </div>
 
           </div>
@@ -8481,38 +8533,6 @@
 
             <div style="max-width: 1400px;">
 
-              <!-- Section: Masters -->
-              <div class="launcher-section theme-blue">
-                <div class="ls-header">
-                  <div class="ls-icon"><i class="ti ti-package"></i></div>
-                  <div class="ls-title">Masters</div>
-                  <div class="ls-line"></div>
-                  <div class="ls-count">4 modules</div>
-                </div>
-                <div class="ls-grid">
-                  <div class="ls-card" onclick="navigate('products',null)">
-                    <div class="ls-card-icon"><i class="ti ti-box"></i></div>
-                    <div class="ls-card-title">Products</div>
-                    <div class="ls-card-desc">Manage products</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('customers',null)">
-                    <div class="ls-card-icon"><i class="ti ti-users"></i></div>
-                    <div class="ls-card-title">Customers</div>
-                    <div class="ls-card-desc">Customer details</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('suppliers',null)">
-                    <div class="ls-card-icon"><i class="ti ti-truck-delivery"></i></div>
-                    <div class="ls-card-title">Suppliers</div>
-                    <div class="ls-card-desc">Supplier details</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('hrm-employees',null)">
-                    <div class="ls-card-icon"><i class="ti ti-id-badge"></i></div>
-                    <div class="ls-card-title">Employees</div>
-                    <div class="ls-card-desc">Employee records</div>
-                  </div>
-                </div>
-              </div>
-
               <!-- Section: CRM -->
               <div class="launcher-section theme-purple">
                 <div class="ls-header">
@@ -8610,6 +8630,28 @@
                     <div class="ls-card-icon"><i class="ti ti-receipt"></i></div>
                     <div class="ls-card-title">Purchase Invoice</div>
                     <div class="ls-card-desc">Track vendor bills</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section: Inventory -->
+              <div class="launcher-section theme-teal">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-stack-2"></i></div>
+                  <div class="ls-title">Inventory</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">2 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('inv-stock',null)">
+                    <div class="ls-card-icon"><i class="ti ti-list-details"></i></div>
+                    <div class="ls-card-title">Stock List</div>
+                    <div class="ls-card-desc">Current inventory valuation</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('sal-buyback',null)">
+                    <div class="ls-card-icon"><i class="ti ti-refresh"></i></div>
+                    <div class="ls-card-title">Buy Back</div>
+                    <div class="ls-card-desc">Buy back stock</div>
                   </div>
                 </div>
               </div>
@@ -8717,28 +8759,6 @@
                     <div class="ls-card-icon"><i class="ti ti-address-book"></i></div>
                     <div class="ls-card-title">Customer Ledger</div>
                     <div class="ls-card-desc">Client statements</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Section: Inventory -->
-              <div class="launcher-section theme-teal">
-                <div class="ls-header">
-                  <div class="ls-icon"><i class="ti ti-stack-2"></i></div>
-                  <div class="ls-title">Inventory</div>
-                  <div class="ls-line"></div>
-                  <div class="ls-count">2 modules</div>
-                </div>
-                <div class="ls-grid">
-                  <div class="ls-card" onclick="navigate('inv-stock',null)">
-                    <div class="ls-card-icon"><i class="ti ti-list-details"></i></div>
-                    <div class="ls-card-title">Stock List</div>
-                    <div class="ls-card-desc">Current inventory valuation</div>
-                  </div>
-                  <div class="ls-card" onclick="navigate('sal-buyback',null)">
-                    <div class="ls-card-icon"><i class="ti ti-refresh"></i></div>
-                    <div class="ls-card-title">Buy Back</div>
-                    <div class="ls-card-desc">Buy back stock</div>
                   </div>
                 </div>
               </div>
@@ -8945,6 +8965,38 @@
                     <div class="ls-card-icon"><i class="ti ti-shield-half"></i></div>
                     <div class="ls-card-title">Credit &amp; Risk</div>
                     <div class="ls-card-desc">Customer credit exposure & risk</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section: Masters -->
+              <div class="launcher-section theme-blue">
+                <div class="ls-header">
+                  <div class="ls-icon"><i class="ti ti-package"></i></div>
+                  <div class="ls-title">Masters</div>
+                  <div class="ls-line"></div>
+                  <div class="ls-count">4 modules</div>
+                </div>
+                <div class="ls-grid">
+                  <div class="ls-card" onclick="navigate('products',null)">
+                    <div class="ls-card-icon"><i class="ti ti-box"></i></div>
+                    <div class="ls-card-title">Products</div>
+                    <div class="ls-card-desc">Manage products</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('customers',null)">
+                    <div class="ls-card-icon"><i class="ti ti-users"></i></div>
+                    <div class="ls-card-title">Customers</div>
+                    <div class="ls-card-desc">Customer details</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('suppliers',null)">
+                    <div class="ls-card-icon"><i class="ti ti-truck-delivery"></i></div>
+                    <div class="ls-card-title">Suppliers</div>
+                    <div class="ls-card-desc">Supplier details</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('hrm-employees',null)">
+                    <div class="ls-card-icon"><i class="ti ti-id-badge"></i></div>
+                    <div class="ls-card-title">Employees</div>
+                    <div class="ls-card-desc">Employee records</div>
                   </div>
                 </div>
               </div>
@@ -9910,8 +9962,8 @@
                       <option>Purchase</option>
                     </select>
                   </div>
-                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
-                      id="madj-remarks" ></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input type="text"
+                      class="form-control" id="madj-remarks"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -9943,8 +9995,8 @@
                   </div>
                   <div class="form-group"><label class="form-label">Quantity</label><input class="form-control"
                       type="number" id="mtrf-qty" placeholder="0" min="1"></div>
-                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
-                      id="mtrf-remarks" ></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input type="text"
+                      class="form-control" id="mtrf-remarks"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -11646,7 +11698,7 @@
                 <div class="page-title">Service Requests</div>
                 <div class="page-sub">Installation, maintenance and service calls</div>
               </div>
-              <button class="btn btn-primary" onclick="openModal('modal-svc-request')"><i class="ti ti-plus"></i> New
+              <button class="btn btn-primary" onclick="openNewSvcRequest()"><i class="ti ti-plus"></i> New
                 Request</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="svc-req-kpi"></div>
@@ -11781,6 +11833,105 @@
             </div>
           </div><!-- /#page-svc-assignjobs -->
 
+          <!-- STANDBY MANAGEMENT PAGE -->
+          <div class="page" id="page-svc-standby">
+            <div class="page-header">
+              <div>
+                <div class="page-title">Standby Asset Management</div>
+                <div class="page-sub">Track company assets issued to customers during service/repair</div>
+              </div>
+              <div class="page-actions">
+                <button class="btn btn-outline" onclick="exportStandbyData()"><i class="ti ti-download"></i>
+                  Export</button>
+                <button class="btn btn-primary" onclick="openModal('modal-svc-standby-add')"><i class="ti ti-plus"></i>
+                  Add to Pool</button>
+              </div>
+            </div>
+
+            <!-- KPI Row -->
+            <div class="kpi-grid kpi-grid-4 mb-4" id="svc-standby-kpi"></div>
+
+            <!-- Tabbed View -->
+            <div class="card">
+              <div class="card-header" style="flex-wrap:wrap; gap:16px;">
+                <div class="card-tabs">
+                  <div class="card-tab active" id="stb-tab-issued" onclick="switchStandbyTab('issued')">
+                    <i class="ti ti-replace"></i> Issuance Tracker
+                  </div>
+                  <div class="card-tab" id="stb-tab-pool" onclick="switchStandbyTab('pool')">
+                    <i class="ti ti-box"></i> Asset Pool Master
+                  </div>
+                </div>
+                <div class="ml-auto" style="display:flex; gap:8px;" id="stb-filters-issued">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="svc-standby-search"
+                      placeholder="Search customer/asset..." oninput="filterStandbyAssets()"></div>
+                  <select class="select-sm" id="svc-standby-filter" onchange="filterStandbyAssets()">
+                    <option value="">All Status</option>
+                    <option value="Active">Active at Customer</option>
+                    <option value="Returned">Returned / Swapped</option>
+                  </select>
+                </div>
+                <div class="ml-auto" style="display:none; gap:8px;" id="stb-filters-pool">
+                  <div class="filter-search"><i class="ti ti-search"></i><input id="svc-pool-search"
+                      placeholder="Search SN/Asset Name..." oninput="renderStandbyPoolTable()"></div>
+                </div>
+              </div>
+
+              <!-- View 1: Issued Tracker -->
+              <div id="stb-view-issued">
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Request ID</th>
+                        <th>Customer</th>
+                        <th>Original Product</th>
+                        <th>Standby Asset</th>
+                        <th>Issued On</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="svc-standby-tbody"></tbody>
+                  </table>
+                </div>
+                <div id="svc-standby-empty"
+                  style="display:none; text-align:center; padding:60px; color:var(--text-muted);">
+                  <i class="ti ti-replace" style="font-size:48px; opacity:0.2; margin-bottom:16px;"></i>
+                  <p>No standby assets currently issued to customers.</p>
+                </div>
+                <div class="pagination-bar" style="padding:12px 16px; border-top:1px solid var(--border);">
+                  <div class="text-muted" style="font-size:12px;">Showing <span id="svc-standby-count">0</span> tracked
+                    issuances</div>
+                </div>
+              </div>
+
+              <!-- View 2: Asset Pool -->
+              <div id="stb-view-pool" style="display:none;">
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Serial No.</th>
+                        <th>Asset Name</th>
+                        <th>Category</th>
+                        <th>Condition</th>
+                        <th>Current Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="svc-pool-tbody"></tbody>
+                  </table>
+                </div>
+                <div class="pagination-bar" style="padding:12px 16px; border-top:1px solid var(--border);">
+                  <div class="text-muted" style="font-size:12px;">Total <span id="svc-pool-count">0</span> assets in
+                    standby pool</div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /#page-svc-standby -->
+
+
           <!-- TECHNICIANS -->
           <div class="page" id="page-svc-technicians">
             <div class="page-header">
@@ -11887,8 +12038,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
-                    id="mtick-desc"  placeholder="Detailed description…"></div>
+                <div class="form-group"><label class="form-label">Description</label><input type="text"
+                    class="form-control" id="mtick-desc" placeholder="Detailed description…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-svc-ticket')">Cancel</button>
@@ -11974,9 +12125,11 @@
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
                   <div class="form-group"><label class="form-label">Address</label><input class="form-control"
                       id="mreq-addr" placeholder="Service location"></div>
-                  <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
-                      id="mreq-desc"  placeholder="Description of service request…"></div>
+                  <div class="form-group"><label class="form-label">Description</label><input type="text"
+                      class="form-control" id="mreq-desc" placeholder="Description of service request…"></div>
                 </div>
+
+
 
                 <div class="form-group" style="margin-top:16px;">
                   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -12129,6 +12282,27 @@
                   </div>
                 </div>
 
+                <!-- Standby Asset Info (Conditional) -->
+                <div id="vreq-standby-section" style="display:none; margin-top:24px;">
+                  <div class="card" style="border:1px solid #fde68a; background:#fffbeb;">
+                    <div class="card-body" style="display:flex; align-items:center; gap:16px; padding:12px 16px;">
+                      <div
+                        style="width:40px; height:40px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                        <i class="ti ti-replace"></i>
+                      </div>
+                      <div style="flex:1;">
+                        <div style="font-size:12px; color:#92400e; font-weight:600;">Standby Asset Issued</div>
+                        <div id="vreq-standby-name" style="font-weight:600; font-size:14px; color:var(--navy);"></div>
+                        <div id="vreq-standby-status" style="font-size:11px; margin-top:2px;"></div>
+                      </div>
+                      <button class="btn btn-sm btn-outline" id="vreq-standby-return-btn"
+                        style="border-color:#f59e0b; color:#92400e;">
+                        <i class="ti ti-arrow-back-up"></i> Mark Returned
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Description/Notes -->
                 <div class="card mt-4">
                   <div class="card-header" style="background:#fff;">
@@ -12175,6 +12349,76 @@
                 <button class="btn btn-outline" onclick="closeModal('modal-svc-technician')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveTechnician()"><i class="ti ti-check"></i> Add
                   Technician</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal: Standby History -->
+          <div class="modal-wrap" id="modal-svc-standby-history">
+            <div class="modal modal-lg">
+              <div class="modal-header">
+                <div class="modal-title"><i class="ti ti-history"></i> Standby Asset History — <span
+                    id="vstb-name"></span></div>
+                <button class="modal-close" onclick="closeModal('modal-svc-standby-history')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="table-wrap">
+                  <table class="data-tbl">
+                    <thead>
+                      <tr>
+                        <th>Date & Time</th>
+                        <th>Activity</th>
+                        <th>Customer / Party</th>
+                        <th>Reference / SCN</th>
+                        <th>Logged By</th>
+                      </tr>
+                    </thead>
+                    <tbody id="vstb-history-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal: Add Standby Asset -->
+          <div class="modal-wrap" id="modal-svc-standby-add">
+            <div class="modal">
+              <div class="modal-header">
+                <div class="modal-title">Register Standby Asset</div>
+                <button class="modal-close" onclick="closeModal('modal-svc-standby-add')"><i
+                    class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label class="form-label">Asset Name / Model*</label>
+                  <input type="text" class="form-control" id="mstb-name" placeholder="e.g. 5KVA Servo Stabilizer">
+                </div>
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Serial Number*</label>
+                    <input type="text" class="form-control" id="mstb-sn" placeholder="STB-XXXX">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-control" id="mstb-cat">
+                      <option>Stabilizers</option>
+                      <option>UPS/Inverters</option>
+                      <option>Control Panels</option>
+                      <option>Safety</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Condition Notes</label>
+                  <textarea class="form-control" id="mstb-notes" rows="2"
+                    placeholder="Good, Refurbished, Minor scratches etc."></textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-svc-standby-add')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveStandbyAsset()"><i class="ti ti-check"></i> Register
+                  Asset</button>
               </div>
             </div>
           </div>
@@ -13205,7 +13449,7 @@
                       value="+91 80 4567 8900"></div>
                   <div class="form-group"><label class="form-label">Website</label><input class="form-control"
                       value="www.acmeindustries.com"></div>
-                  <div class="form-group" ><label class="form-label">Address</label><textarea class="form-control"
+                  <div class="form-group"><label class="form-label">Address</label><textarea class="form-control"
                       rows="2">123, Industrial Area, Phase 2, Bengaluru - 560058</textarea></div>
                 </div>
               </div>
@@ -15026,7 +15270,7 @@
                       <option>Escalated</option>
                     </select>
                   </div>
-                  <div class="form-group" >
+                  <div class="form-group">
                     <label class="form-label">Spare Arrangement Count</label>
                     <input class="form-control" type="number" id="vl-spares" value="0" min="0">
                   </div>
@@ -15044,17 +15288,34 @@
                   </div>
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Engineer Suggestion</label>
-                    <input type="text"  class="form-control" id="vl-eng-suggestion" 
+                    <input type="text" class="form-control" id="vl-eng-suggestion"
                       placeholder="Engineer's observations and recommendations…">
                   </div>
                   <div>
                     <label class="form-label" style="display:block;margin-bottom:6px;">Visit Summary</label>
-                    <input type="text"  class="form-control" id="vl-summary" 
+                    <input type="text" class="form-control" id="vl-summary"
                       placeholder="Detailed summary of work done during this visit…">
                   </div>
-                  <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Stand By Details</label>
-                    <input class="form-control" id="vl-standby" placeholder="Standby arrangement details if any…">
+                  <div class="card"
+                    style="background:#f8fafc; border:1px dashed #cbd5e1; padding:16px; margin-top:8px;">
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                      <input type="checkbox" id="vl-standby-check" onchange="toggleVisitStandby(this.checked)"
+                        style="width:18px; height:18px;">
+                      <label for="vl-standby-check" style="font-weight:700; color:var(--navy); cursor:pointer;">Issue
+                        Standby Asset?</label>
+                    </div>
+                    <div id="vl-standby-fields" style="display:none; grid-template-columns:1fr 1fr; gap:16px;">
+                      <div class="form-group">
+                        <label class="form-label">Available Standby Pool</label>
+                        <select class="form-control" id="vl-standby-asset">
+                          <option value="">-- Select Asset --</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Return Date (Optional)</label>
+                        <input type="date" class="form-control" id="vl-standby-return">
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -17014,7 +17275,7 @@
                       </select>
                     </div>
                     <div class="fg"><label>Quick notes</label>
-                      <input type="text"  class="vf-notes" placeholder="Enter 2–3 bullet points…">
+                      <input type="text" class="vf-notes" placeholder="Enter 2–3 bullet points…">
                     </div>
                     <div class="gps-bar">
                       <div class="gps-dot"></div>
@@ -17647,8 +17908,8 @@
               <div class="modal-body">
                 <div class="form-group"><label class="form-label">Role Name *</label><input class="form-control"
                     id="mrole-name" placeholder="e.g. Branch Manager"></div>
-                <div class="form-group" ><label class="form-label">Description</label><input type="text"  class="form-control"
-                    id="mrole-desc"  placeholder="Role description…"></div>
+                <div class="form-group"><label class="form-label">Description</label><input type="text"
+                    class="form-control" id="mrole-desc" placeholder="Role description…"></div>
                 <div class="form-group"><label class="form-label">Based on</label>
                   <select class="form-control" id="mrole-base">
                     <option>Admin</option>
@@ -17720,8 +17981,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
-                    id="mclead-notes"  placeholder="Initial contact notes…"></div>
+                <div class="form-group"><label class="form-label">Notes</label><input type="text" class="form-control"
+                    id="mclead-notes" placeholder="Initial contact notes…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-lead')">Cancel</button>
@@ -17839,8 +18100,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
-                    id="mcact-notes"  placeholder="Notes…"></div>
+                <div class="form-group"><label class="form-label">Notes</label><input type="text" class="form-control"
+                    id="mcact-notes" placeholder="Notes…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-activity')">Cancel</button>
@@ -17881,8 +18142,8 @@
                   <div class="form-group"><label class="form-label">Date &amp; Time</label><input class="form-control"
                       type="datetime-local" id="mccall-dt"></div>
                 </div>
-                <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
-                    id="mccall-notes"  placeholder="Call summary…"></div>
+                <div class="form-group"><label class="form-label">Notes</label><input type="text" class="form-control"
+                    id="mccall-notes" placeholder="Call summary…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-calllog')">Cancel</button>
@@ -17964,8 +18225,8 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group" ><label class="form-label">Agenda</label><input type="text"  class="form-control"
-                    id="mcmeet-agenda"  placeholder="Meeting agenda…"></div>
+                <div class="form-group"><label class="form-label">Agenda</label><input type="text" class="form-control"
+                    id="mcmeet-agenda" placeholder="Meeting agenda…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-meeting')">Cancel</button>
@@ -18015,8 +18276,8 @@
                   </div>
                   <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
                       id="mfpay-ref" placeholder="UTR / Cheque #"></div>
-                  <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
-                      id="mfpay-notes"  placeholder="Against PO / purpose…">
+                  <div class="form-group"><label class="form-label">Notes</label><input type="text" class="form-control"
+                      id="mfpay-notes" placeholder="Against PO / purpose…">
                   </div>
                 </div>
               </div>
@@ -18141,8 +18402,8 @@
                       <option value="">— Select —</option>
                     </select>
                   </div>
-                  <div class="form-group" ><label class="form-label">Notes</label><input type="text"  class="form-control"
-                      id="mfexp-notes" ></div>
+                  <div class="form-group"><label class="form-label">Notes</label><input type="text" class="form-control"
+                      id="mfexp-notes"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -19304,8 +19565,8 @@
                       id="ml-from" type="date"></div>
                   <div class="form-group"><label class="form-label">To Date *</label><input class="form-control"
                       id="ml-to" type="date"></div>
-                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Reason *</label><input type="text" 
-                      class="form-control" id="ml-reason"  placeholder="Reason for leave"></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Reason *</label><input
+                      type="text" class="form-control" id="ml-reason" placeholder="Reason for leave"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -19377,8 +19638,8 @@
                       id="mpr-old-sal" type="number" placeholder="0"></div>
                   <div class="form-group"><label class="form-label">New Salary</label><input class="form-control"
                       id="mpr-new-sal" type="number" placeholder="0"></div>
-                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Remarks</label><input type="text" 
-                      class="form-control" id="mpr-remarks"  placeholder="Remarks"></div>
+                  <div class="form-group" style="grid-column:1/-1"><label class="form-label">Remarks</label><input
+                      type="text" class="form-control" id="mpr-remarks" placeholder="Remarks"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -19916,7 +20177,8 @@
                 <div class="card mt-4">
                   <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
                     <div class="card-title"><i class="ti ti-list"></i> Line Items</div>
-                    <button class="btn btn-primary btn-sm" onclick="msoAddRow()"><i class="ti ti-plus"></i> Add Item</button>
+                    <button class="btn btn-primary btn-sm" onclick="msoAddRow()"><i class="ti ti-plus"></i> Add
+                      Item</button>
                   </div>
                   <div class="table-wrap">
                     <table class="data-tbl">
@@ -19933,7 +20195,8 @@
                       </thead>
                       <tbody id="mso-items">
                         <tr>
-                          <td colspan="7" class="text-center text-muted" style="padding:20px;">Add an item or link a quotation</td>
+                          <td colspan="7" class="text-center text-muted" style="padding:20px;">Add an item or link a
+                            quotation</td>
                         </tr>
                       </tbody>
                       <tfoot id="mso-totals">
@@ -19949,7 +20212,8 @@
                         </tr>
                         <tr style="background:#0F1C2E;color:#fff;">
                           <td colspan="5" class="text-right" style="font-weight:700;padding:12px;">TOTAL</td>
-                          <td class="amount-cell" id="mso-total" style="font-weight:800;font-size:14px;color:#fff;">₹0</td>
+                          <td class="amount-cell" id="mso-total" style="font-weight:800;font-size:14px;color:#fff;">₹0
+                          </td>
                           <td></td>
                         </tr>
                       </tfoot>
@@ -20381,9 +20645,8 @@
                       <option value="">— Select Product —</option>
                     </select>
                   </div>
-                  <div class="form-group" ><label class="form-label">Buyback Details *</label>
-                    <input type="text"  class="form-control" id="mbb-details" 
-                      placeholder="Enter buyback details...">
+                  <div class="form-group"><label class="form-label">Buyback Details *</label>
+                    <input type="text" class="form-control" id="mbb-details" placeholder="Enter buyback details...">
                   </div>
                   <div class="form-group"><label class="form-label">Price *</label>
                     <input class="form-control" type="number" id="mbb-price" value="0" oninput="mbbCalcTotals()">
@@ -20461,8 +20724,8 @@
                   <div class="form-group"><label class="form-label">Service Reason</label>
                     <input class="form-control" type="text" id="mpm-single-line" placeholder="Enter reason...">
                   </div>
-                  <div class="form-group" ><label class="form-label">Maintenance Notes</label>
-                    <input type="text"  class="form-control" id="mpm-multi-line" 
+                  <div class="form-group"><label class="form-label">Maintenance Notes</label>
+                    <input type="text" class="form-control" id="mpm-multi-line"
                       placeholder="Enter detailed maintenance notes...">
                   </div>
                   <div class="form-group"><label class="form-label">Serial Numbers</label>
@@ -20622,8 +20885,8 @@
                       <option>Accepted</option>
                     </select>
                   </div>
-                  <div class="form-group" ><label class="form-label">Remarks</label><input type="text"  class="form-control"
-                      id="mgrn-remarks" ></div>
+                  <div class="form-group"><label class="form-label">Remarks</label><input type="text"
+                      class="form-control" id="mgrn-remarks"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -20833,7 +21096,7 @@
                       <option>28</option>
                     </select>
                   </div>
-                  <div class="form-group" >
+                  <div class="form-group">
                     <label class="form-label">Status</label>
                     <select class="form-control" id="fp-status">
                       <option>Active</option>
@@ -20842,7 +21105,7 @@
                   </div>
                   <div class="form-group span-2">
                     <label class="form-label">Description</label>
-                    <input type="text"  class="form-control" id="fp-desc"  placeholder="Product description…">
+                    <input type="text" class="form-control" id="fp-desc" placeholder="Product description…">
                   </div>
 
                   <div class="form-group span-2" style="margin-top: 10px;">
@@ -20966,8 +21229,8 @@
                       type="number" id="fw-capacity" placeholder="5000"></div>
                   <div class="form-group"><label class="form-label">Manager</label><input class="form-control"
                       id="fw-manager" placeholder="Manager name"></div>
-                  <div class="form-group" ><label class="form-label">Address</label><input type="text"  class="form-control"
-                      id="fw-address" ></div>
+                  <div class="form-group"><label class="form-label">Address</label><input type="text"
+                      class="form-control" id="fw-address"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -21082,8 +21345,8 @@
                       <option>Supplier</option>
                     </select>
                   </div>
-                  <div class="form-group" ><label class="form-label">Address</label><input type="text"  class="form-control"
-                      id="fc-address" ></div>
+                  <div class="form-group"><label class="form-label">Address</label><input type="text"
+                      class="form-control" id="fc-address"></div>
                   <div class="form-group form-col-2" style="margin-top: 8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                       <label class="form-label" style="margin-bottom:0;">Custom Fields</label>
@@ -21508,6 +21771,7 @@
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
       'svc-pm': { title: 'PM Management', crumbs: ['AMC & Warranty', 'PM Management'], module: 'amc-warranty' },
+      'svc-standby': { title: 'Standby Management', crumbs: ['Service', 'Standby Management'], module: 'service' },
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
@@ -23113,6 +23377,18 @@
       };
     });
 
+    /* ─────────────────────────────────────────────────────
+       STANDBY ASSET POOL
+       ───────────────────────────────────────────────────── */
+    DB.standbyPool = [
+      { id: 'STB-001', name: '5KVA Servo Stabilizer', sn: 'STB-9921', category: 'Stabilizers', condition: 'Excellent', status: 'Available', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] },
+      { id: 'STB-002', name: '10KVA Online UPS', sn: 'STB-4432', category: 'UPS/Inverters', condition: 'Good', status: 'In Use', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] },
+      { id: 'STB-003', name: '3-Phase Control Panel', sn: 'STB-2291', category: 'Control Panels', condition: 'Refurbished', status: 'Available', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] },
+      { id: 'STB-004', name: '2KVA Static Inverter', sn: 'STB-1105', category: 'UPS/Inverters', condition: 'Fair', status: 'Available', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] },
+      { id: 'STB-005', name: 'High Precision Volt Meter', sn: 'STB-8832', category: 'Safety', condition: 'Excellent', status: 'Available', history: [{ date: new Date().toISOString(), action: 'Registered', party: 'Office/Pool', ref: '-', details: 'System initialization', user: 'Admin' }] }
+    ];
+
+    DB.serviceTickets = [];
     DB.serviceRequests = Array.from({ length: 20 }, (_, i) => ({
       id: `SR-${String(i + 1).padStart(4, '0')}`,
       customer: spick(DB.customers).name,
@@ -23124,6 +23400,7 @@
       assignedTo: spick(DB.employees).name,
       location: spick(CITIES),
       estimatedHours: si(1, 16),
+      standby: i === 1 ? { assetId: 'STB-002', assetName: '10KVA Online UPS', issuedOn: new Date(Date.now() - 2 * 86400000).toISOString(), status: 'Active' } : null
     }));
 
     /* ─────────────────────────────────────────────────────
@@ -24180,6 +24457,7 @@
       once('svc-assignjobs', initSvcAssignJobs);
       once('svc-technicians', initSvcTechnicians);
       once('svc-reports', initSvcReports);
+      once('svc-standby', initSvcStandby);
       once('ai-dashboard', initAIDashboard);
       once('ai-insights', initAIInsights);
       once('ai-recommendations', initAIRecommendations);
@@ -29137,6 +29415,286 @@
       sReqPage = 1; renderServiceRequestsTable();
     }
 
+    /* ─────────────────────────────────────────────────────
+       STANDBY ASSET MANAGEMENT LOGIC
+       ───────────────────────────────────────────────────── */
+    function openNewSvcRequest() {
+      const sa = document.getElementById('mreq-standby-asset');
+      if (sa) {
+        sa.innerHTML = '<option value="">-- Select Asset --</option>';
+        (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
+          sa.add(new Option(`${a.name} (${a.sn}) ${a.branch ? '- ' + a.branch : ''}`, a.id));
+        });
+      }
+      const chk = document.getElementById('mreq-standby-check');
+      if (chk) chk.checked = false;
+      const wrap = document.getElementById('mreq-standby-wrap');
+      if (wrap) wrap.style.display = 'none';
+
+      openModal('modal-svc-request');
+    }
+
+    function initSvcStandby() {
+      // Load assets into dropdown for Service Request modal
+      const sa = document.getElementById('mreq-standby-asset');
+      if (sa) {
+        sa.innerHTML = '<option value="">-- Select Asset --</option>';
+        (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
+          sa.add(new Option(`${a.name} (${a.sn})`, a.id));
+        });
+      }
+
+      renderStandbyKPI();
+      renderStandbyTable();
+      renderStandbyPoolTable();
+    }
+
+    function renderStandbyKPI() {
+      const kpi = document.getElementById('svc-standby-kpi');
+      if (!kpi) return;
+      const totalPool = (DB.standbyPool || []).length;
+      const available = (DB.standbyPool || []).filter(a => a.status === 'Available').length;
+      const inUse = (DB.standbyPool || []).filter(a => a.status === 'In Use').length;
+      const totalTracked = (DB.serviceRequests || []).filter(r => r.standby).length;
+
+      kpi.innerHTML = `
+        <div class="kpi-card blue">
+          <div class="kpi-head">
+            <div><div class="kpi-label">Master Pool</div><div class="kpi-val">${totalPool}</div></div>
+            <div class="kpi-icon blue"><i class="ti ti-box"></i></div>
+          </div>
+          <div class="kpi-sub neutral">Total units</div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-head">
+            <div><div class="kpi-label">Available</div><div class="kpi-val">${available}</div></div>
+            <div class="kpi-icon green"><i class="ti ti-circle-check"></i></div>
+          </div>
+          <div class="kpi-sub up">In-house stock</div>
+        </div>
+        <div class="kpi-card amber">
+          <div class="kpi-head">
+            <div><div class="kpi-label">At Customer</div><div class="kpi-val">${inUse}</div></div>
+            <div class="kpi-icon amber"><i class="ti ti-replace"></i></div>
+          </div>
+          <div class="kpi-sub warn">Currently issued</div>
+        </div>
+        <div class="kpi-card navy">
+          <div class="kpi-head">
+            <div><div class="kpi-label">Total Tracks</div><div class="kpi-val">${totalTracked}</div></div>
+            <div class="kpi-icon navy"><i class="ti ti-history"></i></div>
+          </div>
+          <div class="kpi-sub neutral">Lifetime issuances</div>
+        </div>
+      `;
+    }
+
+    function switchStandbyTab(tab) {
+      document.getElementById('stb-tab-issued').classList.toggle('active', tab === 'issued');
+      document.getElementById('stb-tab-pool').classList.toggle('active', tab === 'pool');
+      document.getElementById('stb-view-issued').style.display = tab === 'issued' ? 'block' : 'none';
+      document.getElementById('stb-view-pool').style.display = tab === 'pool' ? 'block' : 'none';
+      document.getElementById('stb-filters-issued').style.display = tab === 'issued' ? 'flex' : 'none';
+      document.getElementById('stb-filters-pool').style.display = tab === 'pool' ? 'flex' : 'none';
+      if (tab === 'pool') renderStandbyPoolTable();
+      else renderStandbyTable();
+    }
+
+    function toggleStandbyFields(checked) {
+      document.getElementById('mreq-standby-fields').style.display = checked ? 'grid' : 'none';
+      if (checked) {
+        const sa = document.getElementById('mreq-standby-asset');
+        if (sa) {
+          sa.innerHTML = '<option value="">-- Select Asset --</option>';
+          (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
+            sa.add(new Option(`${a.name} (${a.sn})`, a.id));
+          });
+        }
+      }
+    }
+
+    function renderStandbyTable() {
+      const tbody = document.getElementById('svc-standby-tbody');
+      if (!tbody) return;
+      const search = (document.getElementById('svc-standby-search')?.value || '').toLowerCase();
+      const statusFilter = document.getElementById('svc-standby-filter')?.value || '';
+
+      const data = (DB.serviceRequests || []).filter(r => r.standby).filter(r => {
+        const ms = !search || r.customer.toLowerCase().includes(search) || r.standby.assetName.toLowerCase().includes(search);
+        const mst = !statusFilter || (statusFilter === 'Active' ? r.standby.status === 'Active' : r.standby.status === 'Returned');
+        return ms && mst;
+      });
+
+      tbody.innerHTML = data.length ? data.map(r => `
+        <tr>
+          <td class="font-600 text-blue">${r.id}</td>
+          <td>${r.customer}</td>
+          <td>${r.product || 'N/A'}</td>
+          <td>
+             <div class="font-600">${r.standby.assetName}</div>
+             <div class="text-muted" style="font-size:11px;">SN: ${r.standby.assetId}</div>
+          </td>
+          <td>${new Date(r.standby.issuedOn).toLocaleDateString()}</td>
+          <td>
+            <span class="tag ${r.standby.status === 'Active' ? 'tag-amber' : 'tag-green'}">
+              ${r.standby.status === 'Active' ? 'In Use' : 'Returned'}
+            </span>
+          </td>
+          <td>
+            <div class="tbl-actions">
+              <button class="btn-icon" onclick="openSvcRequestView('${r.id}')" title="View Request"><i class="ti ti-eye"></i></button>
+              ${r.standby.status === 'Active' ?
+          `<button class="btn-icon text-success" onclick="toggleStandbyReturn('${r.id}', true)" title="Mark Returned"><i class="ti ti-arrow-back-up"></i></button>` :
+          `<button class="btn-icon text-amber" onclick="toggleStandbyReturn('${r.id}', false)" title="Mark as Still at Customer"><i class="ti ti-refresh"></i></button>`
+        }
+            </div>
+          </td>
+        </tr>
+      `).join('') : '';
+
+      const empty = document.getElementById('svc-standby-empty');
+      if (empty) empty.style.display = data.length ? 'none' : 'block';
+      const count = document.getElementById('svc-standby-count');
+      if (count) count.textContent = data.length;
+      renderStandbyKPI();
+    }
+
+    function renderStandbyPoolTable() {
+      const tbody = document.getElementById('svc-pool-tbody');
+      if (!tbody) return;
+      const search = (document.getElementById('svc-pool-search')?.value || '').toLowerCase();
+
+      const data = (DB.standbyPool || []).filter(a => {
+        return !search || a.name.toLowerCase().includes(search) || a.sn.toLowerCase().includes(search);
+      });
+
+      tbody.innerHTML = data.map(a => `
+    <tr>
+      <td class="font-600">${a.sn}</td>
+      <td>${a.name}</td>
+      <td>${a.category}</td>
+      <td>${a.condition}</td>
+      <td>
+        <span class="tag ${a.status === 'Available' ? 'tag-green' : 'tag-amber'}">
+          <i class="ti ${a.status === 'Available' ? 'ti-circle-check' : 'ti-user'}"></i> ${a.status}
+        </span>
+      </td>
+      <td>
+        <div class="tbl-actions">
+           <button class="btn-icon" onclick="viewStandbyHistory('${a.id}')" title="View History"><i class="ti ti-history"></i></button>
+           <button class="btn-icon"><i class="ti ti-edit"></i></button>
+           <button class="btn-icon text-danger"><i class="ti ti-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+      const pc = document.getElementById('svc-pool-count');
+      if (pc) pc.textContent = data.length;
+    }
+
+    function viewStandbyHistory(assetId) {
+      const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+      if (!asset) return;
+
+      const title = document.getElementById('vstb-name');
+      if (title) title.textContent = `${asset.name} (${asset.sn})`;
+
+      const tbody = document.getElementById('vstb-history-tbody');
+      if (tbody) {
+        if (!asset.history || asset.history.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding:40px;">No history records found for this asset.</td></tr>';
+        } else {
+          tbody.innerHTML = asset.history.map(h => `
+        <tr>
+          <td style="font-size:12px;">${new Date(h.date).toLocaleString()}</td>
+          <td>
+            <span class="tag ${h.action === 'Issued' ? 'tag-amber' : (h.action === 'Returned' ? 'tag-green' : 'tag-gray')}">
+              ${h.action}
+            </span>
+          </td>
+          <td style="font-weight:600; color:var(--navy);">${h.party}</td>
+          <td style="font-family:monospace; font-size:11px;">${h.ref}</td>
+          <td style="font-size:12px; color:var(--text-muted);">${h.user}</td>
+        </tr>
+      `).reverse().join('');
+        }
+      }
+      openModal('modal-svc-standby-history');
+    }
+
+    function saveStandbyAsset() {
+      const name = document.getElementById('mstb-name').value;
+      const sn = document.getElementById('mstb-sn').value;
+      const cat = document.getElementById('mstb-cat').value;
+      const notes = document.getElementById('mstb-notes').value;
+
+      if (!name || !sn) { alert('Name and Serial Number are required'); return; }
+
+      const newAsset = {
+        id: 'STB-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0'),
+        name, sn, category: cat, condition: notes || 'Good',
+        status: 'Available',
+        history: [{
+          date: new Date().toISOString(),
+          action: 'Registered',
+          party: 'Office/Pool',
+          ref: '-',
+          details: 'Initial registration into standby pool',
+          user: 'Admin'
+        }]
+      };
+
+      if (!DB.standbyPool) DB.standbyPool = [];
+      DB.standbyPool.push(newAsset);
+      closeModal('modal-svc-standby-add');
+      renderStandbyPoolTable();
+      renderStandbyKPI();
+      showToast('Asset added to standby pool', 'success');
+
+      document.getElementById('mstb-name').value = '';
+      document.getElementById('mstb-sn').value = '';
+      document.getElementById('mstb-notes').value = '';
+    }
+
+    function toggleStandbyReturn(reqId, isReturning) {
+      const req = DB.serviceRequests.find(r => r.id === reqId);
+      if (!req || !req.standby) return;
+
+      const asset = DB.standbyPool.find(a => a.id === req.standby.id);
+
+      if (isReturning) {
+        if (!confirm('Mark this standby asset as returned to pool?')) return;
+        req.standby.status = 'Returned';
+        req.standby.returnedOn = new Date().toISOString();
+        if (asset) {
+          asset.status = 'Available';
+          addStandbyHistory(asset.id, 'Returned', 'Asset returned to office', req.customer, req.scn || req.id);
+        }
+        showToast('Standby asset returned to pool', 'success');
+      } else {
+        req.standby.status = 'Active';
+        delete req.standby.returnedOn;
+        if (asset) {
+          asset.status = 'In Use';
+          addStandbyHistory(asset.id, 'Re-activated', 'Issue status reset', req.customer, req.scn || req.id);
+        }
+        showToast('Status updated to In Use', 'info');
+      }
+
+      renderStandbyTable();
+      renderStandbyPoolTable();
+      renderStandbyKPI();
+    }
+
+    function filterStandbyAssets() {
+      renderStandbyTable();
+    }
+
+    function exportStandbyData() {
+      showToast('Exporting standby asset report...', 'info');
+    }
+
     function renderServiceRequestsTable() {
       const tbody = document.getElementById('svc-req-tbody'); if (!tbody) return;
       const start = (sReqPage - 1) * SREQ_PER;
@@ -29348,16 +29906,70 @@
     }
 
     function saveServiceRequest() {
-      const cust = document.getElementById('mreq-cust')?.value;
-      if (!cust) { showToast('error', 'Validation', 'Select customer.'); return; }
+      const custId = document.getElementById('mreq-cust')?.value;
+      const customer = document.getElementById('mreq-cust')?.options[document.getElementById('mreq-cust').selectedIndex]?.text;
+      const type = document.getElementById('mreq-type')?.value;
+      const product = document.getElementById('mreq-product')?.value;
+      const serial = document.getElementById('mreq-serial')?.value;
+      const date = document.getElementById('mreq-date')?.value;
+      const technician = document.getElementById('mreq-assignee')?.value;
+      const status = document.getElementById('mreq-status')?.value;
+      const desc = document.getElementById('mreq-desc')?.value;
+      const branch = document.getElementById('mreq-branch')?.value;
+      const contact = document.getElementById('mreq-contact')?.value;
+      const address = document.getElementById('mreq-addr')?.value;
 
-      const cfContainer = document.getElementById('mreq-cf-container');
-      if (cfContainer) cfContainer.innerHTML = '';
-      const historyWrap = document.getElementById('mreq-history-wrap');
-      if (historyWrap) historyWrap.style.display = 'none';
+      if (!custId) { showToast('error', 'Validation', 'Please select a customer.'); return; }
 
+      const newId = 'SR-2024-' + (DB.serviceRequests.length + 1001).toString();
+      const newReq = {
+        id: newId,
+        customer,
+        custId,
+        type,
+        product,
+        serialNo: serial || 'SN-' + Math.floor(100000 + Math.random() * 900000),
+        scheduledDate: date || new Date().toISOString(),
+        technician: technician || '',
+        status: status || 'Pending',
+        description: desc,
+        branch: branch || 'Main',
+        contactPerson: contact,
+        address: address || 'Site Address',
+        standby: null,
+        createdAt: new Date().toISOString()
+      };
+
+      // Handle standby
+      const isStandby = document.getElementById('mreq-standby-check')?.checked;
+      if (isStandby) {
+        const assetId = document.getElementById('mreq-standby-asset')?.value;
+        const returnDate = document.getElementById('mreq-standby-return')?.value;
+
+        if (assetId) {
+          const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+          if (asset) {
+            asset.status = 'In Use';
+            newReq.standby = {
+              assetId: asset.id,
+              assetName: asset.name,
+              issuedOn: new Date().toISOString(),
+              returnBy: returnDate,
+              status: 'Active'
+            };
+          }
+        }
+      }
+
+      DB.serviceRequests.unshift(newReq);
       closeModal('modal-svc-request');
-      showToast('success', 'Request Created', 'Service request logged.');
+
+      // Refresh views
+      if (typeof initSvcRequests === 'function') initSvcRequests();
+      if (typeof renderStandbyTable === 'function') renderStandbyTable();
+      if (typeof renderStandbyPoolTable === 'function') renderStandbyPoolTable();
+
+      showToast('success', 'Request Created', 'Service request logged with ID: ' + newId);
     }
 
     const SVC_CHECKLISTS = {
@@ -29382,6 +29994,28 @@
       document.getElementById('vreq-status').innerHTML = `<span class="badge badge-${SVC_STATUS_CLS[req.status] || 'gray'}">${req.status}</span>`;
       document.getElementById('vreq-technician').innerHTML = `<i class="ti ti-user"></i> Tech: ${req.technician || 'Pending Assignment'}`;
       document.getElementById('vreq-desc').textContent = req.description || 'No additional notes provided for this service request.';
+
+      // Standby Info
+      const stbSec = document.getElementById('vreq-standby-section');
+      if (stbSec) {
+        if (req.standby) {
+          stbSec.style.display = 'block';
+          document.getElementById('vreq-standby-name').textContent = req.standby.assetName;
+          document.getElementById('vreq-standby-status').innerHTML = `
+            <span style="color:${req.standby.status === 'Active' ? '#92400e' : '#065f46'}; font-weight:600;">
+              ${req.standby.status === 'Active' ? 'CURRENTLY AT CUSTOMER' : 'RETURNED TO POOL'}
+            </span> 
+            <span style="margin-left:8px; color:#6b7280;">Issued: ${new Date(req.standby.issuedOn).toLocaleDateString()}</span>
+          `;
+          const retBtn = document.getElementById('vreq-standby-return-btn');
+          if (retBtn) {
+            retBtn.style.display = req.standby.status === 'Active' ? 'block' : 'none';
+            retBtn.onclick = () => { toggleStandbyReturn(req.id, true); openSvcRequestView(req.id); };
+          }
+        } else {
+          stbSec.style.display = 'none';
+        }
+      }
 
       // Table 1: Service Details (Corrected Alignment)
       const detailsTbody = document.getElementById('vreq-details-tbody');
@@ -32435,11 +33069,41 @@
       ['vl-branch', 'vl-call-type', 'vl-type-of-call', 'vl-source', 'vl-product-type', 'vl-cust-designation', 'vl-complaint', 'vl-call-status', 'vl-sr-status'].forEach(id => {
         const el = document.getElementById(id); if (el && el.tagName === 'SELECT') el.selectedIndex = 0;
       });
-      ['vl-report-no', 'vl-description', 'vl-incentive', 'vl-signature-name', 'vl-login-id', 'vl-time-in', 'vl-time-out', 'vl-duration', 'vl-spares', 'vl-cust-suggestion', 'vl-eng-suggestion', 'vl-summary', 'vl-standby'].forEach(id => {
+      ['vl-report-no', 'vl-description', 'vl-incentive', 'vl-signature-name', 'vl-login-id', 'vl-time-in', 'vl-time-out', 'vl-duration', 'vl-spares', 'vl-cust-suggestion', 'vl-eng-suggestion', 'vl-summary'].forEach(id => {
         const el = document.getElementById(id); if (el) el.value = '';
       });
+      // Standby Reset
+      const sbc = document.getElementById('vl-standby-check'); if (sbc) sbc.checked = false;
+      const sbf = document.getElementById('vl-standby-fields'); if (sbf) sbf.style.display = 'none';
+      const sba = document.getElementById('vl-standby-asset');
+      if (sba) {
+        sba.innerHTML = '<option value="">-- Select Asset --</option>';
+        (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
+          sba.add(new Option(`${a.name} (${a.sn})`, a.id));
+        });
+      }
+
       const spares = document.getElementById('vl-spares'); if (spares) spares.value = '0';
       openModal('modal-visit-log');
+    }
+
+    function toggleVisitStandby(checked) {
+      const fields = document.getElementById('vl-standby-fields');
+      if (fields) fields.style.display = checked ? 'grid' : 'none';
+    }
+
+    function addStandbyHistory(assetId, action, details, party, ref) {
+      const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+      if (!asset) return;
+      if (!asset.history) asset.history = [];
+      asset.history.push({
+        date: new Date().toISOString(),
+        action: action,
+        party: party || 'Office/Pool',
+        ref: ref || '-',
+        details: details || '',
+        user: 'Service Team'
+      });
     }
 
     function updateVisitDuration() {
@@ -32486,10 +33150,37 @@
         serviceRequestStatus: document.getElementById('vl-sr-status')?.value || 'Completed',
         approvalStatus: 'Pending',
         sparesCount: parseInt(document.getElementById('vl-spares')?.value) || 0,
-        standByDetails: document.getElementById('vl-standby')?.value || '',
         addedBy: 'Current User',
         addedTime: new Date().toISOString(),
       };
+
+      // Handle Standby Asset
+      const isStandby = document.getElementById('vl-standby-check')?.checked;
+      if (isStandby) {
+        const assetId = document.getElementById('vl-standby-asset')?.value;
+        if (assetId) {
+          const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+          if (asset) {
+            asset.status = 'In Use';
+            newVisit.standby = {
+              id: asset.id,
+              name: asset.name,
+              sn: asset.sn,
+              issuedOn: visitDate,
+              expectedReturn: document.getElementById('vl-standby-return')?.value || '',
+              status: 'Active'
+            };
+            addStandbyHistory(assetId, 'Issued', 'Standby issued via Visit Log', customer, newVisit.scn);
+
+            // Also link to service request if it exists
+            const req = (DB.serviceRequests || []).find(r => r.scn === newVisit.scn);
+            if (req) {
+              req.standby = { ...newVisit.standby };
+            }
+          }
+        }
+      }
+
       if (!DB.visits) DB.visits = [];
       DB.visits.unshift(newVisit);
       _visitFiltered = [...DB.visits];
@@ -32498,8 +33189,14 @@
       renderVisitEngGrid();
       renderVisitsTable();
       closeModal('modal-visit-log');
+
+      // Refresh standby UI if on that page
+      if (typeof renderStandbyTable === 'function') renderStandbyTable();
+      if (typeof renderStandbyPoolTable === 'function') renderStandbyPoolTable();
+
       showToast('success', 'Visit Logged', `${newVisit.scn} logged successfully.`);
     }
+
     function initSvcFeedback() {
       const kpi = document.getElementById('svc-feed-kpi');
       if (kpi) kpi.innerHTML = `
@@ -35107,7 +35804,7 @@
           <!-- Notes -->
           <div class="lsp-frow">
             <label class="lsp-label">Notes</label>
-            <input type="text"  class="search-input" id="lf-act-notes"  placeholder="Additional details…"
+            <input type="text" class="search-input" id="lf-act-notes" placeholder="Additional details…"
               style="width:100%;resize:vertical;">
           </div>
 
@@ -36586,7 +37283,7 @@
         </div>
         <div class="d-field d-col-3">
           <label class="d-label">Talking Points / Notes</label>
-          <input type="text"  class="d-input" id="aims-va-notes" 
+          <input type="text" class="d-input" id="aims-va-notes"
             placeholder="Key agenda, products to discuss, context for the SE…"
             style="resize:vertical;font-family:inherit;line-height:1.5;min-height:80px;">
         </div>
