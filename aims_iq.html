@@ -7749,10 +7749,6 @@
               <span class="nav-text">Service Requests</span>
             </div>
 
-            <div class="nav-item" data-page="svc-checklist" onclick="navigate('svc-checklist',this)">
-              <i class="ti ti-checklist nav-icon"></i>
-              <span class="nav-text">Service Checklist</span>
-            </div>
 
             <div class="nav-item" data-page="svc-installation" onclick="navigate('svc-installation',this)">
               <i class="ti ti-settings-automation nav-icon"></i>
@@ -7760,21 +7756,21 @@
             </div>
 
 
-            <div class="nav-item" data-page="svc-visits" onclick="navigate('svc-visits',this)">
-              <i class="ti ti-map-pin nav-icon"></i>
-              <span class="nav-text">Service Visits</span>
-            </div>
             <div class="nav-item" data-page="svc-feedback" onclick="navigate('svc-feedback',this)">
               <i class="ti ti-thumb-up nav-icon"></i>
               <span class="nav-text">Service Feedback</span>
             </div>
-            <div class="nav-item" data-page="svc-standby" onclick="navigate('svc-standby',this)">
-              <i class="ti ti-replace nav-icon"></i>
-              <span class="nav-text">Standby Asset Mgmt</span>
-            </div>
             <div class="nav-item" data-page="svc-repair-tracker" onclick="navigate('svc-repair-tracker',this)">
               <i class="ti ti-tool nav-icon"></i>
-              <span class="nav-text">Repair & PCB Tracker</span>
+              <span class="nav-text">Repair Tracker</span>
+            </div>
+            <div class="nav-item" data-page="svc-standby" onclick="navigate('svc-standby',this)">
+              <i class="ti ti-replace nav-icon"></i>
+              <span class="nav-text">Asset Management</span>
+            </div>
+            <div class="nav-item" data-page="svc-checklist" onclick="navigate('svc-checklist',this)">
+              <i class="ti ti-checklist nav-icon"></i>
+              <span class="nav-text">Checklist Management</span>
             </div>
 
           </div>
@@ -8676,7 +8672,7 @@
                   </div>
                   <div class="ls-card" onclick="navigate('svc-checklist',null)">
                     <div class="ls-card-icon"><i class="ti ti-checklist"></i></div>
-                    <div class="ls-card-title">Service Checklist</div>
+                    <div class="ls-card-title">Checklist Management</div>
                     <div class="ls-card-desc">Standard service steps</div>
                   </div>
                   <div class="ls-card" onclick="navigate('svc-installation',null)">
@@ -8685,11 +8681,6 @@
                     <div class="ls-card-desc">Manage installations</div>
                   </div>
 
-                  <div class="ls-card" onclick="navigate('svc-visits',null)">
-                    <div class="ls-card-icon"><i class="ti ti-map-pin"></i></div>
-                    <div class="ls-card-title">Service Visits</div>
-                    <div class="ls-card-desc">On-site service visits</div>
-                  </div>
                   <div class="ls-card" onclick="navigate('svc-feedback',null)">
                     <div class="ls-card-icon"><i class="ti ti-thumb-up"></i></div>
                     <div class="ls-card-title">Service Feedback</div>
@@ -11754,7 +11745,7 @@
           <div class="page" id="page-svc-checklist">
             <div class="page-header">
               <div>
-                <div class="page-title">Service Checklist</div>
+                <div class="page-title">Checklist Management</div>
                 <div class="page-sub">Configure checklist items per product type and service call type</div>
               </div>
               <button class="btn btn-primary" onclick="openSvcChecklist()"><i class="ti ti-plus"></i> New
@@ -11841,7 +11832,7 @@
           <div class="page" id="page-svc-standby">
             <div class="page-header">
               <div>
-                <div class="page-title">Standby Asset Management</div>
+                <div class="page-title">Asset Management</div>
                 <div class="page-sub">Track company assets issued to customers during service/repair</div>
               </div>
               <div class="page-actions">
@@ -11939,7 +11930,7 @@
           <div class="page" id="page-svc-repair-tracker">
             <div class="page-header">
               <div>
-                <div class="page-title">Repair & PCB Tracker</div>
+                <div class="page-title">Repair Tracker</div>
                 <div class="page-sub">Monitor internal and outsource (vendor) component repairs</div>
               </div>
               <div class="page-actions">
@@ -11999,9 +11990,9 @@
               <div class="card-header" style="align-items: center;">
                 <div class="card-tabs">
                   <div class="card-tab active" id="rep-tab-all" onclick="switchRepairTab('all')"><i
-                      class="ti ti-layout-list"></i> All Reports</div>
+                      class="ti ti-layout-list"></i> All</div>
                   <div class="card-tab" id="rep-tab-outsource" onclick="switchRepairTab('outsource')"><i
-                      class="ti ti-truck-delivery"></i> Outsource PCB
+                      class="ti ti-truck-delivery"></i> Outsource
                   </div>
                 </div>
                 <div class="ml-auto" style="display:flex; gap:12px;">
@@ -12232,10 +12223,11 @@
                   </div>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
-                  <div class="form-group" style="grid-column:span 3;"><label class="form-label">Address</label><input class="form-control"
-                      id="mreq-addr" placeholder="Service location"></div>
-                  <div class="form-group" style="grid-column:span 3;"><label class="form-label">Description</label><input type="text"
-                      class="form-control" id="mreq-desc" placeholder="Description of service request…"></div>
+                  <div class="form-group" style="grid-column:span 3;"><label class="form-label">Address</label><input
+                      class="form-control" id="mreq-addr" placeholder="Service location"></div>
+                  <div class="form-group" style="grid-column:span 3;"><label
+                      class="form-label">Description</label><input type="text" class="form-control" id="mreq-desc"
+                      placeholder="Description of service request…"></div>
                 </div>
 
 
@@ -12348,7 +12340,7 @@
                   </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:16px;">
+                <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:16px;">
                   <!-- TABLE 2: CUSTOMER HISTORY (Invoices & Services) -->
                   <div class="card">
                     <div class="card-header">
@@ -12374,7 +12366,7 @@
                   <!-- TABLE 3: CHECKLIST TABLE -->
                   <div class="card">
                     <div class="card-header">
-                      <div class="card-title text-amber"><i class="ti ti-checklist"></i> Service Checklist</div>
+                      <div class="card-title text-amber"><i class="ti ti-checklist"></i> Checklist Management</div>
                     </div>
                     <div class="table-wrap" style="box-shadow:none; border:none; border-top:1px solid var(--border);">
                       <table class="data-tbl">
@@ -12494,7 +12486,7 @@
           <div class="modal-wrap" id="modal-svc-standby-add">
             <div class="modal">
               <div class="modal-header">
-                <div class="modal-title">Register Standby Asset</div>
+                <div class="modal-title">Register Asset</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-standby-add')"><i
                     class="ti ti-x"></i></button>
               </div>
@@ -12536,7 +12528,7 @@
           <div class="modal-wrap" id="modal-svc-checklist" style="width:70%;">
             <div class="modal">
               <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-checklist"></i> Service Checklist</div>
+                <div class="modal-title"><i class="ti ti-checklist"></i> Checklist Management</div>
                 <button class="modal-close" onclick="closeModal('modal-svc-checklist')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
@@ -15129,329 +15121,6 @@
             </div>
           </div>
 
-          <!-- ── SERVICE: VISITS ─────────────────────────────── -->
-          <div class="page" id="page-svc-visits">
-            <div class="page-header">
-              <div>
-                <div class="page-title">Service Visits</div>
-                <div class="page-sub">Field service call tracking — attendance, approval and visit reports</div>
-              </div>
-              <div style="display:flex;gap:8px;">
-                <button class="btn btn-outline" onclick="showToast('info','Export','Preparing export...')"><i
-                    class="ti ti-download"></i> Export</button>
-                <button class="btn btn-primary" onclick="openVisitLogModal()"><i class="ti ti-plus"></i> Log
-                  Visit</button>
-              </div>
-            </div>
-
-            <!-- KPI -->
-            <div class="kpi-grid kpi-grid-4 mb-4" id="svc-visit-kpi"></div>
-
-
-
-            <!-- Visits Table -->
-            <div class="card">
-              <div class="card-header" style="flex-wrap:wrap;gap:10px;">
-                <div class="card-title"><i class="ti ti-clipboard-list"></i> Service Calls <span
-                    class="badge badge-navy ml-8" id="visit-count">0</span></div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-                  <input class="search-input" id="visit-search" placeholder="SCN, customer, engineer…"
-                    oninput="filterVisits()" style="width:200px;">
-                  <select class="select-sm" id="visit-branch-filter" onchange="filterVisits()">
-                    <option value="">All Branches</option>
-                    <option>Hosur</option>
-                    <option>Salem</option>
-                    <option>Namakkal</option>
-                    <option>Erode</option>
-                    <option>Coimbatore</option>
-                  </select>
-                  <select class="select-sm" id="visit-type-filter" onchange="filterVisits()">
-                    <option value="">All Call Types</option>
-                    <option>Installation</option>
-                    <option>Warranty</option>
-                    <option>Out of Warranty</option>
-                    <option>PM Call</option>
-                  </select>
-                  <select class="select-sm" id="visit-status-filter" onchange="filterVisits()">
-                    <option value="">All Statuses</option>
-                    <option>Attended</option>
-                    <option>Pending</option>
-                  </select>
-                  <input type="date" class="select-sm" id="visit-date-filter" onchange="filterVisits()"
-                    style="width:145px;">
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table class="data-tbl">
-                  <thead>
-                    <tr>
-                      <th>SCN</th>
-                      <th>Call Type</th>
-                      <th>Type of Call</th>
-                      <th>Product Type</th>
-                      <th>Customer</th>
-                      <th>Engineer / Branch</th>
-                      <th>Visit Date</th>
-                      <th>Time In → Out</th>
-                      <th>Duration</th>
-                      <th>Call Status</th>
-                      <th>Approval</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="svc-visits-tbody"></tbody>
-                </table>
-              </div>
-              <div id="visit-pagination"></div>
-            </div>
-          </div>
-
-          <!-- LOG VISIT MODAL -->
-          <div class="modal-wrap" id="modal-visit-log" style="width:70%;">
-            <div class="modal">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-clipboard-plus"></i> Log Service Visit</div>
-                <button class="modal-close" onclick="closeModal('modal-visit-log')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body" style="overflow-y:auto;max-height:75vh;">
-
-                <!-- Section 1: Call Info -->
-                <div
-                  style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">
-                  Call Information</div>
-                <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:20px;">
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">SCN (Auto)</label>
-                    <input class="form-control" id="vl-scn" readonly style="background:var(--bg);">
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Report No</label>
-                    <input class="form-control" id="vl-report-no" placeholder="APS/SCR/SLM/5961">
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Branch <span class="req">*</span></label>
-                    <select class="form-control" id="vl-branch">
-                      <option value="">— select —</option>
-                      <option>Hosur</option>
-                      <option>Salem</option>
-                      <option>Namakkal</option>
-                      <option>Erode</option>
-                      <option>Coimbatore</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Call Type <span class="req">*</span></label>
-                    <select class="form-control" id="vl-call-type">
-                      <option value="">— select —</option>
-                      <option>Installation</option>
-                      <option>Warranty</option>
-                      <option>Out of Warranty</option>
-                      <option>PM Call</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Type of Call <span class="req">*</span></label>
-                    <select class="form-control" id="vl-type-of-call">
-                      <option value="">— select —</option>
-                      <option>Installation</option>
-                      <option>PM Call</option>
-                      <option>Site Inspection</option>
-                      <option>Service Call</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Source of Call</label>
-                    <select class="form-control" id="vl-source">
-                      <option value="">— select —</option>
-                      <option>Customer Call</option>
-                      <option>W PM Call</option>
-                      <option>Solar</option>
-                      <option>Direct</option>
-                      <option>WhatsApp</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Type of Product</label>
-                    <select class="form-control" id="vl-product-type">
-                      <option value="">— select —</option>
-                      <option>SMF Batteries</option>
-                      <option>Domestic UPS and Batteries</option>
-                      <option>Online UPS</option>
-                      <option>Online UPS and SMF Batteries</option>
-                      <option>Online UPS and Tubular Batteries</option>
-                      <option>Solar</option>
-                      <option>Servo Stabilizer</option>
-                      <option>Inverter</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Incentive Points</label>
-                    <input class="form-control" type="number" id="vl-incentive" placeholder="e.g. 2.0" step="0.5"
-                      min="0">
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Description</label>
-                    <input class="form-control" id="vl-description" placeholder="Brief description of the call…">
-                  </div>
-                </div>
-
-                <!-- Section 2: Customer -->
-                <div
-                  style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">
-                  Customer Details</div>
-                <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:20px;">
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Customer <span class="req">*</span></label>
-                    <select class="form-control" id="vl-customer"></select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Customer Designation</label>
-                    <select class="form-control" id="vl-cust-designation">
-                      <option value="">— select —</option>
-                      <option>Staff</option>
-                      <option>Supervisor</option>
-                      <option>Home</option>
-                      <option>Cashier</option>
-                      <option>Incharge</option>
-                      <option>Manager</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Name in Signature</label>
-                    <input class="form-control" id="vl-signature-name" placeholder="Customer who signed">
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Complaint</label>
-                    <select class="form-control" id="vl-complaint">
-                      <option value="">— select —</option>
-                      <option>Ok</option>
-                      <option>Good</option>
-                      <option>Nil</option>
-                      <option>Not Resolved</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Section 3: Engineer & Time -->
-                <div
-                  style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">
-                  Engineer & Time</div>
-                <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:20px;">
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Service Engineer <span class="req">*</span></label>
-                    <select class="form-control" id="vl-engineer"></select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Login ID</label>
-                    <input class="form-control" id="vl-login-id" readonly style="background:var(--bg);"
-                      placeholder="Auto-filled">
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Visit Date <span class="req">*</span></label>
-                    <input class="form-control" type="date" id="vl-visit-date">
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Time In <span class="req">*</span></label>
-                    <input class="form-control" type="time" id="vl-time-in" oninput="updateVisitDuration()">
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Time Out</label>
-                    <input class="form-control" type="time" id="vl-time-out" oninput="updateVisitDuration()">
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Duration</label>
-                    <input class="form-control" id="vl-duration" readonly
-                      style="background:var(--bg);font-weight:600;color:var(--blue);" placeholder="Auto-calculated">
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Call Status</label>
-                    <select class="form-control" id="vl-call-status">
-                      <option>Attended</option>
-                      <option>Pending</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 2;">
-                    <label class="form-label">Service Request Status</label>
-                    <select class="form-control" id="vl-sr-status">
-                      <option>Completed</option>
-                      <option>Pending</option>
-                      <option>Escalated</option>
-                    </select>
-                  </div>
-                  <div class="form-group" style="grid-column:span 3;">
-                    <label class="form-label">Spare Arrangement Count</label>
-                    <input class="form-control" type="number" id="vl-spares" value="0" min="0">
-                  </div>
-                </div>
-
-                <!-- Section 4: Feedback & Notes -->
-                <div
-                  style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">
-                  Feedback & Notes</div>
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                  <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Customer Suggestion</label>
-                    <input class="form-control" id="vl-cust-suggestion"
-                      placeholder="Customer's feedback or suggestion…">
-                  </div>
-                  <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Engineer Suggestion</label>
-                    <input type="text" class="form-control" id="vl-eng-suggestion"
-                      placeholder="Engineer's observations and recommendations…">
-                  </div>
-                  <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Visit Summary</label>
-                    <input type="text" class="form-control" id="vl-summary"
-                      placeholder="Detailed summary of work done during this visit…">
-                  </div>
-                  <div class="card"
-                    style="background:#f8fafc; border:1px dashed #cbd5e1; padding:16px; margin-top:8px;">
-                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                      <input type="checkbox" id="vl-standby-check" onchange="toggleVisitStandby(this.checked)"
-                        style="width:18px; height:18px;">
-                      <label for="vl-standby-check" style="font-weight:700; color:var(--navy); cursor:pointer;">Issue
-                        Standby Asset?</label>
-                    </div>
-                    <div id="vl-standby-fields" style="display:none; grid-template-columns:repeat(6, 1fr); gap:16px;">
-                      <div class="form-group" style="grid-column:span 2;">
-                        <label class="form-label">Available Standby Pool</label>
-                        <select class="form-control" id="vl-standby-asset">
-                          <option value="">-- Select Asset --</option>
-                        </select>
-                      </div>
-                      <div class="form-group" style="grid-column:span 2;">
-                        <label class="form-label">Return Date (Optional)</label>
-                        <input type="date" class="form-control" id="vl-standby-return">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-visit-log')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveVisit()"><i class="ti ti-check"></i> Save Visit</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- VISIT DETAIL MODAL -->
-          <div class="modal-wrap" id="modal-visit-detail" style="width:70%;">
-            <div class="modal">
-              <div class="modal-header">
-                <div class="modal-title"><i class="ti ti-clipboard-list"></i> Visit Detail — <span id="vd-scn"></span>
-                </div>
-                <button class="modal-close" onclick="closeModal('modal-visit-detail')"><i class="ti ti-x"></i></button>
-              </div>
-              <div class="modal-body" id="vd-body" style="max-height:75vh;overflow-y:auto;"></div>
-              <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('modal-visit-detail')">Close</button>
-                <button class="btn btn-outline" id="vd-approve-btn" onclick="approveVisitFromDetail()"><i
-                    class="ti ti-check"></i> Approve</button>
-              </div>
-            </div>
-          </div>
-
           <!-- REPAIR ENTRY DRAWER -->
           <div class="c360-overlay" id="rep-add-overlay" onclick="closeRepairAddPanel()"></div>
           <div class="c360-drawer" id="panel-svc-repair-add"
@@ -15714,8 +15383,10 @@
                 <div class="page-sub">Daily attendance register — mark in/out times and status</div>
               </div>
               <div class="page-actions">
-                <button class="btn btn-primary" onclick="openAddAttendanceModal()"><i class="ti ti-plus"></i> Add Attendance</button>
-                <button class="btn btn-outline" onclick="renderAttTable()"><i class="ti ti-refresh"></i> Refresh</button>
+                <button class="btn btn-primary" onclick="openAddAttendanceModal()"><i class="ti ti-plus"></i> Add
+                  Attendance</button>
+                <button class="btn btn-outline" onclick="renderAttTable()"><i class="ti ti-refresh"></i>
+                  Refresh</button>
               </div>
             </div>
             <div class="card">
@@ -18166,8 +17837,8 @@
                       <option>Negotiation</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3;"><label class="form-label">Notes</label><input type="text" class="form-control"
-                      id="mclead-notes" placeholder="Initial contact notes…"></div>
+                  <div class="form-group" style="grid-column: span 3;"><label class="form-label">Notes</label><input
+                      type="text" class="form-control" id="mclead-notes" placeholder="Initial contact notes…"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -18286,8 +17957,9 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input type="text" class="form-control"
-                    id="mcact-notes" placeholder="Notes…"></div>
+                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                    class="form-label">Notes</label><input type="text" class="form-control" id="mcact-notes"
+                    placeholder="Notes…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-activity')">Cancel</button>
@@ -18328,8 +18000,9 @@
                   <div class="form-group"><label class="form-label">Date &amp; Time</label><input class="form-control"
                       type="datetime-local" id="mccall-dt"></div>
                 </div>
-                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input type="text" class="form-control"
-                    id="mccall-notes" placeholder="Call summary…"></div>
+                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                    class="form-label">Notes</label><input type="text" class="form-control" id="mccall-notes"
+                    placeholder="Call summary…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-crm-calllog')">Cancel</button>
@@ -18462,8 +18135,9 @@
                   </div>
                   <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
                       id="mfpay-ref" placeholder="UTR / Cheque #"></div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input type="text" class="form-control"
-                      id="mfpay-notes" placeholder="Against PO / purpose…">
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label><input type="text" class="form-control" id="mfpay-notes"
+                      placeholder="Against PO / purpose…">
                   </div>
                 </div>
               </div>
@@ -18587,8 +18261,8 @@
                       <option value="">— Select —</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input type="text" class="form-control"
-                      id="mfexp-notes"></div>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label><input type="text" class="form-control" id="mfexp-notes"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -18628,8 +18302,9 @@
                     <option>UPI</option>
                   </select>
                 </div>
-                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input class="form-control"
-                    id="mfinc-notes" placeholder="Brief description…"></div>
+                <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                    class="form-label">Notes</label><input class="form-control" id="mfinc-notes"
+                    placeholder="Brief description…"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-fin-income')">Cancel</button>
@@ -18670,8 +18345,9 @@
                       <option>Immediate</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input class="form-control"
-                      id="mquo-notes" placeholder="Terms and conditions…"></div>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label><input class="form-control" id="mquo-notes"
+                      placeholder="Terms and conditions…"></div>
                 </div>
                 <div class="divider mb-3"></div>
                 <div style="display:flex; justify-content:space-between; align-items:center;" class="mb-3">
@@ -19738,7 +19414,8 @@
             <div class="modal">
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-calendar-plus"></i> Add Daily Attendance</div>
-                <button class="modal-close" onclick="closeModal('modal-hrm-add-attendance')"><i class="ti ti-x"></i></button>
+                <button class="modal-close" onclick="closeModal('modal-hrm-add-attendance')"><i
+                    class="ti ti-x"></i></button>
               </div>
               <div class="modal-body" style="max-height:75vh;overflow-y:auto;">
                 <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:20px;">
@@ -19762,46 +19439,60 @@
                       <option value="Check-Out">Check-Out</option>
                     </select>
                   </div>
-                  
+
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Check-In Image</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                      <input type="text" class="form-control" placeholder="Select Image" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i
+                          class="ti ti-camera"></i></button>
                     </div>
                   </div>
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Check-Out Image</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                      <input type="text" class="form-control" placeholder="Select Image" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i
+                          class="ti ti-camera"></i></button>
                     </div>
                   </div>
-                  
+
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Check-In Speedometer</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                      <input type="text" class="form-control" placeholder="Select Image" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i
+                          class="ti ti-camera"></i></button>
                     </div>
                   </div>
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Check-Out Speedometer</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                      <input type="text" class="form-control" placeholder="Select Image" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i
+                          class="ti ti-camera"></i></button>
                     </div>
                   </div>
-                  
+
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Today Report</label>
-                    <textarea class="form-control" id="da-report" rows="3" placeholder="Enter today's report..."></textarea>
+                    <textarea class="form-control" id="da-report" rows="3"
+                      placeholder="Enter today's report..."></textarea>
                   </div>
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">All Visits</label>
-                    <textarea class="form-control" id="da-visits" rows="3" placeholder="Enter all visits details..."></textarea>
+                    <textarea class="form-control" id="da-visits" rows="3"
+                      placeholder="Enter all visits details..."></textarea>
                   </div>
-                  
+
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Approx Distance (km)</label>
                     <input type="text" class="form-control" id="da-distance" placeholder="e.g. 15.5">
@@ -19809,25 +19500,33 @@
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Voucher Image</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select Image" readonly style="border-right:none;border-radius:6px 0 0 6px;">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i class="ti ti-camera"></i></button>
+                      <input type="text" class="form-control" placeholder="Select Image" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-left:none;color:var(--text-muted);"><i
+                          class="ti ti-camera"></i></button>
                     </div>
                   </div>
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Voucher Pdf</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" placeholder="Select File" readonly style="border-right:none;border-radius:6px 0 0 6px;border-color:var(--navy);color:var(--navy);">
-                      <button class="btn btn-outline" style="border-radius:0 6px 6px 0;border-color:var(--navy);color:var(--navy);"><i class="ti ti-upload"></i></button>
+                      <input type="text" class="form-control" placeholder="Select File" readonly
+                        style="border-right:none;border-radius:6px 0 0 6px;border-color:var(--navy);color:var(--navy);">
+                      <button class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;border-color:var(--navy);color:var(--navy);"><i
+                          class="ti ti-upload"></i></button>
                     </div>
                   </div>
                   <div class="form-group" style="grid-column:span 3;">
                     <label class="form-label">Voucher Amount</label>
                     <div style="display:flex;">
-                      <input type="text" class="form-control" id="da-voucher-amt" placeholder="##,##,###.##" style="border-right:none;border-radius:6px 0 0 6px;">
-                      <span class="btn btn-outline" style="border-radius:0 6px 6px 0;pointer-events:none;color:var(--text-muted);">₹</span>
+                      <input type="text" class="form-control" id="da-voucher-amt" placeholder="##,##,###.##"
+                        style="border-right:none;border-radius:6px 0 0 6px;">
+                      <span class="btn btn-outline"
+                        style="border-radius:0 6px 6px 0;pointer-events:none;color:var(--text-muted);">₹</span>
                     </div>
                   </div>
-                  
+
                 </div>
               </div>
               <div class="modal-footer">
@@ -20014,7 +19713,8 @@
                       <div class="form-group" style="grid-column:span 3;"><label class="form-label">Period *</label>
                         <input class="form-control" id="minc-period" type="month" onchange="incCalcTotal()">
                       </div>
-                      <div class="form-group" style="grid-column:span 2;"><label class="form-label">Performance Rating</label>
+                      <div class="form-group" style="grid-column:span 2;"><label class="form-label">Performance
+                          Rating</label>
                         <select class="form-control" id="minc-rating">
                           <option>Excellent</option>
                           <option>Good</option>
@@ -20022,7 +19722,8 @@
                           <option>Below Average</option>
                         </select>
                       </div>
-                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Target Achievement %</label>
+                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Target Achievement
+                          %</label>
                         <input class="form-control" id="minc-target" type="number" placeholder="0–150" min="0" max="150"
                           oninput="incCalcTotal()">
                       </div>
@@ -20336,10 +20037,12 @@
                       style="font-weight:600;font-size:12px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;">
                       Bonus Rules</div>
                     <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:12px;">
-                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Overtime Rate (₹/hr)</label>
+                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Overtime Rate
+                          (₹/hr)</label>
                         <input class="form-control" id="rule-ot-rate" type="number" placeholder="50">
                       </div>
-                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Full Attendance Bonus (₹)</label>
+                      <div class="form-group" style="grid-column:span 3;"><label class="form-label">Full Attendance
+                          Bonus (₹)</label>
                         <input class="form-control" id="rule-att-bonus" type="number" placeholder="500">
                       </div>
                     </div>
@@ -20559,8 +20262,9 @@
                       <option>Immediate</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input class="form-control"
-                      id="msinv-notes" placeholder="Payment instructions…"></div>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label><input class="form-control" id="msinv-notes"
+                      placeholder="Payment instructions…"></div>
                 </div>
                 <div class="divider mb-3"></div>
                 <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
@@ -20687,7 +20391,8 @@
                     </select>
                   </div>
                   <div class="form-group"><label class="form-label">Total Invoice Amount (₹)</label><input
-                      class="form-control" type="number" id="mrec-amount" placeholder="0.00" oninput="calcAdvPct()"></div>
+                      class="form-control" type="number" id="mrec-amount" placeholder="0.00" oninput="calcAdvPct()">
+                  </div>
                 </div>
                 <div id="mrec-advance-fields"
                   style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
@@ -20712,8 +20417,9 @@
                       <option>Cash</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label class="form-label">Reference #</label><input class="form-control"
-                      id="mrec-ref" placeholder="UTR / Cheque number"></div>
+                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label
+                      class="form-label">Reference #</label><input class="form-control" id="mrec-ref"
+                      placeholder="UTR / Cheque number"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -20769,7 +20475,8 @@
                       <option>Completed</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label>
                     <input class="form-control" id="mret-notes" placeholder="Additional notes…">
                   </div>
                 </div>
@@ -20868,7 +20575,8 @@
                       <option>Cancelled Order</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label>
                     <input class="form-control" id="mcn-notes" placeholder="Additional notes…">
                   </div>
                 </div>
@@ -21101,8 +20809,9 @@
                       <option>Immediate</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label class="form-label">Notes</label><input class="form-control"
-                      id="mpo-notes" placeholder="Any special instructions…"></div>
+                  <div class="form-group" style="grid-column: span 3; max-width: 50%;"><label
+                      class="form-label">Notes</label><input class="form-control" id="mpo-notes"
+                      placeholder="Any special instructions…"></div>
                 </div>
                 <div class="divider mb-3"></div>
                 <div class="card-title mb-3"><i class="ti ti-list"></i> Line Items</div>
@@ -21269,8 +20978,9 @@
                       <option>UPI</option>
                     </select>
                   </div>
-                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label class="form-label">Reference #</label><input class="form-control"
-                      id="mpay-ref" placeholder="Transaction / cheque number"></div>
+                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label
+                      class="form-label">Reference #</label><input class="form-control" id="mpay-ref"
+                      placeholder="Transaction / cheque number"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -22072,13 +21782,13 @@
       // Service
       'svc-tickets': { title: 'Tickets', crumbs: ['Service', 'Tickets'], module: 'service' },
       'svc-requests': { title: 'Service Requests', crumbs: ['Service', 'Requests'], module: 'service' },
-      'svc-checklist': { title: 'Service Checklist', crumbs: ['Service', 'Checklist'], module: 'service' },
+      'svc-checklist': { title: 'Checklist Management', crumbs: ['Service', 'Checklists'], module: 'service' },
       'svc-assignjobs': { title: 'Assign Jobs', crumbs: ['Service', 'Assign Jobs'], module: 'service' },
       'svc-technicians': { title: 'Technicians', crumbs: ['Service', 'Technicians'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Intelligence', 'RCA'], module: 'service' },
       'svc-pm': { title: 'PM Management', crumbs: ['AMC & Warranty', 'PM Management'], module: 'amc-warranty' },
-      'svc-standby': { title: 'Standby Management', crumbs: ['Service', 'Standby Management'], module: 'service' },
-      'svc-repair-tracker': { title: 'Repair & PCB Tracker', crumbs: ['Service', 'Repair & PCB Tracker'], module: 'service' },
+      'svc-standby': { title: 'Asset Management', crumbs: ['Service', 'Asset Management'], module: 'service' },
+      'svc-repair-tracker': { title: 'Repair Tracker', crumbs: ['Service', 'Repair Tracker'], module: 'service' },
       // Reports
       'rep-leads': { title: 'Leads Reports', crumbs: ['Reports', 'Leads'], module: 'reports' },
       'rep-sales': { title: 'Sales Reports', crumbs: ['Reports', 'Sales'], module: 'reports' },
@@ -22118,7 +21828,6 @@
       'svc-amc': { title: 'AMC & Warranty', crumbs: ['Reports', 'AMC & Warranty'], module: 'reports' },
       'svc-amc-contract': { title: 'AMC Contract', crumbs: ['AMC & Warranty', 'AMC Contract'], module: 'amc-warranty' },
       // Service Management (Extended)
-      'svc-visits': { title: 'Service Visits', crumbs: ['Service', 'Visits'], module: 'service' },
       'svc-feedback': { title: 'Service Feedback', crumbs: ['Service', 'Feedback'], module: 'service' },
       'svc-rca': { title: 'Service RCA', crumbs: ['Service', 'Root Cause Analysis'], module: 'service' },
       // HRMS & Payroll
@@ -24834,7 +24543,6 @@
       once('svc-amc-req', initAmcReqPage);
       once('svc-amc-quotes', initAmcQuotesPage);
       once('svc-amc-contract', initAmcContractsPage);
-      once('svc-visits', initSvcVisits);
       once('svc-feedback', initSvcFeedback);
       once('svc-rca', initSvcRCA);
       once('hrm-attendance', initHRMAttendance);
@@ -33532,341 +33240,6 @@
       if (detailDiv) { detailDiv.style.display = 'block'; detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
     }
 
-    /* ── SERVICE VISITS ── */
-    let _visitPage = 1; const VISIT_PER = 15;
-    let _visitFiltered = [];
-    let _visitDetailId = null;
-
-    const VISIT_CALL_STATUS_CLS = { Attended: 'green', Pending: 'amber' };
-    const VISIT_APPROVAL_CLS = { Approved: 'green', Pending: 'amber', Rejected: 'red' };
-
-    function calcVisitDuration(timeIn, timeOut) {
-      if (!timeIn || !timeOut) return '—';
-      try {
-        const [inH, inM] = timeIn.split(':').map(Number);
-        const [outH, outM] = timeOut.split(':').map(Number);
-        const mins = (outH * 60 + outM) - (inH * 60 + inM);
-        if (mins <= 0) return '—';
-        const h = Math.floor(mins / 60), m = mins % 60;
-        return h > 0 ? `${h}h ${m}m` : `${m}m`;
-      } catch (e) { return '—'; }
-    }
-
-    function fmtTime(t) {
-      if (!t) return '—';
-      try {
-        const [h, m] = t.split(':').map(Number);
-        const ampm = h >= 12 ? 'PM' : 'AM';
-        const hh = h % 12 || 12;
-        return `${hh}:${String(m).padStart(2, '0')} ${ampm}`;
-      } catch (e) { return t; }
-    }
-
-    function initSvcVisits() {
-      _visitFiltered = [...(DB.visits || [])];
-      renderVisitsKPI();
-      renderVisitEngGrid();
-      renderVisitsTable();
-    }
-
-    function renderVisitsKPI() {
-      const today = new Date().toISOString().split('T')[0];
-      const list = DB.visits || [];
-      const todayCount = list.filter(v => v.visitDate === today).length;
-      const attended = list.filter(v => v.callStatus === 'Attended').length;
-      const pending = list.filter(v => v.callStatus === 'Pending').length;
-      const durMins = list.filter(v => v.timeIn && v.timeOut).map(v => {
-        const [ih, im] = v.timeIn.split(':').map(Number);
-        const [oh, om] = v.timeOut.split(':').map(Number);
-        return (oh * 60 + om) - (ih * 60 + im);
-      }).filter(d => d > 0);
-      const avgMins = durMins.length ? Math.round(durMins.reduce((a, b) => a + b, 0) / durMins.length) : 0;
-      const avgDur = avgMins > 0 ? `${Math.floor(avgMins / 60)}h ${avgMins % 60}m` : '—';
-
-      const kpi = document.getElementById('svc-visit-kpi');
-      if (kpi) kpi.innerHTML = `
-        <div class="kpi-card blue"><div class="kpi-head"><div><div class="kpi-label">Today's Visits</div><div class="kpi-val">${todayCount}</div></div><div class="kpi-icon blue"><i class="ti ti-calendar-check"></i></div></div><div class="kpi-sub neutral">Logged today</div></div>
-        <div class="kpi-card green"><div class="kpi-head"><div><div class="kpi-label">Attended</div><div class="kpi-val">${attended}</div></div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-sub up">Call completed</div></div>
-        <div class="kpi-card amber"><div class="kpi-head"><div><div class="kpi-label">Pending</div><div class="kpi-val">${pending}</div></div><div class="kpi-icon amber"><i class="ti ti-clock"></i></div></div><div class="kpi-sub warn">Awaiting visit</div></div>
-        <div class="kpi-card navy"><div class="kpi-head"><div><div class="kpi-label">Avg Duration</div><div class="kpi-val">${avgDur}</div></div><div class="kpi-icon navy"><i class="ti ti-timer"></i></div></div><div class="kpi-sub neutral">Per completed visit</div></div>`;
-    }
-
-    function renderVisitEngGrid() {
-      const grid = document.getElementById('svc-visit-eng-grid'); if (!grid) return;
-      const today = new Date().toISOString().split('T')[0];
-      const techs = DB.technicians || [];
-      const recentVisits = (DB.visits || []).filter(v => v.visitDate === today);
-      grid.innerHTML = techs.slice(0, 12).map(t => {
-        const visit = recentVisits.find(v => v.engineer === t.name && v.callStatus === 'Pending');
-        const onVisit = recentVisits.find(v => v.engineer === t.name && v.callStatus === 'Attended');
-        const engStatus = visit ? { label: 'On Visit', color: 'var(--blue)', bg: 'var(--blue-bg)' }
-          : onVisit ? { label: 'Attended', color: 'var(--green)', bg: 'var(--green-bg)' }
-            : { label: 'Available', color: '#6b7280', bg: '#f3f4f6' };
-        return `
-          <div style="border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
-            <div style="width:34px;height:34px;border-radius:50%;background:${engStatus.bg};color:${engStatus.color};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${t.name.charAt(0)}</div>
-            <div style="min-width:0;">
-              <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.name}</div>
-              <div style="font-size:10px;color:${engStatus.color};font-weight:600;margin-top:2px;">${engStatus.label}</div>
-            </div>
-          </div>`;
-      }).join('');
-    }
-
-    function filterVisits() {
-      const q = (document.getElementById('visit-search')?.value || '').toLowerCase();
-      const branch = document.getElementById('visit-branch-filter')?.value || '';
-      const type = document.getElementById('visit-type-filter')?.value || '';
-      const status = document.getElementById('visit-status-filter')?.value || '';
-      const date = document.getElementById('visit-date-filter')?.value || '';
-      _visitFiltered = (DB.visits || []).filter(v =>
-        (!q || v.scn.toLowerCase().includes(q) || v.customer.toLowerCase().includes(q) || v.engineer.toLowerCase().includes(q)) &&
-        (!branch || v.branch === branch) &&
-        (!type || v.callType === type) &&
-        (!status || v.callStatus === status) &&
-        (!date || v.visitDate === date)
-      );
-      _visitPage = 1;
-      renderVisitsTable();
-    }
-
-    function renderVisitsTable() {
-      const list = _visitFiltered.length !== undefined ? _visitFiltered : (DB.visits || []);
-      const start = (_visitPage - 1) * VISIT_PER;
-      const slice = list.slice(start, start + VISIT_PER);
-
-      const tbody = document.getElementById('svc-visits-tbody'); if (!tbody) return;
-      const countEl = document.getElementById('visit-count'); if (countEl) countEl.textContent = list.length;
-
-      tbody.innerHTML = slice.map(v => {
-        const dur = calcVisitDuration(v.timeIn, v.timeOut);
-        return `
-        <tr>
-          <td><span class="id-cell" style="font-size:10px;">${v.scn}</span></td>
-          <td><span class="tag tag-${v.callType === 'Installation' ? 'blue' : v.callType === 'PM Call' ? 'amber' : v.callType === 'Warranty' ? 'green' : 'gray'}" style="font-size:10px;">${v.callType}</span></td>
-          <td class="text-secondary" style="font-size:11px;">${v.typeOfCall}</td>
-          <td class="text-secondary" style="font-size:11px;">${v.productType}</td>
-          <td>
-            <div style="font-size:12px;font-weight:500;">${v.customer}</div>
-          </td>
-          <td>
-            <div style="font-size:12px;">${v.engineer}</div>
-            <div style="font-size:10px;color:var(--text-muted);">${v.branch} · ${v.loginId}</div>
-          </td>
-          <td class="text-muted" style="font-size:11px;">${v.visitDate}</td>
-          <td style="font-size:11px;white-space:nowrap;">${fmtTime(v.timeIn)} → ${fmtTime(v.timeOut)}</td>
-          <td style="font-size:12px;font-weight:600;color:var(--blue);">${dur}</td>
-          <td><span class="badge badge-${VISIT_CALL_STATUS_CLS[v.callStatus] || 'gray'}">${v.callStatus}</span></td>
-          <td><span class="badge badge-${VISIT_APPROVAL_CLS[v.approvalStatus] || 'gray'}">${v.approvalStatus}</span></td>
-          <td>
-            <div class="tbl-actions">
-              <button class="btn btn-ghost btn-icon-sm" title="View Detail" onclick="openVisitDetail('${v.id}')"><i class="ti ti-eye" style="color:var(--blue);"></i></button>
-              ${v.approvalStatus !== 'Approved' ? `<button class="btn btn-ghost btn-icon-sm" title="Approve" onclick="approveVisit('${v.id}')"><i class="ti ti-check" style="color:var(--green);"></i></button>` : ''}
-            </div>
-          </td>
-        </tr>`;
-      }).join('');
-
-      renderPagination('visit-pagination', list.length, _visitPage, VISIT_PER, `function(p){_visitPage=p;renderVisitsTable()}`);
-    }
-
-    function approveVisit(id) {
-      const v = (DB.visits || []).find(x => x.id === id);
-      if (v) { v.approvalStatus = 'Approved'; renderVisitsTable(); showToast('success', 'Approved', `Visit ${v.scn} approved.`); }
-    }
-
-    function approveVisitFromDetail() {
-      approveVisit(_visitDetailId);
-      const btn = document.getElementById('vd-approve-btn');
-      if (btn) btn.style.display = 'none';
-      openVisitDetail(_visitDetailId);
-    }
-
-    function openVisitDetail(id) {
-      const v = (DB.visits || []).find(x => x.id === id);
-      if (!v) return;
-      _visitDetailId = id;
-      document.getElementById('vd-scn').textContent = v.scn;
-      const btn = document.getElementById('vd-approve-btn');
-      if (btn) btn.style.display = v.approvalStatus === 'Approved' ? 'none' : '';
-      const dur = calcVisitDuration(v.timeIn, v.timeOut);
-      document.getElementById('vd-body').innerHTML = `
-        <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;padding:4px 0 16px;">
-          ${[
-          ['SCN', v.scn], ['Report No', v.reportNo], ['Call Type', v.callType], ['Type of Call', v.typeOfCall],
-          ['Source of Call', v.sourceOfCall], ['Product Type', v.productType], ['Incentive Points', v.incentivePoints],
-          ['Branch', v.branch], ['Customer', v.customer], ['Designation', v.customerDesignation],
-          ['Name in Signature', v.nameInSignature], ['Engineer', v.engineer],
-          ['Login ID', v.loginId], ['Visit Date', v.visitDate],
-          ['Time In', fmtTime(v.timeIn)], ['Time Out', fmtTime(v.timeOut)],
-          ['Duration', dur], ['Call Status', v.callStatus],
-          ['SR Status', v.serviceRequestStatus], ['Approval', v.approvalStatus],
-          ['Spares Count', v.sparesCount], ['Added By', v.addedBy]
-        ].map(([lbl, val]) => `
-            <div>
-              <div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;">${lbl}</div>
-              <div style="font-size:13px;font-weight:500;">${val || '—'}</div>
-            </div>`).join('')}
-        </div>
-        ${v.complaint ? `<div style="margin-bottom:12px;"><span style="font-size:10px;text-transform:uppercase;color:var(--text-muted);">Complaint</span><div style="font-size:13px;margin-top:3px;">${v.complaint}</div></div>` : ''}
-        ${v.engineerSuggestion ? `<div style="margin-bottom:12px;"><span style="font-size:10px;text-transform:uppercase;color:var(--text-muted);">Engineer Suggestion</span><div style="font-size:13px;margin-top:3px;color:var(--text);">${v.engineerSuggestion}</div></div>` : ''}
-        ${v.visitSummary ? `<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;"><div style="font-size:10px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Visit Summary</div><div style="font-size:13px;line-height:1.6;color:var(--text);">${v.visitSummary}</div></div>` : ''}`;
-      openModal('modal-visit-detail');
-    }
-
-    function openVisitLogModal() {
-      const custSel = document.getElementById('vl-customer');
-      if (custSel) custSel.innerHTML = '<option value="">— select —</option>' +
-        (DB.customers || []).map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-      const engSel = document.getElementById('vl-engineer');
-      if (engSel) {
-        engSel.innerHTML = '<option value="">— select —</option>' +
-          (DB.technicians || []).map(t => `<option value="${t.name}" data-id="${t.id}">${t.name}</option>`).join('');
-        engSel.onchange = function () {
-          const opt = this.options[this.selectedIndex];
-          const li = document.getElementById('vl-login-id');
-          if (li) li.value = opt.dataset.id ? `APS/${si(1300, 1600)}` : '';
-        };
-      }
-      const scnEl = document.getElementById('vl-scn');
-      if (scnEl) scnEl.value = `APS/SCR/${14635 + (DB.visits || []).length}`;
-      const dateEl = document.getElementById('vl-visit-date');
-      if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
-      ['vl-branch', 'vl-call-type', 'vl-type-of-call', 'vl-source', 'vl-product-type', 'vl-cust-designation', 'vl-complaint', 'vl-call-status', 'vl-sr-status'].forEach(id => {
-        const el = document.getElementById(id); if (el && el.tagName === 'SELECT') el.selectedIndex = 0;
-      });
-      ['vl-report-no', 'vl-description', 'vl-incentive', 'vl-signature-name', 'vl-login-id', 'vl-time-in', 'vl-time-out', 'vl-duration', 'vl-spares', 'vl-cust-suggestion', 'vl-eng-suggestion', 'vl-summary'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.value = '';
-      });
-      // Standby Reset
-      const sbc = document.getElementById('vl-standby-check'); if (sbc) sbc.checked = false;
-      const sbf = document.getElementById('vl-standby-fields'); if (sbf) sbf.style.display = 'none';
-      const sba = document.getElementById('vl-standby-asset');
-      if (sba) {
-        sba.innerHTML = '<option value="">-- Select Asset --</option>';
-        (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
-          sba.add(new Option(`${a.name} (${a.sn})`, a.id));
-        });
-      }
-
-      const spares = document.getElementById('vl-spares'); if (spares) spares.value = '0';
-      openModal('modal-visit-log');
-    }
-
-    function toggleVisitStandby(checked) {
-      const fields = document.getElementById('vl-standby-fields');
-      if (fields) fields.style.display = checked ? 'grid' : 'none';
-    }
-
-    function addStandbyHistory(assetId, action, details, party, ref) {
-      const asset = (DB.standbyPool || []).find(a => a.id === assetId);
-      if (!asset) return;
-      if (!asset.history) asset.history = [];
-      asset.history.push({
-        date: new Date().toISOString(),
-        action: action,
-        party: party || 'Office/Pool',
-        ref: ref || '-',
-        details: details || '',
-        user: 'Service Team'
-      });
-    }
-
-    function updateVisitDuration() {
-      const tin = document.getElementById('vl-time-in')?.value;
-      const tout = document.getElementById('vl-time-out')?.value;
-      const dur = document.getElementById('vl-duration');
-      if (dur) dur.value = calcVisitDuration(tin, tout);
-    }
-
-    function saveVisit() {
-      const branch = document.getElementById('vl-branch')?.value;
-      const callType = document.getElementById('vl-call-type')?.value;
-      const toc = document.getElementById('vl-type-of-call')?.value;
-      const customer = document.getElementById('vl-customer')?.value;
-      const engineer = document.getElementById('vl-engineer')?.value;
-      const visitDate = document.getElementById('vl-visit-date')?.value;
-      const timeIn = document.getElementById('vl-time-in')?.value;
-      if (!branch || !callType || !toc || !customer || !engineer || !visitDate || !timeIn) {
-        showToast('warning', 'Required', 'Please fill Branch, Call Type, Type of Call, Customer, Engineer, Visit Date and Time In.');
-        return;
-      }
-      const timeOut = document.getElementById('vl-time-out')?.value || '';
-      const newVisit = {
-        id: `V-${5000 + (DB.visits || []).length}`,
-        scn: document.getElementById('vl-scn')?.value || `APS/SCR/${14635 + (DB.visits || []).length}`,
-        reportNo: document.getElementById('vl-report-no')?.value || '',
-        callType, typeOfCall: toc,
-        sourceOfCall: document.getElementById('vl-source')?.value || '',
-        description: document.getElementById('vl-description')?.value || '',
-        productType: document.getElementById('vl-product-type')?.value || '',
-        incentivePoints: parseFloat(document.getElementById('vl-incentive')?.value) || 0,
-        customer,
-        customerDesignation: document.getElementById('vl-cust-designation')?.value || '',
-        nameInSignature: document.getElementById('vl-signature-name')?.value || '',
-        complaint: document.getElementById('vl-complaint')?.value || '',
-        customerSuggestion: document.getElementById('vl-cust-suggestion')?.value || '',
-        engineerSuggestion: document.getElementById('vl-eng-suggestion')?.value || '',
-        visitSummary: document.getElementById('vl-summary')?.value || '',
-        engineer,
-        engineerId: '',
-        loginId: document.getElementById('vl-login-id')?.value || '',
-        branch, visitDate, timeIn, timeOut,
-        callStatus: document.getElementById('vl-call-status')?.value || 'Attended',
-        serviceRequestStatus: document.getElementById('vl-sr-status')?.value || 'Completed',
-        approvalStatus: 'Pending',
-        sparesCount: parseInt(document.getElementById('vl-spares')?.value) || 0,
-        addedBy: 'Current User',
-        addedTime: new Date().toISOString(),
-      };
-
-      // Handle Standby Asset
-      const isStandby = document.getElementById('vl-standby-check')?.checked;
-      if (isStandby) {
-        const assetId = document.getElementById('vl-standby-asset')?.value;
-        if (assetId) {
-          const asset = (DB.standbyPool || []).find(a => a.id === assetId);
-          if (asset) {
-            if (asset.status === 'In Use') {
-              showToast('error', 'Standby Error', 'Selected asset is no longer available.');
-              return;
-            }
-            asset.status = 'In Use';
-            newVisit.standby = {
-              id: asset.id,
-              name: asset.name,
-              sn: asset.sn,
-              issuedOn: visitDate,
-              expectedReturn: document.getElementById('vl-standby-return')?.value || '',
-              status: 'Active'
-            };
-            addStandbyHistory(assetId, 'Issued', 'Standby issued via Visit Log', customer, newVisit.scn);
-
-            // Also link to service request if it exists
-            const req = (DB.serviceRequests || []).find(r => r.scn === newVisit.scn);
-            if (req) {
-              req.standby = { ...newVisit.standby };
-            }
-          }
-        }
-      }
-
-      if (!DB.visits) DB.visits = [];
-      DB.visits.unshift(newVisit);
-      _visitFiltered = [...DB.visits];
-      _visitPage = 1;
-      renderVisitsKPI();
-      renderVisitEngGrid();
-      renderVisitsTable();
-      closeModal('modal-visit-log');
-
-      // Refresh standby UI if on that page
-      if (typeof renderStandbyTable === 'function') renderStandbyTable();
-      if (typeof renderStandbyPoolTable === 'function') renderStandbyPoolTable();
-
-      showToast('success', 'Visit Logged', `${newVisit.scn} logged successfully.`);
-    }
-
     function initSvcFeedback() {
       const kpi = document.getElementById('svc-feed-kpi');
       if (kpi) kpi.innerHTML = `
@@ -33971,19 +33344,19 @@
       const dept = document.getElementById('att-dept-filter')?.value || '';
       const tbody = document.getElementById('hrm-att-tbody');
       if (!tbody) return;
-      
+
       let list = DB.dailyAttendances || [];
       if (dept) list = list.filter(a => a.employee.includes(dept));
 
       const countEl = document.getElementById('att-emp-count');
       if (countEl) countEl.textContent = list.length;
-      
+
       const pillsEl = document.getElementById('att-status-pills');
       if (pillsEl) pillsEl.innerHTML = ''; // Clear old pills
 
       const start = (_attPage - 1) * _attPer;
       const slice = list.slice(start, start + _attPer);
-      
+
       tbody.innerHTML = slice.map((a, i) => `<tr>
         <td style="text-align:center;font-size:11px;color:var(--tx-3);font-family:monospace;">${String(start + i + 1).padStart(2, '0')}</td>
         <td style="font-size:12px;font-weight:600;">${a.date}</td>
@@ -33991,7 +33364,7 @@
           <div style="font-weight:600;color:var(--tx-1);">${a.employee}</div>
         </td>
         <td style="font-size:11px;">
-          <span style="padding:2px 8px;border-radius:12px;background:${a.type==='Check-In'?'var(--green-bg)':'var(--red-bg)'};color:${a.type==='Check-In'?'var(--green)':'var(--red)'};font-weight:700;">${a.type}</span>
+          <span style="padding:2px 8px;border-radius:12px;background:${a.type === 'Check-In' ? 'var(--green-bg)' : 'var(--red-bg)'};color:${a.type === 'Check-In' ? 'var(--green)' : 'var(--red)'};font-weight:700;">${a.type}</span>
         </td>
         <td style="font-size:11px;color:var(--tx-2);max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${a.report}">${a.report || '—'}</td>
         <td style="font-size:11px;color:var(--tx-2);max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${a.visits}">${a.visits || '—'}</td>
@@ -33999,7 +33372,7 @@
         <td style="font-size:12px;font-family:monospace;font-weight:700;">${a.voucherAmt ? '₹' + a.voucherAmt : '—'}</td>
         <td><button class="btn btn-ghost btn-icon-sm" title="View" onclick="openEditAttendanceModal(${start + i})"><i class="ti ti-eye"></i></button></td>
       </tr>`).join('') || '<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--tx-3);">No attendance logs found for this date.</td></tr>';
-      
+
       renderPagination('att-pagination', list.length, _attPage, _attPer, p => { _attPage = p; renderAttTable(); });
     }
 
@@ -34009,7 +33382,7 @@
       const chk = document.getElementById('da-for-others').checked;
       document.getElementById('da-user').disabled = !chk;
     }
-    
+
     function initAttUserDropdown() {
       const uSel = document.getElementById('da-user');
       if (uSel.options.length === 0) {
@@ -34023,12 +33396,12 @@
       document.querySelector('#modal-hrm-add-attendance .modal-title').innerHTML = '<i class="ti ti-calendar-plus"></i> Add Daily Attendance';
       document.getElementById('da-for-others').checked = false;
       const uSel = initAttUserDropdown();
-      
+
       const currentUser = document.querySelector('.ud-name')?.textContent || 'Mohana Priya';
       let found = Array.from(uSel.options).find(o => o.value === currentUser);
       if (found) uSel.value = currentUser;
       else if (uSel.options.length > 0) uSel.value = uSel.options[0].value;
-      
+
       uSel.disabled = true;
       document.getElementById('da-date').value = new Date().toISOString().split('T')[0];
       document.getElementById('da-type').value = 'Check-Out';
@@ -34036,28 +33409,28 @@
       document.getElementById('da-visits').value = '';
       document.getElementById('da-distance').value = '';
       document.getElementById('da-voucher-amt').value = '';
-      
+
       openModal('modal-hrm-add-attendance');
     }
-    
+
     function openEditAttendanceModal(idx) {
       _editDailyAttIndex = idx;
       const record = DB.dailyAttendances[idx];
       if (!record) return;
       document.querySelector('#modal-hrm-add-attendance .modal-title').innerHTML = '<i class="ti ti-pencil"></i> Edit Daily Attendance';
-      
+
       document.getElementById('da-for-others').checked = true;
       const uSel = initAttUserDropdown();
       uSel.value = record.employee;
       uSel.disabled = false;
-      
+
       document.getElementById('da-date').value = record.date;
       document.getElementById('da-type').value = record.type;
       document.getElementById('da-report').value = record.report || '';
       document.getElementById('da-visits').value = record.visits || '';
       document.getElementById('da-distance').value = record.distance || '';
       document.getElementById('da-voucher-amt').value = record.voucherAmt || '';
-      
+
       openModal('modal-hrm-add-attendance');
     }
 
