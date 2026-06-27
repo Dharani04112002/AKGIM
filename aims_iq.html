@@ -8832,7 +8832,7 @@
                   <div class="ls-icon"><i class="ti ti-tools"></i></div>
                   <div class="ls-title">Service</div>
                   <div class="ls-line"></div>
-                  <div class="ls-count">5 modules</div>
+                  <div class="ls-count">6 modules</div>
                 </div>
                 <div class="ls-grid">
                   <div class="ls-card" onclick="navigate('svc-requests',null)">
@@ -8840,21 +8840,30 @@
                     <div class="ls-card-title">Service Requests</div>
                     <div class="ls-card-desc">Client support tickets</div>
                   </div>
-                  <div class="ls-card" onclick="navigate('svc-checklist',null)">
-                    <div class="ls-card-icon"><i class="ti ti-checklist"></i></div>
-                    <div class="ls-card-title">Checklist Management</div>
-                    <div class="ls-card-desc">Standard service steps</div>
-                  </div>
                   <div class="ls-card" onclick="navigate('svc-installation',null)">
                     <div class="ls-card-icon"><i class="ti ti-settings-automation"></i></div>
                     <div class="ls-card-title">Installation Mgmt</div>
                     <div class="ls-card-desc">Manage installations</div>
                   </div>
-
                   <div class="ls-card" onclick="navigate('svc-feedback',null)">
                     <div class="ls-card-icon"><i class="ti ti-thumb-up"></i></div>
                     <div class="ls-card-title">Service Feedback</div>
                     <div class="ls-card-desc">Customer feedback</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-repair-tracker',null)">
+                    <div class="ls-card-icon"><i class="ti ti-cpu"></i></div>
+                    <div class="ls-card-title">Repair Tracker</div>
+                    <div class="ls-card-desc">Component repair tracking</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-standby',null)">
+                    <div class="ls-card-icon"><i class="ti ti-cube"></i></div>
+                    <div class="ls-card-title">Asset Management</div>
+                    <div class="ls-card-desc">Track standby assets issued</div>
+                  </div>
+                  <div class="ls-card" onclick="navigate('svc-checklist',null)">
+                    <div class="ls-card-icon"><i class="ti ti-checklist"></i></div>
+                    <div class="ls-card-title">Checklist Management</div>
+                    <div class="ls-card-desc">Standard service steps</div>
                   </div>
                 </div>
               </div>
@@ -11948,7 +11957,6 @@
                       <th>Checklist Item (Option)</th>
                       <th style="text-align:center;">Yes/No</th>
                       <th>Remarks</th>
-                      <th>Installation Form</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -12061,6 +12069,7 @@
                         <th>Original Product</th>
                         <th>Standby Asset</th>
                         <th>Issued On</th>
+                        <th>Assigned By</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -12090,6 +12099,7 @@
                         <th>Category</th>
                         <th>Condition</th>
                         <th>Current Status</th>
+                        <th>Last Issued By</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -12103,6 +12113,142 @@
               </div>
             </div>
           </div><!-- /#page-svc-standby -->
+
+          <!-- ASSET DETAIL MODAL -->
+          <div class="modal-wrap" id="modal-asset-detail" style="width:70%;">
+            <div class="modal">
+              <div class="modal-header">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <div id="mad-icon"
+                    style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#4338ca);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">
+                    <i class="ti ti-cube"></i>
+                  </div>
+                  <div>
+                    <div class="modal-title" id="mad-title" style="margin:0;">—</div>
+                    <div id="mad-sn" style="font-size:11px;color:var(--text-muted);margin-top:2px;"></div>
+                  </div>
+                </div>
+                <div style="margin-left:auto;margin-right:12px;display:flex;align-items:center;gap:8px;">
+                  <span id="mad-status-badge"></span>
+                </div>
+                <button class="modal-close" onclick="closeModal('modal-asset-detail')"><i class="ti ti-x"></i></button>
+              </div>
+              <div class="modal-body" style="background:#f8fafc;overflow-y:auto;max-height:80vh;">
+
+                <!-- Asset Info Cards -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                  <div class="card">
+                    <div class="card-header" style="padding:12px 16px;">
+                      <div class="card-title"
+                        style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;"><i
+                          class="ti ti-info-circle"></i> Asset Details</div>
+                    </div>
+                    <div class="card-body" style="padding:14px 16px;">
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Category</div>
+                          <div id="mad-category" style="font-weight:600;font-size:13px;"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Condition</div>
+                          <div id="mad-condition" style="font-weight:600;font-size:13px;"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Asset ID</div>
+                          <div id="mad-asset-id" style="font-weight:600;font-size:13px;font-family:monospace;"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Serial No.</div>
+                          <div id="mad-serial" style="font-weight:600;font-size:13px;font-family:monospace;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card" id="mad-assignment-card">
+                    <div class="card-header" style="padding:12px 16px;">
+                      <div class="card-title"
+                        style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;"><i
+                          class="ti ti-replace"></i> Current Assignment</div>
+                    </div>
+                    <div class="card-body" style="padding:14px 16px;" id="mad-assignment-body">
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Service Request</div>
+                          <div id="mad-sr-id" style="font-weight:700;font-size:13px;color:var(--blue);"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Customer</div>
+                          <div id="mad-customer" style="font-weight:600;font-size:13px;"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Product</div>
+                          <div id="mad-product" style="font-weight:600;font-size:13px;"></div>
+                        </div>
+                        <div>
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Issued On</div>
+                          <div id="mad-issued" style="font-weight:600;font-size:13px;"></div>
+                        </div>
+                        <div style="grid-column:span 2;">
+                          <div
+                            style="font-size:10px;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">
+                            Assigned By</div>
+                          <div id="mad-issued-by"
+                            style="font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px;"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- History Table -->
+                <div class="card">
+                  <div class="card-header" style="padding:12px 16px;">
+                    <div class="card-title"
+                      style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;"><i
+                        class="ti ti-history"></i> Asset History</div>
+                  </div>
+                  <div class="table-wrap" style="border:none;box-shadow:none;">
+                    <table class="data-tbl">
+                      <thead>
+                        <tr>
+                          <th>Date & Time</th>
+                          <th>Action</th>
+                          <th>Party</th>
+                          <th>Reference</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody id="mad-history-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('modal-asset-detail')">Close</button>
+                <button class="btn btn-sm" id="mad-return-btn"
+                  style="display:none;background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:6px 16px;font-weight:600;cursor:pointer;">
+                  <i class="ti ti-arrow-back-up"></i> Mark Returned
+                </button>
+              </div>
+            </div>
+          </div>
 
           <!-- REPAIR & PCB TRACKER -->
           <div class="page" id="page-svc-repair-tracker">
@@ -12454,10 +12600,18 @@
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-layout-details"></i> Service Request Details — <span
                     id="vreq-id"></span></div>
-                <div class="modal-actions" style="margin-left:auto; margin-right:12px; display:flex; align-items:center; gap:8px;">
-                  <button class="btn btn-outline btn-sm" onclick="showToast('info','Print','Generating service report PDF...')"><i class="ti ti-printer"></i> Print</button>
-                  <button class="btn btn-sm" style="background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="openRepairFromSR(_currentSRViewId)"><i class="ti ti-tool"></i> Log Repair</button>
-                  <button class="btn btn-sm" style="background:var(--green,#16a34a);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="createOpportunityFromSR(_currentSRViewId)"><i class="ti ti-briefcase"></i> Create Opportunity</button>
+                <div class="modal-actions"
+                  style="margin-left:auto; margin-right:12px; display:flex; align-items:center; gap:8px;">
+                  <button class="btn btn-outline btn-sm"
+                    onclick="showToast('info','Print','Generating service report PDF...')"><i class="ti ti-printer"></i>
+                    Print</button>
+                  <button class="btn btn-sm"
+                    style="background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;"
+                    onclick="openRepairFromSR(_currentSRViewId)"><i class="ti ti-tool"></i> Log Repair</button>
+                  <button class="btn btn-sm"
+                    style="background:var(--green,#16a34a);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;"
+                    onclick="createOpportunityFromSR(_currentSRViewId)"><i class="ti ti-briefcase"></i> Create
+                    Opportunity</button>
                   <button class="btn btn-primary btn-sm" onclick="closeModal('modal-svc-request-view')">Close</button>
                 </div>
                 <button class="modal-close" onclick="closeModal('modal-svc-request-view')"><i
@@ -12567,15 +12721,18 @@
                   <div id="vreq-standby-section" style="display:none;">
                     <div class="card" style="border:1px solid #fde68a; background:#fffbeb;">
                       <div class="card-body" style="display:flex; align-items:center; gap:16px; padding:12px 16px;">
-                        <div style="width:40px; height:40px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                        <div
+                          style="width:40px; height:40px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:20px;">
                           <i class="ti ti-replace"></i>
                         </div>
                         <div style="flex:1;">
-                          <div style="font-size:12px; color:#92400e; font-weight:600;">Asset Issued for this Service</div>
+                          <div style="font-size:12px; color:#92400e; font-weight:600;">Asset Issued for this Service
+                          </div>
                           <div id="vreq-standby-name" style="font-weight:600; font-size:14px; color:var(--navy);"></div>
                           <div id="vreq-standby-status" style="font-size:11px; margin-top:2px;"></div>
                         </div>
-                        <button class="btn btn-sm btn-outline" id="vreq-standby-return-btn" style="border-color:#f59e0b; color:#92400e;">
+                        <button class="btn btn-sm btn-outline" id="vreq-standby-return-btn"
+                          style="border-color:#f59e0b; color:#92400e;">
                           <i class="ti ti-arrow-back-up"></i> Mark Returned
                         </button>
                       </div>
@@ -12585,21 +12742,27 @@
                   <div id="vreq-no-asset-section" style="display:none;">
                     <div class="card" style="border:1px dashed #cbd5e1; background:#f8fafc;">
                       <div class="card-body" style="padding:16px;">
-                        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                        <div
+                          style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
                           <div style="display:flex; align-items:center; gap:10px;">
-                            <div style="width:36px; height:36px; border-radius:8px; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:#64748b;">
+                            <div
+                              style="width:36px; height:36px; border-radius:8px; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:#64748b;">
                               <i class="ti ti-cube" style="font-size:18px;"></i>
                             </div>
                             <div>
-                              <div style="font-weight:600; font-size:13px; color:var(--navy);">Issue Asset for this Service</div>
-                              <div style="font-size:11px; color:var(--text-muted);">Assign a standby asset from pool to this service request</div>
+                              <div style="font-weight:600; font-size:13px; color:var(--navy);">Issue Asset for this
+                                Service</div>
+                              <div style="font-size:11px; color:var(--text-muted);">Assign a standby asset from pool to
+                                this service request</div>
                             </div>
                           </div>
                           <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                             <select id="vreq-asset-select" class="select-sm" style="min-width:220px;">
                               <option value="">-- Select Available Asset --</option>
                             </select>
-                            <button class="btn btn-sm" style="background:var(--navy,#0a1628);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="issueAssetToSR()">
+                            <button class="btn btn-sm"
+                              style="background:var(--navy,#0a1628);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;"
+                              onclick="issueAssetToSR()">
                               <i class="ti ti-link"></i> Issue Asset
                             </button>
                           </div>
@@ -12797,15 +12960,6 @@
                     <input class="form-control" id="msc-remarks" style="width:100%;box-sizing:border-box;">
                   </div>
 
-                  <!-- Installation Form -->
-                  <div>
-                    <label class="form-label" style="display:block;margin-bottom:6px;">Installation Form</label>
-                    <div style="display:flex;gap:6px;align-items:center;">
-                      <select class="form-control" id="msc-install-form" style="flex:1;"></select>
-                      <button class="btn btn-icon btn-outline" title="Clear" type="button"
-                        onclick="document.getElementById('msc-install-form').value=''"><i class="ti ti-x"></i></button>
-                    </div>
-                  </div>
 
                 </div>
               </div>
@@ -21571,7 +21725,8 @@
                       <button type="button" class="btn btn-ghost btn-xs" onclick="addCustomerFieldRow()"
                         style="color:var(--sky-blue);"><i class="ti ti-plus"></i> Add Field</button>
                     </div>
-                    <div id="fc-custom-fields-wrap" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"></div>
+                    <div id="fc-custom-fields-wrap" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    </div>
                   </div>
                   <div class="form-group form-col-2" style="margin-top: 16px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -22083,6 +22238,11 @@
         showToast('warning', 'Not Found', `Page "${pageId}" not registered yet.`);
         return;
       }
+
+      // Close any open modals and drawers before switching pages
+      document.querySelectorAll('.modal-wrap.open').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.c360-drawer.open, .drawer.open').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('.c360-overlay.open, #overlay.open, .opp-overlay.open').forEach(o => o.classList.remove('open'));
 
       // 1. Hide all pages
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -30043,7 +30203,7 @@
       });
 
       tbody.innerHTML = data.length ? data.map(r => `
-        <tr>
+        <tr style="cursor:pointer;" onclick="openAssetDetail('${r.standby.id || r.standby.assetId}','${r.id}')">
           <td class="font-600 text-blue">${r.id}</td>
           <td>${r.customer}</td>
           <td>${r.product || 'N/A'}</td>
@@ -30053,13 +30213,18 @@
           </td>
           <td>${new Date(r.standby.issuedOn).toLocaleDateString()}</td>
           <td>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:24px;height:24px;border-radius:50%;background:var(--navy,#0a1628);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${(r.standby.issuedBy || 'Admin User').charAt(0).toUpperCase()}</div>
+              <span style="font-size:12px;font-weight:600;">${r.standby.issuedBy || 'Admin User'}</span>
+            </div>
+          </td>
+          <td>
             <span class="tag ${r.standby.status === 'Active' ? 'tag-amber' : 'tag-green'}">
               ${r.standby.status === 'Active' ? 'In Use' : 'Returned'}
             </span>
           </td>
-          <td>
+          <td onclick="event.stopPropagation()">
             <div class="tbl-actions">
-              <button class="btn-icon" onclick="openSvcRequestView('${r.id}')" title="View Request"><i class="ti ti-eye"></i></button>
               ${r.standby.status === 'Active' ?
           `<button class="btn-icon text-success" onclick="toggleStandbyReturn('${r.id}', true)" title="Mark Returned"><i class="ti ti-arrow-back-up"></i></button>` :
           `<button class="btn-icon text-amber" onclick="toggleStandbyReturn('${r.id}', false)" title="Mark as Still at Customer"><i class="ti ti-refresh"></i></button>`
@@ -30086,7 +30251,7 @@
       });
 
       tbody.innerHTML = data.map(a => `
-    <tr>
+    <tr style="cursor:pointer;" onclick="openAssetDetail('${a.id}', null)">
       <td class="font-600">${a.sn}</td>
       <td>${a.name}</td>
       <td>${a.category}</td>
@@ -30096,9 +30261,9 @@
           <i class="ti ${a.status === 'Available' ? 'ti-circle-check' : 'ti-user'}"></i> ${a.status}
         </span>
       </td>
-      <td>
+      <td>${(() => { const last = (a.history || []).slice().reverse().find(h => h.action === 'Issued'); return last ? `<div style="display:flex;align-items:center;gap:6px;"><div style="width:24px;height:24px;border-radius:50%;background:var(--navy,#0a1628);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${(last.user || 'A').charAt(0).toUpperCase()}</div><span style="font-size:12px;font-weight:600;">${last.user || 'Admin User'}</span></div>` : '<span class="text-muted" style="font-size:11px;">—</span>'; })()}</td>
+      <td onclick="event.stopPropagation()">
         <div class="tbl-actions">
-           <button class="btn-icon" onclick="viewStandbyHistory('${a.id}')" title="View History"><i class="ti ti-history"></i></button>
            <button class="btn-icon"><i class="ti ti-edit"></i></button>
            <button class="btn-icon text-danger"><i class="ti ti-trash"></i></button>
         </div>
@@ -30108,6 +30273,66 @@
 
       const pc = document.getElementById('svc-pool-count');
       if (pc) pc.textContent = data.length;
+    }
+
+    function openAssetDetail(assetId, reqId) {
+      const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+      if (!asset) return;
+
+      // Header
+      document.getElementById('mad-title').textContent = asset.name;
+      document.getElementById('mad-sn').textContent = 'SN: ' + asset.sn;
+      document.getElementById('mad-asset-id').textContent = asset.id;
+      document.getElementById('mad-serial').textContent = asset.sn;
+      document.getElementById('mad-category').textContent = asset.category || '—';
+      document.getElementById('mad-condition').textContent = asset.condition || '—';
+
+      // Status badge
+      const isAvailable = asset.status === 'Available';
+      document.getElementById('mad-status-badge').innerHTML =
+        `<span class="badge badge-${isAvailable ? 'green' : 'amber'}">${isAvailable ? 'Available' : 'In Use'}</span>`;
+
+      // Assignment section
+      const assignCard = document.getElementById('mad-assignment-card');
+      const retBtn = document.getElementById('mad-return-btn');
+      const req = reqId ? DB.serviceRequests.find(r => r.id === reqId) : (DB.serviceRequests || []).find(r => r.standby && (r.standby.id === assetId || r.standby.assetId === assetId) && r.standby.status === 'Active');
+
+      if (req && req.standby) {
+        assignCard.style.borderColor = '#fde68a';
+        assignCard.style.background = '#fffbeb';
+        document.getElementById('mad-sr-id').textContent = req.id;
+        document.getElementById('mad-customer').textContent = req.customer;
+        document.getElementById('mad-product').textContent = req.product || '—';
+        document.getElementById('mad-issued').textContent = new Date(req.standby.issuedOn).toLocaleDateString();
+        const issuedBy = req.standby.issuedBy || 'Admin User';
+        document.getElementById('mad-issued-by').innerHTML = `<div style="width:24px;height:24px;border-radius:50%;background:var(--navy,#0a1628);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">${issuedBy.charAt(0).toUpperCase()}</div>${issuedBy}`;
+        retBtn.style.display = req.standby.status === 'Active' ? 'inline-flex' : 'none';
+        retBtn.onclick = () => { toggleStandbyReturn(req.id, true); closeModal('modal-asset-detail'); };
+      } else {
+        assignCard.style.borderColor = '';
+        assignCard.style.background = '';
+        document.getElementById('mad-sr-id').textContent = '—';
+        document.getElementById('mad-customer').textContent = 'Not assigned';
+        document.getElementById('mad-product').textContent = '—';
+        document.getElementById('mad-issued').textContent = '—';
+        document.getElementById('mad-issued-by').textContent = '—';
+        retBtn.style.display = 'none';
+      }
+
+      // History
+      const tbody = document.getElementById('mad-history-tbody');
+      const history = (asset.history || []).slice().reverse();
+      tbody.innerHTML = history.length ? history.map(h => `
+        <tr>
+          <td style="font-size:11px;color:var(--text-muted);">${new Date(h.date).toLocaleString()}</td>
+          <td><span class="tag ${h.action === 'Issued' ? 'tag-amber' : h.action === 'Returned' ? 'tag-green' : 'tag-gray'}">${h.action}</span></td>
+          <td style="font-weight:600;">${h.party || '—'}</td>
+          <td style="font-size:11px;font-family:monospace;">${h.ref || '—'}</td>
+          <td style="font-size:11px;color:var(--text-muted);">${h.details || '—'}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="5" class="text-center text-muted" style="padding:30px;">No history records yet.</td></tr>';
+
+      openModal('modal-asset-detail');
     }
 
     function addStandbyHistory(assetId, action, party, ref, details) {
@@ -30242,22 +30467,21 @@
           if (d.status === 'Returned') statusTag = 'tag-blue';
 
           return `
-            <tr>
+            <tr style="cursor:pointer;" onclick="showRepairDetails('${d.id}')">
               <td class="font-600">${d.scn}</td>
               <td>${d.component}</td>
               <td>${d.customer}</td>
               <td><span class="tag ${statusTag}">${d.status}</span></td>
               <td>${d.vendor || '-'}</td>
               <td>${d.dateIn}</td>
-              <td>
+              <td onclick="event.stopPropagation()">
                 <div style="display:flex; gap:6px;">
                   <button class="tag ${d.ready ? 'tag-green' : 'tag-gray'}" style="cursor:pointer; border:none;" onclick="toggleRepairReady('${d.id}', true)">Ready</button>
                   <button class="tag ${!d.ready ? 'tag-red' : 'tag-gray'}" style="cursor:pointer; border:none;" onclick="toggleRepairReady('${d.id}', false)">Not Ready</button>
                 </div>
               </td>
-              <td>
+              <td onclick="event.stopPropagation()">
                 <div class="tbl-actions">
-                  <button class="btn-icon" title="View Details" onclick="showRepairDetails('${d.id}')"><i class="ti ti-eye"></i></button>
                   <button class="btn-icon" title="Change Status" onclick="showRepairWorkflow('${d.id}')"><i class="ti ti-arrows-exchange"></i></button>
                 </div>
               </td>
@@ -30313,13 +30537,13 @@
       const dateInp = document.getElementById('mrep-date');
       if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
 
-      const f_scn  = document.getElementById('mrep-scn');
+      const f_scn = document.getElementById('mrep-scn');
       const f_comp = document.getElementById('mrep-component');
       const f_cust = document.getElementById('mrep-customer');
       const f_stat = document.getElementById('mrep-status');
       const f_vend = document.getElementById('mrep-vendor');
       const f_note = document.getElementById('mrep-notes');
-      const f_vg   = document.getElementById('mrep-vendor-group');
+      const f_vg = document.getElementById('mrep-vendor-group');
 
       // Populate SCN select from live DB
       if (f_scn) {
@@ -30338,7 +30562,7 @@
       if (f_stat) f_stat.value = 'In-House';
       if (f_vend) f_vend.value = '';
       if (f_note) f_note.value = prefill?.notes || '';
-      if (f_vg)   f_vg.style.display = 'none';
+      if (f_vg) f_vg.style.display = 'none';
 
       if (f_stat) {
         f_stat.onchange = () => {
@@ -30508,11 +30732,11 @@
 
 
     function issueAssetToSR() {
-      const reqId  = window._currentSRViewId;
+      const reqId = window._currentSRViewId;
       const assetId = document.getElementById('vreq-asset-select')?.value;
       if (!reqId || !assetId) { showToast('warn', 'Select Asset', 'Please select an asset from the list.'); return; }
 
-      const req   = DB.serviceRequests.find(r => r.id === reqId);
+      const req = DB.serviceRequests.find(r => r.id === reqId);
       const asset = DB.standbyPool.find(a => a.id === assetId);
       if (!req || !asset) return;
 
@@ -30521,7 +30745,8 @@
         assetId: asset.id,
         assetName: asset.name,
         issuedOn: new Date().toISOString(),
-        status: 'Active'
+        status: 'Active',
+        issuedBy: 'Admin User'
       };
       asset.status = 'In Use';
       addStandbyHistory(asset.id, 'Issued', req.customer, req.id, `Issued to ${req.customer} for ${req.type}`);
@@ -30578,7 +30803,7 @@
       const slice = sReqFiltered.slice(start, start + SREQ_PER);
       const TYPE_CLS = { Installation: 'blue', Maintenance: 'amber', Repair: 'red', Inspection: 'navy' };
       tbody.innerHTML = slice.map(r => `
-      <tr>
+      <tr style="cursor:pointer;" onclick="openSvcRequestView('${r.id}')">
         <td><span class="id-cell">${r.id}</span></td>
         <td>
           <div class="entity-cell">
@@ -30591,9 +30816,8 @@
         <td class="text-muted" style="font-size:11px;">${fmtDate(r.scheduledDate)}</td>
         <td class="text-secondary" style="font-size:12px;">${r.technician || 'Unassigned'}</td>
         <td><span class="badge badge-${SVC_STATUS_CLS[r.status] || 'gray'}">${r.status}</span></td>
-        <td>
+        <td onclick="event.stopPropagation()">
           <div class="tbl-actions">
-            <button class="btn btn-ghost btn-icon-sm" title="View Details" onclick="openSvcRequestView('${r.id}')"><i class="ti ti-eye" style="color:var(--blue);"></i></button>
             <button class="btn btn-ghost btn-icon-sm" title="Mark Completed" onclick="showToast('success','Done','Service request completed.')"><i class="ti ti-check" style="color:var(--green);"></i></button>
           </div>
         </td>
@@ -30641,15 +30865,14 @@
       }
       if (empty) empty.style.display = 'none';
       tbody.innerHTML = rows.map((c, i) => `
-        <tr>
+        <tr style="cursor:pointer;" onclick="openChecklistDetail('${c.id}')">
           <td class="text-muted" style="font-size:11px;">${i + 1}</td>
           <td>${c.productTypes.map(p => `<span class="tag tag-blue" style="font-size:11px;margin:2px;">${p}</span>`).join('') || '<span class="text-muted">All</span>'}</td>
           <td>${c.callTypes.map(t => `<span class="tag tag-amber" style="font-size:11px;margin:2px;">${t}</span>`).join('') || '<span class="text-muted">All</span>'}</td>
           <td style="font-size:13px; font-weight:500;">${c.option}</td>
           <td class="text-center"><input type="checkbox" ${c.yesNo ? 'checked' : ''} disabled style="width:15px;height:15px;accent-color:var(--blue);"></td>
           <td class="text-secondary" style="font-size:12px;">${c.remarks || '—'}</td>
-          <td class="text-secondary" style="font-size:12px;">${c.installFormId || '—'}</td>
-          <td>
+          <td onclick="event.stopPropagation()">
             <div class="tbl-actions">
               <button class="btn btn-ghost btn-icon-sm" title="Delete" onclick="deleteSvcChecklist('${c.id}')"><i class="ti ti-trash" style="color:var(--red);"></i></button>
             </div>
@@ -30663,14 +30886,38 @@
       showToast('success', 'Deleted', 'Checklist config removed.');
     }
 
+    function openChecklistDetail(id) {
+      const c = (DB.svcChecklists || []).find(x => x.id === id);
+      if (!c) return;
+      window._editChecklistId = id;
+
+      // Populate tag fields
+      _svcChecklistTags = { product: [...(c.productTypes || [])], type: [...(c.callTypes || [])] };
+      renderChecklistTags('product');
+      renderChecklistTags('type');
+
+      // Populate other fields
+      const opt = document.getElementById('msc-option');       if (opt) opt.value = c.option || '';
+      const rem = document.getElementById('msc-remarks');      if (rem) rem.value = c.remarks || '';
+      const yn  = document.getElementById('msc-yesno');        if (yn)  yn.checked = !!c.yesNo;
+
+
+      // Switch modal title and button to Edit mode
+      const title = document.querySelector('#modal-svc-checklist .modal-title');
+      if (title) title.innerHTML = '<i class="ti ti-checklist"></i> Edit Checklist';
+      const submitBtn = document.querySelector('#modal-svc-checklist .modal-footer .btn-primary');
+      if (submitBtn) submitBtn.textContent = 'Update';
+
+      openModal('modal-svc-checklist');
+    }
+
     function openSvcChecklist() {
+      window._editChecklistId = null;
       resetSvcChecklist();
-      const installSel = document.getElementById('msc-install-form');
-      if (installSel) {
-        const forms = (DB.salesOrders || []).slice(0, 30);
-        installSel.innerHTML = '<option value="">-Select-</option>' +
-          forms.map(f => `<option value="${f.id}">${f.id}</option>`).join('');
-      }
+      const title = document.querySelector('#modal-svc-checklist .modal-title');
+      if (title) title.innerHTML = '<i class="ti ti-checklist"></i> Checklist Management';
+      const submitBtn = document.querySelector('#modal-svc-checklist .modal-footer .btn-primary');
+      if (submitBtn) submitBtn.textContent = 'Submit';
       openModal('modal-svc-checklist');
     }
 
@@ -30704,26 +30951,30 @@
       const opt = document.getElementById('msc-option'); if (opt) opt.value = '';
       const yn = document.getElementById('msc-yesno'); if (yn) yn.checked = false;
       const rem = document.getElementById('msc-remarks'); if (rem) rem.value = '';
-      const inst = document.getElementById('msc-install-form'); if (inst) inst.value = '';
     }
 
     function submitSvcChecklist() {
       const option = document.getElementById('msc-option')?.value?.trim();
       if (!option) { showToast('warning', 'Required', 'Please fill in the Option field.'); return; }
-      const newId = 'SCL-' + String((DB.svcChecklists || []).length + 1).padStart(3, '0');
       const record = {
-        id: newId,
         productTypes: [..._svcChecklistTags.product],
         callTypes: [..._svcChecklistTags.type],
         option,
         yesNo: document.getElementById('msc-yesno')?.checked || false,
         remarks: document.getElementById('msc-remarks')?.value?.trim() || '',
-        installFormId: document.getElementById('msc-install-form')?.value || '',
       };
       if (!DB.svcChecklists) DB.svcChecklists = [];
-      DB.svcChecklists.push(record);
+      if (window._editChecklistId) {
+        const idx = DB.svcChecklists.findIndex(c => c.id === window._editChecklistId);
+        if (idx > -1) { DB.svcChecklists[idx] = { ...DB.svcChecklists[idx], ...record }; }
+        window._editChecklistId = null;
+        showToast('success', 'Updated', `Checklist "${option}" updated successfully.`);
+      } else {
+        record.id = 'SCL-' + String(DB.svcChecklists.length + 1).padStart(3, '0');
+        DB.svcChecklists.push(record);
+        showToast('success', 'Saved', `Checklist "${option}" configured successfully.`);
+      }
       renderSvcChecklistTable();
-      showToast('success', 'Saved', `Checklist "${option}" configured successfully.`);
       closeModal('modal-svc-checklist');
     }
 
@@ -30872,7 +31123,7 @@
       document.getElementById('vreq-desc').textContent = req.description || 'No additional notes provided for this service request.';
 
       // Asset section
-      const stbSec    = document.getElementById('vreq-standby-section');
+      const stbSec = document.getElementById('vreq-standby-section');
       const noAssetSec = document.getElementById('vreq-no-asset-section');
       if (req.standby && req.standby.status !== 'Returned') {
         if (stbSec) stbSec.style.display = 'block';
@@ -36624,7 +36875,8 @@
         </label>
         <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
           <i class="ti ti-tag" style="color:#7C3AED;"></i>
-          <select id="osp-type" style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+          <select id="osp-type"
+            style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
             <option value="Sales">Sales</option>
             <option value="Service">Service</option>
             <option value="AMC">AMC</option>
@@ -36633,7 +36885,8 @@
         </label>
         <input type="hidden" id="osp-linked-sr" value="">
       </div>
-      <div id="osp-linked-sr-banner" style="display:none;margin-top:10px;padding:8px 12px;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;font-size:11px;color:#065f46;display:flex;align-items:center;gap:6px;">
+      <div id="osp-linked-sr-banner"
+        style="display:none;margin-top:10px;padding:8px 12px;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;font-size:11px;color:#065f46;display:flex;align-items:center;gap:6px;">
         <i class="ti ti-tool"></i>
         <span>Created from Service Request: <b id="osp-linked-sr-label"></b></span>
       </div>
@@ -39878,7 +40131,7 @@
           style="width: 32px; height: 32px; border-radius: 8px; background: rgba(99, 102, 241, 0.1); color: #6366F1; display: flex; align-items: center; justify-content: center;">
           <i class="ti ti-tool" style="font-size: 18px;"></i>
         </div>
-        <div style="font-size: 16px; font-weight: 700; color: #0F172A;">Repair & PCB Details — <span
+        <div style="font-size: 16px; font-weight: 700; color: #0F172A;">Repair Details — <span
             id="rep-detail-id">REP-000</span></div>
       </div>
       <button onclick="closeRepairPanel()"
