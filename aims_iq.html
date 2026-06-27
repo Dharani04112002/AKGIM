@@ -7583,6 +7583,7 @@
       font-weight: 600;
       background: linear-gradient(90deg, #1e293b, #334155);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: 0.2px;
     }
@@ -8316,78 +8317,111 @@
               <span class="tb-badge" style="background:var(--blue);">29</span>
             </button>
             <div class="notif-dropdown" id="approvals-dropdown" style="width:360px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--card-border);">
+              <div
+                style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--card-border);">
                 <div style="display:flex;align-items:center;gap:8px;">
                   <div style="font-size:14px;font-weight:700;color:var(--tx-1);">Approvals</div>
-                  <span class="badge" style="background:var(--blue);color:#fff;font-size:10px;padding:2px 8px;border-radius:12px;">29 pending</span>
+                  <span class="badge"
+                    style="background:var(--blue);color:#fff;font-size:10px;padding:2px 8px;border-radius:12px;">29
+                    pending</span>
                 </div>
               </div>
               <div style="overflow-y:auto; max-height:350px;">
                 <!-- Item 1: Margin Approval -->
-                <div class="notif-item unread" data-page="sal-margin-approval" onclick="navigate('sal-margin-approval',this);closeAll()">
+                <div class="notif-item unread" data-page="sal-margin-approval"
+                  onclick="navigate('sal-margin-approval',this);closeAll()">
                   <div class="notif-ico" style="background:var(--blue-bg); color:var(--blue);">
                     <i class="ti ti-shield-check"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Margin Approval</span> <span style="font-weight:400;color:var(--tx-3)">— review low margin deals.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Margin Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— review low margin deals.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Sales</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">8</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    8</div>
                 </div>
                 <!-- Item 2: Sales Quote Approval -->
-                <div class="notif-item unread" data-page="appr-sal-quote" onclick="navigate('appr-sal-quote',this);closeAll()">
+                <div class="notif-item unread" data-page="appr-sal-quote"
+                  onclick="navigate('appr-sal-quote',this);closeAll()">
                   <div class="notif-ico" style="background:var(--purple-bg); color:var(--purple);">
                     <i class="ti ti-file-description"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Sales Quote Approval</span> <span style="font-weight:400;color:var(--tx-3)">— quotations awaiting sign-off.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Sales Quote Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— quotations awaiting sign-off.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Sales</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">6</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    6</div>
                 </div>
                 <!-- Item 3: AMC Quote Approval -->
-                <div class="notif-item unread" data-page="appr-amc-quote" onclick="navigate('appr-amc-quote',this);closeAll()">
+                <div class="notif-item unread" data-page="appr-amc-quote"
+                  onclick="navigate('appr-amc-quote',this);closeAll()">
                   <div class="notif-ico" style="background:var(--green-bg); color:var(--green);">
                     <i class="ti ti-shield-check"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">AMC Quote Approval</span> <span style="font-weight:400;color:var(--tx-3)">— maintenance contract quotes pending.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">AMC
+                        Quote Approval</span> <span style="font-weight:400;color:var(--tx-3)">— maintenance contract
+                        quotes pending.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Contracts</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">4</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    4</div>
                 </div>
                 <!-- Item 4: Payment Approval -->
-                <div class="notif-item unread" data-page="appr-payment" onclick="navigate('appr-payment',this);closeAll()">
+                <div class="notif-item unread" data-page="appr-payment"
+                  onclick="navigate('appr-payment',this);closeAll()">
                   <div class="notif-ico" style="background:var(--gold-bg); color:var(--gold);">
                     <i class="ti ti-credit-card"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Payment Approval</span> <span style="font-weight:400;color:var(--tx-3)">— customer payment terms review.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Payment Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— customer payment terms review.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Finance</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">3</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    3</div>
                 </div>
                 <!-- Item 5: Credit Note Approval -->
-                <div class="notif-item unread" data-page="appr-credit-note" onclick="navigate('appr-credit-note',this);closeAll()">
+                <div class="notif-item unread" data-page="appr-credit-note"
+                  onclick="navigate('appr-credit-note',this);closeAll()">
                   <div class="notif-ico" style="background:var(--red-bg); color:var(--red);">
                     <i class="ti ti-receipt-refund"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Credit Note Approval</span> <span style="font-weight:400;color:var(--tx-3)">— credit notes awaiting authorization.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Credit Note Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— credit notes awaiting authorization.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Finance</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">2</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    2</div>
                 </div>
                 <!-- Item 6: Discount Approval -->
-                <div class="notif-item unread" data-page="appr-discount" onclick="navigate('appr-discount',this);closeAll()">
+                <div class="notif-item unread" data-page="appr-discount"
+                  onclick="navigate('appr-discount',this);closeAll()">
                   <div class="notif-ico" style="background:var(--blue-bg); color:var(--blue);">
                     <i class="ti ti-percentage"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Discount Approval</span> <span style="font-weight:400;color:var(--tx-3)">— exceptional discount requests.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Discount Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— exceptional discount requests.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">Sales</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">1</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    1</div>
                 </div>
                 <!-- Item 7: Leave Approval -->
                 <div class="notif-item unread" data-page="appr-leave" onclick="navigate('appr-leave',this);closeAll()">
@@ -8395,10 +8429,14 @@
                     <i class="ti ti-calendar-off"></i>
                   </div>
                   <div style="flex:1; min-width:0;">
-                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span style="color:var(--tx-1)">Leave Approval</span> <span style="font-weight:400;color:var(--tx-3)">— employee leave requests pending.</span></div>
+                    <div style="font-size:13px; color:var(--tx-1); font-weight:600;"><span
+                        style="color:var(--tx-1)">Leave Approval</span> <span
+                        style="font-weight:400;color:var(--tx-3)">— employee leave requests pending.</span></div>
                     <div style="font-size:11px; color:var(--tx-3); margin-top:3px;">HRMS</div>
                   </div>
-                  <div style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">5</div>
+                  <div
+                    style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">
+                    5</div>
                 </div>
               </div>
             </div>
@@ -11606,7 +11644,7 @@
               </div>
             </div>
             <!-- Top Customers + Top Products -->
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title"><i class="ti ti-users"></i> Top 10 Customers</div>
@@ -11709,7 +11747,7 @@
                   class="ti ti-download"></i> Export</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="rep-inv-kpi"></div>
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title"><i class="ti ti-chart-donut"></i> Stock by Category</div>
@@ -11761,7 +11799,7 @@
                   class="ti ti-download"></i> Export</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="rep-cus-kpi"></div>
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title"><i class="ti ti-chart-donut"></i> Customers by Status</div>
@@ -11811,7 +11849,7 @@
                   class="ti ti-download"></i> Export</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="rep-sup-kpi"></div>
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title"><i class="ti ti-chart-donut"></i> Suppliers by Rating</div>
@@ -13087,7 +13125,7 @@
                 AI Assistant</button>
             </div>
             <div class="kpi-grid kpi-grid-4 mb-4" id="ai-dash-kpi"></div>
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title"><i class="ti ti-alert-circle" style="color:var(--red);"></i> Anomalies
@@ -13272,7 +13310,7 @@
               </div>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title">Demand Forecast vs Actuals (12-month + 3-month projection)</div>
@@ -13439,7 +13477,7 @@
               </div>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title">Stock Level vs Reorder Point (top SKUs)</div>
@@ -13591,7 +13629,7 @@
               </div>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title">Top Suppliers — Performance Radar</div>
@@ -13769,7 +13807,7 @@
               </div>
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(6, 1fr);gap:16px;margin-bottom:16px;">
+            <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:16px;">
               <div class="card">
                 <div class="card-header">
                   <div class="card-title">Receivables Aging</div>
