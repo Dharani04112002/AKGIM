@@ -1147,6 +1147,18 @@
       color: var(--tx-3);
     }
 
+    /* Financial Year dropdown */
+    .fy-option {
+      padding: 9px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #0A1628;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .fy-option:hover { background: #f4f6f9; }
+    .fy-option.fy-active { color: #378ADD; background: #EBF4FF; }
+
     /* Topbar icon buttons */
     .tb-icon-btn {
       width: 34px;
@@ -8294,15 +8306,20 @@
           </button>
 
           <!-- Financial Year Selector -->
-          <div style="position:relative;display:flex;align-items:center;">
-            <select id="global-fy-select" onchange="setFinancialYear(this.value)"
-              style="appearance:none;-webkit-appearance:none;background:#f4f6f9;border:1px solid #e0e4ea;border-radius:20px;padding:6px 32px 6px 12px;font-size:12px;font-weight:700;color:#0A1628;cursor:pointer;outline:none;min-width:88px;">
-              <option value="2023-24">2023-24</option>
-              <option value="2024-25">2024-25</option>
-              <option value="2025-26" selected>2025-26</option>
-              <option value="2026-27">2026-27</option>
-            </select>
-            <i class="ti ti-chevron-down" style="position:absolute;right:10px;font-size:11px;color:#6a7f96;pointer-events:none;"></i>
+          <div style="position:relative;" id="fy-dropdown-wrap">
+            <button onclick="toggleFYDropdown()" id="fy-btn"
+              style="display:flex;align-items:center;gap:6px;background:#f4f6f9;border:1px solid #e0e4ea;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;color:#0A1628;cursor:pointer;outline:none;white-space:nowrap;">
+              <i class="ti ti-calendar" style="font-size:12px;color:#378ADD;"></i>
+              <span id="fy-label">FY 2025-26</span>
+              <i class="ti ti-chevron-down" style="font-size:11px;color:#6a7f96;"></i>
+            </button>
+            <div id="fy-dropdown-menu"
+              style="display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid #e0e4ea;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,.1);min-width:130px;z-index:9999;overflow:hidden;">
+              <div onclick="setFinancialYear('2023-24')" class="fy-option">2023-24</div>
+              <div onclick="setFinancialYear('2024-25')" class="fy-option">2024-25</div>
+              <div onclick="setFinancialYear('2025-26')" class="fy-option fy-active">2025-26</div>
+              <div onclick="setFinancialYear('2026-27')" class="fy-option">2026-27</div>
+            </div>
           </div>
 
           <!-- Ask AI -->
@@ -22761,10 +22778,26 @@
        FULLSCREEN
        ═══════════════════════════════════════════ */
     window.CURRENT_FY = '2025-26';
+    function toggleFYDropdown() {
+      const menu = document.getElementById('fy-dropdown-menu');
+      menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    }
     function setFinancialYear(fy) {
       window.CURRENT_FY = fy;
+      document.getElementById('fy-label').textContent = 'FY ' + fy;
+      document.querySelectorAll('.fy-option').forEach(el => {
+        el.classList.toggle('fy-active', el.textContent.trim() === fy);
+      });
+      document.getElementById('fy-dropdown-menu').style.display = 'none';
       showToast('success', 'Financial Year', 'Switched to FY ' + fy);
     }
+    document.addEventListener('click', function(e) {
+      const wrap = document.getElementById('fy-dropdown-wrap');
+      if (wrap && !wrap.contains(e.target)) {
+        const menu = document.getElementById('fy-dropdown-menu');
+        if (menu) menu.style.display = 'none';
+      }
+    });
 
     function toggleFullscreen() {
       const icon = document.getElementById('fs-icon');
