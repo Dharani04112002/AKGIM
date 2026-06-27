@@ -12540,7 +12540,7 @@
                 <button class="modal-close" onclick="closeModal('modal-svc-checklist')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div style="display:flex;flex-direction:column;gap:18px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
                   <!-- Type of Product -->
                   <div>
@@ -18516,14 +18516,13 @@
                       <option value="">— Select Invoice —</option>
                     </select>
                   </div>
-                </div>
-
-                <div class="form-group" style="margin-top: 16px;"><label class="form-label">Payment Status</label>
-                  <select class="form-control" id="mfrec-status" onchange="toggleFinAdvanceFields()">
-                    <option value="full">Full Paid</option>
-                    <option value="partial">Partially Paid</option>
-                    <option value="advance">Advance Paid</option>
-                  </select>
+                  <div class="form-group"><label class="form-label">Payment Status</label>
+                    <select class="form-control" id="mfrec-status" onchange="toggleFinAdvanceFields()">
+                      <option value="full">Full Paid</option>
+                      <option value="partial">Partially Paid</option>
+                      <option value="advance">Advance Paid</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div id="mfrec-advance-fields"
@@ -20669,25 +20668,27 @@
                 <button class="modal-close" onclick="closeModal('modal-sal-receipt')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-group"><label class="form-label">Customer</label>
-                  <select class="form-control" id="mrec-cust">
-                    <option value="">— Select Customer —</option>
-                  </select>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="form-group"><label class="form-label">Customer</label>
+                    <select class="form-control" id="mrec-cust">
+                      <option value="">— Select Customer —</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Invoice Reference</label>
+                    <select class="form-control" id="mrec-inv">
+                      <option value="">— Select Invoice —</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Payment Status</label>
+                    <select class="form-control" id="mrec-status" onchange="toggleAdvanceFields()">
+                      <option value="full">Full Paid</option>
+                      <option value="partial">Partially Paid</option>
+                      <option value="advance">Advance Paid</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Total Invoice Amount (₹)</label><input
+                      class="form-control" type="number" id="mrec-amount" placeholder="0.00" oninput="calcAdvPct()"></div>
                 </div>
-                <div class="form-group"><label class="form-label">Invoice Reference</label>
-                  <select class="form-control" id="mrec-inv">
-                    <option value="">— Select Invoice —</option>
-                  </select>
-                </div>
-                <div class="form-group"><label class="form-label">Payment Status</label>
-                  <select class="form-control" id="mrec-status" onchange="toggleAdvanceFields()">
-                    <option value="full">Full Paid</option>
-                    <option value="partial">Partially Paid</option>
-                    <option value="advance">Advance Paid</option>
-                  </select>
-                </div>
-                <div class="form-group"><label class="form-label">Total Invoice Amount (₹)</label><input
-                    class="form-control" type="number" id="mrec-amount" placeholder="0.00" oninput="calcAdvPct()"></div>
                 <div id="mrec-advance-fields"
                   style="display: none; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                   <div class="form-group" style="margin-bottom:0;"><label class="form-label">Advance %</label>
@@ -20699,19 +20700,21 @@
                       oninput="calcAdvPct()">
                   </div>
                 </div>
-                <div class="form-group"><label class="form-label">Receipt Date</label><input class="form-control"
-                    type="date" id="mrec-date"></div>
-                <div class="form-group"><label class="form-label">Payment Method</label>
-                  <select class="form-control" id="mrec-method">
-                    <option>Bank Transfer</option>
-                    <option>Cheque</option>
-                    <option>UPI</option>
-                    <option>NEFT</option>
-                    <option>Cash</option>
-                  </select>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="form-group"><label class="form-label">Receipt Date</label><input class="form-control"
+                      type="date" id="mrec-date"></div>
+                  <div class="form-group"><label class="form-label">Payment Method</label>
+                    <select class="form-control" id="mrec-method">
+                      <option>Bank Transfer</option>
+                      <option>Cheque</option>
+                      <option>UPI</option>
+                      <option>NEFT</option>
+                      <option>Cash</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label class="form-label">Reference #</label><input class="form-control"
+                      id="mrec-ref" placeholder="UTR / Cheque number"></div>
                 </div>
-                <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
-                    id="mrec-ref" placeholder="UTR / Cheque number"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-sal-receipt')">Cancel</button>
@@ -21246,27 +21249,29 @@
                 <button class="modal-close" onclick="closeModal('modal-pur-payment')"><i class="ti ti-x"></i></button>
               </div>
               <div class="modal-body">
-                <div class="form-group"><label class="form-label">Supplier</label>
-                  <select class="form-control" id="mpay-sup">
-                    <option value="">— Select Supplier —</option>
-                  </select>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                  <div class="form-group"><label class="form-label">Supplier</label>
+                    <select class="form-control" id="mpay-sup">
+                      <option value="">— Select Supplier —</option>
+                    </select>
+                  </div>
+                  <div class="form-group"><label class="form-label">Amount (₹)</label><input class="form-control"
+                      type="number" id="mpay-amount" placeholder="0.00"></div>
+                  <div class="form-group"><label class="form-label">Payment Date</label><input class="form-control"
+                      type="date" id="mpay-date"></div>
+                  <div class="form-group"><label class="form-label">Payment Method</label>
+                    <select class="form-control" id="mpay-method">
+                      <option>Bank Transfer</option>
+                      <option>Cheque</option>
+                      <option>NEFT</option>
+                      <option>RTGS</option>
+                      <option>Cash</option>
+                      <option>UPI</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="grid-column: span 2; max-width: calc(50% - 8px);"><label class="form-label">Reference #</label><input class="form-control"
+                      id="mpay-ref" placeholder="Transaction / cheque number"></div>
                 </div>
-                <div class="form-group"><label class="form-label">Amount (₹)</label><input class="form-control"
-                    type="number" id="mpay-amount" placeholder="0.00"></div>
-                <div class="form-group"><label class="form-label">Payment Date</label><input class="form-control"
-                    type="date" id="mpay-date"></div>
-                <div class="form-group"><label class="form-label">Payment Method</label>
-                  <select class="form-control" id="mpay-method">
-                    <option>Bank Transfer</option>
-                    <option>Cheque</option>
-                    <option>NEFT</option>
-                    <option>RTGS</option>
-                    <option>Cash</option>
-                    <option>UPI</option>
-                  </select>
-                </div>
-                <div class="form-group"><label class="form-label">Reference #</label><input class="form-control"
-                    id="mpay-ref" placeholder="Transaction / cheque number"></div>
               </div>
               <div class="modal-footer">
                 <button class="btn btn-outline" onclick="closeModal('modal-pur-payment')">Cancel</button>
@@ -39780,31 +39785,31 @@
         <div class="modal-title"><i class="ti ti-flag"></i> Set Goal / Target</div>
         <button class="modal-close" onclick="closeModal('modal-set-goal')"><i class="ti ti-x"></i></button>
       </div>
-      <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
-        <div class="form-group"><label class="form-label">Employee</label>
-          <select class="form-control" id="goal-set-emp">
-            <option>John Doe</option>
-            <option>Anish Sharma</option>
-            <option>Rahul V</option>
-          </select>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:12px;">
-          <div class="form-group" style="grid-column:span 2;"><label class="form-label">Frequency</label>
+      <div class="modal-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group"><label class="form-label">Employee</label>
+            <select class="form-control" id="goal-set-emp">
+              <option>John Doe</option>
+              <option>Anish Sharma</option>
+              <option>Rahul V</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Frequency</label>
             <select class="form-control" id="goal-set-freq">
               <option>Daily</option>
               <option>Weekly</option>
               <option>Monthly</option>
             </select>
           </div>
-          <div class="form-group" style="grid-column:span 2;"><label class="form-label">Target Date/Month</label>
+          <div class="form-group"><label class="form-label">Target Date/Month</label>
             <input class="form-control" type="date">
           </div>
-        </div>
-        <div class="form-group"><label class="form-label">Target Name / KPI</label>
-          <input class="form-control" placeholder="e.g. Sales Calls, Service Tickets, etc.">
-        </div>
-        <div class="form-group"><label class="form-label">Target Value (Numeric)</label>
-          <input class="form-control" type="number" placeholder="100">
+          <div class="form-group"><label class="form-label">Target Name / KPI</label>
+            <input class="form-control" placeholder="e.g. Sales Calls, Service Tickets, etc.">
+          </div>
+          <div class="form-group"><label class="form-label">Target Value (Numeric)</label>
+            <input class="form-control" type="number" placeholder="100">
+          </div>
         </div>
       </div>
       <div class="modal-footer">
