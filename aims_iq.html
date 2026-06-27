@@ -11239,6 +11239,13 @@
                     class="badge badge-navy ml-8" id="crm-opp-count">0</span></div>
                 <div style="display:flex;gap:8px;">
                   <input class="search-input" id="crm-opp-search" placeholder="Search…" oninput="filterOpportunities()">
+                  <select class="select-sm" id="crm-opp-type" onchange="filterOpportunities()">
+                    <option value="">All Types</option>
+                    <option>Sales</option>
+                    <option>Service</option>
+                    <option>AMC</option>
+                    <option>Renewal</option>
+                  </select>
                   <select class="select-sm" id="crm-opp-stage" onchange="filterOpportunities()">
                     <option value="">All Stages</option>
                     <option>Prospect</option>
@@ -11257,6 +11264,7 @@
                       <th>Opp ID</th>
                       <th>Title</th>
                       <th>Company</th>
+                      <th>Type</th>
                       <th>Value</th>
                       <th>Stage</th>
                       <th>Prob%</th>
@@ -12276,10 +12284,10 @@
               <div class="modal-header">
                 <div class="modal-title"><i class="ti ti-layout-details"></i> Service Request Details — <span
                     id="vreq-id"></span></div>
-                <div class="modal-actions" style="margin-left:auto; margin-right:12px;">
-                  <button class="btn btn-outline btn-sm"
-                    onclick="showToast('info','Print','Generating service report PDF...')"><i class="ti ti-printer"></i>
-                    Print</button>
+                <div class="modal-actions" style="margin-left:auto; margin-right:12px; display:flex; align-items:center; gap:8px;">
+                  <button class="btn btn-outline btn-sm" onclick="showToast('info','Print','Generating service report PDF...')"><i class="ti ti-printer"></i> Print</button>
+                  <button class="btn btn-sm" style="background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="openRepairFromSR(_currentSRViewId)"><i class="ti ti-tool"></i> Log Repair</button>
+                  <button class="btn btn-sm" style="background:var(--green,#16a34a);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="createOpportunityFromSR(_currentSRViewId)"><i class="ti ti-briefcase"></i> Create Opportunity</button>
                   <button class="btn btn-primary btn-sm" onclick="closeModal('modal-svc-request-view')">Close</button>
                 </div>
                 <button class="modal-close" onclick="closeModal('modal-svc-request-view')"><i
@@ -12383,23 +12391,50 @@
                   </div>
                 </div>
 
-                <!-- Standby Asset Info (Conditional) -->
-                <div id="vreq-standby-section" style="display:none; margin-top:24px;">
-                  <div class="card" style="border:1px solid #fde68a; background:#fffbeb;">
-                    <div class="card-body" style="display:flex; align-items:center; gap:16px; padding:12px 16px;">
-                      <div
-                        style="width:40px; height:40px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:20px;">
-                        <i class="ti ti-replace"></i>
+                <!-- Asset Usage Section -->
+                <div style="margin-top:24px;">
+                  <!-- When asset is assigned -->
+                  <div id="vreq-standby-section" style="display:none;">
+                    <div class="card" style="border:1px solid #fde68a; background:#fffbeb;">
+                      <div class="card-body" style="display:flex; align-items:center; gap:16px; padding:12px 16px;">
+                        <div style="width:40px; height:40px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                          <i class="ti ti-replace"></i>
+                        </div>
+                        <div style="flex:1;">
+                          <div style="font-size:12px; color:#92400e; font-weight:600;">Asset Issued for this Service</div>
+                          <div id="vreq-standby-name" style="font-weight:600; font-size:14px; color:var(--navy);"></div>
+                          <div id="vreq-standby-status" style="font-size:11px; margin-top:2px;"></div>
+                        </div>
+                        <button class="btn btn-sm btn-outline" id="vreq-standby-return-btn" style="border-color:#f59e0b; color:#92400e;">
+                          <i class="ti ti-arrow-back-up"></i> Mark Returned
+                        </button>
                       </div>
-                      <div style="flex:1;">
-                        <div style="font-size:12px; color:#92400e; font-weight:600;">Standby Asset Issued</div>
-                        <div id="vreq-standby-name" style="font-weight:600; font-size:14px; color:var(--navy);"></div>
-                        <div id="vreq-standby-status" style="font-size:11px; margin-top:2px;"></div>
+                    </div>
+                  </div>
+                  <!-- When no asset assigned -->
+                  <div id="vreq-no-asset-section" style="display:none;">
+                    <div class="card" style="border:1px dashed #cbd5e1; background:#f8fafc;">
+                      <div class="card-body" style="padding:16px;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+                          <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:36px; height:36px; border-radius:8px; background:#e2e8f0; display:flex; align-items:center; justify-content:center; color:#64748b;">
+                              <i class="ti ti-cube" style="font-size:18px;"></i>
+                            </div>
+                            <div>
+                              <div style="font-weight:600; font-size:13px; color:var(--navy);">Issue Asset for this Service</div>
+                              <div style="font-size:11px; color:var(--text-muted);">Assign a standby asset from pool to this service request</div>
+                            </div>
+                          </div>
+                          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <select id="vreq-asset-select" class="select-sm" style="min-width:220px;">
+                              <option value="">-- Select Available Asset --</option>
+                            </select>
+                            <button class="btn btn-sm" style="background:var(--navy,#0a1628);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-weight:600;cursor:pointer;" onclick="issueAssetToSR()">
+                              <i class="ti ti-link"></i> Issue Asset
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <button class="btn btn-sm btn-outline" id="vreq-standby-return-btn"
-                        style="border-color:#f59e0b; color:#92400e;">
-                        <i class="ti ti-arrow-back-up"></i> Mark Returned
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -15149,10 +15184,7 @@
                   <div class="form-group mb-4">
                     <label class="form-label">Service Request / SCN</label>
                     <select class="form-control" id="mrep-scn">
-                      <option value="">-- Manual Entry or Select SR --</option>
-                      <option>SR-4401</option>
-                      <option>SR-4405</option>
-                      <option>SR-4412</option>
+                      <option value="">-- Select SR --</option>
                     </select>
                   </div>
                   <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
@@ -28384,10 +28416,12 @@
     function filterOpportunities() {
       const search = (document.getElementById('crm-opp-search')?.value || '').toLowerCase();
       const stage = document.getElementById('crm-opp-stage')?.value || '';
+      const type = document.getElementById('crm-opp-type')?.value || '';
       cOppFiltered = DB.opportunities.filter(o => {
         const ms = !search || o.name.toLowerCase().includes(search) || o.customer.toLowerCase().includes(search);
         const mst = !stage || o.stage === stage;
-        return ms && mst;
+        const mtp = !type || (o.type || 'Sales') === type;
+        return ms && mst && mtp;
       }).sort((a, b) => b.value - a.value);
       const fc = document.getElementById('crm-opp-count'); if (fc) fc.textContent = cOppFiltered.length;
       cOppPage = 1; renderOpportunitiesTable();
@@ -28397,13 +28431,17 @@
       const tbody = document.getElementById('crm-opp-tbody'); if (!tbody) return;
       const start = (cOppPage - 1) * COPP_PER;
       const slice = cOppFiltered.slice(start, start + COPP_PER);
+      const OPP_TYPE_CLS = { Sales: 'blue', Service: 'green', AMC: 'amber', Renewal: 'navy' };
       tbody.innerHTML = slice.map(o => {
         const prob_cls = o.probability >= 70 ? 'green' : o.probability >= 40 ? 'amber' : 'red';
+        const oppType = o.type || 'Sales';
+        const linkedSRTip = o.linkedSR ? ` title="Linked SR: ${o.linkedSR}"` : '';
         return `
       <tr style="cursor:pointer;" onclick="openOppPanel('${o.id}')">
         <td><span class="id-cell">${o.id}</span></td>
-        <td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.name}</td>
+        <td style="font-weight:600;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.name}${o.linkedSR ? `<br><span style="font-size:10px;color:var(--text-muted);"><i class="ti ti-tool"></i> ${o.linkedSR}</span>` : ''}</td>
         <td class="text-secondary" style="font-size:12px;">${o.customer}</td>
+        <td><span class="badge badge-${OPP_TYPE_CLS[oppType] || 'gray'}"${linkedSRTip}>${oppType}</span></td>
         <td class="amount-cell" style="font-weight:700;">₹${fmt(o.value)}</td>
         <td><span class="badge badge-${OPP_STAGE_CLS[o.stage] || 'gray'}">${o.stage}</span></td>
         <td><span class="badge badge-${prob_cls} no-dot">${o.probability}%</span></td>
@@ -28566,6 +28604,9 @@
       document.getElementById('osp-save-label').textContent = 'Save Opportunity';
       document.getElementById('osp-quote-btn').style.display = 'none';
       document.getElementById('osp-won-btn').style.display = 'none';
+      const ospType = document.getElementById('osp-type'); if (ospType) ospType.value = 'Sales';
+      const ospLinkedSR = document.getElementById('osp-linked-sr'); if (ospLinkedSR) ospLinkedSR.value = '';
+      const ospBanner = document.getElementById('osp-linked-sr-banner'); if (ospBanner) ospBanner.style.display = 'none';
       _ospPopulateOwner('');
       ospAddRow();
       _ospOpen();
@@ -28585,6 +28626,13 @@
       document.getElementById('osp-save-label').textContent = 'Save Changes';
       document.getElementById('osp-quote-btn').style.display = '';
       document.getElementById('osp-won-btn').style.display = '';
+      const ospTypeEl = document.getElementById('osp-type'); if (ospTypeEl) ospTypeEl.value = opp.type || 'Sales';
+      const ospLSR = document.getElementById('osp-linked-sr'); if (ospLSR) ospLSR.value = opp.linkedSR || '';
+      const ospBanner2 = document.getElementById('osp-linked-sr-banner');
+      if (ospBanner2) {
+        if (opp.linkedSR) { ospBanner2.style.display = 'flex'; document.getElementById('osp-linked-sr-label').textContent = opp.linkedSR; }
+        else ospBanner2.style.display = 'none';
+      }
       _ospPopulateOwner(opp.assignedTo);
       /* Populate editable items */
       document.getElementById('osp-items-body').innerHTML = '';
@@ -28620,6 +28668,8 @@
           opp.probability = parseInt(document.getElementById('osp-prob').value) || opp.probability;
           opp.closeDate = document.getElementById('osp-close').value;
           opp.assignedTo = document.getElementById('osp-owner').value;
+          opp.type = document.getElementById('osp-type')?.value || opp.type || 'Sales';
+          opp.linkedSR = document.getElementById('osp-linked-sr')?.value || opp.linkedSR || '';
           opp.value = total;
           opp.items = items;
         }
@@ -28633,6 +28683,8 @@
           probability: parseInt(document.getElementById('osp-prob').value) || 50,
           closeDate: document.getElementById('osp-close').value,
           assignedTo: document.getElementById('osp-owner').value,
+          type: document.getElementById('osp-type')?.value || 'Sales',
+          linkedSR: document.getElementById('osp-linked-sr')?.value || '',
           value: total,
           items,
           createdAt: new Date().toISOString(),
@@ -29658,6 +29710,13 @@
       if (pc) pc.textContent = data.length;
     }
 
+    function addStandbyHistory(assetId, action, party, ref, details) {
+      const asset = (DB.standbyPool || []).find(a => a.id === assetId);
+      if (!asset) return;
+      if (!asset.history) asset.history = [];
+      asset.history.push({ date: new Date().toISOString(), action, party: party || '-', ref: ref || '-', details: details || '', user: 'Service Team' });
+    }
+
     function viewStandbyHistory(assetId) {
       const asset = (DB.standbyPool || []).find(a => a.id === assetId);
       if (!asset) return;
@@ -29850,29 +29909,37 @@
       }
     }
 
-    function openNewRepairModal() {
-      // Set default date
+    function openNewRepairModal(prefill) {
       const dateInp = document.getElementById('mrep-date');
       if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
 
-      // Reset fields
-      const f_scn = document.getElementById('mrep-scn');
+      const f_scn  = document.getElementById('mrep-scn');
       const f_comp = document.getElementById('mrep-component');
       const f_cust = document.getElementById('mrep-customer');
       const f_stat = document.getElementById('mrep-status');
       const f_vend = document.getElementById('mrep-vendor');
       const f_note = document.getElementById('mrep-notes');
-      const f_vg = document.getElementById('mrep-vendor-group');
+      const f_vg   = document.getElementById('mrep-vendor-group');
 
-      if (f_scn) f_scn.value = '';
-      if (f_comp) f_comp.value = '';
-      if (f_cust) f_cust.value = '';
+      // Populate SCN select from live DB
+      if (f_scn) {
+        f_scn.innerHTML = '<option value="">-- Select SR --</option>';
+        (DB.serviceRequests || []).forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r.id;
+          opt.textContent = `${r.id} — ${r.customer} (${r.type})`;
+          f_scn.appendChild(opt);
+        });
+        f_scn.value = prefill?.scn || '';
+      }
+
+      if (f_comp) f_comp.value = prefill?.component || '';
+      if (f_cust) f_cust.value = prefill?.customer || '';
       if (f_stat) f_stat.value = 'In-House';
       if (f_vend) f_vend.value = '';
-      if (f_note) f_note.value = '';
-      if (f_vg) f_vg.style.display = 'none';
+      if (f_note) f_note.value = prefill?.notes || '';
+      if (f_vg)   f_vg.style.display = 'none';
 
-      // Setup status listener
       if (f_stat) {
         f_stat.onchange = () => {
           if (f_vg) f_vg.style.display = f_stat.value === 'Outsource' ? 'block' : 'none';
@@ -29880,6 +29947,13 @@
       }
 
       openRepairAddPanel();
+    }
+
+    function openRepairFromSR(reqId) {
+      const req = DB.serviceRequests.find(r => r.id === reqId);
+      if (!req) return;
+      closeModal('modal-svc-request-view');
+      openNewRepairModal({ scn: req.id, customer: req.customer, notes: `Service Type: ${req.type}` });
     }
 
     function openRepairAddPanel() {
@@ -30032,6 +30106,33 @@
     }
 
 
+
+    function issueAssetToSR() {
+      const reqId  = window._currentSRViewId;
+      const assetId = document.getElementById('vreq-asset-select')?.value;
+      if (!reqId || !assetId) { showToast('warn', 'Select Asset', 'Please select an asset from the list.'); return; }
+
+      const req   = DB.serviceRequests.find(r => r.id === reqId);
+      const asset = DB.standbyPool.find(a => a.id === assetId);
+      if (!req || !asset) return;
+
+      req.standby = {
+        id: asset.id,
+        assetId: asset.id,
+        assetName: asset.name,
+        issuedOn: new Date().toISOString(),
+        status: 'Active'
+      };
+      asset.status = 'In Use';
+      addStandbyHistory(asset.id, 'Issued', req.customer, req.id, `Issued to ${req.customer} for ${req.type}`);
+
+      if (typeof renderStandbyTable === 'function') renderStandbyTable();
+      if (typeof renderStandbyPoolTable === 'function') renderStandbyPoolTable();
+      if (typeof renderStandbyKPI === 'function') renderStandbyKPI();
+
+      showToast('success', 'Asset Issued', `${asset.name} issued to ${req.customer}.`);
+      openSvcRequestView(reqId);
+    }
 
     function toggleStandbyReturn(reqId, isReturning) {
       const req = DB.serviceRequests.find(r => r.id === reqId);
@@ -30356,6 +30457,7 @@
     function openSvcRequestView(reqId) {
       const req = DB.serviceRequests.find(r => r.id === reqId);
       if (!req) return;
+      window._currentSRViewId = req.id;
 
       document.getElementById('vreq-id').textContent = req.id;
       document.getElementById('vreq-customer').textContent = req.customer;
@@ -30369,25 +30471,36 @@
       document.getElementById('vreq-technician').innerHTML = `<i class="ti ti-user"></i> Tech: ${req.technician || 'Pending Assignment'}`;
       document.getElementById('vreq-desc').textContent = req.description || 'No additional notes provided for this service request.';
 
-      // Standby Info
-      const stbSec = document.getElementById('vreq-standby-section');
-      if (stbSec) {
-        if (req.standby) {
-          stbSec.style.display = 'block';
-          document.getElementById('vreq-standby-name').textContent = req.standby.assetName;
-          document.getElementById('vreq-standby-status').innerHTML = `
-            <span style="color:${req.standby.status === 'Active' ? '#92400e' : '#065f46'}; font-weight:600;">
-              ${req.standby.status === 'Active' ? 'CURRENTLY AT CUSTOMER' : 'RETURNED TO POOL'}
-            </span> 
-            <span style="margin-left:8px; color:#6b7280;">Issued: ${new Date(req.standby.issuedOn).toLocaleDateString()}</span>
-          `;
-          const retBtn = document.getElementById('vreq-standby-return-btn');
-          if (retBtn) {
-            retBtn.style.display = req.standby.status === 'Active' ? 'block' : 'none';
-            retBtn.onclick = () => { toggleStandbyReturn(req.id, true); openSvcRequestView(req.id); };
+      // Asset section
+      const stbSec    = document.getElementById('vreq-standby-section');
+      const noAssetSec = document.getElementById('vreq-no-asset-section');
+      if (req.standby && req.standby.status !== 'Returned') {
+        if (stbSec) stbSec.style.display = 'block';
+        if (noAssetSec) noAssetSec.style.display = 'none';
+        document.getElementById('vreq-standby-name').textContent = req.standby.assetName;
+        document.getElementById('vreq-standby-status').innerHTML = `
+          <span style="color:#92400e; font-weight:600;">CURRENTLY AT CUSTOMER</span>
+          <span style="margin-left:8px; color:#6b7280;">Issued: ${new Date(req.standby.issuedOn).toLocaleDateString()}</span>
+        `;
+        const retBtn = document.getElementById('vreq-standby-return-btn');
+        if (retBtn) {
+          retBtn.style.display = 'block';
+          retBtn.onclick = () => { toggleStandbyReturn(req.id, true); openSvcRequestView(req.id); };
+        }
+      } else {
+        if (stbSec) stbSec.style.display = 'none';
+        if (noAssetSec) {
+          noAssetSec.style.display = 'block';
+          const sel = document.getElementById('vreq-asset-select');
+          if (sel) {
+            sel.innerHTML = '<option value="">-- Select Available Asset --</option>';
+            (DB.standbyPool || []).filter(a => a.status === 'Available').forEach(a => {
+              const opt = document.createElement('option');
+              opt.value = a.id;
+              opt.textContent = `${a.name} (${a.sn}) — ${a.condition}`;
+              sel.appendChild(opt);
+            });
           }
-        } else {
-          stbSec.style.display = 'none';
         }
       }
 
@@ -30464,6 +30577,25 @@
       }
 
       openModal('modal-svc-request-view');
+    }
+
+    function createOpportunityFromSR(reqId) {
+      const req = DB.serviceRequests.find(r => r.id === reqId);
+      if (!req) return;
+      closeModal('modal-svc-request-view');
+      navigate('crm-opportunities', null);
+      setTimeout(() => {
+        once('crm-opportunities', initCRMOpportunities);
+        openNewOppPanel();
+        document.getElementById('osp-title').value = `Service Opportunity — ${req.customer} (${req.type})`;
+        document.getElementById('osp-company').value = req.customer;
+        document.getElementById('osp-stage').value = 'Prospect';
+        const ospTypeEl = document.getElementById('osp-type'); if (ospTypeEl) ospTypeEl.value = 'Service';
+        const ospLSR = document.getElementById('osp-linked-sr'); if (ospLSR) ospLSR.value = req.id;
+        const banner = document.getElementById('osp-linked-sr-banner');
+        if (banner) { banner.style.display = 'flex'; document.getElementById('osp-linked-sr-label').textContent = req.id; }
+        ospUpdateAvatar();
+      }, 350);
     }
 
     /* ─── ASSIGN JOBS ─── */
@@ -36090,6 +36222,20 @@
             <option value="">Select owner…</option>
           </select>
         </label>
+        <label style="font-size:11px;color:#4A6888;display:flex;align-items:center;gap:4px;">
+          <i class="ti ti-tag" style="color:#7C3AED;"></i>
+          <select id="osp-type" style="font-size:11px;color:#0A1830;border:none;background:transparent;outline:none;padding:0;">
+            <option value="Sales">Sales</option>
+            <option value="Service">Service</option>
+            <option value="AMC">AMC</option>
+            <option value="Renewal">Renewal</option>
+          </select>
+        </label>
+        <input type="hidden" id="osp-linked-sr" value="">
+      </div>
+      <div id="osp-linked-sr-banner" style="display:none;margin-top:10px;padding:8px 12px;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;font-size:11px;color:#065f46;display:flex;align-items:center;gap:6px;">
+        <i class="ti ti-tool"></i>
+        <span>Created from Service Request: <b id="osp-linked-sr-label"></b></span>
       </div>
     </div>
 
