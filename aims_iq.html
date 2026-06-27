@@ -24788,9 +24788,7 @@
         <td><span class="badge ${p.status === 'Active' ? 'badge-green' : 'badge-gray'}">${p.status}</span></td>
         <td>
           <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" title="View" onclick="viewProduct('${p.id}')"><i class="ti ti-eye"></i></button>
             <button class="btn btn-ghost btn-icon-sm" title="Edit" onclick="openModal('modal-product')"><i class="ti ti-edit"></i></button>
-            <button class="btn btn-ghost btn-icon-sm" title="Delete" onclick="showToast('error','Deleted','${p.name} removed.')"><i class="ti ti-trash" style="color:var(--red)"></i></button>
           </div>
         </td>
       </tr>`;
@@ -25668,7 +25666,6 @@
         <td><span class="badge ${c.status === 'Active' ? 'badge-green' : 'badge-gray'}">${c.status}</span></td>
         <td>
           <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" title="View" onclick="viewCustomer('${c.id}')"><i class="ti ti-eye"></i></button>
             <button class="btn btn-ghost btn-icon-sm" title="Edit" onclick="openModal('modal-customer')"><i class="ti ti-edit"></i></button>
           </div>
         </td>
@@ -25898,7 +25895,6 @@
         <td><span class="badge ${s.status === 'Active' ? 'badge-green' : 'badge-gray'}">${s.status}</span></td>
         <td>
           <div style="display:flex;gap:4px;">
-            <button class="btn btn-ghost btn-icon-sm" title="View" onclick="viewSupplier('${s.id}')"><i class="ti ti-eye"></i></button>
             <button class="btn btn-ghost btn-icon-sm" title="Edit" onclick="openModal('modal-supplier')"><i class="ti ti-edit"></i></button>
           </div>
         </td>
