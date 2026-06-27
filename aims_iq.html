@@ -17206,14 +17206,15 @@
 
                 <div style="display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start;">
 
-                  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;">
-                    <!-- Visit schedule card -->
+                  <div style="display:flex;flex-direction:column;gap:16px;">
+
+                    <!-- Row 1: Visit Schedule (full width) -->
                     <div class="card" style="padding:0;overflow:hidden;">
                       <div class="card-header" style="padding:14px 16px;border-bottom:1px solid #eef1f5;">
                         <div class="card-title"><i class="ti ti-calendar-event"
                             style="margin-right:6px;color:#378ADD;"></i>Visit Schedule</div>
                       </div>
-                      <div style="display:flex;flex-direction:column;">
+                      <div style="display:grid;grid-template-columns:repeat(2,1fr);">
 
                         <!-- In progress -->
                         <div
@@ -17242,7 +17243,7 @@
                         </div>
 
                         <!-- At risk -->
-                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;">
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;border-left:3px solid #E24B4A;">
                           <div style="text-align:center;min-width:48px;">
                             <div style="font-size:11px;font-weight:700;color:#0A1628;">12:00</div>
                             <div style="font-size:10px;color:#9aaabb;">PM</div>
@@ -17267,7 +17268,7 @@
                         </div>
 
                         <!-- Need attention -->
-                        <div style="display:flex;gap:14px;padding:14px 16px;border-bottom:1px solid #f4f6f9;">
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-left:3px solid #F59E0B;">
                           <div style="text-align:center;min-width:48px;">
                             <div style="font-size:11px;font-weight:700;color:#0A1628;">14:30</div>
                             <div style="font-size:10px;color:#9aaabb;">PM</div>
@@ -17291,7 +17292,7 @@
                         </div>
 
                         <!-- Call only -->
-                        <div style="display:flex;gap:14px;padding:14px 16px;">
+                        <div style="display:flex;gap:14px;padding:14px 16px;border-left:3px solid #9aaabb;">
                           <div style="text-align:center;min-width:48px;">
                             <div style="font-size:11px;font-weight:700;color:#0A1628;">16:00</div>
                             <div style="font-size:10px;color:#9aaabb;">PM</div>
@@ -17318,72 +17319,77 @@
                       </div>
                     </div>
 
-                    <!-- Pending Quotations -->
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="card-title"><i class="ti ti-file-description"
-                            style="margin-right:6px;color:#534AB7;"></i>Pending Quotations</div>
-                        <span class="badge badge-blue no-dot">9</span>
+                    <!-- Row 2: Pending Quotations + Sales Requirements -->
+                    <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;">
+
+                      <!-- Pending Quotations -->
+                      <div class="card">
+                        <div class="card-header">
+                          <div class="card-title"><i class="ti ti-file-description"
+                              style="margin-right:6px;color:#534AB7;"></i>Pending Quotations</div>
+                          <span class="badge badge-blue no-dot">9</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                              <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-112</div>
+                              <div style="font-size:11px;color:#6a7f96;">Apex Industries · Safety Gloves</div>
+                            </div>
+                            <span class="pill pill-amber">Draft</span>
+                          </div>
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                              <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-108</div>
+                              <div style="font-size:11px;color:#6a7f96;">Birla Corp · Welding Rods</div>
+                            </div>
+                            <span class="pill pill-blue">Pending</span>
+                          </div>
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                              <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-103</div>
+                              <div style="font-size:11px;color:#6a7f96;">TATA Steel · Abrasives</div>
+                            </div>
+                            <span class="pill pill-amber">Draft</span>
+                          </div>
+                        </div>
+                        <div style="padding:14px 16px 16px;">
+                          <button onclick="navigate('sal-quotations')"
+                            style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#534AB7;border:1px solid #EEEDFE;border-radius:7px;cursor:pointer;font-weight:600;">View
+                            All Quotes</button>
+                        </div>
                       </div>
-                      <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                          <div>
-                            <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-112</div>
-                            <div style="font-size:11px;color:#6a7f96;">Apex Industries · Safety Gloves</div>
-                          </div>
-                          <span class="pill pill-amber">Draft</span>
+
+                      <!-- Sales Requirements -->
+                      <div class="card">
+                        <div class="card-header">
+                          <div class="card-title"><i class="ti ti-clipboard-list"
+                              style="margin-right:6px;color:#378ADD;"></i>Sales Requirements</div>
+                          <span class="badge badge-amber no-dot">8</span>
                         </div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                          <div>
-                            <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-108</div>
-                            <div style="font-size:11px;color:#6a7f96;">Birla Corp · Welding Rods</div>
+                        <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                              <div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-058</div>
+                              <div style="font-size:11px;color:#6a7f96;">Godrej Industries · Safety Helmets</div>
+                            </div>
+                            <span class="pill pill-red">High</span>
                           </div>
-                          <span class="pill pill-blue">Pending</span>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                          <div>
-                            <div style="font-size:12px;font-weight:600;color:#0A1628;">QUO-2026-103</div>
-                            <div style="font-size:11px;color:#6a7f96;">TATA Steel · Abrasives</div>
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                              <div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-054</div>
+                              <div style="font-size:11px;color:#6a7f96;">Reliance Ind. · Grinding Discs</div>
+                            </div>
+                            <span class="pill pill-blue">Normal</span>
                           </div>
-                          <span class="pill pill-amber">Draft</span>
                         </div>
-                      </div>
-                      <div style="padding:14px 16px 16px;">
-                        <button onclick="navigate('sal-quotations')"
-                          style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#534AB7;border:1px solid #EEEDFE;border-radius:7px;cursor:pointer;font-weight:600;">View
-                          All Quotes</button>
+                        <div style="padding:14px 16px 16px;">
+                          <button onclick="navigate('sal-orders')"
+                            style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#378ADD;border:1px solid #E6F1FB;border-radius:7px;cursor:pointer;font-weight:600;">View
+                            All Requirements</button>
+                        </div>
                       </div>
                     </div>
 
-                    <!-- Sales Requirements -->
-                    <div class="card">
-                      <div class="card-header">
-                        <div class="card-title"><i class="ti ti-clipboard-list"
-                            style="margin-right:6px;color:#378ADD;"></i>Sales Requirements</div>
-                        <span class="badge badge-amber no-dot">8</span>
-                      </div>
-                      <div style="display:flex;flex-direction:column;gap:12px;padding:16px 16px 0;">
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                          <div>
-                            <div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-058</div>
-                            <div style="font-size:11px;color:#6a7f96;">Godrej Industries · Safety Helmets</div>
-                          </div>
-                          <span class="pill pill-red">High</span>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;align-items:center;">
-                          <div>
-                            <div style="font-size:12px;font-weight:600;color:#0A1628;">REQ-2026-054</div>
-                            <div style="font-size:11px;color:#6a7f96;">Reliance Ind. · Grinding Discs</div>
-                          </div>
-                          <span class="pill pill-blue">Normal</span>
-                        </div>
-                      </div>
-                      <div style="padding:14px 16px 16px;">
-                        <button onclick="navigate('sal-orders')"
-                          style="width:100%;font-size:11px;padding:8px;background:#f4f6f9;color:#378ADD;border:1px solid #E6F1FB;border-radius:7px;cursor:pointer;font-weight:600;">View
-                          All Requirements</button>
-                      </div>
-                    </div>
                   </div>
 
                   <!-- Right column -->
@@ -38372,7 +38378,7 @@
 
   <!-- ── Assignment Rules Drawer ── -->
   <div class="drawer-overlay" id="aims-rules-overlay" onclick="aimsCloseRulesDrawer()"></div>
-  <div class="lead-drawer" id="aims-rules-drawer" style="width:520px;">
+  <div class="lead-drawer" id="aims-rules-drawer" style="width:70%;">
     <div class="drawer-head">
       <div>
         <div class="drawer-title"><i class="ti ti-git-branch"
